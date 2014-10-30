@@ -1,20 +1,38 @@
-﻿Minetest
-========
+﻿Minetest-Blockiverse
+====================
 
 An InfiniMiner/Minecraft inspired game.
+Based on Minetest 1.4.10
 
+Enter the blockiverse component!
+Takes our block building to the next level,
+to lightspeed and beyond!
+
+Build your blockships and explore the vast blockiverse beyond.
+Enitre new planets and things to explore are just a blockship away!
+
+Minetest
 Copyright (c) 2010-2013 Perttu Ahola <celeron55@gmail.com>
+and contributors (see source file comments and the version control log)
+
+Blockiverse component
+Copyright (c) 2014 Brian Jack (gau_veldt@hotmail.com)
 and contributors (see source file comments and the version control log)
 
 In case you downloaded the source code:
 ---------------------------------------
-If you downloaded the Minetest Engine source code in which this file is
-contained, you probably want to download the minetest_game project too:
-  https://github.com/minetest/minetest_game/
+NB: blockiverse_game is TBA/todo...
+The blockiverse engine is not quite far enough along
+to have blockiverse_game yet available.
+
+If you downloaded the Minetest-Blockiverse Engine source code in which this file is
+contained, you probably want to download the blockiverse_game project too:
+  https://github.com/gau-veldt/blockiverse_game/
 See the README.txt in it.
 
-Further documentation
-----------------------
+
+Further documentation (minetest component)
+------------------------------------------
 - Website: http://minetest.net/
 - Wiki: http://wiki.minetest.net/
 - Developer wiki: http://dev.minetest.net/
