@@ -6,7 +6,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define PROJECT_NAME "Minetest"
+#define PROJECT_NAME "Minetest-Blockiverse"
 #define RUN_IN_PLACE 0
 #define STATIC_SHAREDIR ""
 

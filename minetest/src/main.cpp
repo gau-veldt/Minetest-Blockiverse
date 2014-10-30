@@ -856,7 +856,7 @@ int main(int argc, char *argv[])
 #ifdef SERVER
 		dstream << "minetestserver " << minetest_version_hash << std::endl;
 #else
-		dstream << "Minetest " << minetest_version_hash << std::endl;
+		dstream << "Minetest-Blockiverse " << minetest_version_hash << std::endl;
 		dstream << "Using Irrlicht " << IRRLICHT_SDK_VERSION << std::endl;
 #endif
 		dstream << "Build info: " << minetest_build_info << std::endl;
@@ -1628,7 +1628,7 @@ int main(int argc, char *argv[])
 	{
 		// Set the window caption
 		wchar_t* text = wgettext("Main Menu");
-		device->setWindowCaption((std::wstring(L"Minetest [") + text + L"]").c_str());
+		device->setWindowCaption((std::wstring(L"Minetest-Blockiverse [") + text + L"]").c_str());
 		delete[] text;
 
 		// This is used for catching disconnects

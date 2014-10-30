@@ -48,7 +48,7 @@ HTTPFetchRequest::HTTPFetchRequest()
 	connect_timeout = timeout;
 	multipart = false;
 
-	useragent = std::string("Minetest/") + minetest_version_hash + " (" + porting::get_sysinfo() + ")";
+	useragent = std::string("Minetest-Blockiverse/") + minetest_version_hash + " (" + porting::get_sysinfo() + ")";
 }
 
 

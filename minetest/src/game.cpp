@@ -1065,7 +1065,7 @@ static void show_pause_menu(GUIFormSpecMenu** cur_formspec,
 	os		<< "button_exit[4," << (ypos++) << ";3,0.5;btn_exit_os;"
 					<< wide_to_narrow(wstrgettext("Exit to OS"))   << "]"
 			<< "textarea[7.5,0.25;3.9,6.25;;" << control_text << ";]"
-			<< "textarea[0.4,0.25;3.5,6;;" << "Minetest\n"
+			<< "textarea[0.4,0.25;3.5,6;;" << "Minetest-Blockiverse\n"
 			<< minetest_build_info << "\n"
 			<< "path_user = " << wrap_rows(porting::path_user, 20)
 			<< "\n;]";
@@ -1124,7 +1124,7 @@ static void updateChat(Client& client, f32 dtime, bool show_debug,
 	core::rect<s32> rect(10, chat_y, width, chat_y + porting::getWindowSize().Y);
 	guitext_chat->setRelativePosition(rect);
 
-	//now use real height of text and adjust rect according to this size	
+	//now use real height of text and adjust rect according to this size
 	rect = core::rect<s32>(10, chat_y, width,
 			chat_y + guitext_chat->getTextHeight());
 
@@ -1594,7 +1594,7 @@ void the_game(bool &kill, bool random_input, InputHandler *input,
 
 	// First line of debug text
 	gui::IGUIStaticText *guitext = guienv->addStaticText(
-			L"Minetest",
+			L"Minetest-Blockiverse",
 			core::rect<s32>(0, 0, 0, 0),
 			false, false, guiroot);
 	// Second line of debug text
@@ -1727,7 +1727,7 @@ void the_game(bool &kill, bool random_input, InputHandler *input,
 	Hud hud(driver, smgr, guienv, font, text_height,
 			gamedef, player, &local_inventory);
 
-	core::stringw str = L"Minetest [";
+	core::stringw str = L"Minetest-Blockiverse [";
 	str += driver->getName();
 	str += "]";
 	device->setWindowCaption(str.c_str());
@@ -3268,7 +3268,7 @@ void the_game(bool &kill, bool random_input, InputHandler *input,
 
 			std::ostringstream os(std::ios_base::binary);
 			os<<std::fixed
-				<<"Minetest "<<minetest_version_hash
+				<<"Minetest-Blockiverse "<<minetest_version_hash
 				<<" FPS = "<<fps
 				<<" (R: range_all="<<draw_control.range_all<<")"
 				<<std::setprecision(0)
@@ -3286,7 +3286,7 @@ void the_game(bool &kill, bool random_input, InputHandler *input,
 		else if(show_hud || show_chat)
 		{
 			std::ostringstream os(std::ios_base::binary);
-			os<<"Minetest "<<minetest_version_hash;
+			os<<"Minetest-Blockiverse "<<minetest_version_hash;
 			guitext->setText(narrow_to_wide(os.str()).c_str());
 			guitext->setVisible(true);
 		}
