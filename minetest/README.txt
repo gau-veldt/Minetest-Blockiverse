@@ -2,7 +2,7 @@
 ====================
 
 An InfiniMiner/Minecraft inspired game.
-Based on Minetest 1.4.10
+Forked from Minetest 0.4.10-dev
 
 Enter the blockiverse component!
 Takes our block building to the next level,
