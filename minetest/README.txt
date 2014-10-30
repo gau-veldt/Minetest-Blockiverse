@@ -16,7 +16,7 @@ Copyright (c) 2010-2013 Perttu Ahola <celeron55@gmail.com>
 and contributors (see source file comments and the version control log)
 
 Blockiverse component
-Copyright (c) 2014 Brian Jack (gau_veldt@hotmail.com)
+Copyright (c) 2014 Brian Jack <gau_veldt@hotmail.com>
 and contributors (see source file comments and the version control log)
 
 In case you downloaded the source code:
@@ -26,8 +26,8 @@ The blockiverse engine is not quite far enough along
 to have blockiverse_game yet available.
 
 If you downloaded the Minetest-Blockiverse Engine source code in which this file is
-contained, you probably want to download the blockiverse_game project too:
-  https://github.com/gau-veldt/blockiverse_game/
+contained, you probably want to download the Blockiverse_game project too:
+  https://github.com/gau-veldt/Blockiverse_game/
 See the README.txt in it.
 
 
