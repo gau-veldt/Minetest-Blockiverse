@@ -39,8 +39,27 @@ public:
 	** for blockiverse engine
 	*/
 
-	/* gets all sparse objects in range of center */
-	//virtual void objectsInRange(std::list<v3s128> &dst, v3s128 center, u32 range) = 0;
+	/*
+	** gets all sparse objects in range of center
+	** listed objects will be translated such that
+	** (0,0,0) corresponds to center
+	**
+	** because maximum range is much smaller than s128
+	** the translation step converts the large 128-bit
+	** integer absolute positions into much smaller
+	** engine-friendly types suitable for rendering
+	**
+	** @PARAM
+	**        dst: reference to an (empty) list to output to
+	**     center: center point of the search
+	**      range: search radius (in meters)
+	**
+	** NB: You want to be able to look up objects in a rather large range
+	**     even if chunkoids themselves are not actually meshified beyond
+	**     a much smaller range
+	**
+	/*
+	//virtual void objectsInRange(std::list<v3s32> &dst, v3s128 center, u32 range) = 0;
 	/* list blocks comprising specified chunkoid (ships, asteroids, etc) */
 	//virtual void listChunkoid(std::list<v3s16> &dst, u64 id) = 0;
 
