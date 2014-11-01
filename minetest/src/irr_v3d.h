@@ -2,6 +2,8 @@
 Minetest
 Copyright (C) 2010-2013 celeron55, Perttu Ahola <celeron55@gmail.com>
 
+Blockiverse fork changes (C) 2014 Brian Jack <gau_veldt@hotmail.com>
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation; either version 2.1 of the License, or
@@ -27,6 +29,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 typedef core::vector3df v3f;
 typedef core::vector3d<s16> v3s16;
 typedef core::vector3d<s32> v3s32;
+typedef core::vector3d<s64> v3s64;
 
 #endif
 

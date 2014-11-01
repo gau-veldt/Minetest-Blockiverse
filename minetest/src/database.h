@@ -35,11 +35,22 @@ public:
 	virtual void beginSave() = 0;
 	virtual void endSave() = 0;
 
+    /*
+	** for blockiverse engine
+	*/
+
+	/* gets all sparse objects in range of center */
+	//virtual void objectsInRange(std::list<v3s64> &dst, v3s64 center, u32 range) = 0;
+	/* list blocks comprising specified chunkoid (ships, asteroids, etc) */
+	//virtual void listChunkoid(std::list<v3s16> &dst, u64 id) = 0;
+
+    // for minetest engine
 	virtual bool saveBlock(v3s16 blockpos, std::string &data) = 0;
 	virtual std::string loadBlock(v3s16 blockpos) = 0;
 	s64 getBlockAsInteger(const v3s16 pos) const;
 	v3s16 getIntegerAsBlock(s64 i) const;
 	virtual void listAllLoadableBlocks(std::list<v3s16> &dst) = 0;
+
 	virtual int Initialized(void)=0;
 	virtual ~Database() {};
 };
