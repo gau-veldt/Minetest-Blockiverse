@@ -40,7 +40,7 @@ public:
 	*/
 
 	/* gets all sparse objects in range of center */
-	//virtual void objectsInRange(std::list<v3s64> &dst, v3s64 center, u32 range) = 0;
+	//virtual void objectsInRange(std::list<v3s128> &dst, v3s128 center, u32 range) = 0;
 	/* list blocks comprising specified chunkoid (ships, asteroids, etc) */
 	//virtual void listChunkoid(std::list<v3s16> &dst, u64 id) = 0;
 
