@@ -10,3 +10,4 @@ tags
 ## Non-static Minetest directories
 bin/
 obj/
+blockiverse.depend
