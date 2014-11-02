@@ -60,8 +60,8 @@ typedef boost::multiprecision::int128_t s128;
 /*
 ** meters per parsec
 */
-double m_per_parsec=308567758e16L;
-double parsec_per_m=1.0L/m_per_parsec;
+u64 m_per_parsec=30856775800000000;
+double parsec_per_m=1.0L/double(m_per_parsec);
 
 int main(int argc, char** argv)
 {
