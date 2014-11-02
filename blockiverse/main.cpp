@@ -51,9 +51,6 @@ we use main().
 **  space.  Enough bits even to put things at what would be the
 **  real universe's 14.4 gigaparsec visible edge and have bits to
 **  spare!
-**
-**  With the right DBMS it should even be possible to store
-**  such ints in the DB without fuss.
 */
 #include "boost/multiprecision/cpp_int.hpp"
 typedef boost::multiprecision::int128_t s128;
