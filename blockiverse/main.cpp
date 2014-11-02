@@ -7,6 +7,7 @@ To use the engine, we will have to include the header file
 irrlicht.h, which can be found in the Irrlicht Engine SDK
 directory \include.
 */
+#include "auto/version.h"
 #include <irrlicht.h>
 
 /*
@@ -65,6 +66,7 @@ double parsec_per_m=1.0L/double(m_per_parsec);
 
 int main(int argc, char** argv)
 {
+    std::cout << "Version is: " << auto_ver << std::endl;
     /*
     The most important function of the engine is the 'createDevice'
     function. The Irrlicht Device can be created with it, which is the
