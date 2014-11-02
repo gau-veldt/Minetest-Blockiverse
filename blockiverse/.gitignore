@@ -1,0 +1,12 @@
+## Generic ignorable patterns and files
+*~
+.*.swp
+*bak*
+tags
+*.vim
+*.orig
+*.rej
+
+## Non-static Minetest directories
+bin/
+obj/
