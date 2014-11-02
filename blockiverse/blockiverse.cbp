@@ -34,7 +34,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add directory="../../irrlicht-1.8.1/include" />
-			<Add directory="C:/Boost/include" />
+			<Add directory="C:/Boost/include/boost-1_56" />
 			<Add directory="../zlib-1.2.5" />
 			<Add directory="../OpenAL/include" />
 			<Add directory="../libvorbis-1.3.4/include" />

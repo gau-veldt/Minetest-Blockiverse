@@ -42,6 +42,27 @@ if we would want to get rid of the console window, which pops up when
 starting a program with main(), but to keep this example simple,
 we use main().
 */
+
+/*
+**  There he is!
+**
+**  A 128-bit signed integer suitable for coordinates of stuff in
+**  space.  Enough bits even to put things at what would be the
+**  real universe's 14.4 gigaparsec visible edge and have bits to
+**  spare!
+**
+**  With the right DBMS it should even be possible to store
+**  such ints in the DB without fuss.
+*/
+#include "boost/multiprecision/cpp_int.hpp"
+typedef boost::multiprecision::int128_t s128;
+
+/*
+** meters per parsec
+*/
+double m_per_parsec=308567758e16L;
+double parsec_per_m=1.0L/m_per_parsec;
+
 int main(int argc, char** argv)
 {
     /*
