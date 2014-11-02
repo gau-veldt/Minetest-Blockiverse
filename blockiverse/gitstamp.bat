@@ -1,3 +1,6 @@
 @echo off
-git rev-parse --abbrev-ref HEAD
-git log -1 --format=%%h
+echo "/*" >auto/version.h
+echo "** AUTOMATICALLY GENERATED -- DO NOT AHND EDIT" >>auto/version.h
+echo "**" >>auto/version.h
+echo "*/" >>auto/version.h
+git describe --always --dirty
