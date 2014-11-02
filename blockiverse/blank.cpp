@@ -2,7 +2,7 @@
 **
 **  Minetest-Blockiverse
 **
-**  Incorporates code from minetest 0.4.10-dev
+**  Incorporates portions of code from minetest 0.4.10-dev
 **
 **  Blockiverse
 **  Copyright (C) 2014 Brian Jack <gau_veldt@hotmail.com>
