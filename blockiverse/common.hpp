@@ -20,6 +20,7 @@
 #define BV_COMMON_HPP_INCLUDED
 
 #include "auto/version.h"
+#include "rsa/RSA.h"
 
 typedef unsigned long long u64;
 typedef long long s64;
