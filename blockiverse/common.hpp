@@ -22,6 +22,7 @@
 #include "auto/version.h"
 
 typedef unsigned long long u64;
+typedef long long s64;
 
 /*
 ** meters per parsec
