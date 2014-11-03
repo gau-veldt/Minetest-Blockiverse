@@ -1,9 +1,9 @@
 
 #Data storage specification
 
-* All blockiverse related data are kept in a databse whose name is based on the name of the realm, indicated here as {RealmName}
+1. All blockiverse related data are kept in a databse whose name is based on the name of the realm, indicated here as {RealmName}
 
-* Format of sectors:
+2. Format of sectors:
 ```SQL
 CREATE TABLE {RealmName}.sectors (
   id INTEGER,
