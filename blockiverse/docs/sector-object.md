@@ -13,4 +13,4 @@ CREATE TABLE {RealmName}.sectors (
   PRIMARY KEY (id ASC)
 );
 ```
-    * x_pc,y_pc,z_pc is the sector's universe coordinate in parsecs
+ * x_pc,y_pc,z_pc is the sector's universe coordinate in parsecs
