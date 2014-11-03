@@ -4,11 +4,12 @@
 	<Project>
 		<Option title="blockiverse" />
 		<Option pch_mode="2" />
+		<Option default_target="ClientDebug" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="ClientDebug">
-				<Option output="bin/Debug/blockiverse" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="C:/Minetest-Blockiverse/Minetest-Blockiverse/irrlicht-1.8.1/bin/Win32-gcc" />
+				<Option output="bin/blockiverse" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="C:/Minetest-Blockiverse/Minetest-Blockiverse/blockiverse/bin" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -21,8 +22,8 @@
 				</ExtraCommands>
 			</Target>
 			<Target title="ClientRelease">
-				<Option output="bin/Release/blockiverse" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="C:/Minetest-Blockiverse/Minetest-Blockiverse/irrlicht-1.8.1/bin/Win32-gcc" />
+				<Option output="bin/blockiverse" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="C:/Minetest-Blockiverse/Minetest-Blockiverse/blockiverse/bin" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -34,8 +35,8 @@
 				</Linker>
 			</Target>
 			<Target title="ServerDebug">
-				<Option output="bin/Debug/blockiverse" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="C:/Minetest-Blockiverse/Minetest-Blockiverse/irrlicht-1.8.1/bin/Win32-gcc" />
+				<Option output="bin/bvserver" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="C:/Minetest-Blockiverse/Minetest-Blockiverse/blockiverse/bin" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -48,11 +49,12 @@
 				</ExtraCommands>
 			</Target>
 			<Target title="ServerRelease">
-				<Option output="bin/Release/blockiverse" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="C:/Minetest-Blockiverse/Minetest-Blockiverse/irrlicht-1.8.1/bin/Win32-gcc" />
+				<Option output="bin/bvserver" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="C:/Minetest-Blockiverse/Minetest-Blockiverse/blockiverse/bin" />
 				<Option object_output="obj/Release/" />
-				<Option type="0" />
+				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
@@ -61,6 +63,10 @@
 				</Linker>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="Debug" targets="ClientDebug;ServerDebug;" />
+			<Add alias="Release" targets="ClientRelease;ServerRelease;" />
+		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-m32" />
@@ -93,8 +99,16 @@
 		<Unit filename=".gitattributes" />
 		<Unit filename=".gitignore" />
 		<Unit filename="auto/version.h" />
+		<Unit filename="common.hpp" />
 		<Unit filename="gitstamp.bat" />
-		<Unit filename="main.cpp" />
+		<Unit filename="main.cpp">
+			<Option target="ClientDebug" />
+			<Option target="ClientRelease" />
+		</Unit>
+		<Unit filename="server_main.cpp">
+			<Option target="ServerDebug" />
+			<Option target="ServerRelease" />
+		</Unit>
 		<Unit filename="sqlite/sqlite3.c">
 			<Option compilerVar="CC" />
 		</Unit>

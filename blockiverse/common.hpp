@@ -11,22 +11,21 @@
 **  https://www.gnu.org/licenses/lgpl-3.0.en.html
 **  See file LICENSE in ../
 **
-**  Implementation file server_main.cpp
+**  Declaration (header) file common.hpp
 **
-**  Server main driver code.
+**  Declarations for stuff common to client and server.
 **
 */
+#ifndef BV_COMMON_HPP_INCLUDED
+#define BV_COMMON_HPP_INCLUDED
 
-#include "common.hpp"
-#include <iostream>
+#include "auto/version.h"
 
-int main(int argc, char** argv)
-{
-    std::cout << "Version is: " << auto_ver << std::endl;
+typedef unsigned long long u64;
 
-    std::cout << std::endl << "Press enter to continue." << std::endl;
-    std::cin.ignore();
+/*
+** meters per parsec
+*/
+u64 m_per_parsec=30856775800000000;
 
-    return 0;
-}
-
+#endif // BV_COMMON_HPP_INCLUDED

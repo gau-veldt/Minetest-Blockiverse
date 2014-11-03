@@ -1,14 +1,25 @@
 /*
-The program will show how to use the
-basics of the VideoDriver, the GUIEnvironment and the
-SceneManager.
-
-To use the engine, we will have to include the header file
-irrlicht.h, which can be found in the Irrlicht Engine SDK
-directory \include.
+**
+**  Minetest-Blockiverse
+**
+**  Incorporates portions of code from minetest 0.4.10-dev
+**
+**  Blockiverse
+**  Copyright (C) 2014 Brian Jack <gau_veldt@hotmail.com>
+**  Distributed as free software using the copyleft
+**  LGPL Version 3 license:
+**  https://www.gnu.org/licenses/lgpl-3.0.en.html
+**  See file LICENSE in ../
+**
+**  Implementation file main.cpp
+**
+**  Client main driver code.
+**
 */
-#include "auto/version.h"
+
+#include "common.hpp"
 #include <irrlicht.h>
+#include <iostream>
 
 /*
 In the Irrlicht Engine, everything can be found in the namespace
@@ -35,31 +46,6 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
-
-/*
-This is the main method. We can use void main() on every platform.
-On Windows platforms, we could also use the WinMain method
-if we would want to get rid of the console window, which pops up when
-starting a program with main(), but to keep this example simple,
-we use main().
-*/
-
-/*
-**  There he is!
-**
-**  A 128-bit signed integer suitable for coordinates of stuff in
-**  space.  Enough bits even to put things at what would be the
-**  real universe's 14.4 gigaparsec visible edge and have bits to
-**  spare!
-*/
-#include "boost/multiprecision/cpp_int.hpp"
-typedef boost::multiprecision::int128_t s128;
-
-/*
-** meters per parsec
-*/
-u64 m_per_parsec=30856775800000000;
-double parsec_per_m=1.0L/double(m_per_parsec);
 
 int main(int argc, char** argv)
 {
