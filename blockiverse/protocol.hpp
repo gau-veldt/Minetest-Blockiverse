@@ -11,14 +11,14 @@
 **  https://www.gnu.org/licenses/lgpl-3.0.en.html
 **  See file LICENSE in ../
 **
-**  Declaration (header) file {Thing}.hpp
+**  Declaration (header) file protocol.hpp
 **
-**  {WhatThingDoes}
+**  Protocol for server/client comms header declarations
 **
 */
-#ifndef BV_{Thing}_HPP_INCLUDED
-#define BV_{Thing}_HPP_INCLUDED
+#ifndef BV_PROTOCOL_H_INCLUDED
+#define BV_PROTOCOL_H_INCLUDED
 
 /* decls here */
 
-#endif // BV_{Thing}_HPP_INCLUDED
+#endif // BV_PROTOCOL_HPP_INCLUDED
