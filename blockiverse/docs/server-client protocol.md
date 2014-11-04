@@ -11,7 +11,7 @@ length of data involved
 
 ##datatypes
 
-decimals:  f [-] [ <whole digits> ] [ . <fraction digits> ] [ e <exponent digits> ] ;
+decimals:  f [-] [ &LT;whole digits&gt; ] [ . &LT;fraction digits&gt; ] [ e &LT;exponent digits&gt; ] ;
 
 eg: -23.51e7 is the stream: f - 2 3 . 5 7 e 7 ;
 
@@ -32,7 +32,7 @@ examples (representing the value 1 where the hex values represent raw binary byt
 
 unsigned integers omit the +
 
-NB: current blockiverse implementation only uses range 0 <= N <= 3 (64-bit ints)
+NB: current blockiverse implementation only uses range 0 &LT;= N &LT;= 3 (64-bit ints)
 
 integers are little endian in support of the protocol's iterative pattern
 
@@ -64,7 +64,7 @@ return values from method will be pushed is values back
 to the caller
 
 so objectref.method(a,b,c) looks like:
-<c> <b> <a> <objectref> <method> .
+&LT;c&gt; &LT;b&gt; &LT;a&gt; &LT;objectref&gt; &LT;method&gt; .
 
 stack empty when an argument is required raises an error condition
 
