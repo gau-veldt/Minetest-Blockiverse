@@ -16,3 +16,9 @@
 **  Implements the protocol for server/client comms
 **
 */
+
+#include "protocol.hpp"
+
+u32 bvnet::max_reg_objects=1000;
+
+

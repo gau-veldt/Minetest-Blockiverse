@@ -20,14 +20,16 @@
 #define BV_COMMON_HPP_INCLUDED
 
 #include "auto/version.h"
+#include "irrTypes.h"
 #include "rsa/RSA.h"
 
 typedef unsigned long long u64;
 typedef long long s64;
+typedef irr::u32 u32;
 
 /*
 ** meters per parsec
 */
-u64 m_per_parsec=30856775800000000;
+extern u64 m_per_parsec;
 
 #endif // BV_COMMON_HPP_INCLUDED
