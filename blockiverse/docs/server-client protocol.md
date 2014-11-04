@@ -101,7 +101,7 @@ to cleanly terminate the connection
 ## handshake
 
 the client and server each have their own bootstrap object that is immediately
-given to the other via the outbound stream upon connection as an objectref
+given to the other via the outbound stream upon connection as an objectref.
 
 all subsequent interaction is through method calls on the received bootstrap object
-or any objects subsequently received from the other end during the SESSION_ABORTED
+or any objects subsequently received from the other end during the session.
