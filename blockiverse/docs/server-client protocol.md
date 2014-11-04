@@ -17,7 +17,7 @@ eg: -23.51e7 is the stream: f - 2 3 . 5 7 e 7 ;
 
 NB: no digits (ie: f ;) is the value 0.0e0
 
-integer: [+] N db_1 ... db_2^n
+integer: [+] N db_1 ... db_2^N
 
 N is a single digit and indicates 2^N bytes follow
 db_x are the corresponding databytes
