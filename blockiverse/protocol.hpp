@@ -25,15 +25,23 @@
 namespace bvnet {
 
     extern u32 max_reg_objects;
+
     class registry_full : public std::exception {
         mutable char buf[81];
         virtual const char *what() const throw() {
             snprintf(&buf[0],80,
-                     "Registry full: %d maximum objects reached.",
+                     "Registry full: exceeded %d maximum objects.",
                      max_reg_objects);
             return &buf[0];
         }
     };
+
+    class object_null : public std::exception {
+        virtual const char *what() const throw() {
+            return "Error: Attempt to register NULL as object.";
+        }
+    };
+
 
     /*
     ** registry tracks active
@@ -60,8 +68,16 @@ namespace bvnet {
                     Insert object ob into registry and return slot id
                     the object was registered to.  If the registry is
                     full (at maximum allowed entries) throws
-                    registry_full
+                    registry_full.
 
+                    Also throws object_null if an attempt is made to
+                    register a NULL pointer as an object.
+                */
+                if (ob==NULL)
+                    throw object_null();
+                if (objects.size()>=max_reg_objects)
+                    throw registry_full();
+                /*
                     For security do not assume next_slot+1
                     is an unoccupied slot.
 
@@ -70,8 +86,6 @@ namespace bvnet {
                     then register a new object in a low numbered slot to
                     overwrite an existing object in the registry.
                 */
-                if (objects.size()>=max_reg_objects)
-                    throw registry_full();
                 object_map::iterator scan;
                 scan=objects.find(next_slot);
                 while (scan!=objects.end()) {
@@ -80,7 +94,8 @@ namespace bvnet {
                     if (next_slot==0) ++next_slot;
                     scan=objects.find(++next_slot);
                 }
-                /* safe to register object */
+
+                /* next_slot is safe so register object */
                 objects[next_slot]=ob;
                 return next_slot;
             }
