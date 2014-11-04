@@ -23,13 +23,14 @@ N is a single digit and indicates 2^N bytes follow
 db_x are the corresponding databytes
 
 examples (representing the value 1 where the hex values represent raw binary bytes):
-         char (2^0=1 byte): + 0 0x01
+```
+         char (2^0=1 byte ): + 0 0x01
         short (2^1=2 bytes): + 1 0x01 0x00
          long (2^2=4 bytes): + 2 0x01 0x00 0x00 0x00
     long long (2^3=8 bytes): + 3 0x01 0x00 0x00 0x00 0x00 0x00 0x00 0x00
              ...
     maxsize (2^9=512 bytes): + 9 0x01 [511 0x00's]
-
+```
 unsigned integers omit the +
 
 NB: current blockiverse implementation only uses range 0 &lt;= N &lt;= 3 (64-bit ints)
@@ -39,22 +40,25 @@ integers are little endian in support of the protocol's iterative pattern
 len is any unsigned integer type
 
 the # indicates a raw (binary) 32-bit unsigned little-endian object ID
-
+```
 binary blob: * len data
      string: " len data
   objectref: o #
-
+```
 ##opcodes
 
 datavalues push onto a stack when encountered on the agent's inbound stream
 
 a method call is the steam pattern:
+```
 objectref # .
-
+```
 . consumes the # and objectref previously stacked and invokes method # of objectref
 
 so the stream:
+```
 o 0x01 0x00 0x00 0x00 0x10 0x00 0x00 0x00 .
+```
 calls method 0x00000010 (16) of object 0x00000001 (1)
 
 methods called pull their arguments from values stacked prior
@@ -69,7 +73,9 @@ so objectref.method(a,b,c) looks like:
 stack empty when an argument is required raises an error condition
 
 the pattern:
+```
 objectref ~
+```
 indicates a previous object no longer exists
 well designed client and server should send such messages whenever
 objects get destructed (go out of parent's code scope, are delete'ed, etc)
