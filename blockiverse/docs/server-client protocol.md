@@ -42,9 +42,9 @@ examples (representing the value 1 where the hex values represent raw binary byt
 ```
 unsigned integers omit the +
 
-integer data is considered magnitude-only (not 2's complemented) use + and -
-to indicate presence of a sign (will get converted to appropriate endpoint's
-signed representation)
+integer data is considered magnitude-only (not 2's complemented) so + and -
+are ncessary to indicate presence of a sign (will get converted to appropriate
+endpoint's signed representation)
 
 NB: current blockiverse implementation only uses range 0 &lt;= N &lt;= 3 (64-bit ints)
 
