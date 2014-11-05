@@ -52,7 +52,8 @@ integers are little endian in support of the protocol's iterative pattern
 
 len is any unsigned integer type
 
-the # indicates a raw (binary) 32-bit unsigned little-endian object ID
+the # indicates a raw (binary) 32-bit unsigned little-endian
+value which is considered by o to be an object ID
 ```
 binary blob: * len data
      string: " len data
