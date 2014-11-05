@@ -20,30 +20,80 @@
 #define BV_PROTOCOL_H_INCLUDED
 
 #include "common.hpp"
+#include <boost/any.hpp>
 #include <map>
+#include <stack>
+#include <queue>
+#include <windows.h>
 
 namespace bvnet {
 
     extern u32 reg_objects_softmax;
+
+    struct obref {
+        /* wrapper for object ref */
+        u32 id;
+        obref(u32 i):id(i) {}
+        ~obref() {}
+    };
+    struct ob_is_gone {
+        /* wrapper for object-gone message */
+        u32 id;
+        ob_is_gone(u32 i):id(i) {}
+        ~ob_is_gone() {}
+    };
+
     class object;
+    class registry;
+    class connection;
+    class protocol;
+
     typedef std::map<u32,object*> object_map;
+    typedef std::stack<boost::any> value_stack;
+    typedef std::queue<boost::any> value_queue;
+    typedef object_map::iterator omap_iter;
 
     class registry_full : public std::exception {
         mutable char buf[80];
         virtual const char *what() const throw();
     };
-
     class object_null : public std::exception {
         virtual const char *what() const throw();
     };
+    class session_abandoned : public std::exception {
+        virtual const char *what() const throw();
+    };
+    class windows_error : public std::exception {
+        mutable char buf[80];
+        virtual const char *what() const throw();
+        public:
+        windows_error(const char *fcn, DWORD err)
+            {snprintf(buf,sizeof(buf),"%s error: %ld",fcn,err);}
+    };
 
-    class event_sink {
-    private:
-    protected:
+    class unlock_on_destroy {
+        HANDLE lock;
     public:
-        event_sink() {}
-        void notify_remove(int id);
-        virtual ~event_sink() {}
+        unlock_on_destroy(HANDLE theLock) : lock(theLock) {}
+        ~unlock_on_destroy() {
+            ReleaseMutex(lock);
+        }
+    };
+
+    class session {
+    protected:
+        /* value stack */
+        value_stack argstack;
+        value_queue sendq;
+        /* registered objects in session */
+        registry *reg;
+        /* mutex on session manipulation */
+        HANDLE syncro;
+    public:
+        session();
+        virtual ~session();
+        /* tells other end specified object no longer valid */
+        void notify_remove(u32 id);
     };
 
     class protocol {
@@ -72,17 +122,18 @@ namespace bvnet {
         /* next id to use for object registration */
         u32 next_slot;
         /* notify sink for object removals */
-        event_sink *listener;
+        session *listener;
         /* registration of objects */
         object_map objects;
     public:
         /* construction/destruction */
         registry() : next_slot(1), listener(NULL) {}
-        virtual ~registry() {}
+        virtual ~registry();
         /* add object to registry */
         int register_object(object *ob);
         /* set upstream removal notify sink */
-        void set_listener(event_sink *sink) {listener=sink;}
+        void set_listener(session *sink) {listener=sink;}
+        void notify(u32 id);
         /* remove object from registry */
         bool unregister(u32 id);
         bool unregister(object *ob);
@@ -120,7 +171,7 @@ namespace bvnet {
         if (ob==NULL)
             /* refuse to register a NULL pointer */
             throw object_null();
-        if (objects.size()>=reg_objects_softmax)
+        if (objects.size()>=reg_objects_softmax) {
             /*
             ** enforce an object store softmax
             **
@@ -132,6 +183,8 @@ namespace bvnet {
             ** collateral damage.
             */
             throw registry_full();
+        }
+
         /*
             For security do not assume next_slot+1
             is an unoccupied slot.
@@ -141,8 +194,7 @@ namespace bvnet {
             then register a new object in a low numbered slot to
             overwrite an existing object in the registry.
         */
-        object_map::iterator scan;
-        scan=objects.find(next_slot);
+        omap_iter scan=objects.find(next_slot);
         while (scan!=objects.end()) {
             ++next_slot;
             /* skip 0 as it's reserved */
@@ -150,9 +202,17 @@ namespace bvnet {
             scan=objects.find(++next_slot);
         }
 
-        /* next_slot is safe so register object */
+        /* invariant: objects[next_slot] empty
+        **   register object
+        */
         objects[next_slot]=ob;
         return next_slot;
+    }
+
+    inline void registry::notify(u32 id) {
+        if (listener!=NULL) {
+            listener->notify_remove(id);
+        }
     }
 
     inline bool registry::unregister(u32 id) {
@@ -160,9 +220,10 @@ namespace bvnet {
         **  remove object from registry
         **  and notify upstream event sink
         */
-        object_map::iterator victim;
+        omap_iter victim;
         victim=objects.find(id);
         if (victim!=objects.end()) {
+            notify(id);
             objects.erase(victim);
             return true;
         }
@@ -174,13 +235,17 @@ namespace bvnet {
         **  remove object from registry
         **  and notify upstream event sink
         */
-        object_map::iterator cur;
+        omap_iter cur;
+
         if (ob==NULL) {
+            /* indicate not found if NULL */
             return false;
         }
+
         cur=objects.begin();
         while (cur!=objects.end()) {
             if (cur->second==ob) {
+                notify(cur->first);
                 objects.erase(cur);
                 return true;
             }
@@ -189,6 +254,19 @@ namespace bvnet {
             }
         }
         return false;
+    }
+
+    inline registry::~registry() {
+        /*
+        ** destructor must cleanly clear/notify
+        ** any remaining objects
+        */
+        omap_iter remain=objects.begin();
+        while (remain!=objects.end()) {
+            notify(remain->first);
+            /* post-increment iter to keep valid */
+            objects.erase(remain++);
+        }
     }
 
     /*
@@ -203,6 +281,37 @@ namespace bvnet {
 
     inline const char *object_null::what() const throw() {
         return "Error: Attempt to register NULL as object.";
+    }
+
+    inline const char *session_abandoned::what() const throw() {
+        return "Error: Prior thread controlling session aborted uncleanly.";
+    }
+
+    /*
+    **  connection inlines
+    */
+    inline session::session() {
+        syncro=CreateMutex(NULL,FALSE,NULL);
+        if (syncro==NULL) {
+            throw windows_error("CreateMutex",GetLastError());
+        }
+    }
+    inline session::~session() {
+        CloseHandle(syncro);
+    }
+    inline void session::notify_remove(u32 id) {
+        DWORD wState=WaitForSingleObject(syncro,INFINITE);
+        switch (wState) {
+        case WAIT_OBJECT_0:
+            try {
+                unlock_on_destroy lock(syncro);
+                sendq.push(ob_is_gone(id));
+            }
+            catch (...) {throw;}
+            break;
+        case WAIT_ABANDONED:
+            throw session_abandoned();
+        }
     }
 
 };  // bvnet
