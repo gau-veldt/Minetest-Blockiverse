@@ -1,6 +1,11 @@
 
 #Server/Client protocol
 
+opcode overview:
+```
+  int: [+|-] N db_1 ... db_2^N
+float: f [-] [<whole digits>] [.<fraction digits>] [e <exponent digits>] ;
+```
 db is a raw databyte
 
 debug mode:
@@ -17,7 +22,7 @@ eg: -23.51e7 is the stream: f - 2 3 . 5 7 e 7 ;
 
 NB: no digits (ie: f ;) is the value 0.0e0
 
-integer: [+] N db_1 ... db_2^N
+integer: [+|-] N db_1 ... db_2^N
 
 N is a single digit and indicates 2^N bytes follow
 db_x are the corresponding databytes
@@ -51,9 +56,10 @@ datavalues push onto a stack when encountered on the agent's inbound stream
 
 a method call is the steam pattern:
 ```
-objectref # .
+: objectref # .
 ```
 . consumes the # and objectref previously stacked and invokes method # of objectref
+the : opcode at the star is a transaction demarcation
 
 so the stream:
 ```
