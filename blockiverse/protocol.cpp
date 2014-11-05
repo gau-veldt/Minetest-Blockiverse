@@ -19,6 +19,4 @@
 
 #include "protocol.hpp"
 
-u32 bvnet::max_reg_objects=1000;
-
-
+u32 bvnet::reg_objects_softmax=1000;

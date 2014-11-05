@@ -20,6 +20,7 @@
 #include "common.hpp"
 #include <irrlicht.h>
 #include <iostream>
+#include "protocol.hpp"
 
 /*
 ** meters per parsec
