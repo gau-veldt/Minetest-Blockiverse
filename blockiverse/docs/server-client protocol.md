@@ -3,8 +3,12 @@
 
 opcode overview:
 ```
-  int: [+|-] N db_1 ... db_2^N
-float: f [-] [<whole digits>] [.<fraction digits>] [e <exponent digits>] ;
+         int: [+|-] N db_1 ... db_2^N
+       float: f [-] [<whole digits>] [.<fraction digits>] [e<exponent digits>] ;
+        blob: b len data
+      string: " len data
+   objectref: o #
+ method call: objectref # .
 ```
 db is a raw databyte
 
@@ -38,6 +42,10 @@ examples (representing the value 1 where the hex values represent raw binary byt
 ```
 unsigned integers omit the +
 
+integer data is considered magnitude-only (not 2's complemented) use + and -
+to indicate presence of a sign (will get converted to appropriate endpoint's
+signed representation)
+
 NB: current blockiverse implementation only uses range 0 &lt;= N &lt;= 3 (64-bit ints)
 
 integers are little endian in support of the protocol's iterative pattern
@@ -56,10 +64,9 @@ datavalues push onto a stack when encountered on the agent's inbound stream
 
 a method call is the steam pattern:
 ```
-: objectref # .
+objectref # .
 ```
 . consumes the # and objectref previously stacked and invokes method # of objectref
-the : opcode at the star is a transaction demarcation
 
 so the stream:
 ```
