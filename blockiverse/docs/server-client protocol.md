@@ -11,6 +11,7 @@ opcode overview:
  method call: objectref # .
 ```
 db is a raw databyte
+# is LE 32-bit unsigned integer
 
 debug mode:
 when built debug all binary values (except blobs)
