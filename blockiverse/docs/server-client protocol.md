@@ -10,8 +10,8 @@ opcode overview:
    objectref: o #
  method call: objectref # .
 ```
-db is a raw databyte
-# is LE 32-bit unsigned integer
+- db is a raw databyte
+- # is LE 32-bit unsigned integer
 
 debug mode:
 when built debug all binary values (except blobs)
