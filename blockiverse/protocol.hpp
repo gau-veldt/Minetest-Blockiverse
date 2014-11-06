@@ -25,7 +25,6 @@
 #include <stack>
 #include <queue>
 #include <windows.h>
-#include <boost/interprocess/sync/named_mutex.hpp>
 
 namespace bvnet {
 
