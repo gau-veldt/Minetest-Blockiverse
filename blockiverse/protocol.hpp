@@ -20,11 +20,14 @@
 #define BV_PROTOCOL_H_INCLUDED
 
 #include "common.hpp"
-#include <boost/any.hpp>
+#include <iomanip>
+#include <sstream>
 #include <map>
 #include <stack>
 #include <queue>
-#include <windows.h>
+#include <boost/any.hpp>
+#include <boost/interprocess/sync/scoped_lock.hpp>
+#include <boost/interprocess/sync/named_mutex.hpp>
 
 namespace bvnet {
 
@@ -52,6 +55,9 @@ namespace bvnet {
     typedef std::stack<boost::any> value_stack;
     typedef std::queue<boost::any> value_queue;
     typedef object_map::iterator omap_iter;
+    typedef boost::interprocess::named_mutex mutex;
+    typedef boost::interprocess::scoped_lock<mutex> scoped_lock;
+    #define open_or_create boost::interprocess::open_or_create
 
     class registry_full : public std::exception {
         mutable char buf[80];
@@ -59,44 +65,6 @@ namespace bvnet {
     };
     class object_null : public std::exception {
         virtual const char *what() const throw();
-    };
-    class mutex_abandoned : public std::exception {
-        virtual const char *what() const throw();
-    };
-    class unexpected_wakeup : public std::exception {
-        virtual const char *what() const throw();
-    };
-    class windows_error : public std::exception {
-        mutable char buf[80];
-        virtual const char *what() const throw();
-        public:
-        windows_error(const char *fcn, DWORD err)
-            {snprintf(buf,sizeof(buf),"%s error: %ld",fcn,err);}
-    };
-
-    class mutex {
-    private:
-        bool locked;
-        HANDLE lock;
-        mutex(const mutex&);
-        mutex& operator=(const mutex&);
-    public:
-        mutex();
-        ~mutex();
-        void release();
-        void acquire();
-    };
-
-    class scoped_lock {
-    private:
-        mutex &m;
-        scoped_lock(const scoped_lock&);
-        scoped_lock& operator=(const scoped_lock&);
-    public:
-        scoped_lock(mutex &lock) : m(lock)
-            {m.acquire();}
-        ~scoped_lock()
-            {m.release();}
     };
 
     class session {
@@ -300,18 +268,16 @@ namespace bvnet {
     inline const char *object_null::what() const throw() {
         return "Error: Attempt to register NULL as object.";
     }
-    inline const char *mutex_abandoned::what() const throw() {
-        return "Error: Prior thread controlling session aborted uncleanly.";
-    }
-    inline const char *unexpected_wakeup::what() const throw() {
-        return "Mutex: unexpected wakeup.";
-    }
 
     /*
     **  connection inlines
     */
     inline session::session() {
-        synchro=new mutex();
+        std::ostringstream ss;
+        ss << "session@"
+           << std::setfill('0') << std::setw(16) << std::hex << (u64)this
+           << "_mutex";
+        synchro=new mutex(open_or_create,ss.str().data());
     }
     inline session::~session() {
         delete synchro;
@@ -319,39 +285,6 @@ namespace bvnet {
     inline void session::notify_remove(u32 id) {
         scoped_lock lock(*synchro);
         sendq.push(ob_is_gone(id));
-    }
-
-    /*
-    ** mutex inlines
-    */
-    inline mutex::mutex() : locked(false) {
-        lock=CreateMutex(NULL,FALSE,NULL);
-        if (lock==NULL) {
-            throw windows_error("CreateMutex",GetLastError());
-        }
-    }
-    inline mutex::~mutex() {
-        release();
-        if (lock!=NULL) {
-            CloseHandle(lock);
-        }
-    }
-    inline void mutex::acquire() {
-        DWORD wState=WaitForSingleObject(lock,INFINITE);
-        switch (wState) {
-        case WAIT_OBJECT_0:
-            locked=true;
-            return;
-        case WAIT_ABANDONED:
-            throw mutex_abandoned();
-        }
-        throw unexpected_wakeup();
-    }
-    inline void mutex::release() {
-        if (locked) {
-            locked=false;
-            ReleaseMutex(lock);
-        }
     }
 
 };  // bvnet
