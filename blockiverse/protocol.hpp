@@ -26,8 +26,7 @@
 #include <stack>
 #include <queue>
 #include <boost/any.hpp>
-#include <boost/interprocess/sync/scoped_lock.hpp>
-#include <boost/interprocess/sync/named_mutex.hpp>
+#include <boost/thread/mutex.hpp>
 
 namespace bvnet {
 
@@ -55,8 +54,8 @@ namespace bvnet {
     typedef std::stack<boost::any> value_stack;
     typedef std::queue<boost::any> value_queue;
     typedef object_map::iterator omap_iter;
-    typedef boost::interprocess::named_mutex mutex;
-    typedef boost::interprocess::scoped_lock<mutex> scoped_lock;
+    typedef boost::mutex mutex;
+    typedef boost::mutex::scoped_lock scoped_lock;
     #define open_or_create boost::interprocess::open_or_create
 
     class registry_full : public std::exception {
@@ -72,14 +71,13 @@ namespace bvnet {
         /* value stack */
         value_stack argstack;
         value_queue sendq;
-        /* registered objects in session */
-        registry *reg;
-        /* mutex on session manipulation */
-        mutex *synchro;
+
+        registry *reg;  /* registered objects in session */
+        mutex *synchro; /* mutex on session manipulation */
     public:
         session();
         virtual ~session();
-        /* tells other end specified object no longer valid */
+        /* queue message for other end indicating object no longer valid */
         void notify_remove(u32 id);
     };
 
@@ -106,22 +104,21 @@ namespace bvnet {
     */
     class registry {
     private:
-        /* next id to use for object registration */
-        u32 next_slot;
-        /* notify sink for object removals */
-        session *listener;
+        mutex *synchro;     /* mutex on registry manipulation */
+        session *listener;  /* notify sink for object removals */
+
         /* registration of objects */
-        object_map objects;
+        /* must_sync */ u32 next_slot;
+        /* must_sync */ object_map objects;
     public:
         /* construction/destruction */
-        registry() : next_slot(1), listener(NULL) {}
+        registry(session *host) : next_slot(1), listener(host)
+            {synchro=new mutex();}
         virtual ~registry();
         /* add object to registry */
         int register_object(object *ob);
-        /* set upstream removal notify sink */
-        void set_listener(session *sink) {listener=sink;}
-        void notify(u32 id);
         /* remove object from registry */
+        void notify(u32 id);
         bool unregister(u32 id);
         bool unregister(object *ob);
     };
@@ -151,49 +148,59 @@ namespace bvnet {
     **  Registry inlines
     */
     inline int registry::register_object(object *ob) {
+        int chosen_slot; // local value other threads can't modify
         /*
         **  Insert object ob into registry and return slot id
         **  the object was registered to.
         */
-        if (ob==NULL)
+
+        if (ob==NULL) {
             /* refuse to register a NULL pointer */
             throw object_null();
-        if (objects.size()>=reg_objects_softmax) {
+        }
+
+        {
+            scoped_lock lock(*synchro);
+
+            if (objects.size()>=reg_objects_softmax) {
+                /*
+                ** enforce an object store softmax
+                **
+                ** A softmax exception can be caught and the offending session
+                ** simply disconnected whether due to a configuration/program
+                ** error (softmax too low), or a deliberate attack by a malicious
+                ** client attempting to create enough objects to exhaust the free
+                ** store hardmax which may lead to a system crash and subsequent
+                ** collateral damage.
+                */
+                throw registry_full();
+            }
+
             /*
-            ** enforce an object store softmax
-            **
-            ** A softmax exception can be caught and the offending session
-            ** simply disconnected whether due to a configuration/program
-            ** error (softmax too low), or a deliberate attack by a malicious
-            ** client attempting to create enough objects to exhaust the free
-            ** store hardmax which may lead to a system crash and subsequent
-            ** collateral damage.
+                For security do not assume next_slot+1
+                is an unoccupied slot.
+
+                An attacker could use rapid creation and deletion of
+                objects to execute a wraparound attack on next_slot
+                then register a new object in a low numbered slot to
+                overwrite an existing object in the registry.
             */
-            throw registry_full();
+            omap_iter scan=objects.find(next_slot);
+            while (scan!=objects.end()) {
+                ++next_slot;
+                /* skip 0 as it's reserved */
+                if (next_slot==0) ++next_slot;
+                scan=objects.find(++next_slot);
+            }
+            /* invariant: objects[next_slot] empty */
+
+            /* make thread-safe copy for retval */
+            chosen_slot=next_slot;
+
+            /* register object */
+            objects[chosen_slot]=ob;
         }
-
-        /*
-            For security do not assume next_slot+1
-            is an unoccupied slot.
-
-            An attacker could use rapid creation and deletion of
-            objects to execute a wraparound attack on next_slot
-            then register a new object in a low numbered slot to
-            overwrite an existing object in the registry.
-        */
-        omap_iter scan=objects.find(next_slot);
-        while (scan!=objects.end()) {
-            ++next_slot;
-            /* skip 0 as it's reserved */
-            if (next_slot==0) ++next_slot;
-            scan=objects.find(++next_slot);
-        }
-
-        /* invariant: objects[next_slot] empty
-        **   register object
-        */
-        objects[next_slot]=ob;
-        return next_slot;
+        return chosen_slot;
     }
 
     inline void registry::notify(u32 id) {
@@ -203,6 +210,7 @@ namespace bvnet {
     }
 
     inline bool registry::unregister(u32 id) {
+        scoped_lock lock(*synchro);
         /*
         **  remove object from registry
         **  and notify upstream event sink
@@ -229,31 +237,41 @@ namespace bvnet {
             return false;
         }
 
-        cur=objects.begin();
-        while (cur!=objects.end()) {
-            if (cur->second==ob) {
-                notify(cur->first);
-                objects.erase(cur);
-                return true;
+        {
+            scoped_lock lock(*synchro);
+
+            cur=objects.begin();
+            while (cur!=objects.end()) {
+                if (cur->second==ob) {
+                    notify(cur->first);
+                    objects.erase(cur);
+                    return true;
+                }
+                else {
+                    ++cur;
+                }
             }
-            else {
-                ++cur;
-            }
+            return false;
         }
-        return false;
     }
 
     inline registry::~registry() {
-        /*
-        ** destructor must cleanly clear/notify
-        ** any remaining objects
-        */
-        omap_iter remain=objects.begin();
-        while (remain!=objects.end()) {
-            notify(remain->first);
-            /* post-increment iter to keep valid */
-            objects.erase(remain++);
+        {
+            scoped_lock lock(*synchro);
+
+            /*
+            ** destructor must cleanly clear/notify
+            ** any remaining objects
+            */
+            omap_iter remain=objects.begin();
+            while (remain!=objects.end()) {
+                notify(remain->first);
+                /* post-increment iter to keep valid */
+                objects.erase(remain++);
+            }
         }
+        delete synchro;
+        synchro=NULL;
     }
 
     /*
@@ -273,13 +291,11 @@ namespace bvnet {
     **  connection inlines
     */
     inline session::session() {
-        std::ostringstream ss;
-        ss << "session@"
-           << std::setfill('0') << std::setw(16) << std::hex << (u64)this
-           << "_mutex";
-        synchro=new mutex(open_or_create,ss.str().data());
+        synchro=new mutex();
+        reg=new registry(this);
     }
     inline session::~session() {
+        delete reg;
         delete synchro;
     }
     inline void session::notify_remove(u32 id) {

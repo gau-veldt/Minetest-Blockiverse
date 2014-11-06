@@ -15,9 +15,13 @@
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Compiler>
+					<Add option="-Wall" />
 					<Add option="-g" />
 					<Add option="-DPROTOCOL_VERBOSE" />
 				</Compiler>
+				<Linker>
+					<Add library="libboost_system-mgw47-mt-d-1_56" />
+				</Linker>
 				<ExtraCommands>
 					<Add before="gitstamp.bat" />
 				</ExtraCommands>
@@ -34,6 +38,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="libboost_system-mgw47-mt-1_56" />
 				</Linker>
 			</Target>
 			<Target title="ServerDebug">
@@ -44,9 +49,13 @@
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Compiler>
+					<Add option="-Wall" />
 					<Add option="-g" />
 					<Add option="-DPROTOCOL_VERBOSE" />
 				</Compiler>
+				<Linker>
+					<Add library="libboost_system-mgw47-mt-d-1_56" />
+				</Linker>
 				<ExtraCommands>
 					<Add before="gitstamp.bat" />
 				</ExtraCommands>
@@ -64,6 +73,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="libboost_system-mgw47-mt-1_56" />
 				</Linker>
 			</Target>
 		</Build>
@@ -72,7 +82,6 @@
 			<Add alias="Release" targets="ClientRelease;ServerRelease;" />
 		</VirtualTargets>
 		<Compiler>
-			<Add option="-Wall" />
 			<Add option="-m32" />
 			<Add directory="auto" />
 			<Add directory="../../irrlicht-1.8.1/include" />
