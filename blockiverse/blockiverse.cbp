@@ -15,8 +15,8 @@
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Compiler>
-					<Add option="-Wall" />
 					<Add option="-g" />
+					<Add option="-Wall -Wno-unknown-pragmas" />
 					<Add option="-DPROTOCOL_VERBOSE" />
 				</Compiler>
 				<Linker>
@@ -49,8 +49,8 @@
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Compiler>
-					<Add option="-Wall" />
 					<Add option="-g" />
+					<Add option="-Wall -Wno-unknown-pragmas" />
 					<Add option="-DPROTOCOL_VERBOSE" />
 				</Compiler>
 				<Linker>

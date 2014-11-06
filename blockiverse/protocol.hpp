@@ -20,8 +20,6 @@
 #define BV_PROTOCOL_H_INCLUDED
 
 #include "common.hpp"
-#include <iomanip>
-#include <sstream>
 #include <map>
 #include <stack>
 #include <queue>
@@ -48,7 +46,6 @@ namespace bvnet {
     class object;
     class registry;
     class connection;
-    class protocol;
 
     typedef std::map<u32,object*> object_map;
     typedef std::stack<boost::any> value_stack;
@@ -81,14 +78,6 @@ namespace bvnet {
         void notify_remove(u32 id);
     };
 
-    class protocol {
-    private:
-    protected:
-    public:
-        protocol() {}
-        virtual ~protocol() {}
-    };
-
     /*
     ** registry tracks active
     ** object references
@@ -112,7 +101,7 @@ namespace bvnet {
         /* must_sync */ object_map objects;
     public:
         /* construction/destruction */
-        registry(session *host) : next_slot(1), listener(host)
+        registry(session *host) : listener(host),next_slot(1)
             {synchro=new mutex();}
         virtual ~registry();
         /* add object to registry */

@@ -20,7 +20,10 @@
 #include "common.hpp"
 #include <irrlicht.h>
 #include <iostream>
+#include <sstream>
 #include "protocol.hpp"
+#include <boost/variant.hpp>
+#include <boost/lexical_cast.hpp>
 
 /*
 ** meters per parsec
@@ -53,9 +56,35 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+typedef boost::variant<int,float,std::string> setting_t;
+typedef std::map<std::string,setting_t> property_map;
+#define v2str boost::get<std::string>
+#define v2flt boost::get<float>
+#define v2int boost::get<int>
+
+void set_config_defaults(property_map &cfg) {
+    cfg["window_width"]=800;
+    cfg["window_height"]=600;
+    cfg["driver"]="opengl";
+    cfg["standalone"]=1;
+}
+
 int main(int argc, char** argv)
 {
+    property_map config;
+    set_config_defaults(config);
+    std::string cfg_opt;
+
     std::cout << "Version is: " << auto_ver << std::endl;
+
+    /* test settings map */
+    property_map::iterator setting=config.begin();
+    while (setting!=config.end()) {
+        std::cout << setting->first << "="
+            << setting->second << std::endl;
+        ++setting;
+    }
+
     /*
     The most important function of the engine is the 'createDevice'
     function. The Irrlicht Device can be created with it, which is the
@@ -78,8 +107,16 @@ int main(int argc, char** argv)
        parameter here, and set it to 0.
     */
 
+    E_DRIVER_TYPE vdrv=EDT_SOFTWARE;
+    cfg_opt=v2str(config["driver"]);
+    std::cout << cfg_opt << std::endl;
+    if (cfg_opt=="opengl") vdrv=EDT_OPENGL;
+
+    int winW,winH;
+    winW=v2int(config["window_width"]);
+    winH=v2int(config["window_height"]);
     IrrlichtDevice *device =
-        createDevice(EDT_SOFTWARE, dimension2d<u32>(640, 480), 16,
+        createDevice(vdrv, dimension2d<u32>(winW, winH), 16,
             false, false, false, 0);
 
     /*
@@ -102,7 +139,10 @@ int main(int argc, char** argv)
     /*
     We add a hello world label to the window, using the GUI environment.
     */
-    guienv->addStaticText(L"Hello World! This is the Irrlicht Software renderer!",
+    const wchar_t *helloText=L"Hello World! This is the Irrlicht Software renderer!";
+    if (vdrv==EDT_OPENGL)
+        helloText=L"Hello World! This is the Irrlicht OpenGL renderer!";
+    guienv->addStaticText(helloText,
         rect<int>(10,10,200,22), true);
 
     /*
