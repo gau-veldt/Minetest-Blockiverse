@@ -60,7 +60,10 @@ namespace bvnet {
     class object_null : public std::exception {
         virtual const char *what() const throw();
     };
-    class session_abandoned : public std::exception {
+    class mutex_abandoned : public std::exception {
+        virtual const char *what() const throw();
+    };
+    class unexpected_wakeup : public std::exception {
         virtual const char *what() const throw();
     };
     class windows_error : public std::exception {
@@ -71,13 +74,29 @@ namespace bvnet {
             {snprintf(buf,sizeof(buf),"%s error: %ld",fcn,err);}
     };
 
-    class unlock_on_destroy {
+    class mutex {
+    private:
+        bool locked;
         HANDLE lock;
+        mutex(const mutex&);
+        mutex& operator=(const mutex&);
     public:
-        unlock_on_destroy(HANDLE theLock) : lock(theLock) {}
-        ~unlock_on_destroy() {
-            ReleaseMutex(lock);
-        }
+        mutex();
+        ~mutex();
+        void release();
+        void acquire();
+    };
+
+    class scoped_lock {
+    private:
+        mutex &m;
+        scoped_lock(const scoped_lock&);
+        scoped_lock& operator=(const scoped_lock&);
+    public:
+        scoped_lock(mutex &lock) : m(lock)
+            {m.acquire();}
+        ~scoped_lock()
+            {m.release();}
     };
 
     class session {
@@ -88,7 +107,7 @@ namespace bvnet {
         /* registered objects in session */
         registry *reg;
         /* mutex on session manipulation */
-        HANDLE syncro;
+        mutex *synchro;
     public:
         session();
         virtual ~session();
@@ -278,39 +297,60 @@ namespace bvnet {
                  reg_objects_softmax);
         return buf;
     }
-
     inline const char *object_null::what() const throw() {
         return "Error: Attempt to register NULL as object.";
     }
-
-    inline const char *session_abandoned::what() const throw() {
+    inline const char *mutex_abandoned::what() const throw() {
         return "Error: Prior thread controlling session aborted uncleanly.";
+    }
+    inline const char *unexpected_wakeup::what() const throw() {
+        return "Mutex: unexpected wakeup.";
     }
 
     /*
     **  connection inlines
     */
     inline session::session() {
-        syncro=CreateMutex(NULL,FALSE,NULL);
-        if (syncro==NULL) {
+        synchro=new mutex();
+    }
+    inline session::~session() {
+        delete synchro;
+    }
+    inline void session::notify_remove(u32 id) {
+        scoped_lock lock(*synchro);
+        sendq.push(ob_is_gone(id));
+    }
+
+    /*
+    ** mutex inlines
+    */
+    inline mutex::mutex() : locked(false) {
+        lock=CreateMutex(NULL,FALSE,NULL);
+        if (lock==NULL) {
             throw windows_error("CreateMutex",GetLastError());
         }
     }
-    inline session::~session() {
-        CloseHandle(syncro);
+    inline mutex::~mutex() {
+        release();
+        if (lock!=NULL) {
+            CloseHandle(lock);
+        }
     }
-    inline void session::notify_remove(u32 id) {
-        DWORD wState=WaitForSingleObject(syncro,INFINITE);
+    inline void mutex::acquire() {
+        DWORD wState=WaitForSingleObject(lock,INFINITE);
         switch (wState) {
         case WAIT_OBJECT_0:
-            try {
-                unlock_on_destroy lock(syncro);
-                sendq.push(ob_is_gone(id));
-            }
-            catch (...) {throw;}
-            break;
+            locked=true;
+            return;
         case WAIT_ABANDONED:
-            throw session_abandoned();
+            throw mutex_abandoned();
+        }
+        throw unexpected_wakeup();
+    }
+    inline void mutex::release() {
+        if (locked) {
+            locked=false;
+            ReleaseMutex(lock);
         }
     }
 
