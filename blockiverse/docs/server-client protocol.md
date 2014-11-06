@@ -9,9 +9,11 @@ opcode overview:
       string: " len data
    objectref: o #
  method call: objectref # .
+ object gone: objectref ~
 ```
 - db is a raw databyte
 - # is LE 32-bit unsigned integer
+- object gone is an incoming (OOB) message
 
 debug mode:
 when built debug all binary values (except blobs)
