@@ -20,11 +20,11 @@
 #define BV_PROTOCOL_H_INCLUDED
 
 #include "common.hpp"
-#include <map>
 #include <stack>
 #include <queue>
 #include <boost/any.hpp>
 #include <boost/thread/mutex.hpp>
+#include <boost/bimap.hpp>
 
 namespace bvnet {
 
@@ -47,10 +47,18 @@ namespace bvnet {
     class registry;
     class connection;
 
-    typedef std::map<u32,object*> object_map;
+    typedef struct {} object_id;
+    typedef struct {} object_addr;
+    typedef boost::bimaps::tagged<u32,object_id> t_obId;
+    typedef boost::bimaps::tagged<object*,object_addr> t_obAddr;
+    typedef boost::bimap<t_obId,t_obAddr> object_map;
+    typedef object_map::value_type ob_relation;
+    typedef object_map::map_by<object_id>::iterator omap_iter_byid;
+    typedef object_map::map_by<object_addr>::iterator omap_iter_byptr;
+    typedef object_map::map_by<object_id>::type omap_select_id;
+    typedef object_map::map_by<object_addr>::type omap_select_addr;
     typedef std::stack<boost::any> value_stack;
     typedef std::queue<boost::any> value_queue;
-    typedef object_map::iterator omap_iter;
     typedef boost::mutex mutex;
     typedef boost::mutex::scoped_lock scoped_lock;
     #define open_or_create boost::interprocess::open_or_create
@@ -174,12 +182,13 @@ namespace bvnet {
                 then register a new object in a low numbered slot to
                 overwrite an existing object in the registry.
             */
-            omap_iter scan=objects.find(next_slot);
-            while (scan!=objects.end()) {
+            omap_select_id &table=objects.by<object_id>();
+            omap_iter_byid row=table.find(next_slot);
+            while (row!=table.end()) {
                 ++next_slot;
                 /* skip 0 as it's reserved */
                 if (next_slot==0) ++next_slot;
-                scan=objects.find(++next_slot);
+                row=table.find(next_slot);
             }
             /* invariant: objects[next_slot] empty */
 
@@ -187,7 +196,7 @@ namespace bvnet {
             chosen_slot=next_slot;
 
             /* register object */
-            objects[chosen_slot]=ob;
+            objects.insert(ob_relation(chosen_slot,ob));
         }
         return chosen_slot;
     }
@@ -199,16 +208,17 @@ namespace bvnet {
     }
 
     inline bool registry::unregister(u32 id) {
-        scoped_lock lock(*synchro);
         /*
         **  remove object from registry
         **  and notify upstream event sink
         */
-        omap_iter victim;
-        victim=objects.find(id);
-        if (victim!=objects.end()) {
+        scoped_lock lock(*synchro);
+
+        omap_select_id &table=objects.by<object_id>();
+        omap_iter_byid victim=table.find(id);
+        if (victim!=table.end()) {
             notify(id);
-            objects.erase(victim);
+            table.erase(victim);
             return true;
         }
         return false;
@@ -219,26 +229,16 @@ namespace bvnet {
         **  remove object from registry
         **  and notify upstream event sink
         */
-        omap_iter cur;
-
-        if (ob==NULL) {
-            /* indicate not found if NULL */
-            return false;
-        }
-
+        if (ob==NULL) return false;     /* indicate not found if NULL */
         {
             scoped_lock lock(*synchro);
 
-            cur=objects.begin();
-            while (cur!=objects.end()) {
-                if (cur->second==ob) {
-                    notify(cur->first);
-                    objects.erase(cur);
-                    return true;
-                }
-                else {
-                    ++cur;
-                }
+            omap_select_addr &table=objects.by<object_addr>();
+            omap_iter_byptr victim=table.find(ob);
+            if (victim!=table.end()) {
+                notify(victim->get<object_id>());
+                table.erase(victim);
+                return true;
             }
             return false;
         }
@@ -252,11 +252,12 @@ namespace bvnet {
             ** destructor must cleanly clear/notify
             ** any remaining objects
             */
-            omap_iter remain=objects.begin();
-            while (remain!=objects.end()) {
-                notify(remain->first);
+            omap_select_id &table=objects.by<object_id>();
+            omap_iter_byid row=table.begin();
+            while (row!=table.end()) {
+                notify(row->get<object_id>());
                 /* post-increment iter to keep valid */
-                objects.erase(remain++);
+                table.erase(row++);
             }
         }
         delete synchro;
