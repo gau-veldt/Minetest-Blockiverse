@@ -61,7 +61,6 @@ namespace bvnet {
     typedef std::queue<boost::any> value_queue;
     typedef boost::mutex mutex;
     typedef boost::mutex::scoped_lock scoped_lock;
-    #define open_or_create boost::interprocess::open_or_create
 
     class registry_full : public std::exception {
         mutable char buf[80];
