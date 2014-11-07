@@ -16,19 +16,10 @@
 **  Server main driver code.
 **
 */
-
-#include "common.hpp"
-#include <iostream>
-#include "sqlite/sqlite3.h"
-#include "protocol.hpp"
+#include "server.hpp"
 
 int main(int argc, char** argv)
 {
-    std::cout << "Version is: " << auto_ver << std::endl;
-
-    std::cout << std::endl << "Press enter to continue." << std::endl;
-    std::cin.ignore();
-
-    return 0;
+    return server_main(argc,argv);
 }
 

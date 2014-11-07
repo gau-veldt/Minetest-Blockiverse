@@ -21,9 +21,13 @@
 #include <irrlicht.h>
 #include <iostream>
 #include <sstream>
+#include <string>
+#include <vector>
 #include "protocol.hpp"
 #include <boost/variant.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/thread.hpp>
+#include "server.hpp"
 
 /*
 ** meters per parsec
@@ -61,16 +65,20 @@ typedef std::map<std::string,setting_t> property_map;
 #define v2str boost::get<std::string>
 #define v2flt boost::get<float>
 #define v2int boost::get<int>
+typedef std::vector<std::string> strlist;
 
 void set_config_defaults(property_map &cfg) {
     cfg["window_width"]=800;
     cfg["window_height"]=600;
     cfg["driver"]="opengl";
     cfg["standalone"]=1;
+    cfg["address"]="localhost";
+    cfg["port"]=37001;
 }
 
 int main(int argc, char** argv)
 {
+    boost::thread *server=NULL;
     property_map config;
     set_config_defaults(config);
     std::string cfg_opt;
@@ -83,6 +91,12 @@ int main(int argc, char** argv)
         std::cout << setting->first << "="
             << setting->second << std::endl;
         ++setting;
+    }
+
+    bool standalone=(0!=v2int(config["standalone"]));
+    if (standalone) {
+        std::cout << "Starting server." << std::endl;
+        server=new boost::thread(server_main,argc,argv);
     }
 
     /*
@@ -109,7 +123,6 @@ int main(int argc, char** argv)
 
     E_DRIVER_TYPE vdrv=EDT_SOFTWARE;
     cfg_opt=v2str(config["driver"]);
-    std::cout << cfg_opt << std::endl;
     if (cfg_opt=="opengl") vdrv=EDT_OPENGL;
 
     int winW,winH;

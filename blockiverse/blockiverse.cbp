@@ -21,6 +21,10 @@
 				</Compiler>
 				<Linker>
 					<Add library="libboost_system-mgw47-mt-d-1_56" />
+					<Add library="libboost_chrono-mgw47-mt-d-1_56" />
+					<Add library="libboost_date_time-mgw47-mt-d-1_56" />
+					<Add library="libboost_atomic-mgw47-mt-d-1_56" />
+					<Add library="libboost_thread-mgw47-mt-d-1_56" />
 				</Linker>
 				<ExtraCommands>
 					<Add before="gitstamp.bat" />
@@ -39,6 +43,10 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="libboost_system-mgw47-mt-1_56" />
+					<Add library="libboost_chrono-mgw47-mt-1_56" />
+					<Add library="libboost_date_time-mgw47-mt-1_56" />
+					<Add library="libboost_atomic-mgw47-mt-1_56" />
+					<Add library="libboost_thread-mgw47-mt-1_56" />
 				</Linker>
 			</Target>
 			<Target title="ServerDebug">
@@ -55,6 +63,10 @@
 				</Compiler>
 				<Linker>
 					<Add library="libboost_system-mgw47-mt-d-1_56" />
+					<Add library="libboost_chrono-mgw47-mt-d-1_56" />
+					<Add library="libboost_date_time-mgw47-mt-d-1_56" />
+					<Add library="libboost_atomic-mgw47-mt-d-1_56" />
+					<Add library="libboost_thread-mgw47-mt-d-1_56" />
 				</Linker>
 				<ExtraCommands>
 					<Add before="gitstamp.bat" />
@@ -74,6 +86,10 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="libboost_system-mgw47-mt-1_56" />
+					<Add library="libboost_chrono-mgw47-mt-1_56" />
+					<Add library="libboost_date_time-mgw47-mt-1_56" />
+					<Add library="libboost_atomic-mgw47-mt-1_56" />
+					<Add library="libboost_thread-mgw47-mt-1_56" />
 				</Linker>
 			</Target>
 		</Build>
@@ -135,6 +151,8 @@
 		<Unit filename="rsa/PrimeGenerator.h" />
 		<Unit filename="rsa/RSA.cpp" />
 		<Unit filename="rsa/RSA.h" />
+		<Unit filename="server.cpp" />
+		<Unit filename="server.hpp" />
 		<Unit filename="server_main.cpp">
 			<Option target="ServerDebug" />
 			<Option target="ServerRelease" />
