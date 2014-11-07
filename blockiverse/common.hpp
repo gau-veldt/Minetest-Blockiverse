@@ -32,4 +32,11 @@ typedef irr::u32 u32;
 */
 extern u64 m_per_parsec;
 
+struct argset {
+    int    c;
+    char** v;
+    argset(int argc,char **argv)
+        : c(argc),v(argv) {}
+};
+
 #endif // BV_COMMON_HPP_INCLUDED

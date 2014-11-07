@@ -17,17 +17,22 @@
 **
 */
 #include "common.hpp"
+#include <windows.h>
 #include <iostream>
 #include "sqlite/sqlite3.h"
 #include "protocol.hpp"
 #define BV_SERVER_IMPLEMENTATION
 #include "server.hpp"
 
-int server_main(int argc,char** argv) {
-    std::cout << "Version is: " << auto_ver << std::endl;
+DWORD WINAPI server_main(LPVOID argvoid) {
+    int argc=0;
+    char **argv=NULL;
+    if (argvoid!=NULL) {
+        argc=((argset*)argvoid)->c;
+        argv=((argset*)argvoid)->v;
+    }
 
-    std::cout << std::endl << "Press enter to continue." << std::endl;
-    std::cin.ignore();
+    std::cout << "[server] Version is: " << auto_ver << std::endl;
 
     return 0;
 }

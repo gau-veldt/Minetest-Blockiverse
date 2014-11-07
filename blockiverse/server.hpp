@@ -19,6 +19,9 @@
 #ifndef BV_SERVER_HPP_INCLUDED
 #define BV_SERVER_HPP_INCLUDED
 
+#include "common.hpp"
+#include <windows.h>
+
 #ifdef BV_SERVER_IMPLEMENTATION
 /*
 ** server internal header only visible to server implementation
@@ -29,7 +32,7 @@
 ** make server startup visible only
 */
 
-extern int server_main(int argc, char** argv);
+DWORD WINAPI server_main(LPVOID argvoid);
 
 #endif // BV_SERVER_IMPLEMENTATION
 #endif // BV_SERVER_HPP_INCLUDED

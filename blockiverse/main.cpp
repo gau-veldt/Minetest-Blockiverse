@@ -18,15 +18,16 @@
 */
 
 #include "common.hpp"
+#include <windows.h>
 #include <irrlicht.h>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
 #include "protocol.hpp"
+#define _InterlockedCompareExchange InterlockedCompareExchange
 #include <boost/variant.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/thread.hpp>
 #include "server.hpp"
 
 /*
@@ -78,7 +79,9 @@ void set_config_defaults(property_map &cfg) {
 
 int main(int argc, char** argv)
 {
-    boost::thread *server=NULL;
+    DWORD server_tid=0;
+    HANDLE server_thread=NULL;
+    argset args(argc,argv);
     property_map config;
     set_config_defaults(config);
     std::string cfg_opt;
@@ -96,7 +99,16 @@ int main(int argc, char** argv)
     bool standalone=(0!=v2int(config["standalone"]));
     if (standalone) {
         std::cout << "Starting server." << std::endl;
-        server=new boost::thread(server_main,argc,argv);
+        // I'm giving up getting this to work portably via boost for now
+        // until they fix the crap with _InterlockedCompareExchange
+        // and the consequent linker errors
+        server_thread=CreateThread(
+                    NULL,           /* default security*/
+                    0,              /* default stack */
+                    &server_main,   /* entry point */
+                    &args,          /* struct to pass args */
+                    0,              /* default creation */
+                    &server_tid);   /* where to store thread id */
     }
 
     /*
