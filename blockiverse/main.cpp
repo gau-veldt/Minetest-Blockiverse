@@ -25,7 +25,6 @@
 #include <string>
 #include <vector>
 #include "protocol.hpp"
-#define _InterlockedCompareExchange InterlockedCompareExchange
 #include <boost/variant.hpp>
 #include <boost/lexical_cast.hpp>
 #include "server.hpp"
