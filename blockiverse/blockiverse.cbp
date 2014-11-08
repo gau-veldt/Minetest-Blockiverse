@@ -134,6 +134,8 @@
 		<Unit filename=".gitattributes" />
 		<Unit filename=".gitignore" />
 		<Unit filename="auto/version.h" />
+		<Unit filename="client.cpp" />
+		<Unit filename="client.hpp" />
 		<Unit filename="common.hpp" />
 		<Unit filename="docs/sector-object.md" />
 		<Unit filename="docs/server-client protocol.md" />

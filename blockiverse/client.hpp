@@ -11,31 +11,25 @@
 **  https://www.gnu.org/licenses/lgpl-3.0.en.html
 **  See file LICENSE in ../
 **
-**  Declaration (header) file server.hpp
+**  Declaration (header) file client.hpp
 **
-**  declarations for server
+**  Client defs
 **
 */
-#ifndef BV_SERVER_HPP_INCLUDED
-#define BV_SERVER_HPP_INCLUDED
+#ifndef BV_CLIENT_HPP_INCLUDED
+#define BV_CLIENT_HPP_INCLUDED
 
 #include "common.hpp"
-#include <windows.h>
 #include "protocol.hpp"
 
-#ifdef BV_SERVER_IMPLEMENTATION
-/*
-** server internal header only visible to server implementation
-*/
-
-class serverRoot : public bvnet::object {
+class clientRoot : public bvnet::object {
 public:
-    serverRoot(bvnet::session &sess)
+    clientRoot(bvnet::session &sess)
         : bvnet::object(sess) {
     }
-    virtual ~serverRoot() {}
+    virtual ~clientRoot() {}
 
-    const char *getType() {return "serverRoot";}
+    const char *getType() {return "clientRoot";}
     void methodCall(int method) {
         bvnet::scoped_lock lock(ctx.getMutex());
         bvnet::value_queue &vqueue=ctx.getSendQueue();
@@ -48,12 +42,4 @@ public:
     }
 };
 
-#else
-/*
-** make server startup visible only
-*/
-
-DWORD WINAPI server_main(LPVOID argvoid);
-
-#endif // BV_SERVER_IMPLEMENTATION
-#endif // BV_SERVER_HPP_INCLUDED
+#endif // BV_CLIENT_HPP_INCLUDED

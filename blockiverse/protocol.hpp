@@ -20,6 +20,7 @@
 #define BV_PROTOCOL_H_INCLUDED
 
 #include "common.hpp"
+#include <iomanip>
 #include <stack>
 #include <queue>
 #include <boost/any.hpp>
@@ -91,6 +92,9 @@ namespace bvnet {
         bool unregister(object *ob);
         void bootstrap(object *root);
         value_queue &getSendQueue() {return sendq;}
+        mutex &getMutex() {return *synchro;}
+
+        void dump(std::ostream &os);
     };
 
     /*
@@ -125,6 +129,8 @@ namespace bvnet {
         void notify(u32 id);
         bool unregister(u32 id);
         bool unregister(object *ob);
+
+        void dump(std::ostream &os);
     };
 
     /*
@@ -312,6 +318,27 @@ namespace bvnet {
     }
     inline void session::bootstrap(object *sessionRoot) {
         root=sessionRoot;
+    }
+
+    inline void session::dump(std::ostream &os) {
+        os << "session object" << std::endl;
+        os << "  argstack count: " << argstack.size() << std::endl;
+        os << "  send queue size: " << sendq.size() << std::endl;
+        reg->dump(os);
+    }
+
+    inline void registry::dump(std::ostream &os) {
+        os << "  registry" << std::endl;
+        os << "    objects registered: " << objects.size() << std::endl;
+        object_map::iterator i=objects.begin();
+        object *o;
+        while (i!=objects.end()) {
+            o=i->get<object_addr>();
+            os << "      refid=" << i->get<object_id>() << " [";
+            os << std::setfill('0') << std::setw(8) << std::hex << (u32)o;
+            os << "] type=" << o->getType() << std::endl;
+            ++i;
+        }
     }
 
 };  // bvnet

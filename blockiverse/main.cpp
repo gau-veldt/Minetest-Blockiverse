@@ -28,6 +28,7 @@
 #include <boost/variant.hpp>
 #include <boost/lexical_cast.hpp>
 #include "server.hpp"
+#include "client.hpp"
 
 /*
 ** meters per parsec
@@ -95,6 +96,10 @@ int main(int argc, char** argv)
         ++setting;
     }
 
+    /*
+    ** start server when running standalone
+    ** so there will be something to connect to
+    */
     bool standalone=(0!=v2int(config["standalone"]));
     if (standalone) {
         std::cout << "Starting server." << std::endl;
@@ -109,6 +114,15 @@ int main(int argc, char** argv)
                     0,              /* default creation */
                     &server_tid);   /* where to store thread id */
     }
+
+    /*
+    ** create stuff client needs such as
+    ** his session object and clientRoot
+    */
+    bvnet::session client_session;
+    clientRoot client_root(client_session);
+    client_session.dump(std::cout);
+    std::cout.flush();
 
     /*
     The most important function of the engine is the 'createDevice'
