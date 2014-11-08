@@ -84,6 +84,9 @@ namespace bvnet {
         virtual ~session();
         /* queue message for other end indicating object no longer valid */
         void notify_remove(u32 id);
+        int register_object(object *o);
+        bool unregister(u32 id);
+        bool unregister(object *ob);
     };
 
     /*
@@ -130,14 +133,14 @@ namespace bvnet {
     */
     class object {
     protected:
-        registry &store;
+        session &ctx;
     public:
-        object(registry &reg) :
-            store(reg) {
-                store.register_object(this);
+        object(session &sess) :
+            ctx(sess) {
+                ctx.register_object(this);
             }
         virtual ~object() {
-            store.unregister(this);
+            ctx.unregister(this);
         }
     };
 
@@ -291,6 +294,15 @@ namespace bvnet {
     inline void session::notify_remove(u32 id) {
         scoped_lock lock(*synchro);
         sendq.push(ob_is_gone(id));
+    }
+    inline int session::register_object(object *o) {
+        return reg->register_object(o);
+    }
+    inline bool session::unregister(u32 id) {
+        return reg->unregister(id);
+    }
+    inline bool session::unregister(object *ob) {
+        return reg->unregister(ob);
     }
 
 };  // bvnet
