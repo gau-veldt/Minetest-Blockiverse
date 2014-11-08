@@ -238,6 +238,12 @@ int main(int argc, char** argv)
     */
     device->drop();
 
+    if (server_thread!=NULL) {
+        // kill/close server thread
+        CloseHandle(server_thread);
+        server_thread=NULL;
+    }
+
     return 0;
 }
 

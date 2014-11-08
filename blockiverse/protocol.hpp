@@ -72,6 +72,8 @@ namespace bvnet {
     };
 
     class session {
+    private:
+        object *root;
     protected:
         /* value stack */
         value_stack argstack;
@@ -82,11 +84,13 @@ namespace bvnet {
     public:
         session();
         virtual ~session();
-        /* queue message for other end indicating object no longer valid */
-        void notify_remove(u32 id);
+
+        void notify_remove(u32 id);         /* signals that object no longer valid */
         int register_object(object *o);
         bool unregister(u32 id);
         bool unregister(object *ob);
+        void bootstrap(object *root);
+        value_queue &getSendQueue() {return sendq;}
     };
 
     /*
@@ -142,6 +146,8 @@ namespace bvnet {
         virtual ~object() {
             ctx.unregister(this);
         }
+        virtual const char *getType()=0;
+        virtual void methodCall(int idx)=0;
     };
 
     /*
@@ -303,6 +309,9 @@ namespace bvnet {
     }
     inline bool session::unregister(object *ob) {
         return reg->unregister(ob);
+    }
+    inline void session::bootstrap(object *sessionRoot) {
+        root=sessionRoot;
     }
 
 };  // bvnet

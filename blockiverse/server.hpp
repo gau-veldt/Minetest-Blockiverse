@@ -21,11 +21,29 @@
 
 #include "common.hpp"
 #include <windows.h>
+#include "protocol.hpp"
 
 #ifdef BV_SERVER_IMPLEMENTATION
 /*
 ** server internal header only visible to server implementation
 */
+
+class serverRoot : public bvnet::object {
+public:
+    serverRoot(bvnet::session &sess)
+        : bvnet::object(sess) {
+    }
+    virtual ~serverRoot() {}
+    const char *getType() {return "ServerRoot_0_000_00";}
+    void methodCall(int method) {
+        bvnet::value_queue &vqueue=ctx.getSendQueue();
+        switch(method) {
+        case 0:
+            vqueue.push(std::string(getType()));
+            break;
+        }
+    }
+};
 
 #else
 /*
