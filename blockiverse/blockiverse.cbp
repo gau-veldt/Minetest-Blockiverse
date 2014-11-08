@@ -100,6 +100,7 @@
 		<Compiler>
 			<Add option="-m32" />
 			<Add option="-DBOOST_USE_WIDNOWS_H" />
+			<Add option="-D_WIN32_WINNT=0x0601" />
 			<Add directory="auto" />
 			<Add directory="../../irrlicht-1.8.1/include" />
 			<Add directory="C:/Boost/include/boost-1_57" />
@@ -111,6 +112,8 @@
 			<Add directory="sqlite" />
 		</Compiler>
 		<Linker>
+			<Add library="wsock32" />
+			<Add library="ws2_32" />
 			<Add library="Irrlicht" />
 			<Add library="opengl32" />
 			<Add library="glu32" />

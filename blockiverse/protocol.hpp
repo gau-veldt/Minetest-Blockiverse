@@ -25,6 +25,7 @@
 #include <boost/any.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/bimap.hpp>
+#include <boost/asio.hpp>
 
 namespace bvnet {
 
