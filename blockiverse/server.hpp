@@ -35,13 +35,13 @@ public:
     }
     virtual ~serverRoot() {}
 
-    const char *getType() {return "serverRoot";}
-    void methodCall(int method) {
+    virtual const char *getType() {return "serverRoot";}
+    virtual void methodCall(unsigned int method) {
         bvnet::scoped_lock lock(ctx.getMutex());
         bvnet::value_queue &vqueue=ctx.getSendQueue();
         switch(method) {
-        case 0:
-            // method 00: GetType
+        case 0: /* GetType */
+            /* emit object type to output queue as string */
             vqueue.push(std::string(getType()));
             break;
         }

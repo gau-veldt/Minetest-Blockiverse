@@ -153,7 +153,7 @@ namespace bvnet {
             ctx.unregister(this);
         }
         virtual const char *getType()=0;
-        virtual void methodCall(int idx)=0;
+        virtual void methodCall(unsigned int idx)=0;
     };
 
     /*
