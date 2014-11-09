@@ -19,7 +19,6 @@
 #ifndef BV_COMMON_HPP_INCLUDED
 #define BV_COMMON_HPP_INCLUDED
 
-#include "auto/version.h"
 #include "irrTypes.h"
 #include "rsa/RSA.h"
 

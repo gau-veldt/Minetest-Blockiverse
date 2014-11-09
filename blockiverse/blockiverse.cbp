@@ -159,6 +159,8 @@
 			<Option target="ServerDebug" />
 			<Option target="ServerRelease" />
 		</Unit>
+		<Unit filename="settings.cpp" />
+		<Unit filename="settings.hpp" />
 		<Unit filename="sqlite/sqlite3.c">
 			<Option compilerVar="CC" />
 			<Option target="ServerDebug" />

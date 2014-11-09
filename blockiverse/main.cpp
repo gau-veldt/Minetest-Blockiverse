@@ -17,6 +17,7 @@
 **
 */
 
+#include "auto/version.h"
 #include "common.hpp"
 #include <windows.h>
 #include <irrlicht.h>
@@ -29,6 +30,7 @@
 #include <boost/lexical_cast.hpp>
 #include "server.hpp"
 #include "client.hpp"
+#include "settings.hpp"
 
 /*
 ** meters per parsec
@@ -60,22 +62,6 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
-
-typedef boost::variant<int,float,std::string> setting_t;
-typedef std::map<std::string,setting_t> property_map;
-#define v2str boost::get<std::string>
-#define v2flt boost::get<float>
-#define v2int boost::get<int>
-typedef std::vector<std::string> strlist;
-
-void set_config_defaults(property_map &cfg) {
-    cfg["window_width"]=800;
-    cfg["window_height"]=600;
-    cfg["driver"]="opengl";
-    cfg["standalone"]=1;
-    cfg["address"]="localhost";
-    cfg["port"]=37001;
-}
 
 int main(int argc, char** argv)
 {

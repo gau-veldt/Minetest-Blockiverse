@@ -23,7 +23,7 @@
 #include <windows.h>
 #include "protocol.hpp"
 
-#ifdef BV_SERVER_IMPLEMENTATION
+//#ifdef BV_SERVER_IMPLEMENTATION
 /*
 ** server internal header only visible to server implementation
 */
@@ -48,12 +48,12 @@ public:
     }
 };
 
-#else
+//#else
 /*
 ** make server startup visible only
 */
 
 DWORD WINAPI server_main(LPVOID argvoid);
 
-#endif // BV_SERVER_IMPLEMENTATION
+//#endif // BV_SERVER_IMPLEMENTATION
 #endif // BV_SERVER_HPP_INCLUDED

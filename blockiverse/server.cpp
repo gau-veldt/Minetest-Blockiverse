@@ -16,6 +16,7 @@
 **  Server implementation
 **
 */
+#include "auto/version.h"
 #include "common.hpp"
 #include <windows.h>
 #include <iostream>
@@ -23,6 +24,7 @@
 #include "protocol.hpp"
 #define BV_SERVER_IMPLEMENTATION
 #include "server.hpp"
+#include "settings.hpp"
 
 DWORD WINAPI server_main(LPVOID argvoid) {
     int argc=0;
@@ -34,6 +36,9 @@ DWORD WINAPI server_main(LPVOID argvoid) {
 
     std::cout << "[server] Version is: " << auto_ver << std::endl;
 
+    property_map config;
+    set_config_defaults(config);
+
     if (argc==0) {
         std::cout << "[server] Argument passing failed (argc==0)" << std::endl;
     } else {
@@ -42,6 +47,9 @@ DWORD WINAPI server_main(LPVOID argvoid) {
             std::cout << "[server] Argument " << i << ": " << argv[i] << std::endl;
         }
     }
+
+    io_service io;
+    //tcp::acceptor listener()
 
     return 0;
 }

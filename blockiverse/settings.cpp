@@ -11,23 +11,18 @@
 **  https://www.gnu.org/licenses/lgpl-3.0.en.html
 **  See file LICENSE in ../
 **
-**  Implementation file server_main.cpp
+**  Implementation file settings.cpp
 **
-**  Server main driver code.
+**  config/settings implementation
 **
 */
+#include "settings.hpp"
 
-#include "server.hpp"
-
-int main(int argc, char** argv)
-{
-    argset args(argc,argv);
-    int rv;
-    rv=server_main(&args);
-
-    std::cout << std::endl << "Press enter to continue." << std::endl;
-    std::cin.ignore();
-
-    return rv;
+void set_config_defaults(property_map &cfg) {
+    cfg["window_width"]=800;
+    cfg["window_height"]=600;
+    cfg["driver"]="opengl";
+    cfg["standalone"]=1;
+    cfg["address"]="localhost";
+    cfg["port"]=37001;
 }
-

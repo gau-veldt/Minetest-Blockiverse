@@ -26,10 +26,13 @@
 #include <boost/any.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/bimap.hpp>
+#include <boost/bind.hpp>
 #include <boost/asio.hpp>
 
-namespace bvnet {
+using boost::asio::ip::tcp;
+typedef boost::asio::io_service io_service;
 
+namespace bvnet {
     extern u32 reg_objects_softmax;
 
     struct obref {
@@ -80,8 +83,9 @@ namespace bvnet {
         value_stack argstack;
         value_queue sendq;
 
-        registry *reg;  /* registered objects in session */
-        mutex *synchro; /* mutex on session manipulation */
+        registry *reg;      /* registered objects in session */
+        mutex *synchro;     /* mutex on session manipulation */
+        tcp::socket *conn;  /* connection */
     public:
         session();
         virtual ~session();
@@ -298,6 +302,7 @@ namespace bvnet {
     inline session::session() {
         synchro=new mutex();
         reg=new registry(this);
+        conn=NULL;
     }
     inline session::~session() {
         delete reg;
