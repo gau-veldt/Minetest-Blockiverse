@@ -20,6 +20,7 @@
 #include "common.hpp"
 #include <windows.h>
 #include <iostream>
+#include <map>
 #include "sqlite/sqlite3.h"
 #include "protocol.hpp"
 #define BV_SERVER_IMPLEMENTATION
@@ -31,6 +32,35 @@ struct context {
     bvnet::session *session;
     bvnet::object *root;
 };
+
+class context_manager {
+private:
+    context *ctx;
+public:
+    context_manager(context *raii_ctx) : ctx(raii_ctx) {}
+    ~context_manager() {
+        delete ctx->root;
+        ctx->root=NULL;
+        delete ctx->session;
+        ctx->session=NULL;
+        delete ctx->socket;
+        ctx->socket=NULL;
+        delete ctx;
+        ctx=NULL;
+    }
+};
+
+DWORD WINAPI server_boot(LPVOID ctx) {
+    /*
+    ** entry point for client session thread
+    */
+    context_manager raii_ctx((context*)ctx); // proper cleanup on thread exit
+
+    return 0;
+}
+
+typedef std::map<HANDLE,bool> hlist;
+hlist sessions;
 
 DWORD WINAPI server_main(LPVOID argvoid) {
     property_map server_config;
@@ -66,8 +96,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     for (;;) {
         tcp::socket* new_conn=new tcp::socket(io);
         listener.accept(*new_conn);
+
         // create context object
-        // for connection thread
         context *ctx=new context;
         // store socket in context
         ctx->socket=new_conn;
@@ -78,10 +108,35 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         // create session's serverRoot object
         // which is also stored in the context
         ctx->root=new serverRoot(*ctx->session);
-        // it's ugly but I'll  need to have the
-        // connection's thread handle RAII of
-        // the context object and proper deletion
-        // of its members
+        // the worker thread manages the context
+        HANDLE thd=CreateThread(
+            NULL,           /* default security */
+            0,              /* default stack */
+            &server_boot,   /* bootstraps connection thread */
+            ctx,            /* pass the context */
+            0,              /* default creation */
+            NULL);          /* where to store thread id */
+        if (thd!=NULL) {
+            // to keep track of threads
+            sessions[thd]=true;
+        } else {
+            // TODO: error
+        }
+
+        /*
+        ** Prune any completed session threads
+        */
+        DWORD status;
+        hlist::iterator sThread=sessions.begin();
+        while (sThread!=sessions.end()) {
+            GetExitCodeThread(sThread->first,&status);
+            if (status!=STILL_ACTIVE) {
+                CloseHandle(sThread->first);
+                sessions.erase(sThread++);
+            } else {
+                ++sThread;
+            }
+        }
     }
 
     return 0;

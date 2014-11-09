@@ -97,12 +97,12 @@ int main(int argc, char** argv)
         // until they fix the crap with _InterlockedCompareExchange
         // and the consequent linker errors
         server_thread=CreateThread(
-                    NULL,           /* default security*/
-                    0,              /* default stack */
-                    &server_main,   /* entry point */
-                    &args,          /* struct to pass args */
-                    0,              /* default creation */
-                    &server_tid);   /* where to store thread id */
+            NULL,           /* default security*/
+            0,              /* default stack */
+            &server_main,   /* entry point */
+            &args,          /* struct to pass args */
+            0,              /* default creation */
+            &server_tid);   /* where to store thread id */
     }
 
     /*
@@ -242,7 +242,17 @@ int main(int argc, char** argv)
     device->drop();
 
     if (server_thread!=NULL) {
-        // kill/close server thread
+        // kills server thread
+        DWORD rc;
+        GetExitCodeThread(server_thread,&rc);
+        if (rc==STILL_ACTIVE) {
+            /*
+            ** TODO: This is the ugly and dangerous way to stop
+            **       the server and needs a cleaner alternative!
+            */
+            TerminateThread(server_thread,9/* SIGKILL */);
+        }
+        // then close handle
         CloseHandle(server_thread);
         server_thread=NULL;
     }
