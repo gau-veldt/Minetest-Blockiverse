@@ -34,14 +34,21 @@ typedef boost::asio::io_service io_service;
 
 // quick and dirty synchronized ostream
 extern boost::mutex cout_mutex;
-extern std::ios cout_save_st;
 class scoped_cout_lock {
+    std::ios state;
 public:
-    scoped_cout_lock() {cout_mutex.lock();}
-    virtual ~scoped_cout_lock() {cout_mutex.unlock();}
+    scoped_cout_lock() : state(NULL) {
+        cout_mutex.lock();
+        state.copyfmt(std::cout);
+    }
+    virtual ~scoped_cout_lock() {
+        std::cout.flush();
+        std::cout.copyfmt(state);
+        cout_mutex.unlock();
+    }
 };
-#define LOCK_COUT {scoped_cout_lock __scl; cout_save_st.copyfmt(std::cout);
-#define UNLOCK_COUT std::cout.copyfmt(cout_save_st); std::cout.flush();}
+#define LOCK_COUT {scoped_cout_lock __scl;
+#define UNLOCK_COUT }
 
 namespace bvnet {
     extern u32 reg_objects_softmax;

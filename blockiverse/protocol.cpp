@@ -20,6 +20,5 @@
 #include "protocol.hpp"
 
 boost::mutex cout_mutex;
-std::ios cout_save_st(NULL);
 
 u32 bvnet::reg_objects_softmax=1000;
