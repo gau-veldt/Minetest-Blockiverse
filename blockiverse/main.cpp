@@ -111,6 +111,23 @@ int main(int argc, char** argv)
     */
     bvnet::session client_session;
     clientRoot client_root(client_session);
+    int port=v2int(config["port"]);
+    std::ostringstream s_port;
+    s_port << port;
+    std::string host=v2str(config["address"]);
+    io_service io;
+    tcp::resolver resolv(io);
+    tcp::resolver::query lookup(host,s_port.str());
+    tcp::resolver::iterator target=resolv.resolve(lookup);
+    tcp::socket socket(io);
+    LOCK_COUT
+    std::cout << "Connecting to " << host << " port " << port << std::endl;
+    UNLOCK_COUT
+    boost::asio::connect(socket,target);
+    client_session.set_conn(socket);
+    LOCK_COUT
+    std::cout << "Client connected." << std::endl;
+    UNLOCK_COUT
     client_session.dump(std::cout);
 
     /*

@@ -50,11 +50,17 @@ public:
     }
 };
 
-DWORD WINAPI server_boot(LPVOID ctx) {
+DWORD WINAPI server_boot(LPVOID lpvCtx) {
     /*
     ** entry point for client session thread
     */
-    context_manager raii_ctx((context*)ctx); // proper cleanup on thread exit
+    context &ctx=*((context*)lpvCtx);   // make a proper reference
+    context_manager raii_ctx(&ctx);     // proper cleanup on thread exit
+
+    LOCK_COUT
+    std::cout << "[server] spawned thread for new connection" << std::endl;
+    UNLOCK_COUT
+    ctx.session->dump(std::cout);
 
     return 0;
 }

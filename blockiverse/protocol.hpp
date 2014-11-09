@@ -171,17 +171,17 @@ namespace bvnet {
         object(session &sess) :
             ctx(sess) {
                 LOCK_COUT
-                std::cout << "object " << this << " ctor" << std::endl;
+                std::cout << "object [" << this << "] ctor" << std::endl;
                 UNLOCK_COUT
                 ctx.register_object(this);
             }
         virtual ~object() {
             LOCK_COUT
-            std::cout << "object " << this << " dtor" << std::endl;
+            std::cout << "object [" << this << "] dtor" << std::endl;
             UNLOCK_COUT
             ctx.unregister(this);
         }
-        virtual const char *getType()=0;
+        virtual const char *getType() {return "baseObject";}
         virtual void methodCall(unsigned int idx)=0;
     };
 
@@ -355,6 +355,13 @@ namespace bvnet {
         os << "session object" << std::endl;
         os << "  argstack count: " << argstack.size() << std::endl;
         os << "  send queue size: " << sendq.size() << std::endl;
+        os << "  socket: ";
+        if (conn==NULL) {
+            os << "<none>";
+        } else {
+            os << conn;
+        }
+        os << std::endl;
         UNLOCK_COUT
         reg->dump(os);
     }
