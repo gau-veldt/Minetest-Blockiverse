@@ -25,9 +25,6 @@ int main(int argc, char** argv)
     int rv;
     rv=server_main(&args);
 
-    std::cout << std::endl << "Press enter to continue." << std::endl;
-    std::cin.ignore();
-
     return rv;
 }
 

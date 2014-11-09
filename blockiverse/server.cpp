@@ -49,7 +49,19 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     }
 
     io_service io;
-    //tcp::acceptor listener()
+    int port=v2int(config["port"]);
+    std::cout << "[server] listening on port " << port << std::endl;
+    tcp::acceptor listener(io,tcp::endpoint(tcp::v4(),port));
+
+    for (;;) {
+        tcp::socket* new_conn=new tcp::socket(io);
+        listener.accept(*new_conn);
+        // create session
+        bvnet::session *new_sess=new bvnet::session();
+        new_sess->set_conn(*new_conn);
+        // create session's server root object
+        serverRoot *sroot=new serverRoot(*new_sess);
+    }
 
     return 0;
 }

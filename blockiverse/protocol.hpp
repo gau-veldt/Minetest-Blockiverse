@@ -97,6 +97,7 @@ namespace bvnet {
         void bootstrap(object *root);
         value_queue &getSendQueue() {return sendq;}
         mutex &getMutex() {return *synchro;}
+        void set_conn(tcp::socket &s) {conn=&s;}
 
         void dump(std::ostream &os);
     };
@@ -151,9 +152,13 @@ namespace bvnet {
     public:
         object(session &sess) :
             ctx(sess) {
+                std::cout << "object " << this << " ctor" << std::endl;
+                std::cout.flush();
                 ctx.register_object(this);
             }
         virtual ~object() {
+            std::cout << "object " << this << " dtor" << std::endl;
+            std::cout.flush();
             ctx.unregister(this);
         }
         virtual const char *getType()=0;
