@@ -32,6 +32,17 @@
 using boost::asio::ip::tcp;
 typedef boost::asio::io_service io_service;
 
+// quick and dirty synchronized ostream
+extern boost::mutex cout_mutex;
+extern std::ios cout_save_st;
+class scoped_cout_lock {
+public:
+    scoped_cout_lock() {cout_mutex.lock();}
+    virtual ~scoped_cout_lock() {cout_mutex.unlock();}
+};
+#define LOCK_COUT {scoped_cout_lock __scl; cout_save_st.copyfmt(std::cout);
+#define UNLOCK_COUT std::cout.copyfmt(cout_save_st); std::cout.flush();}
+
 namespace bvnet {
     extern u32 reg_objects_softmax;
 
@@ -152,13 +163,15 @@ namespace bvnet {
     public:
         object(session &sess) :
             ctx(sess) {
+                LOCK_COUT
                 std::cout << "object " << this << " ctor" << std::endl;
-                std::cout.flush();
+                UNLOCK_COUT
                 ctx.register_object(this);
             }
         virtual ~object() {
+            LOCK_COUT
             std::cout << "object " << this << " dtor" << std::endl;
-            std::cout.flush();
+            UNLOCK_COUT
             ctx.unregister(this);
         }
         virtual const char *getType()=0;
@@ -331,13 +344,16 @@ namespace bvnet {
     }
 
     inline void session::dump(std::ostream &os) {
+        LOCK_COUT
         os << "session object" << std::endl;
         os << "  argstack count: " << argstack.size() << std::endl;
         os << "  send queue size: " << sendq.size() << std::endl;
+        UNLOCK_COUT
         reg->dump(os);
     }
 
     inline void registry::dump(std::ostream &os) {
+        LOCK_COUT
         os << "  registry" << std::endl;
         os << "    objects registered: " << objects.size() << std::endl;
         object_map::iterator i=objects.begin();
@@ -349,6 +365,7 @@ namespace bvnet {
             os << "] type=" << o->getType() << std::endl;
             ++i;
         }
+        UNLOCK_COUT
     }
 
 };  // bvnet

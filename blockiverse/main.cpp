@@ -72,6 +72,7 @@ int main(int argc, char** argv)
     set_config_defaults(config);
     std::string cfg_opt;
 
+    LOCK_COUT
     std::cout << "Version is: " << auto_ver << std::endl;
 
     /* test settings map */
@@ -81,6 +82,7 @@ int main(int argc, char** argv)
             << setting->second << std::endl;
         ++setting;
     }
+    UNLOCK_COUT
 
     /*
     ** start server when running standalone
@@ -88,7 +90,9 @@ int main(int argc, char** argv)
     */
     bool standalone=(0!=v2int(config["standalone"]));
     if (standalone) {
+        LOCK_COUT
         std::cout << "Starting server." << std::endl;
+        UNLOCK_COUT
         // I'm giving up getting this to work portably via boost for now
         // until they fix the crap with _InterlockedCompareExchange
         // and the consequent linker errors
@@ -108,7 +112,6 @@ int main(int argc, char** argv)
     bvnet::session client_session;
     clientRoot client_root(client_session);
     client_session.dump(std::cout);
-    std::cout.flush();
 
     /*
     The most important function of the engine is the 'createDevice'

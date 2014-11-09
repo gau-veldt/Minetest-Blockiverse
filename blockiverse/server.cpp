@@ -26,7 +26,16 @@
 #include "server.hpp"
 #include "settings.hpp"
 
+struct context {
+    tcp::socket *socket;
+    bvnet::session *session;
+    bvnet::object *root;
+};
+
 DWORD WINAPI server_main(LPVOID argvoid) {
+    property_map server_config;
+    set_config_defaults(server_config);
+
     int argc=0;
     char **argv=NULL;
     if (argvoid!=NULL) {
@@ -34,10 +43,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         argv=((argset*)argvoid)->v;
     }
 
+    LOCK_COUT
     std::cout << "[server] Version is: " << auto_ver << std::endl;
-
-    property_map config;
-    set_config_defaults(config);
 
     if (argc==0) {
         std::cout << "[server] Argument passing failed (argc==0)" << std::endl;
@@ -47,20 +54,34 @@ DWORD WINAPI server_main(LPVOID argvoid) {
             std::cout << "[server] Argument " << i << ": " << argv[i] << std::endl;
         }
     }
+    UNLOCK_COUT
 
     io_service io;
-    int port=v2int(config["port"]);
+    int port=v2int(server_config["port"]);
+    LOCK_COUT
     std::cout << "[server] listening on port " << port << std::endl;
+    UNLOCK_COUT
     tcp::acceptor listener(io,tcp::endpoint(tcp::v4(),port));
 
     for (;;) {
         tcp::socket* new_conn=new tcp::socket(io);
         listener.accept(*new_conn);
-        // create session
-        bvnet::session *new_sess=new bvnet::session();
-        new_sess->set_conn(*new_conn);
-        // create session's server root object
-        serverRoot *sroot=new serverRoot(*new_sess);
+        // create context object
+        // for connection thread
+        context *ctx=new context;
+        // store socket in context
+        ctx->socket=new_conn;
+        // create new session in context
+        ctx->session=new bvnet::session();
+        // link connection socket to new session
+        ctx->session->set_conn(*new_conn);
+        // create session's serverRoot object
+        // which is also stored in the context
+        ctx->root=new serverRoot(*ctx->session);
+        // it's ugly but I'll  need to have the
+        // connection's thread handle RAII of
+        // the context object and proper deletion
+        // of its members
     }
 
     return 0;
