@@ -23,6 +23,9 @@
 #include <windows.h>
 #include "protocol.hpp"
 
+extern volatile bool serverActive;
+extern volatile bool req_serverQuit;
+
 //#ifdef BV_SERVER_IMPLEMENTATION
 /*
 ** server internal header only visible to server implementation
