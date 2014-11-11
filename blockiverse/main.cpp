@@ -63,6 +63,31 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+/*
+**  init: main thread
+** write: server thread only
+**  read: main thread only
+*/
+volatile bool serverActive;
+/*
+**  init: main thread
+** write: main thread only
+**  read: server thread only
+*/
+volatile bool req_serverQuit;
+
+class ClientEventReceiver : public IEventReceiver {
+    virtual bool OnEvent(const SEvent& evt) {
+        if (evt.EventType == EET_LOG_TEXT_EVENT) {
+            // makes irrlicht's logging messages use output locking
+            LOCK_COUT
+            std::cout << evt.LogEvent.Text;
+            UNLOCK_COUT
+            return true;
+        }
+    }
+};
+
 int main(int argc, char** argv)
 {
     DWORD server_tid=0;
@@ -93,6 +118,8 @@ int main(int argc, char** argv)
         LOCK_COUT
         std::cout << "Starting server." << std::endl;
         UNLOCK_COUT
+        serverActive=true;
+        req_serverQuit=false;
         // I'm giving up getting this to work portably via boost for now
         // until they fix the crap with _InterlockedCompareExchange
         // and the consequent linker errors
@@ -128,7 +155,8 @@ int main(int argc, char** argv)
     LOCK_COUT
     std::cout << "Client connected." << std::endl;
     UNLOCK_COUT
-    client_session.dump(std::cout);
+    //client_session.dump(std::cout);
+    client_session.bootstrap(&client_root);
 
     /*
     The most important function of the engine is the 'createDevice'
@@ -257,6 +285,25 @@ int main(int argc, char** argv)
     for more information.
     */
     device->drop();
+
+    // close connection to server
+    LOCK_COUT
+    std::cout << "Closing connection to server." << std::endl;
+    UNLOCK_COUT
+    socket.close();
+
+    // defibrilates if server in blocking accept
+    LOCK_COUT
+    std::cout << "Requesting server quit." << std::endl;
+    UNLOCK_COUT
+    req_serverQuit=true;
+    boost::asio::connect(socket,target);
+    socket.close();
+
+    LOCK_COUT
+    std::cout << "Waiting for server shutdown." << std::endl;
+    UNLOCK_COUT
+    while (serverActive) ;
 
     if (server_thread!=NULL) {
         // kills server thread

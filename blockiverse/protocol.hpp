@@ -28,6 +28,7 @@
 #include <boost/bimap.hpp>
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
+#include <boost/bind.hpp>
 
 using boost::asio::ip::tcp;
 typedef boost::asio::io_service io_service;
@@ -95,8 +96,13 @@ namespace bvnet {
 
     class session {
     private:
+        io_service *io;
         object *root;
+        bool isActive;
+        char in_ch;
     protected:
+        void on_recv(const boost::system::error_code &ec);
+
         /* value stack */
         value_stack argstack;
         value_queue sendq;
@@ -113,9 +119,13 @@ namespace bvnet {
         bool unregister(u32 id);
         bool unregister(object *ob);
         void bootstrap(object *root);
+        bool run();
         value_queue &getSendQueue() {return sendq;}
         mutex &getMutex() {return *synchro;}
-        void set_conn(tcp::socket &s) {conn=&s;}
+        void set_conn(tcp::socket &s) {
+            conn=&s;
+            io=&(s.get_io_service());
+        }
 
         void dump(std::ostream &os);
     };
@@ -348,6 +358,27 @@ namespace bvnet {
     }
     inline void session::bootstrap(object *sessionRoot) {
         root=sessionRoot;
+        isActive=true;
+    }
+    inline void session::on_recv(const boost::system::error_code &ec) {
+        if (!ec) {
+        } else {
+            LOCK_COUT
+            std::cout << "[server] lost connection on session " << this
+                      << " socket " << conn << std::endl;
+            UNLOCK_COUT
+            isActive=false;
+        }
+    }
+    inline bool session::run() {
+        if (isActive) {
+            boost::asio::async_read(
+                *conn,
+                boost::asio::buffer(&in_ch,1),
+                boost::bind(&session::on_recv,this,boost::asio::placeholders::error));
+            io->run();
+        }
+        return isActive;
     }
 
     inline void session::dump(std::ostream &os) {

@@ -43,6 +43,7 @@ public:
         ctx->root=NULL;
         delete ctx->session;
         ctx->session=NULL;
+        ctx->socket->close();
         delete ctx->socket;
         ctx->socket=NULL;
         delete ctx;
@@ -58,9 +59,18 @@ DWORD WINAPI server_boot(LPVOID lpvCtx) {
     context_manager raii_ctx(&ctx);     // proper cleanup on thread exit
 
     LOCK_COUT
-    std::cout << "[server] spawned thread for new connection" << std::endl;
+    std::cout << "[server] spawned slave for socket " << ctx.socket << std::endl;
     UNLOCK_COUT
-    ctx.session->dump(std::cout);
+    //ctx.session->dump(std::cout);
+
+    ctx.session->bootstrap(ctx.root);
+    while (!req_serverQuit && ctx.session->run()) {
+        /* until session dies or server shutdown */
+    }
+
+    LOCK_COUT
+    std::cout << "[server] slave for socket "<< ctx.socket << " finished." << std::endl;
+    UNLOCK_COUT
 
     return 0;
 }
@@ -99,7 +109,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     UNLOCK_COUT
     tcp::acceptor listener(io,tcp::endpoint(tcp::v4(),port));
 
-    for (;;) {
+    while (!req_serverQuit) {
         tcp::socket* new_conn=new tcp::socket(io);
         listener.accept(*new_conn);
 
@@ -145,5 +155,26 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         }
     }
 
+    // get threads to start quitting
+    io.stop();
+    // wait for all threads to stop
+    while (sessions.size()>0) {
+        DWORD status;
+        hlist::iterator sThread=sessions.begin();
+        while (sThread!=sessions.end()) {
+            GetExitCodeThread(sThread->first,&status);
+            if (status!=STILL_ACTIVE) {
+                CloseHandle(sThread->first);
+                sessions.erase(sThread++);
+            } else {
+                ++sThread;
+            }
+        }
+    }
+
+    LOCK_COUT
+    std::cout << "[server] shutdown complete." << std::endl;
+    UNLOCK_COUT
+    serverActive=false;
     return 0;
 }
