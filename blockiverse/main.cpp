@@ -166,7 +166,7 @@ int main(int argc, char** argv)
 
     if (client_session.hasRemote()) {
         LOCK_COUT
-        std::cout << "client's serverRoot=" << client_session.getRemote();
+        std::cout << "client's serverRoot=" << client_session.getRemote() << std::endl;
         UNLOCK_COUT
 
         /*
