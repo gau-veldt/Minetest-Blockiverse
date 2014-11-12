@@ -96,12 +96,13 @@ namespace bvnet {
 
     class session {
     private:
-        io_service *io;
+        io_service *io_;
         object *root;
         bool isActive;
         char in_ch;
+        char _rsvd;
     protected:
-        void on_recv(const boost::system::error_code &ec);
+        void on_recv(const boost::system::error_code &ec,size_t rlen);
 
         /* value stack */
         value_stack argstack;
@@ -124,7 +125,7 @@ namespace bvnet {
         mutex &getMutex() {return *synchro;}
         void set_conn(tcp::socket &s) {
             conn=&s;
-            io=&(s.get_io_service());
+            io_=&(s.get_io_service());
         }
 
         void dump(std::ostream &os);
@@ -338,6 +339,7 @@ namespace bvnet {
         synchro=new mutex();
         reg=new registry(this);
         conn=NULL;
+        _rsvd='\0';
     }
     inline session::~session() {
         delete reg;
@@ -360,14 +362,25 @@ namespace bvnet {
         root=sessionRoot;
         isActive=true;
     }
-    inline void session::on_recv(const boost::system::error_code &ec) {
-        if (!ec) {
-        } else {
-            LOCK_COUT
-            std::cout << "[server] lost connection on session " << this
-                      << " socket " << conn << std::endl;
-            UNLOCK_COUT
-            isActive=false;
+    inline void session::on_recv(const boost::system::error_code &ec,size_t rlen) {
+        if (isActive) {
+            if (!ec) {
+                int ich=int(in_ch);
+                LOCK_COUT
+                std::cout << "[server] session " << this << " recv ["
+                          << rlen << "] "
+                          << std::setw(2) << std::setfill('0') << std::hex << (int)ich
+                          << " '" << ((ich>31 && ich<128)?in_ch:' ') << "'"
+                          << std::endl;
+                UNLOCK_COUT
+            } else {
+                LOCK_COUT
+                std::cout << "[server] EOF (" << ec
+                          << ") on session " << this
+                          << " socket " << conn << std::endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
         }
     }
     inline bool session::run() {
@@ -375,8 +388,11 @@ namespace bvnet {
             boost::asio::async_read(
                 *conn,
                 boost::asio::buffer(&in_ch,1),
-                boost::bind(&session::on_recv,this,boost::asio::placeholders::error));
-            io->run();
+                boost::bind(&session::on_recv,this,
+                    boost::asio::placeholders::error,
+                    boost::asio::placeholders::bytes_transferred));
+            io_->run();
+            io_->reset();
         }
         return isActive;
     }

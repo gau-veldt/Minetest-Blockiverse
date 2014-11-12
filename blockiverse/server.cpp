@@ -75,7 +75,7 @@ DWORD WINAPI server_boot(LPVOID lpvCtx) {
     return 0;
 }
 
-typedef std::map<HANDLE,bool> hlist;
+typedef std::map<HANDLE,io_service*> hlist;
 hlist sessions;
 
 DWORD WINAPI server_main(LPVOID argvoid) {
@@ -110,7 +110,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     tcp::acceptor listener(io,tcp::endpoint(tcp::v4(),port));
 
     while (!req_serverQuit) {
-        tcp::socket* new_conn=new tcp::socket(io);
+        io_service *sio=new io_service;
+        tcp::socket* new_conn=new tcp::socket(*sio);
         listener.accept(*new_conn);
 
         // create context object
@@ -134,7 +135,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
             NULL);          /* where to store thread id */
         if (thd!=NULL) {
             // to keep track of threads
-            sessions[thd]=true;
+            sessions[thd]=sio;
         } else {
             // TODO: error
         }
@@ -148,6 +149,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
             GetExitCodeThread(sThread->first,&status);
             if (status!=STILL_ACTIVE) {
                 CloseHandle(sThread->first);
+                // lose the thread's io_service
+                delete sThread->second;
                 sessions.erase(sThread++);
             } else {
                 ++sThread;
@@ -165,6 +168,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
             GetExitCodeThread(sThread->first,&status);
             if (status!=STILL_ACTIVE) {
                 CloseHandle(sThread->first);
+                // lose the thread's io_service
+                delete sThread->second;
                 sessions.erase(sThread++);
             } else {
                 ++sThread;
