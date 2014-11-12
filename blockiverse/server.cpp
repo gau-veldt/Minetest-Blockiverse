@@ -59,11 +59,17 @@ DWORD WINAPI server_boot(LPVOID lpvCtx) {
     context_manager raii_ctx(&ctx);     // proper cleanup on thread exit
 
     LOCK_COUT
-    std::cout << "[server] spawned slave for socket " << ctx.socket << std::endl;
+    std::cout << "[server] session [" << ctx.session << "] slave on socket " << ctx.socket << std::endl;
     UNLOCK_COUT
     //ctx.session->dump(std::cout);
 
     ctx.session->bootstrap(ctx.root);
+
+    /* some testy type stuff */
+    ctx.session->send_int(1001);
+    ctx.session->send_string("Hello, World!");
+    ctx.session->send_float(1.367e10);
+
     while (!req_serverQuit && ctx.session->run()) {
         /* until session dies or server shutdown */
     }

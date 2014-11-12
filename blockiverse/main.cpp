@@ -140,6 +140,9 @@ int main(int argc, char** argv)
     ** his session object and clientRoot
     */
     bvnet::session client_session;
+    LOCK_COUT
+    std::cout << "client session [" << &client_session << "]";
+    UNLOCK_COUT
     clientRoot client_root(client_session);
     int port=v2int(config["port"]);
     std::ostringstream s_port;
@@ -268,8 +271,42 @@ int main(int argc, char** argv)
         want to run any more. This would be when the user closed the window
         or pressed ALT+F4 in windows.
         */
-        while(device->run())
+        while(device->run() && client_session.poll() /* client still connected */)
         {
+            if (client_session.argcount()>0) {
+                LOCK_COUT
+                bvnet::valtype vt=client_session.argtype();
+                switch (vt) {
+                case bvnet::vtInt:
+                    std::cout << "Client got int: "
+                              << client_session.getarg<s64>()
+                              << std::endl;
+                    break;
+                case bvnet::vtFloat:
+                    std::cout << "Client got float: "
+                              << client_session.getarg<float>()
+                              << std::endl;
+                    break;
+                case bvnet::vtBlob:
+                case bvnet::vtString:
+                    std::cout << "Client got string/blob: "
+                              << client_session.getarg<std::string>()
+                              << std::endl;
+                    break;
+                case bvnet::vtObref:
+                    std::cout << "Client got objectref id="
+                              << client_session.getarg<bvnet::obref>().id
+                              << std::endl;
+                    break;
+                case bvnet::vtDeath:
+                    std::cout << "Client's objectref #"
+                              << client_session.getarg<bvnet::ob_is_gone>().id
+                              << " is dead" << std::endl;
+                    break;
+                }
+                UNLOCK_COUT
+            }
+
             /*
             Anything can be drawn between a beginScene() and an endScene()
             call. The beginScene clears the screen with a color and also the

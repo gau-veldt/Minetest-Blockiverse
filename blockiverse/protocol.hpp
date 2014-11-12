@@ -34,6 +34,9 @@
 using boost::asio::ip::tcp;
 typedef boost::asio::io_service io_service;
 
+extern int log2_tbl[];
+extern int pow2_tbl[];
+
 // quick and dirty synchronized ostream
 extern boost::mutex cout_mutex;
 class scoped_cout_lock {
@@ -115,11 +118,19 @@ namespace bvnet {
         object *root;
         bool isActive;
         bool isBooting;
+        bool _float_or_semi;
+        bool _neg_int;
+        std::string _fpstr;
         char in_ch;
         char in_idx[4];
+        char in_s64[8];
     protected:
         void on_recv(const boost::system::error_code &ec,size_t rlen);
         void on_recv_oref(const boost::system::error_code &ec,size_t rlen);
+        void on_recv_str(const boost::system::error_code &ec,char *buf);
+        void on_recv_len(const boost::system::error_code &ec,size_t rlen);
+        void on_recv_s64(const boost::system::error_code &ec,u32 bsize);
+        void on_write_done(std::string *finsihedbuf);
 
         /* value stack */
         value_stack argstack;
@@ -141,9 +152,28 @@ namespace bvnet {
         bool unregister(u32 id);
         bool unregister(object *ob);
         void encode(const boost::any &a);
-        void decode(const std::string &s);
+        valtype argtype() {
+            return typeMap[argstack.top().type().name()];
+        }
+        int argcount() {return argstack.size();}
+        template<typename V>
+        V getarg() {
+            V rc=boost::any_cast<V>(argstack.top());
+            argstack.pop();
+            return rc;
+        }
         void bootstrap(object *root);
+        void send_int(s64 val) {sendq.push(val);}
+        void send_int(s64 &val) {sendq.push(val);}
+        void send_float(float val) {sendq.push(val);}
+        void send_float(float &val) {sendq.push(val);}
+        void send_blob(std::string val) {sendq.push(val);}
+        void send_blob(std::string &val) {sendq.push(val);}
+        void send_string(std::string val) {sendq.push(val);}
+        void send_string(std::string &val) {sendq.push(val);}
+        void send_obref(object *ob);
         bool run();
+        bool poll();
         value_queue &getSendQueue() {return sendq;}
         mutex &getMutex() {return *synchro;}
         void set_conn(tcp::socket &s) {
@@ -402,6 +432,8 @@ namespace bvnet {
         reg=new registry(this);
         conn=NULL;
         isBooting=true;
+        _float_or_semi=false;
+        _neg_int=false;
         remoteRoot=0;
     }
     inline session::~session() {
@@ -427,6 +459,12 @@ namespace bvnet {
         sendq.push(obref(reg->idOf(root)));
         isActive=true;
     }
+    inline void session::send_obref(object *ob) {
+        sendq.push(obref(reg->idOf(ob)));
+    }
+    inline void session::on_write_done(std::string *finishedbuf) {
+        delete finishedbuf;
+    }
     inline void session::on_recv_oref(const boost::system::error_code &ec,size_t rlen) {
         if (isActive) {
             if (!ec) {
@@ -444,6 +482,7 @@ namespace bvnet {
                     LOCK_COUT
                     std::cout << "session [" << this
                               << "] objectref=" << idx
+                              << " (" << ec << ")"
                               << std::endl;
                     UNLOCK_COUT
                     argstack.push(obref(idx));
@@ -451,7 +490,49 @@ namespace bvnet {
             } else {
                 LOCK_COUT
                 std::cout << "session [" << this
-                          << "] EOF"
+                          << "] expected objectref got EOF"
+                          << " (" << ec << ")"
+                          << std::endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
+        }
+    }
+    inline void session::on_recv_str(const boost::system::error_code &ec,char* buf) {
+        if (!ec) {
+            argstack.push(std::string(buf));
+        }
+        delete [] buf;
+    }
+    inline void session::on_recv_len(const boost::system::error_code &ec,size_t rlen) {
+        if (isActive) {
+            if (!ec) {
+                u32 idx=*((u32*)in_idx);
+                char* pstr=new char[1+idx];
+                pstr[idx]='\0';
+                boost::asio::async_read(
+                    *conn,
+                    boost::asio::buffer(pstr,idx),
+                    boost::bind(&session::on_recv_str,this,
+                    boost::asio::placeholders::error,
+                    pstr));
+
+            }
+        }
+    }
+    inline void session::on_recv_s64(const boost::system::error_code &ec,u32 bsize) {
+        if (isActive) {
+            if (!ec) {
+                s64 *in_val=(s64*)in_s64;
+                s64 val=*in_val;
+                if (_neg_int) val=-val;
+                argstack.push(val);
+                _neg_int=false;
+            } else {
+                LOCK_COUT
+                std::cout << "session [" << this
+                          << "] expected " << bsize << "-byte int got EOF"
+                          << " (" << ec << ")"
                           << std::endl;
                 UNLOCK_COUT
                 isActive=false;
@@ -461,31 +542,97 @@ namespace bvnet {
     inline void session::on_recv(const boost::system::error_code &ec,size_t rlen) {
         if (isActive) {
             if (!ec) {
-                int ich=int(in_ch);
-                switch(in_ch) {
-                case 'o':
-                    boost::asio::async_read(
-                        *conn,
-                        boost::asio::buffer(in_idx,4),
-                        boost::bind(&session::on_recv_oref,this,
-                        boost::asio::placeholders::error,
-                        boost::asio::placeholders::bytes_transferred));
-                    break;
-                default:
-                    LOCK_COUT
-                    std::cout << "session [" << this << "] recv len="
-                              << rlen << " 0x"
-                              << std::setw(2) << std::setfill('0') << std::hex << (int)ich;
-                    if (ich>31 && ich<128)
-                        std::cout << ' ' << in_ch;
-                    std::cout << std::endl;
-                    UNLOCK_COUT
+                int ich=int((unsigned char)in_ch);
+                if (_float_or_semi) {
+                    if (in_ch==';') {
+                        _float_or_semi=false;
+                        float flt;
+                        std::istringstream cvt(_fpstr);
+                        cvt >> flt;
+                        argstack.push(flt);
+                    } else {
+                        _fpstr+=in_ch;
+                    }
+                } else {
+                    u32 obid,bsize;
+                    switch(in_ch) {
+                    /* integer value of 2^N bytes */
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                  /*case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':*/
+                        bsize=pow2_tbl[in_ch-'0'];
+                        *((s64*)in_s64)=0;
+                        boost::asio::async_read(
+                            *conn,
+                            boost::asio::buffer(in_s64,bsize),
+                            boost::bind(&session::on_recv_s64,this,
+                            boost::asio::placeholders::error,
+                            bsize));
+                        break;
+                    case '-':
+                        _neg_int=true;
+                        break;
+                    case '+':
+                        _neg_int=false;
+                        break;
+                    case 'f':
+                        _float_or_semi=true;
+                        _fpstr.clear();
+                        break;
+                    case '"':
+                    case 'b':
+                        boost::asio::async_read(
+                            *conn,
+                            boost::asio::buffer(in_idx,4),
+                            boost::bind(&session::on_recv_len,this,
+                            boost::asio::placeholders::error,
+                            boost::asio::placeholders::bytes_transferred));
+                        break;
+                    case 'o':
+                        boost::asio::async_read(
+                            *conn,
+                            boost::asio::buffer(in_idx,4),
+                            boost::bind(&session::on_recv_oref,this,
+                            boost::asio::placeholders::error,
+                            boost::asio::placeholders::bytes_transferred));
+                        break;
+                    case '~':
+                        obid=(boost::any_cast<obref>(argstack.top())).id;
+                        argstack.pop();
+                        argstack.push(ob_is_gone(obid));
+                        break;
+                    default:
+                        LOCK_COUT
+                        std::cout << "session [" << this << "] recv len="
+                                  << rlen << " 0x"
+                                  << std::setw(2) << std::setfill('0') << std::hex << ich;
+                        if (ich>31 && ich<128)
+                            std::cout << ' ' << in_ch;
+                        std::cout << std::endl;
+                        UNLOCK_COUT
+                    }
                 }
             } else {
                 LOCK_COUT
-                std::cout << "session [" << this
-                          << "] EOF"
-                          << std::endl;
+                if (_float_or_semi) {
+                    std::cout << "session [" << this
+                              << "] expected floatnum; got EOF"
+                              << " (" << ec << ")"
+                              << std::endl;
+
+                } else {
+                    std::cout << "session [" << this
+                              << "] expected opcode got EOF"
+                              << " (" << ec << ")"
+                              << std::endl;
+                }
                 UNLOCK_COUT
                 isActive=false;
             }
@@ -493,6 +640,8 @@ namespace bvnet {
     }
     inline bool session::run() {
         if (isActive) {
+            //if (io_->stopped())
+                io_->reset();
             while (sendq.size()>0) {
                 encode(sendq.front());
                 sendq.pop();
@@ -504,7 +653,24 @@ namespace bvnet {
                     boost::asio::placeholders::error,
                     boost::asio::placeholders::bytes_transferred));
             io_->run();
-            io_->reset();
+        }
+        return isActive;
+    }
+    inline bool session::poll() {
+        if (isActive) {
+            //if (io_->stopped())
+                io_->reset();
+            while (sendq.size()>0) {
+                encode(sendq.front());
+                sendq.pop();
+            }
+            boost::asio::async_read(
+                *conn,
+                boost::asio::buffer(&in_ch,1),
+                boost::bind(&session::on_recv,this,
+                    boost::asio::placeholders::error,
+                    boost::asio::placeholders::bytes_transferred));
+            io_->poll();
         }
         return isActive;
     }
@@ -518,14 +684,42 @@ namespace bvnet {
             std::cout << "<unknown \"" << raw.type().name() << "\">" << std::endl;
             UNLOCK_COUT
         } else {
+            s64 val;
+            u64 mag,mag2;
+            int log2,bytes;
+            float flt;
             switch (tmi->second) {
             case vtInt:
+                val=boost::any_cast<s64>(raw);
+                mag=(val<0)?0-val:val;
+                if (val<0) {
+                    ss << '-';
+                }
+                bytes=1;
+                mag2=mag;
+                while (mag2>255) {
+                    ++bytes;
+                    mag2>>=8;
+                }
+                log2=log2_tbl[bytes-1];
+                ss << log2;
+                bytes=pow2_tbl[log2];
+                while (bytes>0) {
+                    ss << (const char)(mag&0xff);
+                    mag>>=8;
+                    --bytes;
+                }
                 break;
             case vtFloat:
+                flt=boost::any_cast<float>(raw);
+                ss << 'f' << flt << ';';
                 break;
             case vtBlob:
-                break;
             case vtString:
+                idx=boost::any_cast<std::string>(raw).size();
+                ss << '"'
+                   << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
+                ss << boost::any_cast<std::string>(raw);
                 break;
             case vtObref:
                 idx=boost::any_cast<obref>(raw).id;
@@ -533,18 +727,18 @@ namespace bvnet {
                    << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
                 break;
             case vtDeath:
+                idx=boost::any_cast<ob_is_gone>(raw).id;
                 ss << 'o'
                    << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3]
                    << '~';
                 break;
             }
-            boost::asio::write(
+            std::string *dynstr=new std::string(ss.str());
+            boost::asio::async_write(
                 *conn,
-                boost::asio::buffer(ss.str(),ss.str().size()));
+                boost::asio::buffer(*dynstr,dynstr->size()),
+                boost::bind(&session::on_write_done,this,dynstr));
         }
-    }
-    inline void decode(const std::string &cooked) {
-        boost::any a;
     }
 
     inline void session::dump(std::ostream &os) {
