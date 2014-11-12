@@ -12,7 +12,8 @@ opcode overview:
  object gone: objectref ~
 ```
 - db is a raw databyte
-- # is LE 32-bit unsigned integer
+- # is a LE 32-bit unsigned integer
+- len is a LE 32-bit unsigned integer
 - object gone is an incoming (OOB) message
 
 debug mode:
@@ -53,7 +54,7 @@ NB: current blockiverse implementation only uses range 0 &lt;= N &lt;= 3 (64-bit
 
 integers are little endian in support of the protocol's iterative pattern
 
-len is any unsigned integer type
+len is same as #
 
 the # indicates a raw (binary) 32-bit unsigned little-endian
 value which is considered by o to be an object ID

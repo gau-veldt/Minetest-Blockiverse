@@ -30,6 +30,9 @@ volatile bool req_serverQuit;
 
 int main(int argc, char** argv)
 {
+    extern void protocol_main_init();
+    protocol_main_init();
+
     // so matches pattern when standalone/mt
     serverActive=true;
     req_serverQuit=false;

@@ -21,6 +21,7 @@
 
 #include "common.hpp"
 #include <iomanip>
+#include <typeinfo>
 #include <stack>
 #include <queue>
 #include <boost/any.hpp>
@@ -53,6 +54,17 @@ public:
 
 namespace bvnet {
     extern u32 reg_objects_softmax;
+
+    typedef enum {
+        vtInt=1,
+        vtFloat=2,
+        vtBlob=3,
+        vtString=4,
+        vtObref=5,
+        vtDeath=6
+    } valtype;
+    typedef std::map<const char*,valtype> type_map;
+    extern type_map typeMap;
 
     struct obref {
         /* wrapper for object ref */
@@ -93,16 +105,21 @@ namespace bvnet {
     class object_null : public std::exception {
         virtual const char *what() const throw();
     };
+    class object_not_reg : public std::exception {
+        virtual const char *what() const throw();
+    };
 
     class session {
     private:
         io_service *io_;
         object *root;
         bool isActive;
+        bool isBooting;
         char in_ch;
-        char _rsvd;
+        char in_idx[4];
     protected:
         void on_recv(const boost::system::error_code &ec,size_t rlen);
+        void on_recv_oref(const boost::system::error_code &ec,size_t rlen);
 
         /* value stack */
         value_stack argstack;
@@ -111,14 +128,20 @@ namespace bvnet {
         registry *reg;      /* registered objects in session */
         mutex *synchro;     /* mutex on session manipulation */
         tcp::socket *conn;  /* connection */
+
+        u32 remoteRoot;     /* once booted has remote_root */
     public:
         session();
         virtual ~session();
 
         void notify_remove(u32 id);         /* signals that object no longer valid */
         int register_object(object *o);
+        u32 getRemote() {return remoteRoot;}
+        bool hasRemote() {return 0!=remoteRoot;}
         bool unregister(u32 id);
         bool unregister(object *ob);
+        void encode(const boost::any &a);
+        void decode(const std::string &s);
         void bootstrap(object *root);
         bool run();
         value_queue &getSendQueue() {return sendq;}
@@ -163,6 +186,8 @@ namespace bvnet {
         void notify(u32 id);
         bool unregister(u32 id);
         bool unregister(object *ob);
+        u32 idOf(object* ob);
+        object* obOf(u32 id);
 
         void dump(std::ostream &os);
     };
@@ -299,6 +324,40 @@ namespace bvnet {
         }
     }
 
+    inline u32 registry::idOf(object *ob) {
+        /*
+        **  get identify (objectref) of pointed object
+        */
+        if (ob==NULL) throw object_not_reg();   /* indicate DNE if NULL */
+        {
+            scoped_lock lock(*synchro);
+
+            omap_select_addr &table=objects.by<object_addr>();
+            omap_iter_byptr row=table.find(ob);
+            if (row!=table.end()) {
+                return row->get<object_id>();
+            }
+            throw object_not_reg();
+        }
+    }
+
+    inline object* registry::obOf(u32 id) {
+        /*
+        **  get identify (objectref) of pointed object
+        */
+        if (id==0) throw object_not_reg();  /* object id==0 is reserved */
+        {
+            scoped_lock lock(*synchro);
+
+            omap_select_id &table=objects.by<object_id>();
+            omap_iter_byid row=table.find(id);
+            if (row!=table.end()) {
+                return row->get<object_addr>();
+            }
+            throw object_not_reg();
+        }
+    }
+
     inline registry::~registry() {
         {
             scoped_lock lock(*synchro);
@@ -331,6 +390,9 @@ namespace bvnet {
     inline const char *object_null::what() const throw() {
         return "Error: Attempt to register NULL as object.";
     }
+    inline const char *object_not_reg::what() const throw() {
+        return "Object not in registry.";
+    }
 
     /*
     **  connection inlines
@@ -339,7 +401,8 @@ namespace bvnet {
         synchro=new mutex();
         reg=new registry(this);
         conn=NULL;
-        _rsvd='\0';
+        isBooting=true;
+        remoteRoot=0;
     }
     inline session::~session() {
         delete reg;
@@ -359,25 +422,70 @@ namespace bvnet {
         return reg->unregister(ob);
     }
     inline void session::bootstrap(object *sessionRoot) {
+        boost::any a;
         root=sessionRoot;
+        sendq.push(obref(reg->idOf(root)));
         isActive=true;
+    }
+    inline void session::on_recv_oref(const boost::system::error_code &ec,size_t rlen) {
+        if (isActive) {
+            if (!ec) {
+                u32 idx=*((u32*)in_idx);
+                if (isBooting) {
+                    LOCK_COUT
+                    std::cout << "session [" << this
+                              << "] remote root=" << idx
+                              << std::endl;
+                    UNLOCK_COUT
+                    remoteRoot=idx;
+                    // booted once root known
+                    isBooting=false;
+                } else {
+                    LOCK_COUT
+                    std::cout << "session [" << this
+                              << "] objectref=" << idx
+                              << std::endl;
+                    UNLOCK_COUT
+                    argstack.push(obref(idx));
+                }
+            } else {
+                LOCK_COUT
+                std::cout << "session [" << this
+                          << "] EOF"
+                          << std::endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
+        }
     }
     inline void session::on_recv(const boost::system::error_code &ec,size_t rlen) {
         if (isActive) {
             if (!ec) {
                 int ich=int(in_ch);
-                LOCK_COUT
-                std::cout << "[server] session " << this << " recv ["
-                          << rlen << "] "
-                          << std::setw(2) << std::setfill('0') << std::hex << (int)ich
-                          << " '" << ((ich>31 && ich<128)?in_ch:' ') << "'"
-                          << std::endl;
-                UNLOCK_COUT
+                switch(in_ch) {
+                case 'o':
+                    boost::asio::async_read(
+                        *conn,
+                        boost::asio::buffer(in_idx,4),
+                        boost::bind(&session::on_recv_oref,this,
+                        boost::asio::placeholders::error,
+                        boost::asio::placeholders::bytes_transferred));
+                    break;
+                default:
+                    LOCK_COUT
+                    std::cout << "session [" << this << "] recv len="
+                              << rlen << " 0x"
+                              << std::setw(2) << std::setfill('0') << std::hex << (int)ich;
+                    if (ich>31 && ich<128)
+                        std::cout << ' ' << in_ch;
+                    std::cout << std::endl;
+                    UNLOCK_COUT
+                }
             } else {
                 LOCK_COUT
-                std::cout << "[server] EOF (" << ec
-                          << ") on session " << this
-                          << " socket " << conn << std::endl;
+                std::cout << "session [" << this
+                          << "] EOF"
+                          << std::endl;
                 UNLOCK_COUT
                 isActive=false;
             }
@@ -385,6 +493,10 @@ namespace bvnet {
     }
     inline bool session::run() {
         if (isActive) {
+            while (sendq.size()>0) {
+                encode(sendq.front());
+                sendq.pop();
+            }
             boost::asio::async_read(
                 *conn,
                 boost::asio::buffer(&in_ch,1),
@@ -395,6 +507,44 @@ namespace bvnet {
             io_->reset();
         }
         return isActive;
+    }
+    inline void session::encode(const boost::any &raw) {
+        std::ostringstream ss;
+        u32 idx;
+        const char *idx_byte=(const char*)&idx;
+        type_map::iterator tmi=typeMap.find(raw.type().name());
+        if (tmi==typeMap.end()) {
+            LOCK_COUT
+            std::cout << "<unknown \"" << raw.type().name() << "\">" << std::endl;
+            UNLOCK_COUT
+        } else {
+            switch (tmi->second) {
+            case vtInt:
+                break;
+            case vtFloat:
+                break;
+            case vtBlob:
+                break;
+            case vtString:
+                break;
+            case vtObref:
+                idx=boost::any_cast<obref>(raw).id;
+                ss << 'o'
+                   << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
+                break;
+            case vtDeath:
+                ss << 'o'
+                   << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3]
+                   << '~';
+                break;
+            }
+            boost::asio::write(
+                *conn,
+                boost::asio::buffer(ss.str(),ss.str().size()));
+        }
+    }
+    inline void decode(const std::string &cooked) {
+        boost::any a;
     }
 
     inline void session::dump(std::ostream &os) {
