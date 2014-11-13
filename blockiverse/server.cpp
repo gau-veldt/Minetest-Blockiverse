@@ -108,16 +108,17 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     }
     UNLOCK_COUT
 
-    io_service io;
+    io_service acceptor_io;
     int port=v2int(server_config["port"]);
     LOCK_COUT
-    std::cout << "[server] listening on port " << port << std::endl;
+    std::cout << "[server] listening on port " << port
+              << " (io=" << &acceptor_io << ")"<< std::endl;
     UNLOCK_COUT
-    tcp::acceptor listener(io,tcp::endpoint(tcp::v4(),port));
+    tcp::acceptor listener(acceptor_io,tcp::endpoint(tcp::v4(),port));
 
     while (!req_serverQuit) {
-        io_service *sio=new io_service;
-        tcp::socket* new_conn=new tcp::socket(*sio);
+        io_service *s_chld_sess_io=new io_service;
+        tcp::socket* new_conn=new tcp::socket(*s_chld_sess_io);
         listener.accept(*new_conn);
 
         // create context object
@@ -141,7 +142,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
             NULL);          /* where to store thread id */
         if (thd!=NULL) {
             // to keep track of threads
-            sessions[thd]=sio;
+            sessions[thd]=s_chld_sess_io;
         } else {
             // TODO: error
         }
@@ -165,7 +166,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     }
 
     // get threads to start quitting
-    io.stop();
+    acceptor_io.stop();
     // wait for all threads to stop
     while (sessions.size()>0) {
         DWORD status;

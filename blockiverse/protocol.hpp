@@ -120,6 +120,7 @@ namespace bvnet {
         bool isBooting;
         bool _float_or_semi;
         bool _neg_int;
+        bool _opcode_read_queued;
         std::string _fpstr;
         char in_ch;
         char in_idx[4];
@@ -179,6 +180,9 @@ namespace bvnet {
         void set_conn(tcp::socket &s) {
             conn=&s;
             io_=&(s.get_io_service());
+            LOCK_COUT
+            std::cout << "session [" << this << "] on socket " << conn << " via io=" << io_ << std::endl;
+            UNLOCK_COUT
         }
 
         void dump(std::ostream &os);
@@ -434,6 +438,7 @@ namespace bvnet {
         isBooting=true;
         _float_or_semi=false;
         _neg_int=false;
+        _opcode_read_queued=false;
         remoteRoot=0;
     }
     inline session::~session() {
@@ -540,6 +545,7 @@ namespace bvnet {
         }
     }
     inline void session::on_recv(const boost::system::error_code &ec,size_t rlen) {
+        _opcode_read_queued=false;
         if (isActive) {
             if (!ec) {
                 int ich=int((unsigned char)in_ch);
@@ -640,36 +646,42 @@ namespace bvnet {
     }
     inline bool session::run() {
         if (isActive) {
-            //if (io_->stopped())
+            if (io_->stopped())
                 io_->reset();
             while (sendq.size()>0) {
                 encode(sendq.front());
                 sendq.pop();
             }
-            boost::asio::async_read(
-                *conn,
-                boost::asio::buffer(&in_ch,1),
-                boost::bind(&session::on_recv,this,
-                    boost::asio::placeholders::error,
-                    boost::asio::placeholders::bytes_transferred));
+            if (!_opcode_read_queued) {
+                _opcode_read_queued=true;
+                boost::asio::async_read(
+                    *conn,
+                    boost::asio::buffer(&in_ch,1),
+                    boost::bind(&session::on_recv,this,
+                        boost::asio::placeholders::error,
+                        boost::asio::placeholders::bytes_transferred));
+            }
             io_->run();
         }
         return isActive;
     }
     inline bool session::poll() {
         if (isActive) {
-            //if (io_->stopped())
+            if (io_->stopped())
                 io_->reset();
             while (sendq.size()>0) {
                 encode(sendq.front());
                 sendq.pop();
             }
-            boost::asio::async_read(
-                *conn,
-                boost::asio::buffer(&in_ch,1),
-                boost::bind(&session::on_recv,this,
-                    boost::asio::placeholders::error,
-                    boost::asio::placeholders::bytes_transferred));
+            if (!_opcode_read_queued) {
+                _opcode_read_queued=true;
+                boost::asio::async_read(
+                    *conn,
+                    boost::asio::buffer(&in_ch,1),
+                    boost::bind(&session::on_recv,this,
+                        boost::asio::placeholders::error,
+                        boost::asio::placeholders::bytes_transferred));
+            }
             io_->poll();
         }
         return isActive;
