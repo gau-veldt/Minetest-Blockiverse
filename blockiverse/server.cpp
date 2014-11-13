@@ -53,7 +53,7 @@ public:
 
 DWORD WINAPI server_boot(LPVOID lpvCtx) {
     /*
-    ** entry point for client session thread
+    ** entry point for server slave connected to client
     */
     context &ctx=*((context*)lpvCtx);   // make a proper reference
     context_manager raii_ctx(&ctx);     // proper cleanup on thread exit
