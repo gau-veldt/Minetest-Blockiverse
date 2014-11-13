@@ -22,6 +22,7 @@
 #include "common.hpp"
 #include <iomanip>
 #include <typeinfo>
+#include <exception>
 #include <stack>
 #include <queue>
 #include <boost/any.hpp>
@@ -645,44 +646,62 @@ namespace bvnet {
         }
     }
     inline bool session::run() {
-        if (isActive) {
-            if (io_->stopped())
-                io_->reset();
-            while (sendq.size()>0) {
-                encode(sendq.front());
-                sendq.pop();
+        try {
+            if (isActive) {
+                if (io_->stopped())
+                    io_->reset();
+                while (sendq.size()>0) {
+                    encode(sendq.front());
+                    sendq.pop();
+                }
+                if (!_opcode_read_queued) {
+                    _opcode_read_queued=true;
+                    boost::asio::async_read(
+                        *conn,
+                        boost::asio::buffer(&in_ch,1),
+                        boost::bind(&session::on_recv,this,
+                            boost::asio::placeholders::error,
+                            boost::asio::placeholders::bytes_transferred));
+                }
+                io_->run();
             }
-            if (!_opcode_read_queued) {
-                _opcode_read_queued=true;
-                boost::asio::async_read(
-                    *conn,
-                    boost::asio::buffer(&in_ch,1),
-                    boost::bind(&session::on_recv,this,
-                        boost::asio::placeholders::error,
-                        boost::asio::placeholders::bytes_transferred));
-            }
-            io_->run();
+        } catch (std::exception &e) {
+            isActive=false;
+            LOCK_COUT
+            std::cout << "Session " << this << " error: " << e.what()
+                      << " (connection closed)" << std::endl;
+            UNLOCK_COUT
+            isActive=false;
         }
         return isActive;
     }
     inline bool session::poll() {
-        if (isActive) {
-            if (io_->stopped())
-                io_->reset();
-            while (sendq.size()>0) {
-                encode(sendq.front());
-                sendq.pop();
+        try {
+            if (isActive) {
+                if (io_->stopped())
+                    io_->reset();
+                while (sendq.size()>0) {
+                    encode(sendq.front());
+                    sendq.pop();
+                }
+                if (!_opcode_read_queued) {
+                    _opcode_read_queued=true;
+                    boost::asio::async_read(
+                        *conn,
+                        boost::asio::buffer(&in_ch,1),
+                        boost::bind(&session::on_recv,this,
+                            boost::asio::placeholders::error,
+                            boost::asio::placeholders::bytes_transferred));
+                }
+                io_->poll();
             }
-            if (!_opcode_read_queued) {
-                _opcode_read_queued=true;
-                boost::asio::async_read(
-                    *conn,
-                    boost::asio::buffer(&in_ch,1),
-                    boost::bind(&session::on_recv,this,
-                        boost::asio::placeholders::error,
-                        boost::asio::placeholders::bytes_transferred));
-            }
-            io_->poll();
+        } catch (std::exception &e) {
+            isActive=false;
+            LOCK_COUT
+            std::cout << "Session " << this << " error: " << e.what()
+                      << " (connection closed)" << std::endl;
+            UNLOCK_COUT
+            isActive=false;
         }
         return isActive;
     }
