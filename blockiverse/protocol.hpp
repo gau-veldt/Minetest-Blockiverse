@@ -112,6 +112,9 @@ namespace bvnet {
     class object_not_reg : public std::exception {
         virtual const char *what() const throw();
     };
+    class argstack_empty : public std::exception {
+        virtual const char *what() const throw();
+    };
 
     class session {
     private:
@@ -428,6 +431,9 @@ namespace bvnet {
     inline const char *object_not_reg::what() const throw() {
         return "Object not in registry.";
     }
+    inline const char *argstack_empty::what() const throw() {
+        return "Object access when argument stack is empty.";
+    }
 
     /*
     **  connection inlines
@@ -611,9 +617,13 @@ namespace bvnet {
                             boost::asio::placeholders::bytes_transferred));
                         break;
                     case '~':
-                        obid=(boost::any_cast<obref>(argstack.top())).id;
-                        argstack.pop();
-                        argstack.push(ob_is_gone(obid));
+                        if (argstack.size()>0) {
+                            obid=(boost::any_cast<obref>(argstack.top())).id;
+                            argstack.pop();
+                            argstack.push(ob_is_gone(obid));
+                        } else {
+                            throw argstack_empty();
+                        }
                         break;
                     default:
                         LOCK_COUT
