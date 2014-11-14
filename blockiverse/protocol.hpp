@@ -30,6 +30,7 @@
 #include <boost/bimap.hpp>
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
+#include <boost/function.hpp>
 #include <boost/bind.hpp>
 
 using boost::asio::ip::tcp;
@@ -55,6 +56,8 @@ public:
 };
 #define LOCK_COUT {scoped_cout_lock __scl;
 #define UNLOCK_COUT }
+
+typedef boost::function<void()> lpvFunc;
 
 namespace bvnet {
     extern u32 reg_objects_softmax;
@@ -87,7 +90,9 @@ namespace bvnet {
         /* wrapper for method call message */
         u32 id;
         u32 idx;
-        method_call(u32 i,u32 m):id(i),idx(m) {}
+        lpvFunc callbk;
+        int rcount;
+        method_call(u32 i,u32 m,lpvFunc cb,int rnum):id(i),idx(m),callbk(cb),rcount(rnum) {}
         ~method_call() {}
     };
 
@@ -108,6 +113,7 @@ namespace bvnet {
     typedef std::stack<boost::any> value_stack;
     typedef std::queue<boost::any> value_queue;
     typedef std::map<u32,bool> proxy_map;
+    typedef std::map<size_t,lpvFunc> notify_map;
     typedef boost::mutex mutex;
     typedef boost::mutex::scoped_lock scoped_lock;
 
@@ -148,11 +154,14 @@ namespace bvnet {
         void on_recv_len(const boost::system::error_code &ec,size_t rlen);
         void on_recv_s64(const boost::system::error_code &ec,u32 bsize);
         void on_write_done(std::string *finsihedbuf);
+        void on_write_call_done(std::string *finishedbuf,lpvFunc cb);
+        void check_argnotify();
 
         /* value stack */
         value_stack argstack;
         value_queue sendq;
         proxy_map   proxy;
+        notify_map  argnotify;
 
         registry *reg;      /* registered objects in session */
         mutex *synchro;     /* mutex on session manipulation */
@@ -196,7 +205,7 @@ namespace bvnet {
         void send_string(std::string val) {sendq.push(val);}
         void send_string(std::string &val) {sendq.push(val);}
         void send_obref(u32 id) {sendq.push(obref(id));}
-        void send_call(u32 id,u32 m) {sendq.push(method_call(id,m));}
+        void send_call(u32 id,u32 m,lpvFunc cb=NULL,int rcount=0) {sendq.push(method_call(id,m,cb,rcount));}
         bool isValidObject(u32 obid) {
             return (proxy.find(obid)!=proxy.end());
         }
@@ -497,6 +506,10 @@ namespace bvnet {
     inline void session::on_write_done(std::string *finishedbuf) {
         delete finishedbuf;
     }
+    inline void session::on_write_call_done(std::string *finishedbuf,lpvFunc cb) {
+        delete finishedbuf;
+        cb();
+    }
     inline void session::on_recv_oref(const boost::system::error_code &ec,size_t rlen) {
         if (isActive) {
             if (!ec) {
@@ -513,6 +526,7 @@ namespace bvnet {
                     isBooting=false;
                 } else {
                     argstack.push(obref(idx));
+                    check_argnotify();
                 }
             } else {
                 LOCK_COUT
@@ -528,6 +542,7 @@ namespace bvnet {
     inline void session::on_recv_str(const boost::system::error_code &ec,char* buf) {
         if (!ec) {
             argstack.push(std::string(buf));
+            check_argnotify();
         } else {
             LOCK_COUT
             std::cout << "session [" << this
@@ -630,6 +645,7 @@ namespace bvnet {
                 s64 val=*in_val;
                 if (_neg_int) val=-val;
                 argstack.push(val);
+                check_argnotify();
                 _neg_int=false;
             } else {
                 LOCK_COUT
@@ -654,6 +670,7 @@ namespace bvnet {
                         std::istringstream cvt(_fpstr);
                         cvt >> flt;
                         argstack.push(flt);
+                        check_argnotify();
                     } else {
                         _fpstr+=in_ch;
                     }
@@ -749,6 +766,15 @@ namespace bvnet {
                 UNLOCK_COUT
                 isActive=false;
             }
+        }
+    }
+    inline void session::check_argnotify() {
+        /*
+        **  Notifies stored callback when argstack reaches specified size
+        */
+        if (argnotify.find(argstack.size())!=argnotify.end()) {
+            argnotify[argstack.size()]();
+            argnotify.erase(argstack.size());
         }
     }
     inline bool session::run() {
@@ -877,6 +903,19 @@ namespace bvnet {
                 break;
             }
             std::string *dynstr=new std::string(ss.str());
+            if (tmi->second==vtMethod
+                && boost::any_cast<method_call>(raw).callbk!=NULL) {
+                if (boost::any_cast<method_call>(raw).rcount==0) {
+                    // a non-null callback of rcount 0 notifies
+                    // when the queued method call processed
+                    boost::any_cast<method_call>(raw).callbk();
+                } else {
+                    // otherwise the notify is set for when
+                    // argstack reaches size current_size+rcount
+                    argnotify[argstack.size()+boost::any_cast<method_call>(raw).rcount]=
+                        boost::any_cast<method_call>(raw).callbk;
+                }
+            }
             boost::asio::async_write(
                 *conn,
                 boost::asio::buffer(*dynstr,dynstr->size()),

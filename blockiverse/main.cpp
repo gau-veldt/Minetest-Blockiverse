@@ -88,6 +88,13 @@ class ClientEventReceiver : public IEventReceiver {
     }
 };
 
+void testNotify(bvnet::session *s) {
+    std::string rc=s->getarg<std::string>();
+    LOCK_COUT
+    std::cout << "serverRoot.getType() returned \"" << rc << '"' << std::endl;
+    UNLOCK_COUT
+}
+
 int main(int argc, char** argv)
 {
     extern void protocol_main_init();
@@ -173,6 +180,13 @@ int main(int argc, char** argv)
         LOCK_COUT
         std::cout << "client's serverRoot=" << client_session.getRemote() << std::endl;
         UNLOCK_COUT
+
+        /*
+        **  Test method call mechanism
+        */
+        client_session.send_call(1 /* serverRoot */,0 /* getType */,
+                                 boost::bind(testNotify,&client_session),
+                                 1 /* expects one argument */);
 
         /*
         The most important function of the engine is the 'createDevice'
@@ -273,7 +287,6 @@ int main(int argc, char** argv)
         want to run any more. This would be when the user closed the window
         or pressed ALT+F4 in windows.
         */
-        client_session.send_call(1 /* serverRoot */,0 /* getType */);
         while(device->run() && client_session.poll() /* client still connected */)
         {
             if (client_session.argcount()>0) {
