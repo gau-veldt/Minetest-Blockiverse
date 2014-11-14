@@ -65,7 +65,8 @@ namespace bvnet {
         vtBlob=3,
         vtString=4,
         vtObref=5,
-        vtDeath=6
+        vtDeath=6,
+        vtMethod=7
     } valtype;
     typedef std::map<const char*,valtype> type_map;
     extern type_map typeMap;
@@ -81,6 +82,13 @@ namespace bvnet {
         u32 id;
         ob_is_gone(u32 i):id(i) {}
         ~ob_is_gone() {}
+    };
+    struct method_call {;
+        /* wrapper for method call message */
+        u32 id;
+        u32 idx;
+        method_call(u32 i,u32 m):id(i),idx(m) {}
+        ~method_call() {}
     };
 
     class object;
@@ -131,6 +139,7 @@ namespace bvnet {
         char in_s64[8];
     protected:
         void on_recv(const boost::system::error_code &ec,size_t rlen);
+        void on_recv_method_id(const boost::system::error_code &ec,obref obid);
         void on_recv_oref(const boost::system::error_code &ec,size_t rlen);
         void on_recv_str(const boost::system::error_code &ec,char *buf);
         void on_recv_len(const boost::system::error_code &ec,size_t rlen);
@@ -158,14 +167,20 @@ namespace bvnet {
         bool unregister(object *ob);
         void encode(const boost::any &a);
         valtype argtype() {
-            return typeMap[argstack.top().type().name()];
+            if (argstack.size()>0) {
+                return typeMap[argstack.top().type().name()];
+            }
+            throw argstack_empty();
         }
         int argcount() {return argstack.size();}
         template<typename V>
         V getarg() {
-            V rc=boost::any_cast<V>(argstack.top());
-            argstack.pop();
-            return rc;
+            if (argstack.size()>0) {
+                V rc=boost::any_cast<V>(argstack.top());
+                argstack.pop();
+                return rc;
+            }
+            throw argstack_empty();
         }
         void bootstrap(object *root);
         void send_int(s64 val) {sendq.push(val);}
@@ -176,7 +191,8 @@ namespace bvnet {
         void send_blob(std::string &val) {sendq.push(val);}
         void send_string(std::string val) {sendq.push(val);}
         void send_string(std::string &val) {sendq.push(val);}
-        void send_obref(object *ob);
+        void send_obref(u32 id) {sendq.push(obref(id));}
+        void send_call(u32 id,u32 m) {sendq.push(method_call(id,m));}
         bool run();
         bool poll();
         value_queue &getSendQueue() {return sendq;}
@@ -471,9 +487,6 @@ namespace bvnet {
         sendq.push(obref(reg->idOf(root)));
         isActive=true;
     }
-    inline void session::send_obref(object *ob) {
-        sendq.push(obref(reg->idOf(ob)));
-    }
     inline void session::on_write_done(std::string *finishedbuf) {
         delete finishedbuf;
     }
@@ -484,19 +497,13 @@ namespace bvnet {
                 if (isBooting) {
                     LOCK_COUT
                     std::cout << "session [" << this
-                              << "] remote root=" << idx
+                              << "] booted: remote root=" << idx
                               << std::endl;
                     UNLOCK_COUT
                     remoteRoot=idx;
                     // booted once root known
                     isBooting=false;
                 } else {
-                    LOCK_COUT
-                    std::cout << "session [" << this
-                              << "] objectref=" << idx
-                              << " (" << ec << ")"
-                              << std::endl;
-                    UNLOCK_COUT
                     argstack.push(obref(idx));
                 }
             } else {
@@ -513,6 +520,14 @@ namespace bvnet {
     inline void session::on_recv_str(const boost::system::error_code &ec,char* buf) {
         if (!ec) {
             argstack.push(std::string(buf));
+        } else {
+            LOCK_COUT
+            std::cout << "session [" << this
+                      << "] expected string data got EOF"
+                      << " (" << ec << ")"
+                      << std::endl;
+            UNLOCK_COUT
+            isActive=false;
         }
         delete [] buf;
     }
@@ -526,9 +541,39 @@ namespace bvnet {
                     *conn,
                     boost::asio::buffer(pstr,idx),
                     boost::bind(&session::on_recv_str,this,
-                    boost::asio::placeholders::error,
-                    pstr));
+                        boost::asio::placeholders::error,
+                        pstr));
 
+            } else {
+                LOCK_COUT
+                std::cout << "session [" << this
+                          << "] expected string len got EOF"
+                          << " (" << ec << ")"
+                          << std::endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
+        }
+    }
+    inline void session::on_recv_method_id(const boost::system::error_code &ec,obref obid) {
+        if (isActive) {
+            if (!ec) {
+                u32 idx=*((u32*)in_idx);
+                object *ob=reg->obOf(obid.id);
+                LOCK_COUT
+                std::cout << "Session [" << this << "] call "
+                          << ob->getType() << '[' << ob << "]." << idx
+                          << std::endl;
+                UNLOCK_COUT
+                ob->methodCall(idx);
+            } else {
+                LOCK_COUT
+                std::cout << "session [" << this
+                          << "] expected method id got EOF"
+                          << " (" << ec << ")"
+                          << std::endl;
+                UNLOCK_COUT
+                isActive=false;
             }
         }
     }
@@ -569,7 +614,7 @@ namespace bvnet {
                 } else {
                     u32 obid,bsize;
                     switch(in_ch) {
-                    /* integer value of 2^N bytes */
+                /* integer value of 2^N bytes */
                     case '0':
                     case '1':
                     case '2':
@@ -586,8 +631,8 @@ namespace bvnet {
                             *conn,
                             boost::asio::buffer(in_s64,bsize),
                             boost::bind(&session::on_recv_s64,this,
-                            boost::asio::placeholders::error,
-                            bsize));
+                                boost::asio::placeholders::error,
+                                bsize));
                         break;
                     case '-':
                         _neg_int=true;
@@ -605,16 +650,30 @@ namespace bvnet {
                             *conn,
                             boost::asio::buffer(in_idx,4),
                             boost::bind(&session::on_recv_len,this,
-                            boost::asio::placeholders::error,
-                            boost::asio::placeholders::bytes_transferred));
+                                boost::asio::placeholders::error,
+                                boost::asio::placeholders::bytes_transferred));
                         break;
                     case 'o':
                         boost::asio::async_read(
                             *conn,
                             boost::asio::buffer(in_idx,4),
                             boost::bind(&session::on_recv_oref,this,
-                            boost::asio::placeholders::error,
-                            boost::asio::placeholders::bytes_transferred));
+                                boost::asio::placeholders::error,
+                                boost::asio::placeholders::bytes_transferred));
+                        break;
+                    case '.':
+                        if (argstack.size()>0) {
+                            obref callee=(boost::any_cast<obref>(argstack.top()));
+                            argstack.pop();
+                            boost::asio::async_read(
+                                *conn,
+                                boost::asio::buffer(in_idx,4),
+                                boost::bind(&session::on_recv_method_id,this,
+                                    boost::asio::placeholders::error,
+                                    callee));
+                        } else {
+                            throw argstack_empty();
+                        }
                         break;
                     case '~':
                         if (argstack.size()>0) {
@@ -678,8 +737,8 @@ namespace bvnet {
         } catch (std::exception &e) {
             isActive=false;
             LOCK_COUT
-            std::cout << "Session " << this << " error: " << e.what()
-                      << " (connection closed)" << std::endl;
+            std::cout << "Session [" << this << "] closed: "
+                      << e.what() << std::endl;
             UNLOCK_COUT
             isActive=false;
         }
@@ -773,12 +832,20 @@ namespace bvnet {
                    << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3]
                    << '~';
                 break;
+            case vtMethod:
+                idx=boost::any_cast<method_call>(raw).id;
+                ss << 'o'
+                   << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3]
+                   << '.';
+                idx=boost::any_cast<method_call>(raw).idx;
+                ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
+                break;
             }
             std::string *dynstr=new std::string(ss.str());
             boost::asio::async_write(
                 *conn,
                 boost::asio::buffer(*dynstr,dynstr->size()),
-                boost::bind(&session::on_write_done,this,dynstr));
+                    boost::bind(&session::on_write_done,this,dynstr));
         }
     }
 

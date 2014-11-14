@@ -65,14 +65,6 @@ DWORD WINAPI server_boot(LPVOID lpvCtx) {
 
     ctx.session->bootstrap(ctx.root);
 
-    /* some testy type stuff */
-    ctx.session->send_int(1001);
-    ctx.session->send_string("Hello, World!");
-    ctx.session->send_float(7.361e-5);
-    ctx.session->send_int(-31337);
-    ctx.session->send_string("foobar");
-    ctx.session->send_float(-1.367e10);
-
     while (!req_serverQuit && ctx.session->run()) {
         /* until session dies or server shutdown */
     }

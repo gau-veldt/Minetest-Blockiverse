@@ -273,6 +273,7 @@ int main(int argc, char** argv)
         want to run any more. This would be when the user closed the window
         or pressed ALT+F4 in windows.
         */
+        client_session.send_call(1 /* serverRoot */,0 /* getType */);
         while(device->run() && client_session.poll() /* client still connected */)
         {
             if (client_session.argcount()>0) {
@@ -304,6 +305,10 @@ int main(int argc, char** argv)
                     std::cout << "Client's objectref #"
                               << client_session.getarg<bvnet::ob_is_gone>().id
                               << " is dead" << std::endl;
+                    break;
+                case bvnet::vtMethod:
+                    std::cout << "<Method calls should not be visible>"
+                              << std::endl;
                     break;
                 }
                 UNLOCK_COUT
