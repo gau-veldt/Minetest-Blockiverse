@@ -139,7 +139,9 @@ namespace bvnet {
         char in_s64[8];
     protected:
         void on_recv(const boost::system::error_code &ec,size_t rlen);
-        void on_recv_method_id(const boost::system::error_code &ec,obref obid);
+        void on_recv_dead_obid(const boost::system::error_code &ec);
+        void on_recv_call_obid(const boost::system::error_code &ec);
+        void on_recv_call_idx(const boost::system::error_code &ec,u32 obid);
         void on_recv_oref(const boost::system::error_code &ec,size_t rlen);
         void on_recv_str(const boost::system::error_code &ec,char *buf);
         void on_recv_len(const boost::system::error_code &ec,size_t rlen);
@@ -555,11 +557,48 @@ namespace bvnet {
             }
         }
     }
-    inline void session::on_recv_method_id(const boost::system::error_code &ec,obref obid) {
+    inline void session::on_recv_dead_obid(const boost::system::error_code &ec) {
+        if (isActive) {
+            if (!ec) {
+                u32 obid=*((u32*)in_idx);
+                sendq.push(ob_is_gone(obid));
+            } else {
+                LOCK_COUT
+                std::cout << "session [" << this
+                          << "] expected dead objectid got EOF"
+                          << " (" << ec << ")"
+                          << std::endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
+        }
+    }
+    inline void session::on_recv_call_obid(const boost::system::error_code &ec) {
+        if (isActive) {
+            if (!ec) {
+                u32 obid=*((u32*)in_idx);
+                boost::asio::async_read(
+                    *conn,
+                    boost::asio::buffer(in_idx,4),
+                    boost::bind(&session::on_recv_call_idx,this,
+                        boost::asio::placeholders::error,
+                        obid));
+            } else {
+                LOCK_COUT
+                std::cout << "session [" << this
+                          << "] expected callee objectid got EOF"
+                          << " (" << ec << ")"
+                          << std::endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
+        }
+    }
+    inline void session::on_recv_call_idx(const boost::system::error_code &ec,u32 obid) {
         if (isActive) {
             if (!ec) {
                 u32 idx=*((u32*)in_idx);
-                object *ob=reg->obOf(obid.id);
+                object *ob=reg->obOf(obid);
                 LOCK_COUT
                 std::cout << "Session [" << this << "] call "
                           << ob->getType() << '[' << ob << "]." << idx
@@ -569,7 +608,7 @@ namespace bvnet {
             } else {
                 LOCK_COUT
                 std::cout << "session [" << this
-                          << "] expected method id got EOF"
+                          << "] expected method idx got EOF"
                           << " (" << ec << ")"
                           << std::endl;
                 UNLOCK_COUT
@@ -612,7 +651,7 @@ namespace bvnet {
                         _fpstr+=in_ch;
                     }
                 } else {
-                    u32 obid,bsize;
+                    u32 bsize;
                     switch(in_ch) {
                 /* integer value of 2^N bytes */
                     case '0':
@@ -662,27 +701,18 @@ namespace bvnet {
                                 boost::asio::placeholders::bytes_transferred));
                         break;
                     case '.':
-                        if (argstack.size()>0) {
-                            obref callee=(boost::any_cast<obref>(argstack.top()));
-                            argstack.pop();
-                            boost::asio::async_read(
-                                *conn,
-                                boost::asio::buffer(in_idx,4),
-                                boost::bind(&session::on_recv_method_id,this,
-                                    boost::asio::placeholders::error,
-                                    callee));
-                        } else {
-                            throw argstack_empty();
-                        }
+                        boost::asio::async_read(
+                            *conn,
+                            boost::asio::buffer(in_idx,4),
+                            boost::bind(&session::on_recv_call_obid,this,
+                                boost::asio::placeholders::error));
                         break;
                     case '~':
-                        if (argstack.size()>0) {
-                            obid=(boost::any_cast<obref>(argstack.top())).id;
-                            argstack.pop();
-                            argstack.push(ob_is_gone(obid));
-                        } else {
-                            throw argstack_empty();
-                        }
+                        boost::asio::async_read(
+                            *conn,
+                            boost::asio::buffer(in_idx,4),
+                            boost::bind(&session::on_recv_dead_obid,this,
+                                boost::asio::placeholders::error));
                         break;
                     default:
                         LOCK_COUT
@@ -828,15 +858,13 @@ namespace bvnet {
                 break;
             case vtDeath:
                 idx=boost::any_cast<ob_is_gone>(raw).id;
-                ss << 'o'
-                   << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3]
-                   << '~';
+                ss << '~'
+                   << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
                 break;
             case vtMethod:
+                ss << '.';
                 idx=boost::any_cast<method_call>(raw).id;
-                ss << 'o'
-                   << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3]
-                   << '.';
+                ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
                 idx=boost::any_cast<method_call>(raw).idx;
                 ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
                 break;

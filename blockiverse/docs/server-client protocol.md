@@ -7,14 +7,14 @@ opcode overview:
        float: f [-] [<whole digits>] [.<fraction digits>] [e<exponent digits>] ;
         blob: b len data
       string: " len data
-   objectref: o #
- method call: objectref # .
- object gone: objectref ~
+   objectref: o id
+ method call: . id method
+ object gone: ~ id
 ```
 - db is a raw databyte
-- # is a LE 32-bit unsigned integer
 - len is a LE 32-bit unsigned integer
-- object gone is an incoming (OOB) message
+- id is LE 32-bit unsigned integer object id
+- method is LE 32-bit unsigned integer method index
 
 debug mode:
 when built debug all binary values (except blobs)
@@ -59,7 +59,7 @@ len is same as #
 the # indicates a raw (binary) 32-bit unsigned little-endian
 value which is considered by o to be an object ID
 ```
-binary blob: * len data
+binary blob: b len data
      string: " len data
   objectref: o #
 ```
@@ -69,13 +69,12 @@ datavalues push onto a stack when encountered on the agent's inbound stream
 
 a method call is the steam pattern:
 ```
-objectref # .
+. id method
 ```
-. consumes the # and objectref previously stacked and invokes method # of objectref
 
 so the stream:
 ```
-o 0x01 0x00 0x00 0x00 0x10 0x00 0x00 0x00 .
+. 0x01 0x00 0x00 0x00 0x10 0x00 0x00 0x00
 ```
 calls method 0x00000010 (16) of object 0x00000001 (1)
 
@@ -92,7 +91,7 @@ stack empty when an argument is required raises an error condition
 
 the pattern:
 ```
-objectref ~
+~ id
 ```
 indicates a previous object no longer exists
 well designed client and server should send such messages whenever
