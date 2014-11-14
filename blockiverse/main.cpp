@@ -21,10 +21,12 @@
 #include "common.hpp"
 #include <windows.h>
 #include <irrlicht.h>
+#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
+#include "rsa/RSA.h"
 #include "protocol.hpp"
 #include <boost/variant.hpp>
 #include <boost/lexical_cast.hpp>
@@ -118,6 +120,75 @@ int main(int argc, char** argv)
         ++setting;
     }
     UNLOCK_COUT
+
+    /*
+    ** load client keypair
+    ** or generate if they do not exist
+    */
+    BigInt pub_mod,pub_exp,priv_mod,priv_exp;
+    KeyPair *client_kpair=NULL;
+    std::string s;
+    LOCK_COUT
+    std::cout << "Loading client keys..." << std::endl;
+    UNLOCK_COUT
+    try {
+        std::ifstream keyfile;
+        keyfile.exceptions(std::ios::failbit | std::ios::badbit);
+        keyfile.open("client.keys",std::ios::in);
+        keyfile >> s;
+        priv_mod=BigInt(s);
+        keyfile >> s;
+        priv_exp=BigInt(s);
+        keyfile >> s;
+        pub_mod=BigInt(s);
+        keyfile >> s;
+        pub_exp=BigInt(s);
+        client_kpair=new KeyPair(Key(priv_mod,priv_exp),Key(pub_mod,pub_exp));
+    } catch (std::exception &e) {
+        LOCK_COUT
+        std::cout << "Failed to read keyfile: " << e.what() << std::endl;
+        UNLOCK_COUT
+    }
+    if (client_kpair==NULL) {
+        LOCK_COUT
+        std::cout << "Generating new client key" << std::endl
+                  << "  This is only done once,"  << std::endl
+                  << "  but it takes several minutes..." << std::endl;
+        UNLOCK_COUT
+        /*
+        ** 100 is 332-bit RSA key
+        ** this already takes several minutes
+        ** and the industry is moving to
+        ** 2048-bit keys (617)!!! :(
+        */
+        KeyPair temp_kp=RSA::GenerateKeyPair(/*617*/100);
+        priv_mod=temp_kp.GetPrivateKey().GetModulus();
+        priv_exp=temp_kp.GetPrivateKey().GetExponent();
+        pub_mod=temp_kp.GetPublicKey().GetModulus();
+        pub_exp=temp_kp.GetPublicKey().GetExponent();
+        client_kpair=new KeyPair(Key(priv_mod,priv_exp),Key(pub_mod,pub_exp));
+        LOCK_COUT
+        std::cout << "New client key generated." << std::endl;
+        UNLOCK_COUT
+        try {
+            // write key
+            std::ofstream keyfile;
+            keyfile.exceptions(std::ios::failbit | std::ios::badbit);
+            keyfile.open("client.keys",std::ios::out|std::ios::trunc);
+            keyfile << priv_mod << std::endl;
+            keyfile << priv_exp << std::endl;
+            keyfile << pub_mod << std::endl;
+            keyfile << pub_exp << std::endl;
+            keyfile.close();
+        } catch (std::exception &e) {
+            LOCK_COUT
+            std::cout << "Failed to write keyfile: " << e.what() << std::endl;
+            UNLOCK_COUT
+        }
+    }
+    //LOCK_COUT
+    //std::cout << *client_kpair << std::endl;
+    //UNLOCK_COUT
 
     /*
     ** start server when running standalone
