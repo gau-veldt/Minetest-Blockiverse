@@ -107,6 +107,7 @@ namespace bvnet {
     typedef object_map::map_by<object_addr>::type omap_select_addr;
     typedef std::stack<boost::any> value_stack;
     typedef std::queue<boost::any> value_queue;
+    typedef std::map<u32,bool> proxy_map;
     typedef boost::mutex mutex;
     typedef boost::mutex::scoped_lock scoped_lock;
 
@@ -151,6 +152,7 @@ namespace bvnet {
         /* value stack */
         value_stack argstack;
         value_queue sendq;
+        proxy_map   proxy;
 
         registry *reg;      /* registered objects in session */
         mutex *synchro;     /* mutex on session manipulation */
@@ -195,6 +197,9 @@ namespace bvnet {
         void send_string(std::string &val) {sendq.push(val);}
         void send_obref(u32 id) {sendq.push(obref(id));}
         void send_call(u32 id,u32 m) {sendq.push(method_call(id,m));}
+        bool isValidObject(u32 obid) {
+            return (proxy.find(obid)!=proxy.end());
+        }
         bool run();
         bool poll();
         value_queue &getSendQueue() {return sendq;}
@@ -496,6 +501,7 @@ namespace bvnet {
         if (isActive) {
             if (!ec) {
                 u32 idx=*((u32*)in_idx);
+                proxy[idx]=true;
                 if (isBooting) {
                     LOCK_COUT
                     std::cout << "session [" << this
@@ -561,7 +567,8 @@ namespace bvnet {
         if (isActive) {
             if (!ec) {
                 u32 obid=*((u32*)in_idx);
-                sendq.push(ob_is_gone(obid));
+                /* proxy eliminates need for death messages in argstack */
+                proxy.erase(obid);
             } else {
                 LOCK_COUT
                 std::cout << "session [" << this
