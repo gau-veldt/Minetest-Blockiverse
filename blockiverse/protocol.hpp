@@ -772,9 +772,12 @@ namespace bvnet {
         /*
         **  Notifies stored callback when argstack reaches specified size
         */
-        if (argnotify.find(argstack.size())!=argnotify.end()) {
-            argnotify[argstack.size()]();
-            argnotify.erase(argstack.size());
+        size_t slot=argstack.size();
+        lpvFunc cb;
+        if (argnotify.find(slot)!=argnotify.end()) {
+            cb=argnotify[slot];
+            argnotify.erase(slot);
+            cb();
         }
     }
     inline bool session::run() {
@@ -840,6 +843,7 @@ namespace bvnet {
     inline void session::encode(const boost::any &raw) {
         std::ostringstream ss;
         u32 idx;
+        method_call mc(0,0,NULL,0);
         const char *idx_byte=(const char*)&idx;
         type_map::iterator tmi=typeMap.find(raw.type().name());
         if (tmi==typeMap.end()) {
@@ -895,25 +899,33 @@ namespace bvnet {
                    << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
                 break;
             case vtMethod:
+                mc=boost::any_cast<method_call>(raw);
+                /*LOCK_COUT
+                std::cout << "call #" << mc.id << '.' << mc.idx
+                          << "() cb=" << mc.callbk
+                          << ", rcount=" << mc.rcount
+                          << ", stack=" << argstack.size() << std::endl;
+                UNLOCK_COUT*/
                 ss << '.';
-                idx=boost::any_cast<method_call>(raw).id;
+                idx=mc.id;
                 ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
-                idx=boost::any_cast<method_call>(raw).idx;
+                idx=mc.idx;
                 ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
                 break;
             }
             std::string *dynstr=new std::string(ss.str());
             if (tmi->second==vtMethod
-                && boost::any_cast<method_call>(raw).callbk!=NULL) {
-                if (boost::any_cast<method_call>(raw).rcount==0) {
-                    // a non-null callback of rcount 0 notifies
+                && mc.callbk) {
+                // only if callback not null
+                if (mc.rcount==0) {
+                    // a callback of rcount 0 notifies
                     // when the queued method call processed
-                    boost::any_cast<method_call>(raw).callbk();
+                    mc.callbk();
                 } else {
                     // otherwise the notify is set for when
                     // argstack reaches size current_size+rcount
-                    argnotify[argstack.size()+boost::any_cast<method_call>(raw).rcount]=
-                        boost::any_cast<method_call>(raw).callbk;
+                    argnotify[argstack.size()+mc.rcount]=
+                        mc.callbk;
                 }
             }
             boost::asio::async_write(

@@ -23,13 +23,16 @@
 #include <irrlicht.h>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <string>
 #include <vector>
 #include "rsa/RSA.h"
+#include "sha1.hpp"
 #include "protocol.hpp"
 #include <boost/variant.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/uuid/sha1.hpp>
 #include "server.hpp"
 #include "client.hpp"
 #include "settings.hpp"
@@ -93,7 +96,30 @@ class ClientEventReceiver : public IEventReceiver {
 void testNotify(bvnet::session *s) {
     std::string rc=s->getarg<std::string>();
     LOCK_COUT
-    std::cout << "serverRoot.getType() returned \"" << rc << '"' << std::endl;
+    std::cout << "serverRoot.getType() returned " << rc << std::endl;
+    UNLOCK_COUT
+}
+
+void testLogin(bvnet::session *s,KeyPair *ckey) {
+    std::string erc=s->getarg<std::string>();
+    LOCK_COUT
+    std::cout << "Decrypting server challenge..." << std::endl;
+    UNLOCK_COUT
+    std::string rc=RSA::Decrypt(erc,ckey->GetPrivateKey());
+    LOCK_COUT
+    std::cout << "    decrypted: " << rc << std::endl;
+    UNLOCK_COUT
+    SHA1 rcdig;
+    rcdig.addBytes(rc.c_str(),rc.size());
+    unsigned char *dig=rcdig.getDigest();
+    std::ostringstream ss;
+    for (int i=0;i<20;++i)
+        ss << std::setfill('0') << std::setw(2) << std::hex
+           << (unsigned int)dig[i];
+    std::string rcsha=ss.str();
+    free(dig);
+    LOCK_COUT
+    std::cout << "    SHA1: " << rcsha << std::endl;
     UNLOCK_COUT
 }
 
@@ -258,6 +284,13 @@ int main(int argc, char** argv)
         client_session.send_call(1 /* serverRoot */,0 /* getType */,
                                  boost::bind(testNotify,&client_session),
                                  1 /* expects one argument */);
+        client_session.run();
+        client_session.send_string(client_kpair->GetPublicKey().GetModulus());
+        client_session.send_string(client_kpair->GetPublicKey().GetExponent());
+        client_session.send_call(1 /* serverRoot */,1 /* LoginClient */,
+                                 boost::bind(testLogin,&client_session,client_kpair),
+                                 1 /* expects one argument */);
+        client_session.run();
 
         /*
         The most important function of the engine is the 'createDevice'
