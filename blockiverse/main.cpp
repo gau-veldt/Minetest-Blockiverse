@@ -100,8 +100,15 @@ void testNotify(bvnet::session *s) {
     UNLOCK_COUT
 }
 
-void testLogin(bvnet::session *s,KeyPair *ckey) {
+void loginDone(bvnet::session *s,bool *authOk,bool *doneFlag) {
+    int rc=(int)s->getarg<s64>();
+    *authOk=rc;
+    *doneFlag=true;
+}
+
+void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
     std::string erc=s->getarg<std::string>();
+    std::string rcsha;
     LOCK_COUT
     std::cout << "Decrypting server challenge..." << std::endl;
     UNLOCK_COUT
@@ -116,11 +123,16 @@ void testLogin(bvnet::session *s,KeyPair *ckey) {
     for (int i=0;i<20;++i)
         ss << std::setfill('0') << std::setw(2) << std::hex
            << (unsigned int)dig[i];
-    std::string rcsha=ss.str();
+    rcsha=ss.str();
     free(dig);
     LOCK_COUT
     std::cout << "    SHA1: " << rcsha << std::endl;
     UNLOCK_COUT
+    s->send_string(rcsha);
+    s->send_call(1 /* serverRoot */,2 /* AnswerChallenge */,
+                 boost::bind(loginDone,s,
+                             authOk,doneFlag),
+                 1 /* expects one argument */);
 }
 
 int main(int argc, char** argv)
@@ -284,13 +296,23 @@ int main(int argc, char** argv)
         client_session.send_call(1 /* serverRoot */,0 /* getType */,
                                  boost::bind(testNotify,&client_session),
                                  1 /* expects one argument */);
-        client_session.run();
+
+        bool authOk=false,authDone=false;
         client_session.send_string(client_kpair->GetPublicKey().GetModulus());
         client_session.send_string(client_kpair->GetPublicKey().GetExponent());
         client_session.send_call(1 /* serverRoot */,1 /* LoginClient */,
-                                 boost::bind(testLogin,&client_session,client_kpair),
+                                 boost::bind(testLogin,&client_session,
+                                             client_kpair,&authOk,&authDone),
                                  1 /* expects one argument */);
-        client_session.run();
+
+        while (!authDone && client_session.run());
+        LOCK_COUT
+        if (authOk) {
+            std::cout << "Server accepted client auth." << std::endl;
+        } else {
+            std::cout << "Server rejected client auth." << std::endl;
+        }
+        UNLOCK_COUT
 
         /*
         The most important function of the engine is the 'createDevice'

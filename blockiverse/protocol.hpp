@@ -91,7 +91,7 @@ namespace bvnet {
         u32 id;
         u32 idx;
         lpvFunc callbk;
-        int rcount;
+        size_t rcount;
         method_call(u32 i,u32 m,lpvFunc cb,int rnum):id(i),idx(m),callbk(cb),rcount(rnum) {}
         ~method_call() {}
     };
@@ -113,7 +113,7 @@ namespace bvnet {
     typedef std::stack<boost::any> value_stack;
     typedef std::queue<boost::any> value_queue;
     typedef std::map<u32,bool> proxy_map;
-    typedef std::map<size_t,lpvFunc> notify_map;
+    typedef std::queue<method_call> cb_queue;
     typedef boost::mutex mutex;
     typedef boost::mutex::scoped_lock scoped_lock;
 
@@ -161,7 +161,7 @@ namespace bvnet {
         value_stack argstack;
         value_queue sendq;
         proxy_map   proxy;
-        notify_map  argnotify;
+        cb_queue    argnotify;
 
         registry *reg;      /* registered objects in session */
         mutex *synchro;     /* mutex on session manipulation */
@@ -172,7 +172,8 @@ namespace bvnet {
         session();
         virtual ~session();
 
-        void notify_remove(u32 id);         /* signals that object no longer valid */
+        void notify_remove(u32 id);                 /* signals that object no longer valid */
+        void disconnect() {isActive=false;}
         int register_object(object *o);
         u32 getRemote() {return remoteRoot;}
         bool hasRemote() {return 0!=remoteRoot;}
@@ -197,13 +198,13 @@ namespace bvnet {
         }
         void bootstrap(object *root);
         void send_int(s64 val) {sendq.push(val);}
-        void send_int(s64 &val) {sendq.push(val);}
+        //void send_int(s64 &val) {sendq.push(val);}
         void send_float(float val) {sendq.push(val);}
-        void send_float(float &val) {sendq.push(val);}
+        //void send_float(float &val) {sendq.push(val);}
         void send_blob(std::string val) {sendq.push(val);}
-        void send_blob(std::string &val) {sendq.push(val);}
+        //void send_blob(std::string &val) {sendq.push(val);}
         void send_string(std::string val) {sendq.push(val);}
-        void send_string(std::string &val) {sendq.push(val);}
+        //void send_string(std::string &val) {sendq.push(val);}
         void send_obref(u32 id) {sendq.push(obref(id));}
         void send_call(u32 id,u32 m,lpvFunc cb=NULL,int rcount=0) {sendq.push(method_call(id,m,cb,rcount));}
         bool isValidObject(u32 obid) {
@@ -772,12 +773,13 @@ namespace bvnet {
         /*
         **  Notifies stored callback when argstack reaches specified size
         */
-        size_t slot=argstack.size();
-        lpvFunc cb;
-        if (argnotify.find(slot)!=argnotify.end()) {
-            cb=argnotify[slot];
-            argnotify.erase(slot);
-            cb();
+        if (argnotify.size()>0) {
+            size_t args_avail=argstack.size();
+            if (args_avail>=argnotify.front().rcount) {
+                method_call mc(argnotify.front());
+                argnotify.pop();
+                mc.callbk();
+            }
         }
     }
     inline bool session::run() {
@@ -900,12 +902,12 @@ namespace bvnet {
                 break;
             case vtMethod:
                 mc=boost::any_cast<method_call>(raw);
-                /*LOCK_COUT
+                LOCK_COUT
                 std::cout << "call #" << mc.id << '.' << mc.idx
                           << "() cb=" << mc.callbk
-                          << ", rcount=" << mc.rcount
-                          << ", stack=" << argstack.size() << std::endl;
-                UNLOCK_COUT*/
+                          << ", when stack+=" << mc.rcount
+                          << std::endl;
+                UNLOCK_COUT
                 ss << '.';
                 idx=mc.id;
                 ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
@@ -924,8 +926,7 @@ namespace bvnet {
                 } else {
                     // otherwise the notify is set for when
                     // argstack reaches size current_size+rcount
-                    argnotify[argstack.size()+mc.rcount]=
-                        mc.callbk;
+                    argnotify.push(mc);
                 }
             }
             boost::asio::async_write(
