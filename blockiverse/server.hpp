@@ -23,9 +23,11 @@
 #include <windows.h>
 #include "protocol.hpp"
 #include "sha1.hpp"
+#include <boost/nondet_random.hpp>
 
 extern volatile bool serverActive;
 extern volatile bool req_serverQuit;
+extern boost::random::random_device entropy;
 
 //#ifdef BV_SERVER_IMPLEMENTATION
 /*
@@ -41,6 +43,7 @@ private:
     Key *clientKey;
     bool clientValid;
     std::string challenge;
+    unsigned int randbits[8];
 public:
     serverRoot(bvnet::session &sess)
         : bvnet::object(sess) {
@@ -75,7 +78,25 @@ public:
                 sMod=ctx.getarg<std::string>();
                 cli_pub_mod=BigInt(sMod);
                 clientKey=new Key(cli_pub_mod,cli_pub_exp);
-                challenge="TODO: Random Challenge Strings";
+                for (int i=0;i<8;++i)
+                    randbits[i]=entropy();
+                unsigned char *randbyte=(unsigned char *)randbits;
+                challenge.clear();
+                /*
+                ** Dividing down to valid printables (32-127) makes
+                ** the challenge effectively [192..208] bits or 6-6.5
+                ** bits per byte. An SHA1 may potentially collide past
+                ** 160 bits thus making 160 bits the minimum, a lower
+                ** bound ND randomness of 192 bits will suffice.
+                **
+                ** In release builds where the challenge won't be
+                ** displayed dividing down to printables will not
+                ** be necessary and the entire 256 bits may be
+                ** utilized.
+                */
+                for (int i=0;i<31;++i) {
+                    challenge+=(unsigned char)(32+((int)(((float)randbyte[i])/2.68421)));
+                }
                 eChal=RSA::Encrypt(challenge,*clientKey);
                 vqueue.push(eChal);
             }

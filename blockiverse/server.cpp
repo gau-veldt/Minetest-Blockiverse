@@ -27,6 +27,8 @@
 #include "server.hpp"
 #include "settings.hpp"
 
+boost::random::random_device entropy;
+
 struct context {
     tcp::socket *socket;
     bvnet::session *session;

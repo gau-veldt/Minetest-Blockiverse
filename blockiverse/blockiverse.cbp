@@ -23,6 +23,7 @@
 					<Add library="libboost_chrono-mgw47-mt-d-1_57" />
 					<Add library="libboost_date_time-mgw47-mt-d-1_57" />
 					<Add library="libboost_atomic-mgw47-mt-d-1_57" />
+					<Add library="libboost_random-mgw47-mt-d-1_57.a" />
 				</Linker>
 				<ExtraCommands>
 					<Add before="gitstamp.bat" />
@@ -45,6 +46,7 @@
 					<Add library="libboost_chrono-mgw47-mt-1_57" />
 					<Add library="libboost_date_time-mgw47-mt-1_57" />
 					<Add library="libboost_atomic-mgw47-mt-1_57" />
+					<Add library="libboost_random-mgw47-mt-1_57.a" />
 				</Linker>
 			</Target>
 			<Target title="ServerDebug">
@@ -63,6 +65,7 @@
 					<Add library="libboost_chrono-mgw47-mt-d-1_57" />
 					<Add library="libboost_date_time-mgw47-mt-d-1_57" />
 					<Add library="libboost_atomic-mgw47-mt-d-1_57" />
+					<Add library="libboost_random-mgw47-mt-d-1_57.a" />
 				</Linker>
 				<ExtraCommands>
 					<Add before="gitstamp.bat" />
@@ -85,6 +88,7 @@
 					<Add library="libboost_chrono-mgw47-mt-1_57" />
 					<Add library="libboost_date_time-mgw47-mt-1_57" />
 					<Add library="libboost_atomic-mgw47-mt-1_57" />
+					<Add library="libboost_random-mgw47-mt-1_57.a" />
 				</Linker>
 			</Target>
 		</Build>
