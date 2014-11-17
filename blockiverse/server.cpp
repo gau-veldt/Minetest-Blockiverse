@@ -26,6 +26,7 @@
 #define BV_SERVER_IMPLEMENTATION
 #include "server.hpp"
 #include "settings.hpp"
+//#include <boost/thread.hpp>
 
 boost::random::random_device entropy;
 
