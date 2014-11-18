@@ -22,6 +22,7 @@
 #include "common.hpp"
 #include <windows.h>
 #include "protocol.hpp"
+#include "database.hpp"
 #include "sha1.hpp"
 #include <boost/nondet_random.hpp>
 
@@ -35,6 +36,25 @@ extern boost::random::random_device entropy;
 */
 
 #include "RSA/rsa.h"
+
+class Account : public bvnet::object {
+private:
+public:
+    Account(bvnet::session &sess)
+        : bvnet::object(sess) {}
+    virtual ~Account() {}
+    virtual const char *getType() {return "userAccount";}
+    virtual void methodCall(unsigned int method) {
+        bvnet::scoped_lock lock(ctx.getMutex());
+        bvnet::value_queue &vqueue=ctx.getSendQueue();
+        switch(method) {
+        case 0: /* GetType */
+            /* emit object type to output queue as string */
+            vqueue.push(std::string(getType()));
+            break;
+        }
+    }
+};
 
 class serverRoot : public bvnet::object {
 private:
