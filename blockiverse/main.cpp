@@ -31,6 +31,7 @@
 #include "sha1.hpp"
 #include "protocol.hpp"
 #include <boost/thread/thread.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/variant.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/sha1.hpp>
@@ -140,6 +141,7 @@ int main(int argc, char** argv)
 {
     extern void protocol_main_init();
     protocol_main_init();
+
     boost::thread *server_thread=NULL;
     argset args(argc,argv);
     property_map config;
@@ -148,6 +150,8 @@ int main(int argc, char** argv)
 
     LOCK_COUT
     std::cout << "Version is: " << auto_ver << std::endl;
+    boost::filesystem::path cwd=boost::filesystem::current_path();
+    std::cout << "Starting in: " << cwd << std::endl;
 
     /* test settings map */
     property_map::iterator setting=config.begin();

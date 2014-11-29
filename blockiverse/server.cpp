@@ -26,7 +26,7 @@
 #define BV_SERVER_IMPLEMENTATION
 #include "server.hpp"
 #include "settings.hpp"
-//#include <boost/thread.hpp>
+#include <boost/thread.hpp>
 
 boost::random::random_device entropy;
 
@@ -79,8 +79,8 @@ DWORD WINAPI server_boot(LPVOID lpvCtx) {
     return 0;
 }
 
-typedef std::map<HANDLE,io_service*> hlist;
-hlist sessions;
+typedef std::map<boost::thread*,io_service*> s_list;
+s_list sessions;
 
 DWORD WINAPI server_main(LPVOID argvoid) {
     property_map server_config;
@@ -131,13 +131,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         // which is also stored in the context
         ctx->root=new serverRoot(*ctx->session);
         // the worker thread manages the context
-        HANDLE thd=CreateThread(
-            NULL,           /* default security */
-            0,              /* default stack */
-            &server_boot,   /* bootstraps connection thread */
-            ctx,            /* pass the context */
-            0,              /* default creation */
-            NULL);          /* where to store thread id */
+        boost::thread *thd=new boost::thread(server_boot,ctx);
         if (thd!=NULL) {
             // to keep track of threads
             sessions[thd]=s_chld_sess_io;
@@ -148,14 +142,11 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         /*
         ** Prune any completed session threads
         */
-        DWORD status;
-        hlist::iterator sThread=sessions.begin();
+        s_list::iterator sThread=sessions.begin();
         while (sThread!=sessions.end()) {
-            GetExitCodeThread(sThread->first,&status);
-            if (status!=STILL_ACTIVE) {
-                CloseHandle(sThread->first);
-                // lose the thread's io_service
-                delete sThread->second;
+            if (sThread->first->timed_join(boost::posix_time::seconds(0))) {
+                delete sThread->first;  // delete thread
+                delete sThread->second; // delete thread's io_service
                 sessions.erase(sThread++);
             } else {
                 ++sThread;
@@ -163,23 +154,14 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         }
     }
 
-    // get threads to start quitting
-    acceptor_io.stop();
-    // wait for all threads to stop
-    while (sessions.size()>0) {
-        DWORD status;
-        hlist::iterator sThread=sessions.begin();
-        while (sThread!=sessions.end()) {
-            GetExitCodeThread(sThread->first,&status);
-            if (status!=STILL_ACTIVE) {
-                CloseHandle(sThread->first);
-                // lose the thread's io_service
-                delete sThread->second;
-                sessions.erase(sThread++);
-            } else {
-                ++sThread;
-            }
-        }
+    // cleanly quit open sessions
+    s_list::iterator sThread=sessions.begin();
+    while (sThread!=sessions.end()) {
+        sThread->second->stop();        // make thread's io_service stop
+        sThread->first->join();         // wait for it to quit
+        delete sThread->first;          // delete thread
+        delete sThread->second;         // delete thread's io_service
+        sessions.erase(sThread++);
     }
 
     LOCK_COUT
