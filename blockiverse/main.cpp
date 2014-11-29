@@ -30,6 +30,7 @@
 #include "rsa/RSA.h"
 #include "sha1.hpp"
 #include "protocol.hpp"
+#include <boost/thread/thread.hpp>
 #include <boost/variant.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/sha1.hpp>
@@ -139,9 +140,7 @@ int main(int argc, char** argv)
 {
     extern void protocol_main_init();
     protocol_main_init();
-
-    DWORD server_tid=0;
-    HANDLE server_thread=NULL;
+    boost::thread *server_thread=NULL;
     argset args(argc,argv);
     property_map config;
     set_config_defaults(config);
@@ -239,16 +238,7 @@ int main(int argc, char** argv)
         UNLOCK_COUT
         serverActive=true;
         req_serverQuit=false;
-        // I'm giving up getting this to work portably via boost for now
-        // until they fix the crap with _InterlockedCompareExchange
-        // and the consequent linker errors
-        server_thread=CreateThread(
-            NULL,           /* default security*/
-            0,              /* default stack */
-            &server_main,   /* entry point */
-            &args,          /* struct to pass args */
-            0,              /* default creation */
-            &server_tid);   /* where to store thread id */
+        server_thread=new boost::thread(server_main,&args);
     }
 
     /*
@@ -499,24 +489,11 @@ int main(int argc, char** argv)
     LOCK_COUT
     std::cout << "Waiting for server shutdown." << std::endl;
     UNLOCK_COUT
-    while (serverActive) ;
-
     if (server_thread!=NULL) {
-        // kills server thread
-        DWORD rc;
-        GetExitCodeThread(server_thread,&rc);
-        if (rc==STILL_ACTIVE) {
-            /*
-            ** TODO: This is the ugly and dangerous way to stop
-            **       the server and needs a cleaner alternative!
-            */
-            TerminateThread(server_thread,9/* SIGKILL */);
-        }
-        // then close handle
-        CloseHandle(server_thread);
+        server_thread->join();  //while (serverActive) ;
+        delete server_thread;
         server_thread=NULL;
     }
 
     return 0;
 }
-
