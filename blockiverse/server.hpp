@@ -149,9 +149,12 @@ public:
                           << "         client: " << answer          << std::endl
                           << "           same: " << (hChal==answer) << std::endl;
                 UNLOCK_COUT
-                authOk=(hChal==answer);
+                if (hChal==answer) {
+                    authOk=1;
+                    clientValid=true;
+                }
                 vqueue.push(authOk);
-                if (!authOk) {
+                if (!clientValid) {
                     ctx.disconnect();
                 }
             }
