@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('server_8cpp_source.html','');});
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="comment">// create new session in context</span></div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        ctx-&gt;session=<span class="keyword">new</span> <a class="code" href="classbvnet_1_1session.html">bvnet::session</a>();</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="comment">// link connection socket to new session</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        ctx-&gt;session-&gt;set_conn(*new_conn);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        ctx-&gt;session-&gt;<a class="code" href="classbvnet_1_1session.html#aecc4b55e7de514acb6c944f5fc3ee3ca">set_conn</a>(*new_conn);</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <span class="comment">// create session&#39;s serverRoot object</span></div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="comment">// which is also stored in the context</span></div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        ctx-&gt;root=<span class="keyword">new</span> <a class="code" href="classserver_root.html">serverRoot</a>(*ctx-&gt;session);</div>
@@ -286,20 +286,21 @@ $(document).ready(function(){initNavTree('server_8cpp_source.html','');});
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}</div>
 <div class="ttc" id="structcontext_html"><div class="ttname"><a href="structcontext.html">context</a></div><div class="ttdef"><b>Definition:</b> <a href="server_8cpp_source.html#l00035">server.cpp:35</a></div></div>
+<div class="ttc" id="classbvnet_1_1session_html_aecc4b55e7de514acb6c944f5fc3ee3ca"><div class="ttname"><a href="classbvnet_1_1session.html#aecc4b55e7de514acb6c944f5fc3ee3ca">bvnet::session::set_conn</a></div><div class="ttdeci">void set_conn(tcp::socket &amp;s)</div><div class="ttdoc">associate connection </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00295">protocol.hpp:295</a></div></div>
 <div class="ttc" id="classserver_root_html"><div class="ttname"><a href="classserver_root.html">serverRoot</a></div><div class="ttdef"><b>Definition:</b> <a href="server_8hpp_source.html#l00059">server.hpp:59</a></div></div>
 <div class="ttc" id="structargset_html"><div class="ttname"><a href="structargset.html">argset</a></div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00055">common.hpp:55</a></div></div>
 <div class="ttc" id="classcontext__manager_html"><div class="ttname"><a href="classcontext__manager.html">context_manager</a></div><div class="ttdef"><b>Definition:</b> <a href="server_8cpp_source.html#l00041">server.cpp:41</a></div></div>
-<div class="ttc" id="classbvnet_1_1session_html"><div class="ttname"><a href="classbvnet_1_1session.html">bvnet::session</a></div><div class="ttdoc">Symmetrical endpoint session for established connection. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00162">protocol.hpp:162</a></div></div>
-<div class="ttc" id="classbvnet_1_1session_html_a72fc82d1ae205d8df51a94eff45201a4"><div class="ttname"><a href="classbvnet_1_1session.html#a72fc82d1ae205d8df51a94eff45201a4">bvnet::session::bootstrap</a></div><div class="ttdeci">void bootstrap(object *root)</div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00584">protocol.hpp:584</a></div></div>
-<div class="ttc" id="classbvnet_1_1object_html"><div class="ttname"><a href="classbvnet_1_1object.html">bvnet::object</a></div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00327">protocol.hpp:327</a></div></div>
-<div class="ttc" id="classbvnet_1_1session_html_a4f4c7ce4d9b9a2c90667937accc7a2c3"><div class="ttname"><a href="classbvnet_1_1session.html#a4f4c7ce4d9b9a2c90667937accc7a2c3">bvnet::session::run</a></div><div class="ttdeci">bool run()</div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00868">protocol.hpp:868</a></div></div>
+<div class="ttc" id="classbvnet_1_1session_html"><div class="ttname"><a href="classbvnet_1_1session.html">bvnet::session</a></div><div class="ttdoc">Symmetrical endpoint session for established connection. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00166">protocol.hpp:166</a></div></div>
+<div class="ttc" id="classbvnet_1_1session_html_a72fc82d1ae205d8df51a94eff45201a4"><div class="ttname"><a href="classbvnet_1_1session.html#a72fc82d1ae205d8df51a94eff45201a4">bvnet::session::bootstrap</a></div><div class="ttdeci">void bootstrap(object *root)</div><div class="ttdoc">Handshake/bootstrap process. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00616">protocol.hpp:616</a></div></div>
+<div class="ttc" id="classbvnet_1_1object_html"><div class="ttname"><a href="classbvnet_1_1object.html">bvnet::object</a></div><div class="ttdoc">ABC for remotable objects. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00359">protocol.hpp:359</a></div></div>
+<div class="ttc" id="classbvnet_1_1session_html_a4f4c7ce4d9b9a2c90667937accc7a2c3"><div class="ttname"><a href="classbvnet_1_1session.html#a4f4c7ce4d9b9a2c90667937accc7a2c3">bvnet::session::run</a></div><div class="ttdeci">bool run()</div><div class="ttdoc">network pump - blocks until data received. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00900">protocol.hpp:900</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>server.cpp</b></li>
-    <li class="footer">Generated on Sun Nov 30 2014 12:05:51 for Blockiverse by
+    <li class="footer">Generated on Sun Nov 30 2014 13:25:36 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

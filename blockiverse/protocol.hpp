@@ -62,44 +62,44 @@ extern int pow2_tbl[];
 typedef boost::function<void()> lpvFunc;
 
 namespace bvnet {
-    /** Maximum size of object registry */
     extern u32 reg_objects_softmax;
 
     /**
+    * @typedef valtype
     * @brief Possible value types.
     *
     * These are the possible types of values transmitted
     * between server/client sessions.
     */
     typedef enum {
-        vtInt=1,        /**< Variable-length integer */
-        vtFloat=2,      /**< Floating-point value */
-        vtBlob=3,       /**< Arbitrary binary data (currently same as String) */
-        vtString=4,     /**< Length-prefixed string */
-        vtObref=5,      /**< Object reference */
-        vtDeath=6,      /**< Object no longer exists */
-        vtMethod=7      /**< Object method call */
+        vtInt=1,        /**< @brief Variable-length integer */
+        vtFloat=2,      /**< @brief Floating-point value */
+        vtBlob=3,       /**< @brief Arbitrary binary data (currently same as String) */
+        vtString=4,     /**< @brief Length-prefixed string */
+        vtObref=5,      /**< @brief Object reference */
+        vtDeath=6,      /**< @brief Object no longer exists */
+        vtMethod=7      /**< @brief Object method call */
     } valtype;
-    /** map of protocol valuetype class to corresponding data type */
+    /** @typedef type_map @brief map of protocol valuetype class to corresponding data type */
     typedef std::map<const char*,valtype> type_map;
-    /** used by serialization to encode or decode protocol valuetypes to actual data types */
+    /** @brief used by serialization to encode or decode protocol valuetypes to actual data types */
     extern type_map typeMap;
 
-    /** protocol valuetype class for object reference */
+    /** @brief protocol valuetype class for object reference */
     struct obref {
         /* wrapper for object ref */
         u32 id;
         obref(u32 i):id(i) {}
         ~obref() {}
     };
-    /** protocol valuetype class for indicating object no longer exists */
+    /** @brief protocol valuetype class for indicating object no longer exists */
     struct ob_is_gone {
         /* wrapper for object-gone message */
         u32 id;
         ob_is_gone(u32 i):id(i) {}
         ~ob_is_gone() {}
     };
-    /** protocol valuetype class for object method calls */
+    /** @brief protocol valuetype class for object method calls */
     struct method_call {;
         /* wrapper for method call message */
         u32 id;
@@ -125,25 +125,29 @@ namespace bvnet {
     typedef object_map::map_by<object_id>::type omap_select_id;
     typedef object_map::map_by<object_addr>::type omap_select_addr;
 
-    /** incoming value stack to receive incoming data */
+    /** @brief incoming value stack to receive incoming data */
     typedef std::stack<boost::any> value_stack;
-    /** queued outgoing data waiting for transfer */
+    /** @brief queued outgoing data waiting for transfer */
     typedef std::queue<boost::any> value_queue;
     typedef std::map<u32,bool> proxy_map;
     typedef std::queue<method_call> cb_queue;
     typedef boost::mutex mutex;
     typedef boost::mutex::scoped_lock scoped_lock;
 
+    /** @brief Indicates registry exceeded reg_objects_softmax */
     class registry_full : public std::exception {
         mutable char buf[80];
         virtual const char *what() const throw();
     };
+    /** @brief Indicates attempt to register NULL object */
     class object_null : public std::exception {
         virtual const char *what() const throw();
     };
+    /** @brief Indicates referencing object not in registry */
     class object_not_reg : public std::exception {
         virtual const char *what() const throw();
     };
+    /** @brief Indicates attempt to access value (or its type) when argstack empty */
     class argstack_empty : public std::exception {
         virtual const char *what() const throw();
     };
@@ -161,56 +165,66 @@ namespace bvnet {
     */
     class session {
     private:
-        io_service *io_;            /**< io_service for this session  */
-        object *root;               /**< session's root (bootstrap) object */
-        bool isActive;              /**< connection is alive */
-        bool isBooting;             /**< session is in handshake/bootstrap phase */
-        bool _float_or_semi;        /**< expecting floating point chars or terminating ; */
-        bool _neg_int;              /**< got - meaning incoming int is a negative */
-        bool _opcode_read_queued;   /**< when true already waiting for opcode to arrive */
-        std::string _fpstr;         /**< accumulator to receive incoming floating point value  */
-        char in_ch;                 /**< the character just received */
-        char in_idx[4];             /**< the uint32 just received */
-        char in_s64[8];             /**< the sint64 just received */
+        io_service *io_;            /**< @brief io_service for this session  */
+        object *root;               /**< @brief session's root (bootstrap) object */
+        bool isActive;              /**< @brief connection is alive */
+        bool isBooting;             /**< @brief session is in handshake/bootstrap phase */
+        bool _float_or_semi;        /**< @brief expecting floating point chars or terminating ; */
+        bool _neg_int;              /**< @brief got - meaning incoming int is a negative */
+        bool _opcode_read_queued;   /**< @brief when true already waiting for opcode to arrive */
+        std::string _fpstr;         /**< @brief accumulator to receive incoming floating point value  */
+        char in_ch;                 /**< @brief the character just received */
+        char in_idx[4];             /**< @brief the uint32 just received */
+        char in_s64[8];             /**< @brief the sint64 just received */
     protected:
+        /** @brief various async data reception callbacks */
         void on_recv(const boost::system::error_code &ec,size_t rlen);
+        /** @brief various async data reception callbacks */
         void on_recv_dead_obid(const boost::system::error_code &ec);
+        /** @brief various async data reception callbacks */
         void on_recv_call_obid(const boost::system::error_code &ec);
+        /** @brief various async data reception callbacks */
         void on_recv_call_idx(const boost::system::error_code &ec,u32 obid);
+        /** @brief various async data reception callbacks */
         void on_recv_oref(const boost::system::error_code &ec,size_t rlen);
+        /** @brief various async data reception callbacks */
         void on_recv_str(const boost::system::error_code &ec,char *buf);
+        /** @brief various async data reception callbacks */
         void on_recv_len(const boost::system::error_code &ec,size_t rlen);
+        /** @brief various async data reception callbacks */
         void on_recv_s64(const boost::system::error_code &ec,u32 bsize);
+        /** @brief various async trasnfer completion callbacks */
         void on_write_done(std::string *finsihedbuf);
+        /** @brief various async trasnfer completion callbacks */
         void on_write_call_done(std::string *finishedbuf,lpvFunc cb);
-        /** notifies callback when expected number of return arguments arrive */
+        /** @brief notifies callback when expected number of return arguments arrive */
         void check_argnotify();
 
         /* value stack */
-        value_stack argstack;   /**< incoming results stack */
-        value_queue sendq;      /**< outgoing values queue */
-        proxy_map   proxy;      /**< cache of available remote objects */
-        cb_queue    argnotify;  /**< callbacks to notify when remote methods complete */
+        value_stack argstack;   /**< @brief incoming results stack */
+        value_queue sendq;      /**< @brief outgoing values queue */
+        proxy_map   proxy;      /**< @brief cache of available remote objects */
+        cb_queue    argnotify;  /**< @brief callbacks to notify when remote methods complete */
 
-        registry *reg;      /**< registered objects in session */
-        mutex *synchro;     /**< mutex on session manipulation */
-        tcp::socket *conn;  /**< connection */
+        registry *reg;      /**< @brief registered objects in session */
+        mutex *synchro;     /**< @brief mutex on session manipulation */
+        tcp::socket *conn;  /**< @brief connection */
 
-        u32 remoteRoot;     /**< once booted has remote_root */
+        u32 remoteRoot;     /**< @brief once booted has remote_root */
     public:
         session();
         virtual ~session();
 
-        void notify_remove(u32 id);                 /**< signals that object no longer valid */
-        void disconnect() {isActive=false;}         /**< close the conncetion */
-        int register_object(object *o);             /**< register object as available to remote */
-        u32 getRemote() {return remoteRoot;}        /**< get remote's root (bootstrap) object */
-        bool hasRemote() {return 0!=remoteRoot;}    /**< true indicates remote root object valid */
-        bool unregister(u32 id);                    /**< unregister object by-id and inform remote */
-        bool unregister(object *ob);                /**< unregister object by-address and inform remote */
-        void encode(const boost::any &a);           /**< sends any queued values over the wire */
+        void notify_remove(u32 id);                 /**< @brief signals that object no longer valid */
+        void disconnect() {isActive=false;}         /**< @brief close the conncetion */
+        int register_object(object *o);             /**< @brief register object as available to remote */
+        u32 getRemote() {return remoteRoot;}        /**< @brief get remote's root (bootstrap) object */
+        bool hasRemote() {return 0!=remoteRoot;}    /**< @brief true indicates remote root object valid */
+        bool unregister(u32 id);                    /**< @brief unregister object by-id and inform remote */
+        bool unregister(object *ob);                /**< @brief unregister object by-address and inform remote */
+        void encode(const boost::any &a);           /**< @brief sends any queued values over the wire */
         /**
-        * Determine type of result stack top value.
+        * @brief Determine type of result stack top value.
         * @throw argstack_empty if the result stack is empty when attempted
         */
         valtype argtype() {
@@ -219,7 +233,7 @@ namespace bvnet {
             }
             throw argstack_empty();
         }
-        /** current size of result stack */
+        /** @brief current size of result stack */
         int argcount() {return argstack.size();}
         /**
         * @brief Receive next value from top of return stack.
@@ -239,17 +253,28 @@ namespace bvnet {
             }
             throw argstack_empty();
         }
-        /** Handshake/bootstrap process */
+        /** @brief Handshake/bootstrap process */
         void bootstrap(object *root);
-        void send_int(s64 val) {sendq.push(val);}
+        void send_int(s64 val) {sendq.push(val);}               /**< @brief send int to remote */
         //void send_int(s64 &val) {sendq.push(val);}
-        void send_float(float val) {sendq.push(val);}
+        void send_float(float val) {sendq.push(val);}           /**< @brief send float to remote */
         //void send_float(float &val) {sendq.push(val);}
-        void send_blob(std::string val) {sendq.push(val);}
+        void send_blob(std::string val) {sendq.push(val);}      /**< @brief send blob (as string) to remote */
         //void send_blob(std::string &val) {sendq.push(val);}
-        void send_string(std::string val) {sendq.push(val);}
+        void send_string(std::string val) {sendq.push(val);}    /**< @brief send string to remote */
         //void send_string(std::string &val) {sendq.push(val);}
-        void send_obref(u32 id) {sendq.push(obref(id));}
+        void send_obref(u32 id) {sendq.push(obref(id));}        /**< @brief send object referebce to remote */
+        /** @brief Remote method call.
+        *
+        *   Creates method call message to send to remote.
+        *
+        *   @param id object id for method
+        *   @param m method number
+        *   @param cb callback invoked when method completed.
+        *          Default: NULL (no callback).
+        *   @param rcount expected number of returned values.
+        *          Default: 0 (no values returned).
+        */
         void send_call(u32 id,u32 m,lpvFunc cb=NULL,int rcount=0) {sendq.push(method_call(id,m,cb,rcount));}
         /** @brief Queries if an object still valid  and useable on remote.
         *   @param obid object id.
@@ -258,12 +283,15 @@ namespace bvnet {
         bool isValidObject(u32 obid) {
             return (proxy.find(obid)!=proxy.end());
         }
-        /** network pump - blocks until data received. */
+        /** @brief network pump - blocks until data received. */
         bool run();
-        /** network pump - returns to allow other activy whilst waiting. */
+        /** @brief network pump - returns to allow other activy whilst waiting. */
         bool poll();
+        /** @brief get outgoing value queue for this session */
         value_queue &getSendQueue() {return sendq;}
+        /** @brief get thread lock for this session */
         mutex &getMutex() {return *synchro;}
+        /** @brief associate connection @param s socket to utilize for session */
         void set_conn(tcp::socket &s) {
             conn=&s;
             io_=&(s.get_io_service());
@@ -271,64 +299,68 @@ namespace bvnet {
             std::cout << "session [" << this << "] on socket " << conn << " via io=" << io_ << std::endl;
             UNLOCK_COUT
         }
-        /** for debugging - dumps data about session */
+        /** @brief for debugging - dumps data about session */
         void dump(std::ostream &os);
     };
 
     /**
-    ** registry tracks active
-    ** object references.
+    ** @brief object reigstry class
     **
-    ** instances are permitted.
+    ** registry tracks active object references.
     **
-    ** server-side: one instance for each connected client
-    ** client-side: one sole instance for upstream server.
+    ** Instances are permitted:
     **
-    ** NB: Registry does not take ownership of registered
+    **      server-side: one instance for each connected client
+    **      client-side: one sole instance for upstream server.
+    **
+    ** @note
+    **     Registry does not take ownership of registered
     **     objects instead, object is designed to require
     **     a registry reference at construction.
     */
     class registry {
     private:
-        mutex *synchro;     /**< mutex on registry manipulation */
-        session *listener;  /**< notify sink for object removals */
+        mutex *synchro;     /**< @brief mutex on registry manipulation */
+        session *listener;  /**< @brief notify sink for object removals */
 
-        u32 next_slot;          /**< id for next object [must be thread-synced] */
-        object_map objects;     /**< registered objects [must be thread-synced] */
+        u32 next_slot;          /**< @brief id for next object [must be thread-synced] */
+        object_map objects;     /**< @brief registered objects [must be thread-synced] */
     public:
-        /** construction/destruction */
+        /** @brief constructor @param host The session reisgtry works for. */
         registry(session *host) : listener(host),next_slot(1)
             {synchro=new mutex();}
+        /** @brief destructor */
         virtual ~registry();
-        /** add object to registry */
+        /** @brief add object to registry */
         int register_object(object *ob);
-        /** notify upstream of object destruction */
+        /** @brief notify upstream of object destruction @param id id of affected object @return allocated slot*/
         void notify(u32 id);
-        /** remove object from registry by-id */
+        /** @brief remove object from registry by-id @param id id of object to unregister */
         bool unregister(u32 id);
-        /** remove object from registry by-ptr */
+        /** @brief remove object from registry by-ptr @param ob ptr to object to unregister */
         bool unregister(object *ob);
         /** @brief query id for given object ptr @param ob object ptr @return object id */
         u32 idOf(object* ob);
         /** @brief query ptr for given object id @param id object id @return object ptr */
         object* obOf(u32 id);
-        /** for debugging - dumps data about registry */
+        /** @brief for debugging - dumps data about registry */
         void dump(std::ostream &os);
     };
 
     /**
-    ** object is base used for objects
-    ** exchangeable via object references.
+    ** @brief ABC for remotable objects.
     **
-    ** since secure referencing requires a way to
+    ** Base used for objects exchangeable via object references.
+    **
+    ** Since secure referencing requires a way to
     ** track object lifetime a registry reference
     ** is required for construction.
     */
     class object {
     protected:
-        session &ctx;       /**< for objects to attach to the session's registry */
+        session &ctx;       /**< @brief for objects to attach to the session's registry */
     public:
-        /** construction of an object requires reference to the session to attach to */
+        /** @brief construction of an object @param sess reference to session to attach */
         object(session &sess) :
             ctx(sess) {
                 LOCK_COUT
@@ -336,7 +368,7 @@ namespace bvnet {
                 UNLOCK_COUT
                 ctx.register_object(this);
             }
-        /** base dtor to automatically unregister the object */
+        /** @brief base dtor to automatically unregister the object */
         virtual ~object() {
             LOCK_COUT
             std::cout << "object [" << this << "] dtor" << std::endl;

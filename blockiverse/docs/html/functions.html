@@ -192,8 +192,14 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>getarg()
 : <a class="el" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">bvnet::session</a>
 </li>
+<li>getMutex()
+: <a class="el" href="classbvnet_1_1session.html#a36be08af163114b187cb3646441c0c46">bvnet::session</a>
+</li>
 <li>getRemote()
 : <a class="el" href="classbvnet_1_1session.html#a822c677a62f47f7b9867b4454ee7d1c6">bvnet::session</a>
+</li>
+<li>getSendQueue()
+: <a class="el" href="classbvnet_1_1session.html#a30be8d3779c734c6a9bf96bbc19d5dc5">bvnet::session</a>
 </li>
 <li>getType()
 : <a class="el" href="class_account.html#a906b5fee76e343176a2a2e36a6b46a0c">Account</a>
@@ -248,6 +254,36 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>obOf()
 : <a class="el" href="classbvnet_1_1registry.html#ad09c9ec75dfa8354bba8816db1e7d09f">bvnet::registry</a>
 </li>
+<li>on_recv()
+: <a class="el" href="classbvnet_1_1session.html#ab6b5d68ae50cd16e92cf5673bc72bcde">bvnet::session</a>
+</li>
+<li>on_recv_call_idx()
+: <a class="el" href="classbvnet_1_1session.html#a2a80abd0b8e90a24780844f889c4cbcd">bvnet::session</a>
+</li>
+<li>on_recv_call_obid()
+: <a class="el" href="classbvnet_1_1session.html#a6d3b55fb210397e70cb0dbaf50e79f1f">bvnet::session</a>
+</li>
+<li>on_recv_dead_obid()
+: <a class="el" href="classbvnet_1_1session.html#ac7866f3782244a8225dc21be182503ee">bvnet::session</a>
+</li>
+<li>on_recv_len()
+: <a class="el" href="classbvnet_1_1session.html#afc74827c63f0d732ac3e34dcee8d23be">bvnet::session</a>
+</li>
+<li>on_recv_oref()
+: <a class="el" href="classbvnet_1_1session.html#ae9cfaf1741b2d5b728cb51a0a41a08b7">bvnet::session</a>
+</li>
+<li>on_recv_s64()
+: <a class="el" href="classbvnet_1_1session.html#aa32bab5ae8663e64aeb429146746274d">bvnet::session</a>
+</li>
+<li>on_recv_str()
+: <a class="el" href="classbvnet_1_1session.html#a9568ff729105fc5f8265cd18139f6cd4">bvnet::session</a>
+</li>
+<li>on_write_call_done()
+: <a class="el" href="classbvnet_1_1session.html#a708cb5242726962e0884950183dc7fc5">bvnet::session</a>
+</li>
+<li>on_write_done()
+: <a class="el" href="classbvnet_1_1session.html#ac31decbe980c827edcd3193d4bf27853">bvnet::session</a>
+</li>
 </ul>
 
 
@@ -282,8 +318,29 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>send_blob()
+: <a class="el" href="classbvnet_1_1session.html#a3603554fa7f1ebb122c4a9a635f91a71">bvnet::session</a>
+</li>
+<li>send_call()
+: <a class="el" href="classbvnet_1_1session.html#a0a94a03781b72154e82f951c68320598">bvnet::session</a>
+</li>
+<li>send_float()
+: <a class="el" href="classbvnet_1_1session.html#a54cdc07be63c20c4af1c00407e6074bc">bvnet::session</a>
+</li>
+<li>send_int()
+: <a class="el" href="classbvnet_1_1session.html#abb157b3a922e637e6aa8da6de976e174">bvnet::session</a>
+</li>
+<li>send_obref()
+: <a class="el" href="classbvnet_1_1session.html#a7bc97917863742f0bea82d49f3e0b7ab">bvnet::session</a>
+</li>
+<li>send_string()
+: <a class="el" href="classbvnet_1_1session.html#af974a78a309e4f7aff43e9ecc7304077">bvnet::session</a>
+</li>
 <li>sendq
 : <a class="el" href="classbvnet_1_1session.html#a97a650651948f346c85b44d959b9ee2f">bvnet::session</a>
+</li>
+<li>set_conn()
+: <a class="el" href="classbvnet_1_1session.html#aecc4b55e7de514acb6c944f5fc3ee3ca">bvnet::session</a>
 </li>
 <li>synchro
 : <a class="el" href="classbvnet_1_1session.html#a5c8c8bad5803ac6c8a0da89392955c16">bvnet::session</a>
@@ -303,13 +360,16 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>~object()
 : <a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">bvnet::object</a>
 </li>
+<li>~registry()
+: <a class="el" href="classbvnet_1_1registry.html#aa2b648066a89226f8726d2a0bbf3a5c2">bvnet::registry</a>
+</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Nov 30 2014 12:05:52 for Blockiverse by
+    <li class="footer">Generated on Sun Nov 30 2014 13:25:37 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

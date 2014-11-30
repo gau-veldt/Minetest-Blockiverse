@@ -114,6 +114,9 @@ $(document).ready(function(){initNavTree('classbvnet_1_1object.html','');});
 </div><!--header-->
 <div class="contents">
 
+<p>ABC for remotable objects.  
+ <a href="classbvnet_1_1object.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for bvnet::object:</div>
@@ -130,8 +133,11 @@ Inheritance diagram for bvnet::object:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7122d96ee6c8685e5830cd9c403afa7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7122d96ee6c8685e5830cd9c403afa7a">object</a> (<a class="el" href="classbvnet_1_1session.html">session</a> &amp;sess)</td></tr>
+<tr class="memdesc:a7122d96ee6c8685e5830cd9c403afa7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">construction of an object  <a href="#a7122d96ee6c8685e5830cd9c403afa7a">More...</a><br /></td></tr>
 <tr class="separator:a7122d96ee6c8685e5830cd9c403afa7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b65a31e0d72dd4f35ef621c94ad9791"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">~object</a> ()</td></tr>
+<tr class="memitem:a7b65a31e0d72dd4f35ef621c94ad9791"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b65a31e0d72dd4f35ef621c94ad9791"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">~object</a> ()</td></tr>
+<tr class="memdesc:a7b65a31e0d72dd4f35ef621c94ad9791"><td class="mdescLeft">&#160;</td><td class="mdescRight">base dtor to automatically unregister the object <br /></td></tr>
 <tr class="separator:a7b65a31e0d72dd4f35ef621c94ad9791"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57798d2be75fcb4257749ad7f3ec985a"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a57798d2be75fcb4257749ad7f3ec985a">getType</a> ()</td></tr>
 <tr class="memdesc:a57798d2be75fcb4257749ad7f3ec985a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get object's identity.  <a href="#a57798d2be75fcb4257749ad7f3ec985a">More...</a><br /></td></tr>
@@ -142,14 +148,17 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbvnet_1_1session.html">session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td></tr>
+<tr class="memitem:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc0211ae67284eccf20e9bfe1c25e0cc"></a>
+<a class="el" href="classbvnet_1_1session.html">session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td></tr>
+<tr class="memdesc:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">for objects to attach to the session's registry <br /></td></tr>
 <tr class="separator:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>object is base used for objects exchangeable via object references.</p>
-<p>since secure referencing requires a way to track object lifetime a registry reference is required for construction. </p>
+<div class="textblock"><p>ABC for remotable objects. </p>
+<p>Base used for objects exchangeable via object references.</p>
+<p>Since secure referencing requires a way to track object lifetime a registry reference is required for construction. </p>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00327">327</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00359">359</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7122d96ee6c8685e5830cd9c403afa7a"></a>
 <div class="memitem">
@@ -172,35 +181,16 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>construction of an object requires reference to the session to attach to </p>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00332">332</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>construction of an object </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sess</td><td>reference to session to attach </td></tr>
+  </table>
+  </dd>
+</dl>
 
-</div>
-</div>
-<a class="anchor" id="a7b65a31e0d72dd4f35ef621c94ad9791"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bvnet::object::~object </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>base dtor to automatically unregister the object </p>
-
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00340">340</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00364">364</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -232,7 +222,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classserver_root.html#a3e22b92d44917a86e12c0155c6169b15">serverRoot</a>, <a class="el" href="class_account.html#a906b5fee76e343176a2a2e36a6b46a0c">Account</a>, and <a class="el" href="classclient_root.html#a452d300aba48c73218e0204421c43a8d">clientRoot</a>.</p>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00352">352</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00384">384</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -269,30 +259,6 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="acc0211ae67284eccf20e9bfe1c25e0cc"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classbvnet_1_1session.html">session</a>&amp; bvnet::object::ctx</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>for objects to attach to the session's registry </p>
-
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00329">329</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="protocol_8hpp_source.html">protocol.hpp</a></li>
 </ul>
@@ -302,7 +268,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>bvnet</b></li><li class="navelem"><a class="el" href="classbvnet_1_1object.html">object</a></li>
-    <li class="footer">Generated on Sun Nov 30 2014 12:05:51 for Blockiverse by
+    <li class="footer">Generated on Sun Nov 30 2014 13:25:37 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

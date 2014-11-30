@@ -24,9 +24,12 @@ int pow2_tbl[]={1,2,4,8};         /* 2^x */
 
 boost::mutex cout_mutex;
 
+/** @var bvnet::reg_object_softmax @brief Maximum size of object registry */
 u32 bvnet::reg_objects_softmax=1000;
 
 typedef bvnet::type_map::value_type mappedType;
+
+/** @var bvnet::typeMap @brief Used by serialization to encode or decode protocol valuetypes to actual data types */
 bvnet::type_map bvnet::typeMap;
 
 void protocol_main_init() {
