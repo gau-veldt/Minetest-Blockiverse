@@ -22,6 +22,12 @@
 **
 **  @section bv_banner Blockiverse
 **
+**  An extension based on minetest allowing for space travel
+**  between distant worlds, blockships and other vehicles,
+**  extraplanetary resource collection, celestial bodies,
+**  space exploration and space platforms allowing orbital
+**  habitation.
+**
 **  Incorporates portions of code from minetest 0.4.10-dev
 **
 **  Copyright (C) 2014 Brian Jack <gau_veldt@hotmail.com>
