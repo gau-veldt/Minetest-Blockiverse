@@ -151,14 +151,14 @@ $(document).ready(function(){initNavTree('server_8hpp_source.html','');});
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="class_account.html">Account</a>(<a class="code" href="classbvnet_1_1session.html">bvnet::session</a> &amp;sess)</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        : <a class="code" href="classbvnet_1_1object.html">bvnet::object</a>(sess) {}</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_account.html">Account</a>() {}</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *getType() {<span class="keywordflow">return</span> <span class="stringliteral">&quot;userAccount&quot;</span>;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> methodCall(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> method) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        bvnet::scoped_lock lock(ctx.getMutex());</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        bvnet::value_queue &amp;vqueue=ctx.getSendQueue();</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_account.html#a906b5fee76e343176a2a2e36a6b46a0c">   46</a></span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_account.html#a906b5fee76e343176a2a2e36a6b46a0c">getType</a>() {<span class="keywordflow">return</span> <span class="stringliteral">&quot;userAccount&quot;</span>;}</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="class_account.html#a31165e7bd325fef5138e0d1cc02b273b">   47</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_account.html#a31165e7bd325fef5138e0d1cc02b273b">methodCall</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> method) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        bvnet::scoped_lock lock(<a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.getMutex());</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        bvnet::value_queue &amp;vqueue=<a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.getSendQueue();</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">switch</span>(method) {</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">case</span> 0: <span class="comment">/* GetType */</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="comment">/* emit object type to output queue as string */</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            vqueue.push(std::string(getType()));</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            vqueue.push(std::string(<a class="code" href="class_account.html#a906b5fee76e343176a2a2e36a6b46a0c">getType</a>()));</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        }</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    }</div>
@@ -184,14 +184,14 @@ $(document).ready(function(){initNavTree('server_8hpp_source.html','');});
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keyword">delete</span> clientKey;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *getType() {<span class="keywordflow">return</span> <span class="stringliteral">&quot;serverRoot&quot;</span>;}</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> methodCall(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> method) {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        bvnet::scoped_lock lock(ctx.getMutex());</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        bvnet::value_queue &amp;vqueue=ctx.getSendQueue();</div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="classserver_root.html#a3e22b92d44917a86e12c0155c6169b15">   79</a></span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classserver_root.html#a3e22b92d44917a86e12c0155c6169b15">getType</a>() {<span class="keywordflow">return</span> <span class="stringliteral">&quot;serverRoot&quot;</span>;}</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classserver_root.html#a36cbaa849cfef2c6f2d7fef1762d6346">   80</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classserver_root.html#a36cbaa849cfef2c6f2d7fef1762d6346">methodCall</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> method) {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        bvnet::scoped_lock lock(<a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.getMutex());</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        bvnet::value_queue &amp;vqueue=<a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.getSendQueue();</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">switch</span>(method) {</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">case</span> 0: <span class="comment">/* GetType */</span></div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="comment">/* emit object type to output queue as string */</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            vqueue.push(std::string(getType()));</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            vqueue.push(std::string(<a class="code" href="classserver_root.html#a3e22b92d44917a86e12c0155c6169b15">getType</a>()));</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">case</span> 1: <span class="comment">/* LoginClient */</span></div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            {</div>
@@ -201,9 +201,9 @@ $(document).ready(function(){initNavTree('server_8hpp_source.html','');});
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">                ** out: string: challenge (encrpyted w/pubkey)</span></div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">                */</span></div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                std::string sMod,sExp,eChal;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                sExp=ctx.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;(); <span class="comment">/* LIFO is exponent */</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                sExp=<a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;(); <span class="comment">/* LIFO is exponent */</span></div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                cli_pub_exp=BigInt(sExp);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                sMod=ctx.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                sMod=<a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;();</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                cli_pub_mod=BigInt(sMod);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                clientKey=<span class="keyword">new</span> Key(cli_pub_mod,cli_pub_exp);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0;i&lt;8;++i)</div>
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('server_8hpp_source.html','');});
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment">                */</span></div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                s64 authOk=0;</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;                std::string hChal,answer;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                answer=ctx.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;();</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                answer=<a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;();</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;                SHA1 sha;</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;                sha.addBytes(challenge.c_str(),challenge.size());</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;                <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *dig=sha.getDigest();</div>
@@ -263,7 +263,7 @@ $(document).ready(function(){initNavTree('server_8hpp_source.html','');});
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                }</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                vqueue.push(authOk);</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                <span class="keywordflow">if</span> (!clientValid) {</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                    ctx.<a class="code" href="classbvnet_1_1session.html#adff1f9a58b2de9efd9be73ff71a57603">disconnect</a>();</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                    <a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.<a class="code" href="classbvnet_1_1session.html#adff1f9a58b2de9efd9be73ff71a57603">disconnect</a>();</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                }</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            }</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            <span class="keywordflow">break</span>;</div>
@@ -313,8 +313,8 @@ $(document).ready(function(){initNavTree('server_8hpp_source.html','');});
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="comment">                **</span></div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment">                */</span></div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                std::string pass,user;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                pass=ctx.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;();     <span class="comment">// LIFO is password</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                user=ctx.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;();</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                pass=<a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;();     <span class="comment">// LIFO is password</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                user=<a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.<a class="code" href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">getarg</a>&lt;std::string&gt;();</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                <span class="keywordflow">if</span> (clientValid) {</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                    <span class="comment">// TODO: check for new account creation,</span></div>
@@ -323,7 +323,7 @@ $(document).ready(function(){initNavTree('server_8hpp_source.html','');});
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                } <span class="keywordflow">else</span> {</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                    <span class="comment">// invalid (unauthorized) client</span></div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                    vqueue.push(s64(0));</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                    ctx.<a class="code" href="classbvnet_1_1session.html#adff1f9a58b2de9efd9be73ff71a57603">disconnect</a>();</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                    <a class="code" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a>.<a class="code" href="classbvnet_1_1session.html#adff1f9a58b2de9efd9be73ff71a57603">disconnect</a>();</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;                }</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            }</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <span class="keywordflow">break</span>;</div>
@@ -340,19 +340,24 @@ $(document).ready(function(){initNavTree('server_8hpp_source.html','');});
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="comment">//#endif // BV_SERVER_IMPLEMENTATION</span></div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">#endif // BV_SERVER_HPP_INCLUDED</span></div>
+<div class="ttc" id="classserver_root_html_a3e22b92d44917a86e12c0155c6169b15"><div class="ttname"><a href="classserver_root.html#a3e22b92d44917a86e12c0155c6169b15">serverRoot::getType</a></div><div class="ttdeci">virtual const char * getType()</div><div class="ttdoc">Get object&#39;s identity. </div><div class="ttdef"><b>Definition:</b> <a href="server_8hpp_source.html#l00079">server.hpp:79</a></div></div>
 <div class="ttc" id="classserver_root_html"><div class="ttname"><a href="classserver_root.html">serverRoot</a></div><div class="ttdef"><b>Definition:</b> <a href="server_8hpp_source.html#l00059">server.hpp:59</a></div></div>
 <div class="ttc" id="class_account_html"><div class="ttname"><a href="class_account.html">Account</a></div><div class="ttdef"><b>Definition:</b> <a href="server_8hpp_source.html#l00040">server.hpp:40</a></div></div>
-<div class="ttc" id="classbvnet_1_1session_html"><div class="ttname"><a href="classbvnet_1_1session.html">bvnet::session</a></div><div class="ttdoc">Symmetrical endpoint session for established connection. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00144">protocol.hpp:144</a></div></div>
-<div class="ttc" id="classbvnet_1_1object_html"><div class="ttname"><a href="classbvnet_1_1object.html">bvnet::object</a></div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00309">protocol.hpp:309</a></div></div>
-<div class="ttc" id="classbvnet_1_1session_html_a2f8b2d381ad7df194ffef5c83a607795"><div class="ttname"><a href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">bvnet::session::getarg</a></div><div class="ttdeci">V getarg()</div><div class="ttdoc">Receive next value from top of return stack. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00216">protocol.hpp:216</a></div></div>
-<div class="ttc" id="classbvnet_1_1session_html_adff1f9a58b2de9efd9be73ff71a57603"><div class="ttname"><a href="classbvnet_1_1session.html#adff1f9a58b2de9efd9be73ff71a57603">bvnet::session::disconnect</a></div><div class="ttdeci">void disconnect()</div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00187">protocol.hpp:187</a></div></div>
+<div class="ttc" id="classbvnet_1_1object_html_acc0211ae67284eccf20e9bfe1c25e0cc"><div class="ttname"><a href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">bvnet::object::ctx</a></div><div class="ttdeci">session &amp; ctx</div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00323">protocol.hpp:323</a></div></div>
+<div class="ttc" id="classbvnet_1_1session_html"><div class="ttname"><a href="classbvnet_1_1session.html">bvnet::session</a></div><div class="ttdoc">Symmetrical endpoint session for established connection. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00156">protocol.hpp:156</a></div></div>
+<div class="ttc" id="class_account_html_a906b5fee76e343176a2a2e36a6b46a0c"><div class="ttname"><a href="class_account.html#a906b5fee76e343176a2a2e36a6b46a0c">Account::getType</a></div><div class="ttdeci">virtual const char * getType()</div><div class="ttdoc">Get object&#39;s identity. </div><div class="ttdef"><b>Definition:</b> <a href="server_8hpp_source.html#l00046">server.hpp:46</a></div></div>
+<div class="ttc" id="class_account_html_a31165e7bd325fef5138e0d1cc02b273b"><div class="ttname"><a href="class_account.html#a31165e7bd325fef5138e0d1cc02b273b">Account::methodCall</a></div><div class="ttdeci">virtual void methodCall(unsigned int method)</div><div class="ttdoc">Method call switchboard. </div><div class="ttdef"><b>Definition:</b> <a href="server_8hpp_source.html#l00047">server.hpp:47</a></div></div>
+<div class="ttc" id="classbvnet_1_1object_html"><div class="ttname"><a href="classbvnet_1_1object.html">bvnet::object</a></div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00321">protocol.hpp:321</a></div></div>
+<div class="ttc" id="classbvnet_1_1session_html_a2f8b2d381ad7df194ffef5c83a607795"><div class="ttname"><a href="classbvnet_1_1session.html#a2f8b2d381ad7df194ffef5c83a607795">bvnet::session::getarg</a></div><div class="ttdeci">V getarg()</div><div class="ttdoc">Receive next value from top of return stack. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00228">protocol.hpp:228</a></div></div>
+<div class="ttc" id="classserver_root_html_a36cbaa849cfef2c6f2d7fef1762d6346"><div class="ttname"><a href="classserver_root.html#a36cbaa849cfef2c6f2d7fef1762d6346">serverRoot::methodCall</a></div><div class="ttdeci">virtual void methodCall(unsigned int method)</div><div class="ttdoc">Method call switchboard. </div><div class="ttdef"><b>Definition:</b> <a href="server_8hpp_source.html#l00080">server.hpp:80</a></div></div>
+<div class="ttc" id="classbvnet_1_1session_html_adff1f9a58b2de9efd9be73ff71a57603"><div class="ttname"><a href="classbvnet_1_1session.html#adff1f9a58b2de9efd9be73ff71a57603">bvnet::session::disconnect</a></div><div class="ttdeci">void disconnect()</div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00199">protocol.hpp:199</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>server.hpp</b></li>
-    <li class="footer">Generated on Sun Nov 30 2014 11:14:34 for Blockiverse by
+    <li class="footer">Generated on Sun Nov 30 2014 11:55:31 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

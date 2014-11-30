@@ -1,9 +1,5 @@
-/**
-**  @brief Minetest-Blockiverse
-**
-**  @version 0.0.1
-**  @date 2014-2015
-**  @copyright GNU LGPL 3.0
+/*
+**  Minetest-Blockiverse
 **
 **  Incorporates portions of code from minetest 0.4.10-dev
 **
@@ -17,6 +13,22 @@
 **  Declaration (header) file protocol.hpp
 **
 **  Protocol for server/client comms header declarations
+*/
+/** @mainpage Minetest-Blockiverse
+**
+**  @version 0.0.1
+**  @date 2014
+**  @copyright GNU LGPL 3.0
+**
+**  @section bv_banner Blockiverse
+**
+**  Incorporates portions of code from minetest 0.4.10-dev
+**
+**  Copyright (C) 2014 Brian Jack <gau_veldt@hotmail.com>
+**  Distributed as free software using the copyleft
+**  LGPL Version 3 license:
+**  https://www.gnu.org/licenses/lgpl-3.0.en.html
+**
 */
 #ifndef BV_PROTOCOL_H_INCLUDED
 #define BV_PROTOCOL_H_INCLUDED
@@ -308,8 +320,9 @@ namespace bvnet {
     */
     class object {
     protected:
-        session &ctx;
+        session &ctx;       /**< for objects to attach to the session's registry */
     public:
+        /** construction of an object requires reference to the session to attach to */
         object(session &sess) :
             ctx(sess) {
                 LOCK_COUT
@@ -317,13 +330,35 @@ namespace bvnet {
                 UNLOCK_COUT
                 ctx.register_object(this);
             }
+        /** base dtor to automatically unregister the object */
         virtual ~object() {
             LOCK_COUT
             std::cout << "object [" << this << "] dtor" << std::endl;
             UNLOCK_COUT
             ctx.unregister(this);
         }
+        /**
+        *   @brief Get object's identity.
+        *   @return Object identity string
+        *
+        *   Overriden by superclass to announce it's identity.
+        */
         virtual const char *getType() {return "baseObject";}
+        /**
+        *   @brief Method call switchboard.
+        *
+        *   Overidden by superclass to implement methods callable
+        *   by the remote.  Currently the superclasses are using
+        *   big switchbanks which looks plain evil but at this
+        *   point I'm not sure of what to refactor with.
+        *
+        *   @todo
+        *   It would be good for the base class to implement some
+        *   sort of glue to take out the switch boilerplate and some
+        *   sort of static enum to get rid of those magic numbers
+        *   (method call ids from remote POV) and
+        *
+        */
         virtual void methodCall(unsigned int idx)=0;
     };
 
