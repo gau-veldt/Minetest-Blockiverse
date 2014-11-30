@@ -159,6 +159,66 @@ public:
                 }
             }
             break;
+        case 3: /* GetAccount */
+            {
+                /*
+                ** Called by authenticated client to
+                ** log on to a user account
+                **
+                ** in: string username
+                **     string password
+                **
+                ** out: objectref account or
+                **      int result code
+                **
+                ** username is the username of the account
+                ** to log onto either the username owned by
+                ** the client or anotehr user who has linked
+                ** (whitelisted) this client
+                **
+                ** as a special case if client does not currently own a
+                ** user account and the specified username is not in use
+                ** by another account it will be created and registered
+                ** with this client's pubkey as its owner
+                **
+                ** a pasword string must always be sent but
+                ** only used when the username being logged
+                ** onto via linked (whitelisted) client
+                **
+                ** nonempty password are sent encrypted
+                ** (by client with privkey) and server
+                ** will decode with connected client's
+                ** pubkey
+                **
+                ** returns either the objectref
+                ** of the user account on success
+                ** or an integer result code on
+                ** failure:
+                **
+                ** 0: invalid client (did not answer chellenge)
+                ** 1: unauthorized (not owner of the account or incorrect
+                **    password supplied for linked (whitelisted) account
+                **
+                ** calling this method from unvalidated
+                ** client causes disconnection after
+                ** returning a result code of 0
+                **
+                */
+                std::string pass,user;
+                pass=ctx.getarg<std::string>();     // LIFO is password
+                user=ctx.getarg<std::string>();
+
+                if (clientValid) {
+                    // TODO: check for new account creation,
+                    //       logon to own account or logon to
+                    //       linked (whitelisted) account
+                } else {
+                    // invalid (unauthorized) client
+                    vqueue.push(s64(0));
+                    ctx.disconnect();
+                }
+            }
+            break;
         }
     }
 };
