@@ -130,6 +130,17 @@ namespace bvnet {
         virtual const char *what() const throw();
     };
 
+    /**
+    *   @brief Symmetrical endpoint session for established connection.
+    *
+    *   Maintains the state of the session while the endpoint is connected.
+    *   The protocol is mainly symmetrical -- both endpoints have the same
+    *   communication language.  Once a bootstrap/hnadshake announces the
+    *   root object the session will asynchronously wait for incoming data
+    *   with the possibility of sending data or method calls upstream to
+    *   the remote (and symmetrically processing any such data or method
+    *   calls received from the remote).
+    */
     class session {
     private:
         io_service *io_;            /**< io_service for this session  */
