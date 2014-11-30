@@ -25,4 +25,12 @@
 
 extern void init_db(std::string);
 
+class SQLiteDB : private boost::noncopyable {
+private:
+
+public:
+    SQLiteDB(std::string);
+    virtual ~SQLiteDB();
+};
+
 #endif // BV_DATABASE_HPP_INCLUDED

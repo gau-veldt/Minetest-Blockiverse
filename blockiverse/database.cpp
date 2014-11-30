@@ -24,6 +24,6 @@ void init_db(std::string where) {
     ** Creates database/tables for blockiverse
     */
     LOCK_COUT
-    std::cout << "Database file: " << where << std::endl;
+    std::cout << "[DB] Database file: " << where << std::endl;
     UNLOCK_COUT
 }

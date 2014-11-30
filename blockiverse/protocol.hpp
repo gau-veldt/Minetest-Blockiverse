@@ -1,6 +1,9 @@
-/*
+/**
+**  @brief Minetest-Blockiverse
 **
-**  Minetest-Blockiverse
+**  @version 0.0.1
+**  @date 2014-2015
+**  @copyright GNU LGPL 3.0
 **
 **  Incorporates portions of code from minetest 0.4.10-dev
 **
@@ -14,7 +17,6 @@
 **  Declaration (header) file protocol.hpp
 **
 **  Protocol for server/client comms header declarations
-**
 */
 #ifndef BV_PROTOCOL_H_INCLUDED
 #define BV_PROTOCOL_H_INCLUDED
@@ -42,32 +44,44 @@ extern int pow2_tbl[];
 typedef boost::function<void()> lpvFunc;
 
 namespace bvnet {
+    /** Maximum size of object registry */
     extern u32 reg_objects_softmax;
 
+    /**
+    * @brief Possible value types.
+    *
+    * These are the possible types of values transmitted
+    * between server/client sessions.
+    */
     typedef enum {
-        vtInt=1,
-        vtFloat=2,
-        vtBlob=3,
-        vtString=4,
-        vtObref=5,
-        vtDeath=6,
-        vtMethod=7
+        vtInt=1,        /**< Variable-length integer */
+        vtFloat=2,      /**< Floating-point value */
+        vtBlob=3,       /**< Arbitrary binary data (currently same as String) */
+        vtString=4,     /**< Length-prefixed string */
+        vtObref=5,      /**< Object reference */
+        vtDeath=6,      /**< Object no longer exists */
+        vtMethod=7      /**< Object method call */
     } valtype;
+    /** map of protocol valuetype class to corresponding data type */
     typedef std::map<const char*,valtype> type_map;
+    /** used by serialization to encode or decode protocol valuetypes to actual data types */
     extern type_map typeMap;
 
+    /** protocol valuetype class for object reference */
     struct obref {
         /* wrapper for object ref */
         u32 id;
         obref(u32 i):id(i) {}
         ~obref() {}
     };
+    /** protocol valuetype class for indicating object no longer exists */
     struct ob_is_gone {
         /* wrapper for object-gone message */
         u32 id;
         ob_is_gone(u32 i):id(i) {}
         ~ob_is_gone() {}
     };
+    /** protocol valuetype class for object method calls */
     struct method_call {;
         /* wrapper for method call message */
         u32 id;
@@ -92,7 +106,10 @@ namespace bvnet {
     typedef object_map::map_by<object_addr>::iterator omap_iter_byptr;
     typedef object_map::map_by<object_id>::type omap_select_id;
     typedef object_map::map_by<object_addr>::type omap_select_addr;
+
+    /** incoming value stack to receive incoming data */
     typedef std::stack<boost::any> value_stack;
+    /** queued outgoing data waiting for transfer */
     typedef std::queue<boost::any> value_queue;
     typedef std::map<u32,bool> proxy_map;
     typedef std::queue<method_call> cb_queue;
@@ -115,17 +132,17 @@ namespace bvnet {
 
     class session {
     private:
-        io_service *io_;
-        object *root;
-        bool isActive;
-        bool isBooting;
-        bool _float_or_semi;
-        bool _neg_int;
-        bool _opcode_read_queued;
-        std::string _fpstr;
-        char in_ch;
-        char in_idx[4];
-        char in_s64[8];
+        io_service *io_;            /**< io_service for this session  */
+        object *root;               /**< session's root (bootstrap) object */
+        bool isActive;              /**< connection is alive */
+        bool isBooting;             /**< session is in handshake/bootstrap phase */
+        bool _float_or_semi;        /**< expecting floating point chars or terminating ; */
+        bool _neg_int;              /**< got - meaning incoming int is a negative */
+        bool _opcode_read_queued;   /**< when true already waiting for opcode to arrive */
+        std::string _fpstr;         /**< accumulator to receive incoming floating point value  */
+        char in_ch;                 /**< the character just received */
+        char in_idx[4];             /**< the uint32 just received */
+        char in_s64[8];             /**< the sint64 just received */
     protected:
         void on_recv(const boost::system::error_code &ec,size_t rlen);
         void on_recv_dead_obid(const boost::system::error_code &ec);
@@ -137,38 +154,53 @@ namespace bvnet {
         void on_recv_s64(const boost::system::error_code &ec,u32 bsize);
         void on_write_done(std::string *finsihedbuf);
         void on_write_call_done(std::string *finishedbuf,lpvFunc cb);
+        /** notifies callback when expected number of return arguments arrive */
         void check_argnotify();
 
         /* value stack */
-        value_stack argstack;
-        value_queue sendq;
-        proxy_map   proxy;
-        cb_queue    argnotify;
+        value_stack argstack;   /**< incoming results stack */
+        value_queue sendq;      /**< outgoing values queue */
+        proxy_map   proxy;      /**< cache of available remote objects */
+        cb_queue    argnotify;  /**< callbacks to notify when remote methods complete */
 
-        registry *reg;      /* registered objects in session */
-        mutex *synchro;     /* mutex on session manipulation */
-        tcp::socket *conn;  /* connection */
+        registry *reg;      /**< registered objects in session */
+        mutex *synchro;     /**< mutex on session manipulation */
+        tcp::socket *conn;  /**< connection */
 
-        u32 remoteRoot;     /* once booted has remote_root */
+        u32 remoteRoot;     /**< once booted has remote_root */
     public:
         session();
         virtual ~session();
 
-        void notify_remove(u32 id);                 /* signals that object no longer valid */
-        void disconnect() {isActive=false;}
-        int register_object(object *o);
-        u32 getRemote() {return remoteRoot;}
-        bool hasRemote() {return 0!=remoteRoot;}
-        bool unregister(u32 id);
-        bool unregister(object *ob);
-        void encode(const boost::any &a);
+        void notify_remove(u32 id);                 /**< signals that object no longer valid */
+        void disconnect() {isActive=false;}         /**< close the conncetion */
+        int register_object(object *o);             /**< register object as available to remote */
+        u32 getRemote() {return remoteRoot;}        /**< get remote's root (bootstrap) object */
+        bool hasRemote() {return 0!=remoteRoot;}    /**< true indicates remote root object valid */
+        bool unregister(u32 id);                    /**< unregister object by-id and inform remote */
+        bool unregister(object *ob);                /**< unregister object by-address and inform remote */
+        void encode(const boost::any &a);           /**< sends any queued values over the wire */
+        /**
+        * Determine type of result stack top value.
+        * @throw argstack_empty if the result stack is empty when attempted
+        */
         valtype argtype() {
             if (argstack.size()>0) {
                 return typeMap[argstack.top().type().name()];
             }
             throw argstack_empty();
         }
+        /** current size of result stack */
         int argcount() {return argstack.size();}
+        /**
+        * @brief Receive next value from top of return stack.
+        *
+        * Since the value stack holds arbitrary types getarg is templated
+        * in order to provide a different return value type for all value
+        * types possible to be received.
+        *
+        * @throw argstack_empty if the result stack is empty when attempted
+        */
         template<typename V>
         V getarg() {
             if (argstack.size()>0) {
@@ -178,6 +210,7 @@ namespace bvnet {
             }
             throw argstack_empty();
         }
+        /** Handshake/bootstrap process */
         void bootstrap(object *root);
         void send_int(s64 val) {sendq.push(val);}
         //void send_int(s64 &val) {sendq.push(val);}
@@ -189,10 +222,16 @@ namespace bvnet {
         //void send_string(std::string &val) {sendq.push(val);}
         void send_obref(u32 id) {sendq.push(obref(id));}
         void send_call(u32 id,u32 m,lpvFunc cb=NULL,int rcount=0) {sendq.push(method_call(id,m,cb,rcount));}
+        /** @brief Queries if an object still valid  and useable on remote.
+        *   @param obid object id.
+        *   @return true if oject useable false otherwise.
+        */
         bool isValidObject(u32 obid) {
             return (proxy.find(obid)!=proxy.end());
         }
+        /** network pump - blocks until data received. */
         bool run();
+        /** network pump - returns to allow other activy whilst waiting. */
         bool poll();
         value_queue &getSendQueue() {return sendq;}
         mutex &getMutex() {return *synchro;}
@@ -203,55 +242,58 @@ namespace bvnet {
             std::cout << "session [" << this << "] on socket " << conn << " via io=" << io_ << std::endl;
             UNLOCK_COUT
         }
-
+        /** for debugging - dumps data about session */
         void dump(std::ostream &os);
     };
 
-    /*
+    /**
     ** registry tracks active
-    ** object references
+    ** object references.
     **
-    ** instances are permitted
+    ** instances are permitted.
     **
     ** server-side: one instance for each connected client
-    ** client-side: one sole instance for upstream server
+    ** client-side: one sole instance for upstream server.
     **
-    ** NB: registry does not take ownership of registered
+    ** NB: Registry does not take ownership of registered
     **     objects instead, object is designed to require
-    **     a registry reference at construction
+    **     a registry reference at construction.
     */
     class registry {
     private:
-        mutex *synchro;     /* mutex on registry manipulation */
-        session *listener;  /* notify sink for object removals */
+        mutex *synchro;     /**< mutex on registry manipulation */
+        session *listener;  /**< notify sink for object removals */
 
-        /* registration of objects */
-        /* must_sync */ u32 next_slot;
-        /* must_sync */ object_map objects;
+        u32 next_slot;          /**< id for next object [must be thread-synced] */
+        object_map objects;     /**< registered objects [must be thread-synced] */
     public:
-        /* construction/destruction */
+        /** construction/destruction */
         registry(session *host) : listener(host),next_slot(1)
             {synchro=new mutex();}
         virtual ~registry();
-        /* add object to registry */
+        /** add object to registry */
         int register_object(object *ob);
-        /* remove object from registry */
+        /** notify upstream of object destruction */
         void notify(u32 id);
+        /** remove object from registry by-id */
         bool unregister(u32 id);
+        /** remove object from registry by-ptr */
         bool unregister(object *ob);
+        /** @brief query id for given object ptr @param ob object ptr @return object id */
         u32 idOf(object* ob);
+        /** @brief query ptr for given object id @param id object id @return object ptr */
         object* obOf(u32 id);
-
+        /** for debugging - dumps data about registry */
         void dump(std::ostream &os);
     };
 
-    /*
+    /**
     ** object is base used for objects
-    ** exchangeable via object references
+    ** exchangeable via object references.
     **
     ** since secure referencing requires a way to
     ** track object lifetime a registry reference
-    ** is required for construction
+    ** is required for construction.
     */
     class object {
     protected:
@@ -279,9 +321,13 @@ namespace bvnet {
     */
     inline int registry::register_object(object *ob) {
         int chosen_slot; // local value other threads can't modify
-        /*
+        /**
         **  Insert object ob into registry and return slot id
         **  the object was registered to.
+        **  @param ob ptr to object to register
+        **  @return slot id object registered to
+        **  @throw object_null I refuse to register NULLs
+        **  @throw registry_full Reigstry exceeded size limit - DDoS mitigation.
         */
 
         if (ob==NULL) {
@@ -752,7 +798,7 @@ namespace bvnet {
         }
     }
     inline void session::check_argnotify() {
-        /*
+        /**
         **  Notifies stored callback when argstack reaches specified size
         */
         if (argnotify.size()>0) {
