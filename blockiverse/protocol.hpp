@@ -359,10 +359,13 @@ namespace bvnet {
         *   point I'm not sure of what to refactor with.
         *
         *   @todo
-        *   It would be good for the base class to implement some
-        *   sort of glue to take out the switch boilerplate and some
-        *   sort of static enum to get rid of those magic numbers
-        *   (method call ids from remote POV) and
+        *   Base class to implement some sort of glue to take out the switch boilerplate?
+        *   @todo
+        *   some sort of static enum to get rid of the magic number
+        *   method call #s from remote POV?
+        *   @todo
+        *   automatically declare the methods for method calling
+        *   via some sort of macro or metacode?
         *
         */
         virtual void methodCall(unsigned int idx)=0;

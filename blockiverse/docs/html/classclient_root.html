@@ -204,7 +204,10 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Method call switchboard. </p>
 <p>Overidden by superclass to implement methods callable by the remote. Currently the superclasses are using big switchbanks which looks plain evil but at this point I'm not sure of what to refactor with.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>It would be good for the base class to implement some sort of glue to take out the switch boilerplate and some sort of static enum to get rid of those magic numbers (method call ids from remote POV) and</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd><p class="startdd">Base class to implement some sort of glue to take out the switch boilerplate? </p>
+<p>some sort of static enum to get rid of the magic number method call #s from remote POV? </p>
+<p class="enddd">automatically declare the methods for method calling via some sort of macro or metacode?</p>
+</dd></dl>
 
 <p>Implements <a class="el" href="classbvnet_1_1object.html#ac522ae7e71b2c98ec4ff0473fa97ff26">bvnet::object</a>.</p>
 
@@ -221,7 +224,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classclient_root.html">clientRoot</a></li>
-    <li class="footer">Generated on Sun Nov 30 2014 11:56:53 for Blockiverse by
+    <li class="footer">Generated on Sun Nov 30 2014 12:05:51 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>
