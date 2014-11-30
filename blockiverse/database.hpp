@@ -20,6 +20,7 @@
 #define BV_DATABASE_HPP_INCLUDED
 
 #include <string>
+#include "common.hpp"
 #include "sqlite/sqlite3.h"
 
 extern void init_db(std::string);

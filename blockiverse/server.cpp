@@ -94,11 +94,12 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         argc=((argset*)argvoid)->c;
         argv=((argset*)argvoid)->v;
     }
+    boost::filesystem::path cwd=boost::filesystem::current_path();
+    boost::filesystem::path db_path=cwd / "bv_db";
 
     LOCK_COUT
     std::cout << "[server] Version is: " << auto_ver << std::endl;
-    boost::filesystem::path cwd=boost::filesystem::current_path();
-    std::cout << "Starting in: " << cwd << std::endl;
+    std::cout << "[server] Starting in: " << cwd << std::endl;
 
     if (argc==0) {
         std::cout << "[server] Argument passing failed (argc==0)" << std::endl;
@@ -109,6 +110,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         }
     }
     UNLOCK_COUT
+
+    init_db(db_path.string());
 
     io_service acceptor_io;
     int port=v2int(server_config["port"]);

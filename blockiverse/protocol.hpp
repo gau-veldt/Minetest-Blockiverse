@@ -39,24 +39,6 @@ typedef boost::asio::io_service io_service;
 extern int log2_tbl[];
 extern int pow2_tbl[];
 
-// quick and dirty synchronized ostream
-extern boost::mutex cout_mutex;
-class scoped_cout_lock {
-    std::ios state;
-public:
-    scoped_cout_lock() : state(NULL) {
-        cout_mutex.lock();
-        state.copyfmt(std::cout);
-    }
-    virtual ~scoped_cout_lock() {
-        std::cout.flush();
-        std::cout.copyfmt(state);
-        cout_mutex.unlock();
-    }
-};
-#define LOCK_COUT {scoped_cout_lock __scl;
-#define UNLOCK_COUT }
-
 typedef boost::function<void()> lpvFunc;
 
 namespace bvnet {
