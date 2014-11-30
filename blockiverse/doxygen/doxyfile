@@ -758,27 +758,13 @@ INPUT                  = ../ \
                          "..\protocol.cpp" \
                          "..\settings.hpp" \
                          "..\main.cpp" \
-                         "..\sha1.cpp" \
                          "..\auto\version.h" \
-                         "..\sha1.hpp" \
-                         "..\rsa\BigInt.cpp" \
-                         "..\sqlite\sqlite3.c" \
                          "..\client.cpp" \
-                         "..\sqlite\sqlite3.h" \
                          "..\common.hpp" \
                          "..\database.cpp" \
-                         "..\rsa\BigInt.h" \
                          "..\protocol.hpp" \
                          "..\client.hpp" \
-                         "..\rsa\Key.cpp" \
                          "..\database.hpp" \
-                         "..\rsa\Key.h" \
-                         "..\rsa\KeyPair.cpp" \
-                         "..\rsa\KeyPair.h" \
-                         "..\rsa\PrimeGenerator.cpp" \
-                         "..\rsa\PrimeGenerator.h" \
-                         "..\rsa\RSA.cpp" \
-                         "..\rsa\RSA.h" \
                          "..\server.cpp" \
                          "..\server.hpp"
 
@@ -815,7 +801,10 @@ RECURSIVE              = NO
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = 
+EXCLUDE                = ..\sqlite\ \
+                         ..\rsa\ \
+                         ..\sha1.cpp \
+                         ..\sha1.hpp
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
