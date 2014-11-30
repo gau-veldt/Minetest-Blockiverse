@@ -18,3 +18,10 @@
 */
 
 #include "database.hpp"
+
+void init_db(std::string where) {
+    /*
+    ** Creates database/tables for blockiverse
+    */
+
+}

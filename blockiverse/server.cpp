@@ -26,7 +26,9 @@
 #define BV_SERVER_IMPLEMENTATION
 #include "server.hpp"
 #include "settings.hpp"
+#include "database.hpp"
 #include <boost/thread.hpp>
+#include <boost/filesystem.hpp>
 
 boost::random::random_device entropy;
 
@@ -95,6 +97,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
 
     LOCK_COUT
     std::cout << "[server] Version is: " << auto_ver << std::endl;
+    boost::filesystem::path cwd=boost::filesystem::current_path();
+    std::cout << "Starting in: " << cwd << std::endl;
 
     if (argc==0) {
         std::cout << "[server] Argument passing failed (argc==0)" << std::endl;

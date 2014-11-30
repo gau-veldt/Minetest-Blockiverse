@@ -19,8 +19,9 @@
 #ifndef BV_DATABASE_HPP_INCLUDED
 #define BV_DATABASE_HPP_INCLUDED
 
+#include <string>
 #include "sqlite/sqlite3.h"
 
-/* decls here */
+extern void init_db(std::string);
 
 #endif // BV_DATABASE_HPP_INCLUDED
