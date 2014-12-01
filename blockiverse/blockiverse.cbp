@@ -105,6 +105,7 @@
 			<Add alias="Release" targets="ClientRelease;ServerRelease;" />
 		</VirtualTargets>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-m32" />
 			<Add option="-DBOOST_USE_WIDNOWS_H" />
 			<Add option="-D_WIN32_WINNT=0x0601" />
