@@ -19,11 +19,16 @@
 
 #include "database.hpp"
 
-void init_db(std::string where) {
-    /*
-    ** Creates database/tables for blockiverse
-    */
-    LOCK_COUT
-    std::cout << "[DB] Database file: " << where << std::endl;
-    UNLOCK_COUT
-}
+namespace bvdb {
+
+    void init_db(std::string where) {
+        /**
+        * @brief Creates database/tables for blockiverse
+        * @param where pathname to database file
+        */
+        LOCK_COUT
+        std::cout << "[DB] Database file: " << where << std::endl;
+        UNLOCK_COUT
+    }
+
+};

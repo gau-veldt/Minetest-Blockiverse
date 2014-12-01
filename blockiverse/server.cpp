@@ -111,7 +111,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     }
     UNLOCK_COUT
 
-    init_db(db_path.string());
+    bvdb::init_db(db_path.string());
 
     io_service acceptor_io;
     int port=v2int(server_config["port"]);
