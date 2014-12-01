@@ -23,7 +23,6 @@
 #include <string>
 #include "common.hpp"
 #include <boost/core/noncopyable.hpp>
-#include <stdint-gcc.h>
 #include "sqlite/sqlite3.h"
 
 namespace bvdb {
