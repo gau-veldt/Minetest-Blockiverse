@@ -32,6 +32,9 @@ namespace bvdb {
     struct ColumnCastFailed : public std::runtime_error {
         ColumnCastFailed(const char *msg) : std::runtime_error(msg) {}
     };
+    struct NotThreadable : public std::runtime_error {
+        NotThreadable(const char *msg) : std::runtime_error(msg) {}
+    };
 
     class dbValue : boost::noncopyable {
     public:
@@ -126,7 +129,7 @@ namespace bvdb {
 
     class SQLiteDB : private boost::noncopyable {
     private:
-
+        sqlite3 *db;
     public:
         SQLiteDB(std::string);
         virtual ~SQLiteDB();

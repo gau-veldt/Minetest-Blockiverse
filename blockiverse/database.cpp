@@ -26,9 +26,14 @@ namespace bvdb {
         * @brief Creates database/tables for blockiverse
         * @param where pathname to database file
         */
+        bool sql3_safe=sqlite3_threadsafe();
         LOCK_COUT
-        std::cout << "[DB] Database file: " << where << std::endl;
+        std::cout << "[DB] Database file: " << where
+                  << " threading=" << (sql3_safe?"yes":"no") << std::endl;
         UNLOCK_COUT
+        if (!sql3_safe) {
+            throw NotThreadable("SQLite3 compiled singe-thread-only.");
+        }
     }
 
 };

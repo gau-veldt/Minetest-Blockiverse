@@ -174,8 +174,6 @@
 		<Unit filename="sha1.hpp" />
 		<Unit filename="sqlite/sqlite3.c">
 			<Option compilerVar="CC" />
-			<Option target="ServerDebug" />
-			<Option target="ServerRelease" />
 		</Unit>
 		<Unit filename="sqlite/sqlite3.h" />
 		<Extensions>
