@@ -68,7 +68,7 @@ protected:
     IVisitor()=default;
     ~IVisitor()=default;
 public:
-    virtual void visit(IVisitable &)=0;
+    virtual void visit(IVisitable *)=0;
 };
 class IVisitable {
 protected:
