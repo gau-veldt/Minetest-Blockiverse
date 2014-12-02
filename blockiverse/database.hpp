@@ -35,6 +35,9 @@ namespace bvdb {
     struct NotThreadable : public std::runtime_error {
         NotThreadable(const char *msg) : std::runtime_error(msg) {}
     };
+    struct DBError : public std::runtime_error {
+        DBError(const char *msg) : std::runtime_error(msg) {}
+    };
 
     class dbValue : boost::noncopyable {
     public:
@@ -129,10 +132,30 @@ namespace bvdb {
 
     class SQLiteDB : private boost::noncopyable {
     private:
+        static std::string file;
         sqlite3 *db;
     public:
-        SQLiteDB(std::string);
-        virtual ~SQLiteDB();
+        static void init(const std::string path) {
+            if (file.size()==0)
+                file=path;
+            else
+                throw DBError("Multiple attempts to set database file.");
+        }
+        SQLiteDB() {
+            db=NULL;
+            if (file.size()==0) {
+                throw DBError("Database file not set.");
+            }
+            int rc=sqlite3_open(file.c_str(),&db);
+            if (rc) {
+                throw DBError(sqlite3_errmsg(db));
+            }
+        }
+        virtual ~SQLiteDB() {
+            if (db!=NULL) {
+                sqlite3_close(db);
+            }
+        }
     };
 
 };

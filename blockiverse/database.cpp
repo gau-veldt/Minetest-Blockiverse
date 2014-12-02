@@ -21,6 +21,8 @@
 
 namespace bvdb {
 
+    std::string SQLiteDB::file;
+
     void init_db(std::string where) {
         /**
         * @brief Creates database/tables for blockiverse
@@ -34,6 +36,7 @@ namespace bvdb {
         if (!sql3_safe) {
             throw NotThreadable("SQLite3 compiled singe-thread-only.");
         }
+        SQLiteDB::init(where);
     }
 
 };
