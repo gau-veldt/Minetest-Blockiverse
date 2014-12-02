@@ -59,4 +59,23 @@ struct argset {
         : c(argc),v(argv) {}
 };
 
+/** @brief ABCs for visitor pattern
+ *  Abstact base classes for the visitor pattern */
+class IVisitor;
+class IVisitable;
+class IVisitor {
+protected:
+    IVisitor()=default;
+    ~IVisitor()=default;
+public:
+    virtual void visit(IVisitable &)=0;
+};
+class IVisitable {
+protected:
+    IVisitable()=default;
+    ~IVisitable()=default;
+public:
+    virtual void accept(IVisitor &)=0;
+};
+
 #endif // BV_COMMON_HPP_INCLUDED
