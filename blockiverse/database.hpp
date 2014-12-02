@@ -132,6 +132,8 @@ namespace bvdb {
 
     /** @brief keys are column names which yield the dbValue ptrs */
     typedef std::map<std::string,dbValue::ptr> rowResult;
+    /** @brief statement cache map type */
+    typedef std::map<std::string,sqlite3_stmt*> stmt_map;
 
     /**
      *  @brief Manager class for SQLite3 database and connections
@@ -148,6 +150,9 @@ namespace bvdb {
     private:
         static std::string file;
         sqlite3 *db;
+        /** @brief optimizer cache of statements for faster operations
+        *   These will be appropriately released in dtor */
+        stmt_map stmtCache;
     public:
         static void init(const std::string path) {
             if (file.size()==0)
@@ -166,11 +171,45 @@ namespace bvdb {
             }
         }
         virtual ~SQLiteDB() {
+            for (auto&& i : stmtCache) {
+                sqlite3_finalize(i.second);
+                i.second=NULL;
+            }
             if (db!=NULL) {
                 sqlite3_close(db);
                 db=NULL;
             }
         }
+
+        sqlite3_stmt* prepare(std::string sql) {
+            /** @brief compile sql to prepared statement
+            *   Results will be cached so compiles aren't repeated.
+            *   Statement will be reset on cache hit.
+            */
+            stmt_map::iterator lookup=stmtCache.find(sql);
+            if (lookup != stmtCache.end()) {
+                // we have it so don't recompile
+                // we'll be nice and reset the statemnet
+                // since the prepare operation implies it
+                sqlite3_stmt *stmt=lookup->second;
+                sqlite3_reset(stmt);
+                sqlite3_clear_bindings(stmt);
+                return stmt;
+            } else {
+                sqlite3_stmt *target=NULL;
+                int rc=sqlite3_prepare_v2(db,sql.c_str(),sql.size(),&target,NULL);
+                if (rc) {
+                    throw DBError(sqlite3_errmsg(db));
+                } else {
+                    if (target!=NULL) {
+                        // only cache if not not NULL
+                        stmtCache[sql]=target;
+                    }
+                    return target;
+                }
+            }
+        }
+
         void runOnce(const std::string sql) {
             /**
             *   @brief Run SQL commend once
