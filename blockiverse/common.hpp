@@ -75,7 +75,7 @@ protected:
     IVisitable()=default;
     ~IVisitable()=default;
 public:
-    virtual void accept(IVisitor &)=0;
+    virtual void accept(IVisitor &v) {v.visit(this);}
 };
 
 #endif // BV_COMMON_HPP_INCLUDED
