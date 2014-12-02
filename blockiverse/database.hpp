@@ -130,6 +130,17 @@ namespace bvdb {
     /** @brief keys are column names which yield the dbValue ptrs */
     typedef std::map<std::string,dbValue::ptr> rowResult;
 
+    /**
+     *  @brief Manager class for SQLite3 database and connections
+     *
+     *  Manages specification of database file, creating connections
+     *  and shutting down.
+     *
+     *  Cacheing system utilizes prepared statements to remember SQL
+     *  statements on first use to prevent the overhead of subsequent
+     *  compilations of SQL statements so long as class user utilizes
+     *  binding semantics versus inline parameters.
+     */
     class SQLiteDB : private boost::noncopyable {
     private:
         static std::string file;
