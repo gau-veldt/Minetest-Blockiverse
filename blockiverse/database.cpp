@@ -34,7 +34,7 @@ namespace bvdb {
                   << "         threading: " << (sql3_safe?"yes":"no") << std::endl;
         UNLOCK_COUT
         if (!sql3_safe) {
-            throw NotThreadable("SQLite3 compiled singe-thread-only.");
+            throw NotThreadable("SQLite3 compiled single-thread-only.");
         }
         SQLiteDB::init(where);
     }
