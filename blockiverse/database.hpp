@@ -36,7 +36,10 @@ namespace bvdb {
         NotThreadable(const char *msg) : std::runtime_error(msg) {}
     };
     struct DBError : public std::runtime_error {
-        DBError(const char *msg) : std::runtime_error(msg) {}
+        enum _flags {noop,release};
+        DBError(const char *msg,_flags f=noop) : std::runtime_error(std::string(msg)) {
+            if (f==release) sqlite3_free((void*)msg);
+        }
     };
 
     class dbValue : boost::noncopyable {
@@ -165,7 +168,30 @@ namespace bvdb {
         virtual ~SQLiteDB() {
             if (db!=NULL) {
                 sqlite3_close(db);
+                db=NULL;
             }
+        }
+        void runOnce(const std::string sql) {
+            /**
+            *   @brief Run SQL commend once
+            *
+            *   Runs an SQL intneded to be used only once (eg: table initializer)
+            *   thus no cacheing is performed of the SQL statement (ie: prepared
+            *   statements).
+            *
+            *   Furthermore assumes no results.
+            *
+            *   @param sql SQL statement to execute
+            *   @throw DBError should execution fail
+            */
+            LOCK_COUT
+            std::cout << "[DB] runOnce SQL: " << sql << std::endl;
+            UNLOCK_COUT
+
+            char *err=NULL;
+            int rc=sqlite3_exec(db,sql.c_str(),NULL,NULL,&err);
+            if (rc)
+                throw DBError(err,DBError::release);
         }
     };
 
