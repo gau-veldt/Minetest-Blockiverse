@@ -137,8 +137,12 @@
 		<Unit filename=".gitattributes" />
 		<Unit filename=".gitignore" />
 		<Unit filename="auto/version.h" />
-		<Unit filename="client.cpp" />
+		<Unit filename="client.cpp">
+			<Option target="ClientDebug" />
+			<Option target="ClientRelease" />
+		</Unit>
 		<Unit filename="client.hpp" />
+		<Unit filename="common.cpp" />
 		<Unit filename="common.hpp" />
 		<Unit filename="database.cpp" />
 		<Unit filename="database.hpp" />

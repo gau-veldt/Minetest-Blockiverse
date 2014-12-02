@@ -40,11 +40,6 @@
 #include "settings.hpp"
 
 /*
-** meters per parsec
-*/
-u64 m_per_parsec=30856775800000000;
-
-/*
 In the Irrlicht Engine, everything can be found in the namespace
 'irr'. So if you want to use a class of the engine, you have to
 write an irr:: before the name of the class. For example to use
