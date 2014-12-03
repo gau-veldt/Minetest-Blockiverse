@@ -149,7 +149,7 @@ namespace bvdb {
 
     /** @brief keys are column names which yield the dbValue ptrs */
     typedef std::map<int,dbValue::ptr> rowResult;
-    typedef std::vector<rowResult> wholeResult;
+    typedef std::vector<rowResult> Result;
     /** @brief statement cache map type */
     typedef std::map<std::string,sqlite3_stmt*> stmt_map;
 
@@ -199,8 +199,8 @@ namespace bvdb {
             }
         }
 
-        std::shared_ptr<wholeResult> run(sqlite3_stmt *stmt) {
-            std::shared_ptr<wholeResult> data(new wholeResult);
+        std::shared_ptr<Result> run(sqlite3_stmt *stmt) {
+            std::shared_ptr<Result> data(new Result);
             int rc;
             do {
                 rc=sqlite3_step(stmt);

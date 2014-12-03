@@ -205,13 +205,20 @@ public:
                 **
                 */
                 std::string pass,user;
-                pass=ctx.getarg<std::string>();     // LIFO is password
+                // LIFO is password
+                pass=RSA::Decrypt(ctx.getarg<std::string>(),*clientKey);
                 user=ctx.getarg<std::string>();
+                LOCK_COUT
+                std::cout << "[server] request login for user="
+                          << user << " password=" << pass << std::endl;
+                UNLOCK_COUT
 
                 if (clientValid) {
-                    // TODO: check for new account creation,
-                    //       logon to own account or logon to
-                    //       linked (whitelisted) account
+                    std::ostringstream key;
+                    key << cli_pub_mod << ":" << cli_pub_exp;
+                    LOCK_COUT
+                    std::cout << "[server] login: client's key is " << key.str() << std::endl;
+                    UNLOCK_COUT
                 } else {
                     // invalid (unauthorized) client
                     vqueue.push(s64(0));

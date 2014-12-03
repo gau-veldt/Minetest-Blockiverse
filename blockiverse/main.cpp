@@ -303,6 +303,14 @@ int main(int argc, char** argv)
         }
         UNLOCK_COUT
 
+        if (authOk) {
+            // username
+            client_session.send_string("nobody");
+            // password
+            client_session.send_string(RSA::Encrypt("dontcare",client_kpair->GetPrivateKey()));
+            client_session.send_call(1 /* serverRoot */,3 /* GetAccount */);
+        }
+
         /*
         The most important function of the engine is the 'createDevice'
         function. The Irrlicht Device can be created with it, which is the
