@@ -209,16 +209,16 @@ public:
                 pass=RSA::Decrypt(ctx.getarg<std::string>(),*clientKey);
                 user=ctx.getarg<std::string>();
                 LOCK_COUT
-                std::cout << "[server] request login for user="
-                          << user << " password=" << pass << std::endl;
+                std::cout << "[server] request login for user " << user << std::endl;
+                //std::cout << "         password " << pass << std::endl;
                 UNLOCK_COUT
 
                 if (clientValid) {
                     std::ostringstream key;
                     key << cli_pub_mod << ":" << cli_pub_exp;
-                    LOCK_COUT
-                    std::cout << "[server] login: client's key is " << key.str() << std::endl;
-                    UNLOCK_COUT
+                    // the client public key exponent in the current RSA lib
+                    // is always 65537 but future/forked clients might use differing
+                    // exponents so it needs to be saved.
                 } else {
                     // invalid (unauthorized) client
                     vqueue.push(s64(0));
