@@ -19,6 +19,7 @@
 #ifndef BV_DATABASE_HPP_INCLUDED
 #define BV_DATABASE_HPP_INCLUDED
 
+#include <memory>
 #include <exception>
 #include <string>
 #include "common.hpp"
@@ -76,7 +77,7 @@ namespace bvdb {
             data=NULL;
             affinity=null;
         }
-        dbValue(char *s) {
+        dbValue(const char *s) {
             data=new std::string(s);
             affinity=text;
         }
@@ -131,7 +132,8 @@ namespace bvdb {
     };
 
     /** @brief keys are column names which yield the dbValue ptrs */
-    typedef std::map<std::string,dbValue::ptr> rowResult;
+    typedef std::map<int,dbValue::ptr> rowResult;
+    typedef std::vector<rowResult> wholeResult;
     /** @brief statement cache map type */
     typedef std::map<std::string,sqlite3_stmt*> stmt_map;
 
@@ -179,6 +181,45 @@ namespace bvdb {
                 sqlite3_close(db);
                 db=NULL;
             }
+        }
+
+        std::shared_ptr<wholeResult> run(sqlite3_stmt *stmt) {
+            std::shared_ptr<wholeResult> data(new wholeResult);
+            int rc;
+            do {
+                rc=sqlite3_step(stmt);
+                if (rc==SQLITE_ROW) {
+                    data->resize(data->size()+1);
+                    rowResult cur=data->back();
+                    for (int i=0;i<sqlite3_column_count(stmt);++i) {
+                        switch (sqlite3_column_type(stmt,i)) {
+                        case SQLITE_NULL:
+                            cur[i]=dbValue::ptr(new dbValue);
+                            break;
+                        case SQLITE_INTEGER:
+                            cur[i]=dbValue::ptr(new dbValue((s64)sqlite3_column_int(stmt,i)));
+                            break;
+                        case SQLITE_FLOAT:
+                            cur[i]=dbValue::ptr(new dbValue((double)sqlite3_column_double(stmt,i)));
+                            break;
+                        case SQLITE_TEXT:
+                            cur[i]=dbValue::ptr(new dbValue((const char *)sqlite3_column_text(stmt,i)));
+                            break;
+                        case SQLITE_BLOB:
+                            cur[i]=dbValue::ptr(
+                                new dbValue(
+                                    (const char *)sqlite3_column_text(stmt,i),
+                                    sqlite3_column_bytes(stmt,i)
+                                ));
+                            break;
+                        }
+                    }
+                }
+            } while (rc==SQLITE_ROW);
+            if (rc!=SQLITE_DONE) {
+                throw DBError(sqlite3_errmsg(db));
+            }
+            return data;
         }
 
         sqlite3_stmt* prepare(std::string sql) {
