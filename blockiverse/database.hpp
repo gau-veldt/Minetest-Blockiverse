@@ -207,7 +207,13 @@ namespace bvdb {
                 if (rc==SQLITE_ROW) {
                     data->resize(data->size()+1);
                     rowResult cur=data->back();
-                    for (int i=0;i<sqlite3_column_count(stmt);++i) {
+                    int nrows=sqlite3_column_count(stmt);
+                    for (int i=0;i<nrows;++i) {
+                        LOCK_COUT
+                        std::cout << "[DB] query " << stmt
+                                  << ": result row " << i+1 << "/" << nrows
+                                  << std::endl;
+                        UNLOCK_COUT
                         switch (sqlite3_column_type(stmt,i)) {
                         case SQLITE_NULL:
                             cur[i]=dbValue::ptr(new dbValue);
@@ -251,6 +257,10 @@ namespace bvdb {
                 sqlite3_stmt *stmt=lookup->second;
                 sqlite3_reset(stmt);
                 sqlite3_clear_bindings(stmt);
+                LOCK_COUT
+                std::cout << "[DB] Statement cache hit: "
+                          << stmt << ": " << sql << std::endl;
+                UNLOCK_COUT
                 return stmt;
             } else {
                 sqlite3_stmt *target=NULL;
@@ -262,6 +272,10 @@ namespace bvdb {
                         // only cache if not not NULL
                         stmtCache[sql]=target;
                     }
+                    LOCK_COUT
+                    std::cout << "[DB] Statement compiled: "
+                              << target << ": " << sql << std::endl;
+                    UNLOCK_COUT
                     return target;
                 }
             }
