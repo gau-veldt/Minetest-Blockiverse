@@ -125,13 +125,13 @@ void onGetAccount(bvnet::session *s,u32 *acctOb,bool *doneFlag) {
 void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
     std::string erc=s->getarg<std::string>();
     std::string rcsha;
-    LOCK_COUT
-    std::cout << "Decrypting server challenge..." << std::endl;
-    UNLOCK_COUT
+    //LOCK_COUT
+    //std::cout << "Decrypting server challenge..." << std::endl;
+    //UNLOCK_COUT
     std::string rc=RSA::Decrypt(erc,ckey->GetPrivateKey());
-    LOCK_COUT
-    std::cout << "    decrypted: " << rc << std::endl;
-    UNLOCK_COUT
+    //LOCK_COUT
+    //std::cout << "    decrypted: " << rc << std::endl;
+    //UNLOCK_COUT
     SHA1 rcdig;
     rcdig.addBytes(rc.c_str(),rc.size());
     unsigned char *dig=rcdig.getDigest();
@@ -141,9 +141,9 @@ void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
            << (unsigned int)dig[i];
     rcsha=ss.str();
     free(dig);
-    LOCK_COUT
-    std::cout << "    SHA1: " << rcsha << std::endl;
-    UNLOCK_COUT
+    //LOCK_COUT
+    //std::cout << "    SHA1: " << rcsha << std::endl;
+    //UNLOCK_COUT
     s->send_string(rcsha);
     s->send_call(1 /* serverRoot */,2 /* AnswerChallenge */,
                  boost::bind(loginDone,s,
