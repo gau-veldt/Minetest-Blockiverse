@@ -37,10 +37,11 @@ private:
     void read();
     void write();
     void process_line(const string &);
+    typedef void (*defaultor)(Configurator &);
 protected:
     virtual void process_clause(const string &,const string &);
 public:
-    Configurator(const string &);
+    Configurator(const string &,defaultor=NULL);
     ~Configurator() {try {write();} catch (exception &e) {}}
 
     void read_cmdline(int,char**);

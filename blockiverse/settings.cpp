@@ -28,8 +28,11 @@ using boost::token_compress_on;
 using boost::filesystem::path;
 using boost::split;
 
-Configurator::Configurator(const string &cfgPath) {
+Configurator::Configurator(const string &cfgPath,defaultor init_defaults) {
     cfgFile=cfgPath;
+    if (init_defaults!=NULL) {
+        init_defaults(*this);
+    }
     read();
 }
 

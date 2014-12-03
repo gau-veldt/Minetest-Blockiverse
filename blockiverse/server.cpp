@@ -96,8 +96,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         argv=((argset*)argvoid)->v;
     }
     boost::filesystem::path cwd=boost::filesystem::current_path();
-    Configurator server_config((cwd/"server.cfg").string());
-    server_default_config(server_config);
+    Configurator server_config((cwd/"server.cfg").string(),server_default_config);
     server_config.read_cmdline(argc,argv);
 
     LOCK_COUT

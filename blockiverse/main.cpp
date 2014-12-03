@@ -170,8 +170,7 @@ int main(int argc, char** argv)
     boost::thread *server_thread=NULL;
     argset args(argc,argv);
     boost::filesystem::path cwd=boost::filesystem::current_path();
-    Configurator config((cwd/"client.cfg").string());
-    client_default_config(config);
+    Configurator config((cwd/"client.cfg").string(),client_default_config);
     config.read_cmdline(argc,argv);
 
     LOCK_COUT
@@ -331,8 +330,8 @@ int main(int argc, char** argv)
         }
         UNLOCK_COUT
 
-        std::string userName="nobody";
-        std::string userPass="dontcare";
+        std::string userName=config["user"];
+        std::string userPass=config["passwd"];
         if (authOk) {
             // username
             client_session.send_string(userName);
