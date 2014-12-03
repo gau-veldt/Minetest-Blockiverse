@@ -1017,12 +1017,12 @@ namespace bvnet {
                 break;
             case vtMethod:
                 mc=boost::any_cast<method_call>(raw);
-                LOCK_COUT
+                /*LOCK_COUT
                 std::cout << "call #" << mc.id << '.' << mc.idx
                           << "() cb=" << mc.callbk
                           << ", when stack+=" << mc.rcount
                           << std::endl;
-                UNLOCK_COUT
+                UNLOCK_COUT*/
                 ss << '.';
                 idx=mc.id;
                 ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
