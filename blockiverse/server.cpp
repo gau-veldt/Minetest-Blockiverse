@@ -94,6 +94,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
         argc=((argset*)argvoid)->c;
         argv=((argset*)argvoid)->v;
     }
+    argc=argc;
+    argv=argv;
     boost::filesystem::path cwd=boost::filesystem::current_path();
     boost::filesystem::path db_path=cwd / "bv_db";
 
