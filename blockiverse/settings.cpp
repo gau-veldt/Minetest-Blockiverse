@@ -38,7 +38,7 @@ void Configurator::process_line(const std::string &line) {
 
 void Configurator::process_clause(const std::string &key,const std::string &val) {
     LOCK_COUT
-    std::cout << "[conf] " << boost::filesystem::path(cfgFile).filename()
+    std::cout << "[conf] " << boost::filesystem::path(cfgFile).filename().string()
               << ": " << key << "=" << val << std::endl;
     UNLOCK_COUT
     cfg[key]=val;
