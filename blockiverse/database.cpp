@@ -30,8 +30,8 @@ namespace bvdb {
         */
         bool sql3_safe=sqlite3_threadsafe();
         LOCK_COUT
-        std::cout << "[DB] Database (" << (sql3_safe?"":"not")
-                  << " threadable) file: " << where << std::endl;
+        std::cout << "[DB] Database (" << (sql3_safe?"":"not ")
+                  << "threadable) file: " << where << std::endl;
         UNLOCK_COUT
         if (!sql3_safe) {
             throw NotThreadable("SQLite3 compiled single-thread-only.");
