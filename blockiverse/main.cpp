@@ -78,6 +78,17 @@ volatile bool serverActive;
 */
 volatile bool req_serverQuit;
 
+void client_default_config(Configurator &cfg) {
+    cfg["window_width"]="800";
+    cfg["window_height"]="600";
+    cfg["driver"]="opengl";
+    cfg["standalone"]="1";
+    cfg["address"]="localhost";
+    cfg["port"]="37001";
+    cfg["user"]="singleplayer";
+    cfg["passwd"]="";
+}
+
 class ClientEventReceiver : public IEventReceiver {
     virtual bool OnEvent(const SEvent& evt) {
         if (evt.EventType == EET_LOG_TEXT_EVENT) {
@@ -158,22 +169,19 @@ int main(int argc, char** argv)
 
     boost::thread *server_thread=NULL;
     argset args(argc,argv);
-    property_map config;
-    set_config_defaults(config);
-    std::string cfg_opt;
+    boost::filesystem::path cwd=boost::filesystem::current_path();
+    Configurator config((cwd/"client.cfg").string());
+    client_default_config(config);
+    config.read_cmdline(argc,argv);
 
     LOCK_COUT
     std::cout << "Version is: " << auto_ver << std::endl;
-    boost::filesystem::path cwd=boost::filesystem::current_path();
     std::cout << "Starting in: " << cwd << std::endl;
-
     /* test settings map */
-    property_map::iterator setting=config.begin();
-    while (setting!=config.end()) {
-        std::cout << setting->first << "="
-            << setting->second << std::endl;
-        ++setting;
-    }
+    /*for (auto &setting : config) {
+        std::cout << setting.first << "="
+            << setting.second << std::endl;
+    }*/
     UNLOCK_COUT
 
     /*
@@ -189,7 +197,7 @@ int main(int argc, char** argv)
     try {
         std::ifstream keyfile;
         keyfile.exceptions(std::ios::failbit | std::ios::badbit);
-        keyfile.open("client.keys",std::ios::in);
+        keyfile.open((cwd/"client.keys").string(),std::ios::in);
         keyfile >> s;
         priv_mod=BigInt(s);
         keyfile >> s;
@@ -229,7 +237,7 @@ int main(int argc, char** argv)
             // write key
             std::ofstream keyfile;
             keyfile.exceptions(std::ios::failbit | std::ios::badbit);
-            keyfile.open("client.keys",std::ios::out|std::ios::trunc);
+            keyfile.open((cwd/"client.keys").string(),std::ios::out|std::ios::trunc);
             keyfile << priv_mod << std::endl;
             keyfile << priv_exp << std::endl;
             keyfile << pub_mod << std::endl;
@@ -370,8 +378,7 @@ int main(int argc, char** argv)
             */
 
             E_DRIVER_TYPE vdrv=EDT_SOFTWARE;
-            cfg_opt=v2str(config["driver"]);
-            if (cfg_opt=="opengl") vdrv=EDT_OPENGL;
+            if (v2str(config["driver"])=="opengl") vdrv=EDT_OPENGL;
 
             int winW,winH;
             winW=v2int(config["window_width"]);

@@ -32,6 +32,10 @@
 
 boost::random::random_device entropy;
 
+void server_default_config(Configurator &cfg) {
+    cfg["port"]="37001";
+}
+
 struct context {
     tcp::socket *socket;
     bvnet::session *session;
@@ -85,24 +89,20 @@ typedef std::map<boost::thread*,io_service*> s_list;
 s_list sessions;
 
 DWORD WINAPI server_main(LPVOID argvoid) {
-    property_map server_config;
-    set_config_defaults(server_config);
-
     int argc=0;
     char **argv=NULL;
     if (argvoid!=NULL) {
         argc=((argset*)argvoid)->c;
         argv=((argset*)argvoid)->v;
     }
-    argc=argc;
-    argv=argv;
     boost::filesystem::path cwd=boost::filesystem::current_path();
-    boost::filesystem::path db_path=cwd / "bv_db";
+    Configurator server_config((cwd/"server.cfg").string());
+    server_default_config(server_config);
+    server_config.read_cmdline(argc,argv);
 
     LOCK_COUT
     std::cout << "[server] Version is: " << auto_ver << std::endl;
     std::cout << "[server] Starting in: " << cwd << std::endl;
-
     /*if (argc==0) {
         std::cout << "[server] Argument passing failed (argc==0)" << std::endl;
     } else {
@@ -113,7 +113,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     }*/
     UNLOCK_COUT
 
-    bvdb::init_db(db_path.string());
+    bvdb::init_db((cwd/"bv_db").string());
 
     io_service acceptor_io;
     int port=v2int(server_config["port"]);
