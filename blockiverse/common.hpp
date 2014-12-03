@@ -22,6 +22,7 @@
 #include "irrTypes.h"
 #include "rsa/RSA.h"
 #include <boost/thread/mutex.hpp>
+#include <string>
 #include <iostream>
 #include <iomanip>
 
@@ -77,5 +78,9 @@ protected:
 public:
     virtual void accept(IVisitor &v) {v.visit(this);}
 };
+
+using std::string;
+using std::cout;
+using std::endl;
 
 #endif // BV_COMMON_HPP_INCLUDED

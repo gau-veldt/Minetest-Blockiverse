@@ -23,23 +23,28 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
 
-Configurator::Configurator(const std::string &cfgPath) {
+using boost::is_any_of;
+using boost::token_compress_on;
+using boost::filesystem::path;
+using boost::split;
+
+Configurator::Configurator(const string &cfgPath) {
     cfgFile=cfgPath;
     read();
 }
 
-void Configurator::process_line(const std::string &line) {
-    std::vector<std::string> parts;
-    boost::split(parts,line,boost::is_any_of("="),boost::token_compress_on);
+void Configurator::process_line(const string &line) {
+    std::vector<string> parts;
+    split(parts,line,boost::is_any_of("="),boost::token_compress_on);
     if (parts.size()>1) {
         process_clause(parts[0],parts[1]);
     }
 }
 
-void Configurator::process_clause(const std::string &key,const std::string &val) {
+void Configurator::process_clause(const string &key,const string &val) {
     LOCK_COUT
-    std::cout << "[conf] " << boost::filesystem::path(cfgFile).filename().string()
-              << ": " << key << "=" << val << std::endl;
+    cout << "[conf] " << path(cfgFile).filename().string()
+              << ": " << key << "=" << val << endl;
     UNLOCK_COUT
     cfg[key]=val;
 }
@@ -47,19 +52,19 @@ void Configurator::process_clause(const std::string &key,const std::string &val)
 void Configurator::read_cmdline(int argc,char **argv) {
     for (int i=0;i<argc;++i) {
         /*LOCK_COUT
-        std::cout << "from cmdline: " << line << std::endl;
+        cout << "from cmdline: " << line << endl;
         UNLOCK_COUT*/
         process_line(argv[i]);
     }
 }
 
 void Configurator::read() {
-    std::string line;
+    string line;
     std::ifstream in(cfgFile);
     std::getline(in,line);
     while (in) {
         /*LOCK_COUT
-        std::cout << "from " << cfgFile << ": " << line << std::endl;
+        cout << "from " << cfgFile << ": " << line << endl;
         UNLOCK_COUT*/
         process_line(line);
         std::getline(in,line);
@@ -69,6 +74,6 @@ void Configurator::read() {
 void Configurator::write() {
     std::ofstream out(cfgFile);
     for (auto &each : cfg) {
-        out << each.first << "=" << each.second << std::endl;
+        out << each.first << "=" << each.second << endl;
     }
 }
