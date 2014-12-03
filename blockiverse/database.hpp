@@ -30,14 +30,30 @@ namespace bvdb {
 
     extern void init_db(std::string);
 
+    /** @brief Column type casting error */
     struct ColumnCastFailed : public std::runtime_error {
         ColumnCastFailed(const char *msg) : std::runtime_error(msg) {}
     };
+    /** @brief We got a single-threaded SQLite library */
     struct NotThreadable : public std::runtime_error {
         NotThreadable(const char *msg) : std::runtime_error(msg) {}
     };
+    /** @brief SQLITE_BUSY gets its own football for easier catching */
+    struct DBIsBusy : public std::runtime_error {
+        DBIsBusy() : std::runtime_error(std::string("SQLite is busy.")) {}
+    };
+    /** @brief Errors SQLite and database access errors
+    *   Bad parameters, incorrect usage, violated constraints, etc.
+    */
     struct DBError : public std::runtime_error {
         enum _flags {noop,release};
+        static void busy_aware_throw(int code,const char *msg,_flags f=noop) {
+            if (code==SQLITE_BUSY) {
+                throw DBIsBusy();
+            } else {
+                throw DBError(msg,f);
+            }
+        }
         DBError(const char *msg,_flags f=noop) : std::runtime_error(std::string(msg)) {
             if (f==release) sqlite3_free((void*)msg);
         }
@@ -169,7 +185,7 @@ namespace bvdb {
             }
             int rc=sqlite3_open(file.c_str(),&db);
             if (rc) {
-                throw DBError(sqlite3_errmsg(db));
+                DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
             }
         }
         virtual ~SQLiteDB() {
@@ -217,7 +233,7 @@ namespace bvdb {
                 }
             } while (rc==SQLITE_ROW);
             if (rc!=SQLITE_DONE) {
-                throw DBError(sqlite3_errmsg(db));
+                DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
             }
             return data;
         }
@@ -240,7 +256,7 @@ namespace bvdb {
                 sqlite3_stmt *target=NULL;
                 int rc=sqlite3_prepare_v2(db,sql.c_str(),sql.size(),&target,NULL);
                 if (rc) {
-                    throw DBError(sqlite3_errmsg(db));
+                    DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
                 } else {
                     if (target!=NULL) {
                         // only cache if not not NULL
@@ -271,7 +287,7 @@ namespace bvdb {
             char *err=NULL;
             int rc=sqlite3_exec(db,sql.c_str(),NULL,NULL,&err);
             if (rc)
-                throw DBError(err,DBError::release);
+                DBError::busy_aware_throw(rc,err,DBError::release);
         }
     };
 
