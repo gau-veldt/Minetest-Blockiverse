@@ -220,6 +220,20 @@ public:
                     // is always 65537 but future/forked clients might use differing
                     // exponents so it needs to be saved.
                     bool authOK=false;
+                    /** TODO:
+                     *  Access database for existing user account.
+                     *  Create (login suceeds) if does not exist
+                     *
+                     *  If account exists verify client's key is account owner.
+                     *  If client's key is owner login succeeds.
+                     *
+                     *  If not the owner check the whitelist for client's key.
+                     *  If not there login fails.
+                     *
+                     *  If there is an entry verify the provided password against
+                     *  the whitelist entry.  Login succeeds on password match,
+                     *  fails otherwise.
+                     */
                     if (authOK) {
                         // login successful spawn Account
                         // object and return its objectref
