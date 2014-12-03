@@ -101,14 +101,14 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     std::cout << "[server] Version is: " << auto_ver << std::endl;
     std::cout << "[server] Starting in: " << cwd << std::endl;
 
-    if (argc==0) {
+    /*if (argc==0) {
         std::cout << "[server] Argument passing failed (argc==0)" << std::endl;
     } else {
         std::cout << "[server] Argument count: " << argc << std::endl;
         for (int i=0;i<argc;++i) {
             std::cout << "[server] Argument " << i << ": " << argv[i] << std::endl;
         }
-    }
+    }*/
     UNLOCK_COUT
 
     bvdb::init_db(db_path.string());
