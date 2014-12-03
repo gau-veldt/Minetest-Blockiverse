@@ -103,6 +103,25 @@ void loginDone(bvnet::session *s,bool *authOk,bool *doneFlag) {
     *doneFlag=true;
 }
 
+void onGetAccount(bvnet::session *s,u32 *acctOb,bool *doneFlag) {
+    bvnet::obref acct(0);
+    bool loginOK=false;
+    try {
+        acct=s->getarg<bvnet::obref>();
+        loginOK=true;
+    } catch (std::exception &e) {}
+    if (loginOK) {
+        *acctOb=acct.id;
+    } else {
+        *acctOb=0;
+        s64 rc=s->getarg<s64>();
+        LOCK_COUT
+        std::cout << "serverRoot.GetAccount returned " << rc << std::endl;
+        UNLOCK_COUT
+    }
+    *doneFlag=true;
+}
+
 void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
     std::string erc=s->getarg<std::string>();
     std::string rcsha;
@@ -287,12 +306,13 @@ int main(int argc, char** argv)
                                  1 /* expects one argument */);
 
         bool authOk=false,authDone=false;
+        u32 acctId=0;
         client_session.send_string(client_kpair->GetPublicKey().GetModulus());
         client_session.send_string(client_kpair->GetPublicKey().GetExponent());
         client_session.send_call(1 /* serverRoot */,1 /* LoginClient */,
                                  boost::bind(testLogin,&client_session,
                                              client_kpair,&authOk,&authDone),
-                                 1 /* expects one argument */);
+                                 1 /* expects one result */);
 
         while (!authDone && client_session.run());
         LOCK_COUT
@@ -303,13 +323,28 @@ int main(int argc, char** argv)
         }
         UNLOCK_COUT
 
+        std::string userName="nobody";
+        std::string userPass="dontcare";
         if (authOk) {
             // username
-            client_session.send_string("nobody");
+            client_session.send_string(userName);
             // password
-            client_session.send_string(RSA::Encrypt("dontcare",client_kpair->GetPrivateKey()));
-            client_session.send_call(1 /* serverRoot */,3 /* GetAccount */);
+            client_session.send_string(RSA::Encrypt(userPass,client_kpair->GetPrivateKey()));
+            authDone=false;
+            client_session.send_call(1 /* serverRoot */,3 /* GetAccount */,
+                                     boost::bind(onGetAccount,&client_session,
+                                                 &acctId,&authDone),
+                                     1 /* expects one result */);
+            while (!authDone && client_session.run());
         }
+        LOCK_COUT
+        if (acctId>0) {
+            std::cout << "Logged in as " << userName
+                      << " with account object id=" << acctId << std::endl;
+        } else {
+            std::cout << "Inavlid credntials for user " << userName << std::endl;
+        }
+        UNLOCK_COUT
 
         /*
         The most important function of the engine is the 'createDevice'

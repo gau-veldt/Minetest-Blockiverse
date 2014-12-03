@@ -143,12 +143,12 @@ public:
                        << (unsigned int)dig[i];
                 hChal=ss.str();
                 free(dig);
-                LOCK_COUT
+                /*LOCK_COUT
                 std::cout << "[server] Client answered challenge:"  << std::endl
                           << "           mine: " << hChal           << std::endl
                           << "         client: " << answer          << std::endl
                           << "           same: " << (hChal==answer) << std::endl;
-                UNLOCK_COUT
+                UNLOCK_COUT*/
                 if (hChal==answer) {
                     authOk=1;
                     clientValid=true;
@@ -219,6 +219,14 @@ public:
                     // the client public key exponent in the current RSA lib
                     // is always 65537 but future/forked clients might use differing
                     // exponents so it needs to be saved.
+                    bool authOK=false;
+                    if (authOK) {
+                        // login successful spawn Account
+                        // object and return its objectref
+                    } else {
+                        // authentication failure
+                        vqueue.push(s64(1));
+                    }
                 } else {
                     // invalid (unauthorized) client
                     vqueue.push(s64(0));

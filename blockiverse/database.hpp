@@ -295,7 +295,7 @@ namespace bvdb {
             *   @throw DBError should execution fail
             */
             LOCK_COUT
-            std::cout << "[DB] runOnce SQL: " << sql << std::endl;
+            std::cout << "[DB] runOnce: " << sql << std::endl;
             UNLOCK_COUT
 
             char *err=NULL;
