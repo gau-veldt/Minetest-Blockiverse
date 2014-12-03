@@ -68,9 +68,9 @@ DWORD WINAPI server_boot(LPVOID lpvCtx) {
     context_manager raii_ctx(&ctx);     // proper cleanup on thread exit
 
     LOCK_COUT
-    std::cout << "[server] session [" << ctx.session << "] slave on socket " << ctx.socket << std::endl;
+    cout << "[server] session [" << ctx.session << "] slave on socket " << ctx.socket << endl;
     UNLOCK_COUT
-    //ctx.session->dump(std::cout);
+    //ctx.session->dump(cout);
 
     ctx.session->bootstrap(ctx.root);
 
@@ -79,7 +79,7 @@ DWORD WINAPI server_boot(LPVOID lpvCtx) {
     }
 
     LOCK_COUT
-    std::cout << "[server] slave for socket "<< ctx.socket << " finished." << std::endl;
+    cout << "[server] slave for socket "<< ctx.socket << " finished." << endl;
     UNLOCK_COUT
 
     return 0;
@@ -101,14 +101,14 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     server_config.read_cmdline(argc,argv);
 
     LOCK_COUT
-    std::cout << "[server] Version is: " << auto_ver << std::endl;
-    std::cout << "[server] Starting in: " << cwd << std::endl;
+    cout << "[server] Version is: " << auto_ver << endl;
+    cout << "[server] Starting in: " << cwd << endl;
     /*if (argc==0) {
-        std::cout << "[server] Argument passing failed (argc==0)" << std::endl;
+        cout << "[server] Argument passing failed (argc==0)" << endl;
     } else {
-        std::cout << "[server] Argument count: " << argc << std::endl;
+        cout << "[server] Argument count: " << argc << endl;
         for (int i=0;i<argc;++i) {
-            std::cout << "[server] Argument " << i << ": " << argv[i] << std::endl;
+            cout << "[server] Argument " << i << ": " << argv[i] << endl;
         }
     }*/
     UNLOCK_COUT
@@ -118,8 +118,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     io_service acceptor_io;
     int port=v2int(server_config["port"]);
     LOCK_COUT
-    std::cout << "[server] listening on port " << port
-              << " (io=" << &acceptor_io << ")"<< std::endl;
+    cout << "[server] listening on port " << port
+              << " (io=" << &acceptor_io << ")"<< endl;
     UNLOCK_COUT
     tcp::acceptor listener(acceptor_io,tcp::endpoint(tcp::v4(),port));
 
@@ -174,7 +174,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     }
 
     LOCK_COUT
-    std::cout << "[server] shutdown complete." << std::endl;
+    cout << "[server] shutdown complete." << endl;
     UNLOCK_COUT
     serverActive=false;
     return 0;

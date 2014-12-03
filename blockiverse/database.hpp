@@ -28,7 +28,7 @@
 
 namespace bvdb {
 
-    extern void init_db(std::string);
+    extern void init_db(string);
 
     /** @brief Column type casting error */
     struct ColumnCastFailed : public std::runtime_error {
@@ -40,7 +40,7 @@ namespace bvdb {
     };
     /** @brief SQLITE_BUSY gets its own football for easier catching */
     struct DBIsBusy : public std::runtime_error {
-        DBIsBusy() : std::runtime_error(std::string("SQLite is busy.")) {}
+        DBIsBusy() : std::runtime_error(string("SQLite is busy.")) {}
     };
     /** @brief Errors SQLite and database access errors
     *   Bad parameters, incorrect usage, violated constraints, etc.
@@ -54,7 +54,7 @@ namespace bvdb {
                 throw DBError(msg,f);
             }
         }
-        DBError(const char *msg,_flags f=noop) : std::runtime_error(std::string(msg)) {
+        DBError(const char *msg,_flags f=noop) : std::runtime_error(string(msg)) {
             if (f==release) sqlite3_free((void*)msg);
         }
     };
@@ -80,7 +80,7 @@ namespace bvdb {
                     break;
                 case text:
                 case blob:
-                    delete (std::string*)data;
+                    delete (string*)data;
                 default:
                     break;
                 }
@@ -94,12 +94,12 @@ namespace bvdb {
             affinity=null;
         }
         dbValue(const char *s) {
-            data=new std::string(s);
+            data=new string(s);
             affinity=text;
         }
         dbValue(const char* src,size_t len) {
-            data=new std::string;
-            ((std::string*)data)->assign(src,len);
+            data=new string;
+            ((string*)data)->assign(src,len);
             affinity=blob;
         }
         dbValue(const double &r) {
@@ -132,7 +132,7 @@ namespace bvdb {
                 throw ColumnCastFailed("null/text/blob -> real");
             }
         }
-        operator std::string() {
+        operator string() {
             switch (affinity) {
             case integer:
                 return std::to_string(*((s64*)data));
@@ -140,7 +140,7 @@ namespace bvdb {
                 return std::to_string(*((double*)data));
             case text:
             case blob:
-                return *((std::string*)data);
+                return *((string*)data);
             default:
                 throw ColumnCastFailed("null -> string");
             }
@@ -151,7 +151,7 @@ namespace bvdb {
     typedef std::map<int,dbValue::ptr> rowResult;
     typedef std::vector<rowResult> Result;
     /** @brief statement cache map type */
-    typedef std::map<std::string,sqlite3_stmt*> stmt_map;
+    typedef std::map<string,sqlite3_stmt*> stmt_map;
 
     /**
      *  @brief Manager class for SQLite3 database and connections
@@ -166,13 +166,13 @@ namespace bvdb {
      */
     class SQLiteDB : private boost::noncopyable {
     private:
-        static std::string file;
+        static string file;
         sqlite3 *db;
         /** @brief optimizer cache of statements for faster operations
         *   These will be appropriately released in dtor */
         stmt_map stmtCache;
     public:
-        static void init(const std::string path) {
+        static void init(const string path) {
             if (file.size()==0)
                 file=path;
             else
@@ -210,9 +210,9 @@ namespace bvdb {
                     int nrows=sqlite3_column_count(stmt);
                     for (int i=0;i<nrows;++i) {
                         LOCK_COUT
-                        std::cout << "[DB] query " << stmt
+                        cout << "[DB] query " << stmt
                                   << ": result row " << i+1 << "/" << nrows
-                                  << std::endl;
+                                  << endl;
                         UNLOCK_COUT
                         switch (sqlite3_column_type(stmt,i)) {
                         case SQLITE_NULL:
@@ -244,7 +244,7 @@ namespace bvdb {
             return data;
         }
 
-        sqlite3_stmt* prepare(std::string sql) {
+        sqlite3_stmt* prepare(string sql) {
             /** @brief compile sql to prepared statement
             *   Results will be cached so compiles aren't repeated.
             *   Statement will be reset on cache hit.
@@ -258,8 +258,8 @@ namespace bvdb {
                 sqlite3_reset(stmt);
                 sqlite3_clear_bindings(stmt);
                 LOCK_COUT
-                std::cout << "[DB] Statement cache hit: "
-                          << stmt << ": " << sql << std::endl;
+                cout << "[DB] Statement cache hit: "
+                          << stmt << ": " << sql << endl;
                 UNLOCK_COUT
                 return stmt;
             } else {
@@ -273,15 +273,15 @@ namespace bvdb {
                         stmtCache[sql]=target;
                     }
                     LOCK_COUT
-                    std::cout << "[DB] Statement compiled: "
-                              << target << ": " << sql << std::endl;
+                    cout << "[DB] Statement compiled: "
+                              << target << ": " << sql << endl;
                     UNLOCK_COUT
                     return target;
                 }
             }
         }
 
-        void runOnce(const std::string sql) {
+        void runOnce(const string sql) {
             /**
             *   @brief Run SQL commend once
             *
@@ -295,7 +295,7 @@ namespace bvdb {
             *   @throw DBError should execution fail
             */
             LOCK_COUT
-            std::cout << "[DB] runOnce: " << sql << std::endl;
+            cout << "[DB] runOnce: " << sql << endl;
             UNLOCK_COUT
 
             char *err=NULL;

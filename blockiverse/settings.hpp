@@ -22,7 +22,7 @@
 #include <boost/lexical_cast.hpp>
 #include <map>
 
-typedef std::map<std::string,std::string> property_map;
+typedef std::map<string,string> property_map;
 
 #define v2int boost::lexical_cast<int>
 #define v2str boost::lexical_cast<std::string>
@@ -33,15 +33,15 @@ private:
     typedef property_map::key_type cfg_key;
     typedef property_map::mapped_type cfg_val;
     property_map cfg;
-    std::string cfgFile;
+    string cfgFile;
     void read();
     void write();
-    void process_line(const std::string &);
+    void process_line(const string &);
 protected:
-    virtual void process_clause(const std::string &,const std::string &);
+    virtual void process_clause(const string &,const string &);
 public:
-    Configurator(const std::string &);
-    ~Configurator() {try {write();} catch (std::exception &e) {}}
+    Configurator(const string &);
+    ~Configurator() {try {write();} catch (exception &e) {}}
 
     void read_cmdline(int,char**);
 

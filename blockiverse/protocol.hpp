@@ -135,20 +135,20 @@ namespace bvnet {
     typedef boost::mutex::scoped_lock scoped_lock;
 
     /** @brief Indicates registry exceeded reg_objects_softmax */
-    class registry_full : public std::exception {
+    class registry_full : public exception {
         mutable char buf[80];
         virtual const char *what() const throw();
     };
     /** @brief Indicates attempt to register NULL object */
-    class object_null : public std::exception {
+    class object_null : public exception {
         virtual const char *what() const throw();
     };
     /** @brief Indicates referencing object not in registry */
-    class object_not_reg : public std::exception {
+    class object_not_reg : public exception {
         virtual const char *what() const throw();
     };
     /** @brief Indicates attempt to access value (or its type) when argstack empty */
-    class argstack_empty : public std::exception {
+    class argstack_empty : public exception {
         virtual const char *what() const throw();
     };
 
@@ -172,7 +172,7 @@ namespace bvnet {
         bool _float_or_semi;        /**< @brief expecting floating point chars or terminating ; */
         bool _neg_int;              /**< @brief got - meaning incoming int is a negative */
         bool _opcode_read_queued;   /**< @brief when true already waiting for opcode to arrive */
-        std::string _fpstr;         /**< @brief accumulator to receive incoming floating point value  */
+        string _fpstr;         /**< @brief accumulator to receive incoming floating point value  */
         char in_ch;                 /**< @brief the character just received */
         char in_idx[4];             /**< @brief the uint32 just received */
         char in_s64[8];             /**< @brief the sint64 just received */
@@ -194,9 +194,9 @@ namespace bvnet {
         /** @brief various async data reception callbacks */
         void on_recv_s64(const boost::system::error_code &ec,u32 bsize);
         /** @brief various async trasnfer completion callbacks */
-        void on_write_done(std::string *finsihedbuf);
+        void on_write_done(string *finsihedbuf);
         /** @brief various async trasnfer completion callbacks */
-        void on_write_call_done(std::string *finishedbuf,lpvFunc cb);
+        void on_write_call_done(string *finishedbuf,lpvFunc cb);
         /** @brief notifies callback when expected number of return arguments arrive */
         void check_argnotify();
 
@@ -259,10 +259,10 @@ namespace bvnet {
         //void send_int(s64 &val) {sendq.push(val);}
         void send_float(float val) {sendq.push(val);}           /**< @brief send float to remote */
         //void send_float(float &val) {sendq.push(val);}
-        void send_blob(std::string val) {sendq.push(val);}      /**< @brief send blob (as string) to remote */
-        //void send_blob(std::string &val) {sendq.push(val);}
-        void send_string(std::string val) {sendq.push(val);}    /**< @brief send string to remote */
-        //void send_string(std::string &val) {sendq.push(val);}
+        void send_blob(string val) {sendq.push(val);}      /**< @brief send blob (as string) to remote */
+        //void send_blob(string &val) {sendq.push(val);}
+        void send_string(string val) {sendq.push(val);}    /**< @brief send string to remote */
+        //void send_string(string &val) {sendq.push(val);}
         void send_obref(u32 id) {sendq.push(obref(id));}        /**< @brief send object referebce to remote */
         /** @brief Remote method call.
         *
@@ -296,7 +296,7 @@ namespace bvnet {
             conn=&s;
             io_=&(s.get_io_service());
             LOCK_COUT
-            std::cout << "session [" << this << "] on socket " << conn << " via io=" << io_ << std::endl;
+            cout << "session [" << this << "] on socket " << conn << " via io=" << io_ << endl;
             UNLOCK_COUT
         }
         /** @brief for debugging - dumps data about session */
@@ -364,14 +364,14 @@ namespace bvnet {
         object(session &sess) :
             ctx(sess) {
                 LOCK_COUT
-                std::cout << "object [" << this << "] ctor" << std::endl;
+                cout << "object [" << this << "] ctor" << endl;
                 UNLOCK_COUT
                 ctx.register_object(this);
             }
         /** @brief base dtor to automatically unregister the object */
         virtual ~object() {
             LOCK_COUT
-            std::cout << "object [" << this << "] dtor" << std::endl;
+            cout << "object [" << this << "] dtor" << endl;
             UNLOCK_COUT
             ctx.unregister(this);
         }
@@ -619,10 +619,10 @@ namespace bvnet {
         sendq.push(obref(reg->idOf(root)));
         isActive=true;
     }
-    inline void session::on_write_done(std::string *finishedbuf) {
+    inline void session::on_write_done(string *finishedbuf) {
         delete finishedbuf;
     }
-    inline void session::on_write_call_done(std::string *finishedbuf,lpvFunc cb) {
+    inline void session::on_write_call_done(string *finishedbuf,lpvFunc cb) {
         delete finishedbuf;
         cb();
     }
@@ -633,9 +633,9 @@ namespace bvnet {
                 proxy[idx]=true;
                 if (isBooting) {
                     LOCK_COUT
-                    std::cout << "session [" << this
+                    cout << "session [" << this
                               << "] booted: remote root=" << idx
-                              << std::endl;
+                              << endl;
                     UNLOCK_COUT
                     remoteRoot=idx;
                     // booted once root known
@@ -646,10 +646,10 @@ namespace bvnet {
                 }
             } else {
                 LOCK_COUT
-                std::cout << "session [" << this
+                cout << "session [" << this
                           << "] expected objectref got EOF"
                           << " (" << ec << ")"
-                          << std::endl;
+                          << endl;
                 UNLOCK_COUT
                 isActive=false;
             }
@@ -657,14 +657,14 @@ namespace bvnet {
     }
     inline void session::on_recv_str(const boost::system::error_code &ec,char* buf) {
         if (!ec) {
-            argstack.push(std::string(buf));
+            argstack.push(string(buf));
             check_argnotify();
         } else {
             LOCK_COUT
-            std::cout << "session [" << this
+            cout << "session [" << this
                       << "] expected string data got EOF"
                       << " (" << ec << ")"
-                      << std::endl;
+                      << endl;
             UNLOCK_COUT
             isActive=false;
         }
@@ -685,10 +685,10 @@ namespace bvnet {
 
             } else {
                 LOCK_COUT
-                std::cout << "session [" << this
+                cout << "session [" << this
                           << "] expected string len got EOF"
                           << " (" << ec << ")"
-                          << std::endl;
+                          << endl;
                 UNLOCK_COUT
                 isActive=false;
             }
@@ -702,10 +702,10 @@ namespace bvnet {
                 proxy.erase(obid);
             } else {
                 LOCK_COUT
-                std::cout << "session [" << this
+                cout << "session [" << this
                           << "] expected dead objectid got EOF"
                           << " (" << ec << ")"
-                          << std::endl;
+                          << endl;
                 UNLOCK_COUT
                 isActive=false;
             }
@@ -723,10 +723,10 @@ namespace bvnet {
                         obid));
             } else {
                 LOCK_COUT
-                std::cout << "session [" << this
+                cout << "session [" << this
                           << "] expected callee objectid got EOF"
                           << " (" << ec << ")"
-                          << std::endl;
+                          << endl;
                 UNLOCK_COUT
                 isActive=false;
             }
@@ -738,17 +738,17 @@ namespace bvnet {
                 u32 idx=*((u32*)in_idx);
                 object *ob=reg->obOf(obid);
                 LOCK_COUT
-                std::cout << "Session [" << this << "] call "
+                cout << "Session [" << this << "] call "
                           << ob->getType() << '[' << ob << "]." << idx
-                          << std::endl;
+                          << endl;
                 UNLOCK_COUT
                 ob->methodCall(idx);
             } else {
                 LOCK_COUT
-                std::cout << "session [" << this
+                cout << "session [" << this
                           << "] expected method idx got EOF"
                           << " (" << ec << ")"
-                          << std::endl;
+                          << endl;
                 UNLOCK_COUT
                 isActive=false;
             }
@@ -765,10 +765,10 @@ namespace bvnet {
                 _neg_int=false;
             } else {
                 LOCK_COUT
-                std::cout << "session [" << this
+                cout << "session [" << this
                           << "] expected " << bsize << "-byte int got EOF"
                           << " (" << ec << ")"
-                          << std::endl;
+                          << endl;
                 UNLOCK_COUT
                 isActive=false;
             }
@@ -856,28 +856,28 @@ namespace bvnet {
                         break;
                     default:
                         LOCK_COUT
-                        std::cout << "session [" << this << "] recv len="
+                        cout << "session [" << this << "] recv len="
                                   << rlen << " 0x"
                                   << std::setw(2) << std::setfill('0') << std::hex << ich;
                         if (ich>31 && ich<128)
-                            std::cout << ' ' << in_ch;
-                        std::cout << std::endl;
+                            cout << ' ' << in_ch;
+                        cout << endl;
                         UNLOCK_COUT
                     }
                 }
             } else {
                 LOCK_COUT
                 if (_float_or_semi) {
-                    std::cout << "session [" << this
+                    cout << "session [" << this
                               << "] expected floatnum; got EOF"
                               << " (" << ec << ")"
-                              << std::endl;
+                              << endl;
 
                 } else {
-                    std::cout << "session [" << this
+                    cout << "session [" << this
                               << "] expected opcode got EOF"
                               << " (" << ec << ")"
-                              << std::endl;
+                              << endl;
                 }
                 UNLOCK_COUT
                 isActive=false;
@@ -917,11 +917,11 @@ namespace bvnet {
                 }
                 io_->run();
             }
-        } catch (std::exception &e) {
+        } catch (exception &e) {
             isActive=false;
             LOCK_COUT
-            std::cout << "Session [" << this << "] closed: "
-                      << e.what() << std::endl;
+            cout << "Session [" << this << "] closed: "
+                      << e.what() << endl;
             UNLOCK_COUT
             isActive=false;
         }
@@ -947,11 +947,11 @@ namespace bvnet {
                 }
                 io_->poll();
             }
-        } catch (std::exception &e) {
+        } catch (exception &e) {
             isActive=false;
             LOCK_COUT
-            std::cout << "Session " << this << " error: " << e.what()
-                      << " (connection closed)" << std::endl;
+            cout << "Session " << this << " error: " << e.what()
+                      << " (connection closed)" << endl;
             UNLOCK_COUT
             isActive=false;
         }
@@ -965,7 +965,7 @@ namespace bvnet {
         type_map::iterator tmi=typeMap.find(raw.type().name());
         if (tmi==typeMap.end()) {
             LOCK_COUT
-            std::cout << "<unknown \"" << raw.type().name() << "\">" << std::endl;
+            cout << "<unknown \"" << raw.type().name() << "\">" << endl;
             UNLOCK_COUT
         } else {
             s64 val;
@@ -1000,10 +1000,10 @@ namespace bvnet {
                 break;
             case vtBlob:
             case vtString:
-                idx=boost::any_cast<std::string>(raw).size();
+                idx=boost::any_cast<string>(raw).size();
                 ss << '"'
                    << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
-                ss << boost::any_cast<std::string>(raw);
+                ss << boost::any_cast<string>(raw);
                 break;
             case vtObref:
                 idx=boost::any_cast<obref>(raw).id;
@@ -1018,10 +1018,10 @@ namespace bvnet {
             case vtMethod:
                 mc=boost::any_cast<method_call>(raw);
                 /*LOCK_COUT
-                std::cout << "call #" << mc.id << '.' << mc.idx
+                cout << "call #" << mc.id << '.' << mc.idx
                           << "() cb=" << mc.callbk
                           << ", when stack+=" << mc.rcount
-                          << std::endl;
+                          << endl;
                 UNLOCK_COUT*/
                 ss << '.';
                 idx=mc.id;
@@ -1030,7 +1030,7 @@ namespace bvnet {
                 ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
                 break;
             }
-            std::string *dynstr=new std::string(ss.str());
+            string *dynstr=new string(ss.str());
             if (tmi->second==vtMethod
                 && mc.callbk) {
                 // only if callback not null
@@ -1053,31 +1053,31 @@ namespace bvnet {
 
     inline void session::dump(std::ostream &os) {
         LOCK_COUT
-        os << "session object" << std::endl;
-        os << "  argstack count: " << argstack.size() << std::endl;
-        os << "  send queue size: " << sendq.size() << std::endl;
+        os << "session object" << endl;
+        os << "  argstack count: " << argstack.size() << endl;
+        os << "  send queue size: " << sendq.size() << endl;
         os << "  socket: ";
         if (conn==NULL) {
             os << "<none>";
         } else {
             os << conn;
         }
-        os << std::endl;
+        os << endl;
         UNLOCK_COUT
         reg->dump(os);
     }
 
     inline void registry::dump(std::ostream &os) {
         LOCK_COUT
-        os << "  registry" << std::endl;
-        os << "    objects registered: " << objects.size() << std::endl;
+        os << "  registry" << endl;
+        os << "    objects registered: " << objects.size() << endl;
         object_map::iterator i=objects.begin();
         object *o;
         while (i!=objects.end()) {
             o=i->get<object_addr>();
             os << "      refid=" << i->get<object_id>() << " [";
             os << std::setfill('0') << std::setw(8) << std::hex << (u32)o;
-            os << "] type=" << o->getType() << std::endl;
+            os << "] type=" << o->getType() << endl;
             ++i;
         }
         UNLOCK_COUT

@@ -36,7 +36,7 @@ public:
         switch(method) {
         case 0: /* GetType */
             /* emit object type to output queue as string */
-            vqueue.push(std::string(getType()));
+            vqueue.push(string(getType()));
             break;
         }
     }

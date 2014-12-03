@@ -23,8 +23,14 @@
 #include "rsa/RSA.h"
 #include <boost/thread/mutex.hpp>
 #include <string>
+#include <exception>
 #include <iostream>
 #include <iomanip>
+
+using std::string;
+using std::cout;
+using std::endl;
+using std::exception;
 
 // quick and dirty synchronized ostream
 extern boost::mutex cout_mutex;
@@ -33,11 +39,11 @@ class scoped_cout_lock {
 public:
     scoped_cout_lock() : state(NULL) {
         cout_mutex.lock();
-        state.copyfmt(std::cout);
+        state.copyfmt(cout);
     }
     virtual ~scoped_cout_lock() {
-        std::cout.flush();
-        std::cout.copyfmt(state);
+        cout.flush();
+        cout.copyfmt(state);
         cout_mutex.unlock();
     }
 };
@@ -78,9 +84,5 @@ protected:
 public:
     virtual void accept(IVisitor &v) {v.visit(this);}
 };
-
-using std::string;
-using std::cout;
-using std::endl;
 
 #endif // BV_COMMON_HPP_INCLUDED

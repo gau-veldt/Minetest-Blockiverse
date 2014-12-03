@@ -21,17 +21,17 @@
 
 namespace bvdb {
 
-    std::string SQLiteDB::file;
+    string SQLiteDB::file;
 
-    void init_db(std::string where) {
+    void init_db(string where) {
         /**
         * @brief Creates database/tables for blockiverse
         * @param where pathname to database file
         */
         bool sql3_safe=sqlite3_threadsafe();
         LOCK_COUT
-        std::cout << "[DB] Database (" << (sql3_safe?"":"not ")
-                  << "threadable) file: " << where << std::endl;
+        cout << "[DB] Database (" << (sql3_safe?"":"not ")
+                  << "threadable) file: " << where << endl;
         UNLOCK_COUT
         if (!sql3_safe) {
             throw NotThreadable("SQLite3 compiled single-thread-only.");
@@ -58,8 +58,8 @@ namespace bvdb {
                         ")");
         } catch (DBError &e) {
             LOCK_COUT
-            std::cout << "[DB] Error creating tables:" << std::endl
-                      << "     " << e.what()       << std::endl;
+            cout << "[DB] Error creating tables:" << endl
+                      << "     " << e.what()       << endl;
             UNLOCK_COUT
         }
     }

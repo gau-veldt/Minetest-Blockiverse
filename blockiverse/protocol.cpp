@@ -35,8 +35,8 @@ bvnet::type_map bvnet::typeMap;
 void protocol_main_init() {
     bvnet::typeMap.insert(mappedType(typeid(s64                ).name(),bvnet::vtInt));
     bvnet::typeMap.insert(mappedType(typeid(float              ).name(),bvnet::vtFloat));
-    //bvnet::typeMap.insert(mappedType(typeid(std::string       ).name(),bvnet::vtBlob));
-    bvnet::typeMap.insert(mappedType(typeid(std::string       ).name(),bvnet::vtString));
+    //bvnet::typeMap.insert(mappedType(typeid(string       ).name(),bvnet::vtBlob));
+    bvnet::typeMap.insert(mappedType(typeid(string       ).name(),bvnet::vtString));
     bvnet::typeMap.insert(mappedType(typeid(bvnet::obref      ).name(),bvnet::vtObref));
     bvnet::typeMap.insert(mappedType(typeid(bvnet::ob_is_gone ).name(),bvnet::vtDeath));
     bvnet::typeMap.insert(mappedType(typeid(bvnet::method_call).name(),bvnet::vtMethod));

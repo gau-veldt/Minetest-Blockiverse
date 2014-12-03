@@ -94,7 +94,7 @@ class ClientEventReceiver : public IEventReceiver {
         if (evt.EventType == EET_LOG_TEXT_EVENT) {
             // makes irrlicht's logging messages use output locking
             LOCK_COUT
-            std::cout << evt.LogEvent.Text;
+            cout << evt.LogEvent.Text;
             UNLOCK_COUT
             return true;
         }
@@ -104,7 +104,7 @@ class ClientEventReceiver : public IEventReceiver {
 void testNotify(bvnet::session *s) {
     std::string rc=s->getarg<std::string>();
     LOCK_COUT
-    std::cout << "serverRoot.getType() returned " << rc << std::endl;
+    cout << "serverRoot.getType() returned " << rc << endl;
     UNLOCK_COUT
 }
 
@@ -120,14 +120,14 @@ void onGetAccount(bvnet::session *s,u32 *acctOb,bool *doneFlag) {
     try {
         acct=s->getarg<bvnet::obref>();
         loginOK=true;
-    } catch (std::exception &e) {}
+    } catch (exception &e) {}
     if (loginOK) {
         *acctOb=acct.id;
     } else {
         *acctOb=0;
         s64 rc=s->getarg<s64>();
         LOCK_COUT
-        std::cout << "serverRoot.GetAccount returned " << rc << std::endl;
+        cout << "serverRoot.GetAccount returned " << rc << endl;
         UNLOCK_COUT
     }
     *doneFlag=true;
@@ -137,11 +137,11 @@ void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
     std::string erc=s->getarg<std::string>();
     std::string rcsha;
     //LOCK_COUT
-    //std::cout << "Decrypting server challenge..." << std::endl;
+    //cout << "Decrypting server challenge..." << endl;
     //UNLOCK_COUT
     std::string rc=RSA::Decrypt(erc,ckey->GetPrivateKey());
     //LOCK_COUT
-    //std::cout << "    decrypted: " << rc << std::endl;
+    //cout << "    decrypted: " << rc << endl;
     //UNLOCK_COUT
     SHA1 rcdig;
     rcdig.addBytes(rc.c_str(),rc.size());
@@ -153,7 +153,7 @@ void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
     rcsha=ss.str();
     free(dig);
     //LOCK_COUT
-    //std::cout << "    SHA1: " << rcsha << std::endl;
+    //cout << "    SHA1: " << rcsha << endl;
     //UNLOCK_COUT
     s->send_string(rcsha);
     s->send_call(1 /* serverRoot */,2 /* AnswerChallenge */,
@@ -175,12 +175,12 @@ int main(int argc, char** argv)
     config.read_cmdline(argc,argv);
 
     LOCK_COUT
-    std::cout << "Version is: " << auto_ver << std::endl;
-    std::cout << "Starting in: " << cwd << std::endl;
+    cout << "Version is: " << auto_ver << endl;
+    cout << "Starting in: " << cwd << endl;
     /* test settings map */
     /*for (auto &setting : config) {
-        std::cout << setting.first << "="
-            << setting.second << std::endl;
+        cout << setting.first << "="
+            << setting.second << endl;
     }*/
     UNLOCK_COUT
 
@@ -192,7 +192,7 @@ int main(int argc, char** argv)
     KeyPair *client_kpair=NULL;
     std::string s;
     LOCK_COUT
-    std::cout << "Loading client keys..." << std::endl;
+    cout << "Loading client keys..." << endl;
     UNLOCK_COUT
     try {
         std::ifstream keyfile;
@@ -207,16 +207,16 @@ int main(int argc, char** argv)
         keyfile >> s;
         pub_exp=BigInt(s);
         client_kpair=new KeyPair(Key(priv_mod,priv_exp),Key(pub_mod,pub_exp));
-    } catch (std::exception &e) {
+    } catch (exception &e) {
         LOCK_COUT
-        std::cout << "Failed to read keyfile: " << e.what() << std::endl;
+        cout << "Failed to read keyfile: " << e.what() << endl;
         UNLOCK_COUT
     }
     if (client_kpair==NULL) {
         LOCK_COUT
-        std::cout << "Generating new client key" << std::endl
-                  << "  This is only done once,"  << std::endl
-                  << "  but it takes several minutes..." << std::endl;
+        cout << "Generating new client key" << endl
+                  << "  This is only done once,"  << endl
+                  << "  but it takes several minutes..." << endl;
         UNLOCK_COUT
         /*
         ** 100 is 332-bit RSA key
@@ -231,26 +231,26 @@ int main(int argc, char** argv)
         pub_exp=temp_kp.GetPublicKey().GetExponent();
         client_kpair=new KeyPair(Key(priv_mod,priv_exp),Key(pub_mod,pub_exp));
         LOCK_COUT
-        std::cout << "New client key generated." << std::endl;
+        cout << "New client key generated." << endl;
         UNLOCK_COUT
         try {
             // write key
             std::ofstream keyfile;
             keyfile.exceptions(std::ios::failbit | std::ios::badbit);
             keyfile.open((cwd/"client.keys").string(),std::ios::out|std::ios::trunc);
-            keyfile << priv_mod << std::endl;
-            keyfile << priv_exp << std::endl;
-            keyfile << pub_mod << std::endl;
-            keyfile << pub_exp << std::endl;
+            keyfile << priv_mod << endl;
+            keyfile << priv_exp << endl;
+            keyfile << pub_mod << endl;
+            keyfile << pub_exp << endl;
             keyfile.close();
-        } catch (std::exception &e) {
+        } catch (exception &e) {
             LOCK_COUT
-            std::cout << "Failed to write keyfile: " << e.what() << std::endl;
+            cout << "Failed to write keyfile: " << e.what() << endl;
             UNLOCK_COUT
         }
     }
     //LOCK_COUT
-    //std::cout << *client_kpair << std::endl;
+    //cout << *client_kpair << endl;
     //UNLOCK_COUT
 
     /*
@@ -260,7 +260,7 @@ int main(int argc, char** argv)
     bool standalone=(0!=v2int(config["standalone"]));
     if (standalone) {
         LOCK_COUT
-        std::cout << "Starting server." << std::endl;
+        cout << "Starting server." << endl;
         UNLOCK_COUT
         serverActive=true;
         req_serverQuit=false;
@@ -273,8 +273,8 @@ int main(int argc, char** argv)
     */
     bvnet::session client_session;
     LOCK_COUT
-    std::cout << "client session ["
-              << &client_session << "]" << std::endl;;
+    cout << "client session ["
+              << &client_session << "]" << endl;;
     UNLOCK_COUT
     clientRoot client_root(client_session);
     int port=v2int(config["port"]);
@@ -287,15 +287,15 @@ int main(int argc, char** argv)
     tcp::resolver::iterator target=resolv.resolve(lookup);
     tcp::socket socket(client_io);
     LOCK_COUT
-    std::cout << "Connecting to "
-              << host << " port " << port << std::endl;
+    cout << "Connecting to "
+              << host << " port " << port << endl;
     UNLOCK_COUT
     boost::asio::connect(socket,target);
     client_session.set_conn(socket);
     LOCK_COUT
-    std::cout << "Client connected." << std::endl;
+    cout << "Client connected." << endl;
     UNLOCK_COUT
-    //client_session.dump(std::cout);
+    //client_session.dump(cout);
     client_session.bootstrap(&client_root);
     while (client_session.run() && !client_session.hasRemote()) {
         /* until session dies or remote root is known  */
@@ -303,7 +303,7 @@ int main(int argc, char** argv)
 
     if (client_session.hasRemote()) {
         LOCK_COUT
-        std::cout << "client's serverRoot=" << client_session.getRemote() << std::endl;
+        cout << "client's serverRoot=" << client_session.getRemote() << endl;
         UNLOCK_COUT
 
         /*
@@ -325,9 +325,9 @@ int main(int argc, char** argv)
         while (!authDone && client_session.run());
         LOCK_COUT
         if (authOk) {
-            std::cout << "Server accepted client auth." << std::endl;
+            cout << "Server accepted client auth." << endl;
         } else {
-            std::cout << "Server rejected client auth." << std::endl;
+            cout << "Server rejected client auth." << endl;
         }
         UNLOCK_COUT
 
@@ -347,10 +347,10 @@ int main(int argc, char** argv)
         }
         LOCK_COUT
         if (acctId>0) {
-            std::cout << "Logged in as " << userName
-                      << " with account object id=" << acctId << std::endl;
+            cout << "Logged in as " << userName
+                      << " with account object id=" << acctId << endl;
         } else {
-            std::cout << "Inavlid credntials for user " << userName << std::endl;
+            cout << "Inavlid credntials for user " << userName << endl;
         }
         UNLOCK_COUT
 
@@ -389,8 +389,8 @@ int main(int argc, char** argv)
 
             /*
             Set the caption of the window to some nice text. Note that there is
-            a 'L' in front of the string. The Irrlicht Engine uses wide character
-            strings when displaying text.
+            a 'L' in front of the std::string. The Irrlicht Engine uses wide character
+            std::strings when displaying text.
             */
             device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
 
@@ -460,34 +460,34 @@ int main(int argc, char** argv)
                     bvnet::valtype vt=client_session.argtype();
                     switch (vt) {
                     case bvnet::vtInt:
-                        std::cout << "Client got int: "
+                        cout << "Client got int: "
                                   << client_session.getarg<s64>()
-                                  << std::endl;
+                                  << endl;
                         break;
                     case bvnet::vtFloat:
-                        std::cout << "Client got float: "
+                        cout << "Client got float: "
                                   << client_session.getarg<float>()
-                                  << std::endl;
+                                  << endl;
                         break;
                     case bvnet::vtBlob:
                     case bvnet::vtString:
-                        std::cout << "Client got string/blob: "
+                        cout << "Client got std::string/blob: "
                                   << client_session.getarg<std::string>()
-                                  << std::endl;
+                                  << endl;
                         break;
                     case bvnet::vtObref:
-                        std::cout << "Client got objectref id="
+                        cout << "Client got objectref id="
                                   << client_session.getarg<bvnet::obref>().id
-                                  << std::endl;
+                                  << endl;
                         break;
                     case bvnet::vtDeath:
-                        std::cout << "Client's objectref #"
+                        cout << "Client's objectref #"
                                   << client_session.getarg<bvnet::ob_is_gone>().id
-                                  << " is dead" << std::endl;
+                                  << " is dead" << endl;
                         break;
                     case bvnet::vtMethod:
-                        std::cout << "<Method calls should not be visible>"
-                                  << std::endl;
+                        cout << "<Method calls should not be visible>"
+                                  << endl;
                         break;
                     }
                     UNLOCK_COUT
@@ -524,20 +524,20 @@ int main(int argc, char** argv)
 
     // close connection to server
     LOCK_COUT
-    std::cout << "Closing connection to server." << std::endl;
+    cout << "Closing connection to server." << endl;
     UNLOCK_COUT
     socket.close();
 
     // defibrilates if server in blocking accept
     LOCK_COUT
-    std::cout << "Requesting server quit." << std::endl;
+    cout << "Requesting server quit." << endl;
     UNLOCK_COUT
     req_serverQuit=true;
     boost::asio::connect(socket,target);
     socket.close();
 
     LOCK_COUT
-    std::cout << "Waiting for server shutdown." << std::endl;
+    cout << "Waiting for server shutdown." << endl;
     UNLOCK_COUT
     if (server_thread!=NULL) {
         server_thread->join();  //while (serverActive) ;

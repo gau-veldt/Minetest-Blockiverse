@@ -50,7 +50,7 @@ public:
         switch(method) {
         case 0: /* GetType */
             /* emit object type to output queue as string */
-            vqueue.push(std::string(getType()));
+            vqueue.push(string(getType()));
             break;
         }
     }
@@ -62,7 +62,7 @@ private:
     BigInt cli_pub_exp;
     Key *clientKey;
     bool clientValid;
-    std::string challenge;
+    string challenge;
     unsigned int randbits[8];
 public:
     serverRoot(bvnet::session &sess)
@@ -83,7 +83,7 @@ public:
         switch(method) {
         case 0: /* GetType */
             /* emit object type to output queue as string */
-            vqueue.push(std::string(getType()));
+            vqueue.push(string(getType()));
             break;
         case 1: /* LoginClient */
             {
@@ -92,10 +92,10 @@ public:
                 **
                 ** out: string: challenge (encrpyted w/pubkey)
                 */
-                std::string sMod,sExp,eChal;
-                sExp=ctx.getarg<std::string>(); /* LIFO is exponent */
+                string sMod,sExp,eChal;
+                sExp=ctx.getarg<string>(); /* LIFO is exponent */
                 cli_pub_exp=BigInt(sExp);
-                sMod=ctx.getarg<std::string>();
+                sMod=ctx.getarg<string>();
                 cli_pub_mod=BigInt(sMod);
                 clientKey=new Key(cli_pub_mod,cli_pub_exp);
                 for (int i=0;i<8;++i)
@@ -132,8 +132,8 @@ public:
                 ** NB: invalid response drops the connection
                 */
                 s64 authOk=0;
-                std::string hChal,answer;
-                answer=ctx.getarg<std::string>();
+                string hChal,answer;
+                answer=ctx.getarg<string>();
                 SHA1 sha;
                 sha.addBytes(challenge.c_str(),challenge.size());
                 unsigned char *dig=sha.getDigest();
@@ -144,10 +144,10 @@ public:
                 hChal=ss.str();
                 free(dig);
                 /*LOCK_COUT
-                std::cout << "[server] Client answered challenge:"  << std::endl
-                          << "           mine: " << hChal           << std::endl
-                          << "         client: " << answer          << std::endl
-                          << "           same: " << (hChal==answer) << std::endl;
+                cout << "[server] Client answered challenge:"  << endl
+                          << "           mine: " << hChal           << endl
+                          << "         client: " << answer          << endl
+                          << "           same: " << (hChal==answer) << endl;
                 UNLOCK_COUT*/
                 if (hChal==answer) {
                     authOk=1;
@@ -204,13 +204,13 @@ public:
                 ** returning a result code of 0
                 **
                 */
-                std::string pass,user;
+                string pass,user;
                 // LIFO is password
-                pass=RSA::Decrypt(ctx.getarg<std::string>(),*clientKey);
-                user=ctx.getarg<std::string>();
+                pass=RSA::Decrypt(ctx.getarg<string>(),*clientKey);
+                user=ctx.getarg<string>();
                 LOCK_COUT
-                std::cout << "[server] request login for user " << user << std::endl;
-                //std::cout << "         password " << pass << std::endl;
+                cout << "[server] request login for user " << user << endl;
+                //cout << "         password " << pass << endl;
                 UNLOCK_COUT
 
                 if (clientValid) {
