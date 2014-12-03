@@ -197,7 +197,7 @@ int main(int argc, char** argv)
         ** and the industry is moving to
         ** 2048-bit keys (617)!!! :(
         */
-        KeyPair temp_kp=RSA::GenerateKeyPair(/*100 too slow while debugging*/50);
+        KeyPair temp_kp=RSA::GenerateKeyPair(/*100 too slow while debugging*/32);
         priv_mod=temp_kp.GetPrivateKey().GetModulus();
         priv_exp=temp_kp.GetPrivateKey().GetExponent();
         pub_mod=temp_kp.GetPublicKey().GetModulus();
