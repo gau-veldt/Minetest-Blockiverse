@@ -23,6 +23,8 @@
 #include "protocol.hpp"
 
 class clientRoot : public bvnet::object {
+private:
+protected:
 public:
     clientRoot(bvnet::session &sess)
         : bvnet::object(sess) {
@@ -30,16 +32,6 @@ public:
     virtual ~clientRoot() {}
 
     virtual const char *getType() {return "clientRoot";}
-    virtual void methodCall(unsigned int method) {
-        bvnet::scoped_lock lock(ctx.getMutex());
-        bvnet::value_queue &vqueue=ctx.getSendQueue();
-        switch(method) {
-        case 0: /* GetType */
-            /* emit object type to output queue as string */
-            vqueue.push(string(getType()));
-            break;
-        }
-    }
 };
 
 #endif // BV_CLIENT_HPP_INCLUDED

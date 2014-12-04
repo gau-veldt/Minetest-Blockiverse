@@ -40,6 +40,7 @@
 #define BV_PROTOCOL_H_INCLUDED
 
 #include "common.hpp"
+#include <functional>
 #include <iomanip>
 #include <typeinfo>
 #include <exception>
@@ -134,6 +135,10 @@ namespace bvnet {
     typedef boost::mutex mutex;
     typedef boost::mutex::scoped_lock scoped_lock;
 
+    typedef std::function<void(object*,value_queue&)> method_of_ob;
+    typedef std::map<unsigned int,method_of_ob> call_map;
+    typedef std::map<unsigned int,string> name_map;
+
     /** @brief Indicates registry exceeded reg_objects_softmax */
     class registry_full : public exception {
         mutable char buf[80];
@@ -150,6 +155,15 @@ namespace bvnet {
     /** @brief Indicates attempt to access value (or its type) when argstack empty */
     class argstack_empty : public exception {
         virtual const char *what() const throw();
+    };
+    class method_notimpl : public exception {
+        mutable char buf[80];
+        string dmcOb;
+        unsigned int dmcMethodId;
+        virtual const char *what() const throw();
+    public:
+        method_notimpl(string ob,unsigned int slot) :
+            dmcOb(ob),dmcMethodId(slot) {}
     };
 
     /**
@@ -352,13 +366,77 @@ namespace bvnet {
     **
     ** Base used for objects exchangeable via object references.
     **
+    ** Objects with active references may have methods invoked via
+    ** the implemented dispatched method call mechanism.  This system
+    ** is OO-friendly and allows runtime polymorphism.  Each object
+    ** instance has its own dmc table (think c++ vtable) which may be
+    ** be modified at runtime after initial setting by the ctor.  One
+    ** use is to swap out initial (compiled) methods for methods invoking
+    ** lua scripted forms executed via the (future) embedded lua
+    ** interpretor.  In this form you get the javascript-esque object
+    ** method redefinition capability.  The other purpose is to allow
+    ** proper OO inheritence in derived classes in the heararchy which
+    ** may override previous bases' dmc table entries within their ctors.
+    **
     ** Since secure referencing requires a way to
     ** track object lifetime a registry reference
     ** is required for construction.
     */
+    typedef void(bvnet::object::*dmc)(value_queue&);
     class object {
+    private:
+        /**
+        *   @brief Displateched Method Call
+        *
+        *   Implements dispatched method call (dmc)
+        *
+        *   Superclass-installed dmc methods in dmcTable are
+        *   callable by the remote.  A superclass sets up his
+        *   dmc methods in his ctor by accessing object's dmcTable
+        *
+        *   As a plus the lock and value queue boilerplate has been
+        *   been moved to the base class dispatcher and the dmc methods
+        *   will be in locked context and given the value queue as a
+        *   parameter.  He also has an exception now to trap calls to
+        *   an unimplemented method index.
+        *
+        *   @todo
+        *   some sort of static enum to get rid of the magic number
+        *   method call #s from remote POV?  I'll have the ctors store
+        *   method labels in the base class dmcName map while it is
+        *   setting up the dmc methods.
+        *
+        *   @todo
+        *   automatically declare the methods for method calling
+        *   via some sort of macro or metacode?
+        *
+        */
+        friend class session;
+        void methodCall(unsigned int idx) {
+            bvnet::scoped_lock lock(ctx.getMutex());
+            bvnet::value_queue &vqueue=ctx.getSendQueue();
+            auto dmcFunc=dmcTable.find(idx);
+            if (dmcFunc!=dmcTable.end()) {
+                (dmcFunc->second)(this,vqueue);
+            } else {
+                // called a method that doesn't exist
+                throw method_notimpl(getType(),idx);
+            }
+        }
     protected:
         session &ctx;       /**< @brief for objects to attach to the session's registry */
+        call_map dmcTable;  /**< @brief method mapper for method call and OO mechanism */
+        name_map dmcLabel;  /**< @brief name labels of dmc methods */
+
+        void dmc_GetType(value_queue&); /**< @brief the GetType dispatched method call (dmc) */
+    private:
+        const string methodLabel(const unsigned int idx) {
+            const auto &s=dmcLabel.find(idx);
+            if (s!=dmcLabel.end()) {
+                return s->second;
+            }
+            return std::to_string(idx);
+        }
     public:
         /** @brief construction of an object @param sess reference to session to attach */
         object(session &sess) :
@@ -367,6 +445,9 @@ namespace bvnet {
                 cout << "object [" << this << "] ctor" << endl;
                 UNLOCK_COUT
                 ctx.register_object(this);
+                // dmtTable[0] is the GetType method
+                dmcTable[0]=&object::dmc_GetType;
+                dmcLabel[0]="GetType";
             }
         /** @brief base dtor to automatically unregister the object */
         virtual ~object() {
@@ -382,26 +463,14 @@ namespace bvnet {
         *   Overriden by superclass to announce it's identity.
         */
         virtual const char *getType() {return "baseObject";}
-        /**
-        *   @brief Method call switchboard.
-        *
-        *   Overidden by superclass to implement methods callable
-        *   by the remote.  Currently the superclasses are using
-        *   big switchbanks which looks plain evil but at this
-        *   point I'm not sure of what to refactor with.
-        *
-        *   @todo
-        *   Base class to implement some sort of glue to take out the switch boilerplate?
-        *   @todo
-        *   some sort of static enum to get rid of the magic number
-        *   method call #s from remote POV?
-        *   @todo
-        *   automatically declare the methods for method calling
-        *   via some sort of macro or metacode?
-        *
-        */
-        virtual void methodCall(unsigned int idx)=0;
     };
+
+    /*
+    **  Object inlines
+    */
+    inline void object::dmc_GetType(value_queue &vqueue) {
+        vqueue.push(string(getType()));
+    }
 
     /*
     **  Registry inlines
@@ -582,6 +651,12 @@ namespace bvnet {
     inline const char *argstack_empty::what() const throw() {
         return "Object access when argument stack is empty.";
     }
+    inline const char *method_notimpl::what() const throw() {
+        snprintf(buf,sizeof(buf),
+                 "Method %s.%d not implemented.",
+                 dmcOb.c_str(),dmcMethodId);
+        return buf;
+    }
 
     /*
     **  connection inlines
@@ -739,7 +814,7 @@ namespace bvnet {
                 object *ob=reg->obOf(obid);
                 LOCK_COUT
                 cout << "Session [" << this << "] call "
-                          << ob->getType() << '[' << ob << "]." << idx
+                          << ob->getType() << '[' << ob << "]." << ob->methodLabel(idx)
                           << endl;
                 UNLOCK_COUT
                 ob->methodCall(idx);
@@ -1084,5 +1159,7 @@ namespace bvnet {
     }
 
 };  // bvnet
+
+using bvnet::dmc;
 
 #endif // BV_PROTOCOL_HPP_INCLUDED
