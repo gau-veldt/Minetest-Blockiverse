@@ -304,10 +304,44 @@ public:
                                 // linked (whitelisted/allowed) this client's
                                 // pubkey and whitelist entry's password
                                 // matches the password supplied.
-                                LOCK_COUT
-                                cout << "[server] TODO: Check whitelist for "
-                                     << user << " on pubkey " << key.str() << " (and check provided password)" << endl;
-                                UNLOCK_COUT
+                                SHA1 sha;
+                                sha.addBytes(pass.c_str(),pass.size());
+                                unsigned char *dig=sha.getDigest();
+                                std::ostringstream hPass;
+                                for (int i=0;i<20;++i)
+                                    hPass << std::setfill('0') << std::setw(2) << std::hex
+                                          << (unsigned int)dig[i];
+                                free(dig);
+                                statement findAllowed=db.prepare(
+                                    "SELECT "
+                                        "* "
+                                    "FROM "
+                                        "AllowedClient "
+                                    "WHERE "
+                                        "userid=?1 "
+                                        "AND allowkey=?2 "
+                                        "AND passwd=?3");
+                                db.bind(findAllowed,1,IdOfUsername);
+                                db.bind(findAllowed,2,key.str());
+                                db.bind(findAllowed,3,hPass.str());
+                                query_result rsltAllowed;
+                                try_again=false;
+                                do {
+                                    try {
+                                        rsltUser=db.run(findUser);
+                                    } catch (DBIsBusy &busy) {
+                                        try_again=true;
+                                    }
+                                } while (try_again);
+                                if (rsltUser->size()>0) {
+                                    // a result row indicates whitelist had
+                                    // an allowance entry for this client's pubkey
+                                    // and that the passwords matched up
+
+                                    /* Don't uncomment until an Account object
+                                    ** is created and its objref put on the output queue */
+                                    //authOK=true
+                                }
                             } else {
                                 // this would be the case of creating
                                 // a new account (username not in use)
