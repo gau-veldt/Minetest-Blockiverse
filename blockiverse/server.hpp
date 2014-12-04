@@ -37,6 +37,12 @@ extern boost::random::random_device entropy;
 
 #include "RSA/rsa.h"
 
+using bvdb::SQLiteDB;
+using bvdb::DBIsBusy;
+using bvdb::DBError;
+typedef SQLiteDB::statement statement;
+typedef SQLiteDB::query_result query_result;
+
 class Account : public bvnet::object {
 private:
 public:
@@ -63,6 +69,7 @@ private:
     Key *clientKey;
     bool clientValid;
     string challenge;
+    SQLiteDB db;
     unsigned int randbits[8];
 public:
     serverRoot(bvnet::session &sess)
@@ -219,21 +226,100 @@ public:
                     // the client public key exponent in the current RSA lib
                     // is always 65537 but future/forked clients might use differing
                     // exponents so it needs to be saved.
-                    bool authOK=false;
-                    /** TODO:
-                     *  Access database for existing user account.
-                     *  Create (login suceeds) if does not exist
-                     *
-                     *  If account exists verify client's key is account owner.
-                     *  If client's key is owner login succeeds.
-                     *
-                     *  If not the owner check the whitelist for client's key.
-                     *  If not there login fails.
-                     *
-                     *  If there is an entry verify the provided password against
-                     *  the whitelist entry.  Login succeeds on password match,
-                     *  fails otherwise.
-                     */
+                    bool try_again,authOK=false;
+                    /*
+                    ** Access database for existing user account.
+                    ** Create (login suceeds) if does not exist
+                    **
+                    ** If account exists verify client's key is account owner.
+                    ** If client's key is owner login succeeds.
+                    **
+                    ** If not the owner check the whitelist for client's key.
+                    ** If not there login fails.
+                    **
+                    ** If there is an entry verify the provided password against
+                    ** the whitelist entry.  Login succeeds on password match,
+                    ** fails otherwise.
+                    **/
+                    s64 IdOfOwner=-1;
+                    s64 IdOfUsername=-1;
+                    // see if account exists for this owner
+                    statement findOwner=db.prepare("SELECT * FROM Owner WHERE userkey=?1");
+                    db.bind(findOwner,1,key.str());
+                    query_result rsltOwner;
+                    try_again=false;
+                    do {
+                        try {
+                            rsltOwner=db.run(findOwner);
+                        } catch (DBIsBusy &busy) {
+                            try_again=true;
+                        }
+                    } while (try_again);
+                    if (rsltOwner->size()>0)
+                        IdOfOwner=db.get_result<s64>(rsltOwner,0,0/* userid */);
+
+                    // see if account exists for this username
+                    statement findUser=db.prepare("SELECT * FROM Owner WHERE username=?1");
+                    db.bind(findUser,1,user);
+                    query_result rsltUser;
+                    try_again=false;
+                    do {
+                        try {
+                            rsltUser=db.run(findUser);
+                        } catch (DBIsBusy &busy) {
+                            try_again=true;
+                        }
+                    } while (try_again);
+                    if (rsltUser->size()>0)
+                        IdOfUsername=db.get_result<s64>(rsltUser,0,0/* userid */);
+
+                    if ((IdOfUsername<0)&&(IdOfUsername<0)) {
+                        // client has no account and username is unused
+                        // action: create it (on success login succeeds)
+                        LOCK_COUT
+                        cout << "[server] TODO: Create account for "
+                             << user << " on pubkey " << key.str() << endl;
+                        UNLOCK_COUT
+                    } else {
+                        if (IdOfOwner==IdOfUsername) {
+                            // userid of owner matches userid of username
+                            // action: login succeeds
+                            LOCK_COUT
+                            cout << "[server] TODO: Login succeeds for "
+                                 << user << " on pubkey " << key.str() << endl;
+                            UNLOCK_COUT
+
+                            /* Don't uncomment until an Account object
+                            ** is created and its objref put on the output queue */
+                            //authOK=true;
+                        } else {
+                            if (IdOfUsername>=0) {
+                                // This is the attempt to log in as
+                                // an existing username via a client
+                                // (pubkey) that does not own the account
+                                // specified by the username.
+                                //
+                                // This case needs an additional query
+                                // to see of the owner of the username has
+                                // linked (whitelisted/allowed) this client's
+                                // pubkey and whitelist entry's password
+                                // matches the password supplied.
+                                LOCK_COUT
+                                cout << "[server] TODO: Check whitelist for "
+                                     << user << " on pubkey " << key.str() << " (and check provided password)" << endl;
+                                UNLOCK_COUT
+                            } else {
+                                // this would be the case of creating
+                                // a new account (username not in use)
+                                // by a client (pubkey) already posessing
+                                // an account but this is prohibited by
+                                // the db (only one account per pubkey)
+                                // so let the login attempt fail
+                                authOK=false;
+                            }
+                        }
+                    }
+
                     if (authOK) {
                         // login successful spawn Account
                         // object and return its objectref

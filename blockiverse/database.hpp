@@ -47,7 +47,7 @@ namespace bvdb {
     */
     struct DBError : public std::runtime_error {
         enum _flags {noop,release};
-        static void busy_aware_throw(int code,const char *msg,_flags f=noop) {
+        [[noreturn]] static void busy_aware_throw(int code,const char *msg,_flags f=noop) {
             if (code==SQLITE_BUSY) {
                 throw DBIsBusy();
             } else {
@@ -190,6 +190,9 @@ namespace bvdb {
         }
         virtual ~SQLiteDB() {
             for (auto&& i : stmtCache) {
+                LOCK_COUT
+                cout << "[DB] delete cached statement " << i.second << endl;
+                UNLOCK_COUT
                 sqlite3_finalize(i.second);
                 i.second=NULL;
             }
@@ -199,8 +202,12 @@ namespace bvdb {
             }
         }
 
-        std::shared_ptr<Result> run(sqlite3_stmt *stmt) {
-            std::shared_ptr<Result> data(new Result);
+        typedef std::shared_ptr<Result> query_result;
+        template<typename T>
+        T get_result(query_result rslt,int row,int col) {return (T)(*(((*rslt)[row])[col]));}
+
+        query_result run(sqlite3_stmt *stmt) {
+            query_result data(new Result);
             int rc;
             do {
                 rc=sqlite3_step(stmt);
@@ -241,9 +248,73 @@ namespace bvdb {
             if (rc!=SQLITE_DONE) {
                 DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
             }
+            LOCK_COUT
+            cout << "[DB] " << stmt << ": " << data->size() << " rows returned." << endl;
+            UNLOCK_COUT
             return data;
         }
 
+        typedef sqlite3_stmt *statement;
+        void bind(statement s,int idx,const string &val) {
+            /** @brief bind argument with a string */
+            int rc=sqlite3_bind_text(s,idx,val.c_str(),val.size(),SQLITE_TRANSIENT);
+            if (rc) {
+                DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
+            }
+            LOCK_COUT
+            cout << "[DB] " << s << ": " << "?" << idx << " = \"" << val << '"' << endl;
+            UNLOCK_COUT
+        }
+        void bind(statement s,int idx,const char *val,int len) {
+            /** @brief bind argument with binary data (blob) */
+            int rc=sqlite3_bind_blob(s,idx,val,len,SQLITE_TRANSIENT);
+            if (rc) {
+                DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
+            }
+            LOCK_COUT
+            cout << "[DB] " << s << ": " << "?" << idx << " = (blob of size " << len << ")" << endl;
+            UNLOCK_COUT
+        }
+        void bind(statement s,int idx,s64 &val) {
+            /** @brief bind argument with an int64 */
+            int rc=sqlite3_bind_int64(s,idx,val);
+            if (rc) {
+                DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
+            }
+            LOCK_COUT
+            cout << "[DB] " << s << ": " << "?" << idx << " = " << val << endl;
+            UNLOCK_COUT
+        }
+        void bind(statement s,int idx,int &val) {
+            /** @brief bind argument with an integer */
+            int rc=sqlite3_bind_int(s,idx,val);
+            if (rc) {
+                DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
+            }
+            LOCK_COUT
+            cout << "[DB] " << s << ": " << "?" << idx << " = " << val << endl;
+            UNLOCK_COUT
+        }
+        void bind(statement s,int idx,double &val) {
+            /** @brief bind argument with a double */
+            int rc=sqlite3_bind_double(s,idx,val);
+            if (rc) {
+                DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
+            }
+            LOCK_COUT
+            cout << "[DB] " << s << ": " << "?" << idx << " = " << val << endl;
+            UNLOCK_COUT
+        }
+        void bind_null(statement s,int idx) {
+            /** @brief bind argument with nothing (null) */
+            int rc=sqlite3_bind_null(s,idx);
+            if (rc) {
+                DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
+            }
+            LOCK_COUT
+            cout << "[DB] " << s << ": " << "?" << idx << " = (null)" << endl;
+            UNLOCK_COUT
+        }
         sqlite3_stmt* prepare(string sql) {
             /** @brief compile sql to prepared statement
             *   Results will be cached so compiles aren't repeated.
@@ -258,7 +329,7 @@ namespace bvdb {
                 sqlite3_reset(stmt);
                 sqlite3_clear_bindings(stmt);
                 LOCK_COUT
-                cout << "[DB] Statement cache hit: "
+                cout << "[DB] Statement (cached): "
                           << stmt << ": " << sql << endl;
                 UNLOCK_COUT
                 return stmt;
@@ -300,8 +371,9 @@ namespace bvdb {
 
             char *err=NULL;
             int rc=sqlite3_exec(db,sql.c_str(),NULL,NULL,&err);
-            if (rc)
+            if (rc) {
                 DBError::busy_aware_throw(rc,err,DBError::release);
+            }
         }
     };
 
