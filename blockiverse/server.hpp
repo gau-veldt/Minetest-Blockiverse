@@ -286,7 +286,9 @@ public:
                             // action: login succeeds
                             LOCK_COUT
                             cout << "[server] TODO: Login succeeds for "
-                                 << user << " on pubkey " << key.str() << endl;
+                                 << user << "(" << IdOfOwner
+                                 << ") on pubkey " << key.str()
+                                 << " (owner)" << endl;
                             UNLOCK_COUT
 
                             /* Don't uncomment until an Account object
@@ -337,6 +339,12 @@ public:
                                     // a result row indicates whitelist had
                                     // an allowance entry for this client's pubkey
                                     // and that the passwords matched up
+                                    LOCK_COUT
+                                    cout << "[server] TODO: Login succeeds for "
+                                         << user << "(" << IdOfUsername
+                                         << ") on pubkey " << key.str()
+                                         << " (via whitelist)" << endl;
+                                    UNLOCK_COUT
 
                                     /* Don't uncomment until an Account object
                                     ** is created and its objref put on the output queue */
