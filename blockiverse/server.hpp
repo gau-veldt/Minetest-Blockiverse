@@ -45,9 +45,10 @@ typedef SQLiteDB::query_result query_result;
 
 class Account : public bvnet::object {
 private:
+    s64 userId;
 public:
-    Account(bvnet::session &sess)
-        : bvnet::object(sess) {}
+    Account(bvnet::session &sess,s64 who)
+        : bvnet::object(sess),userId(who) {}
     virtual ~Account() {}
     virtual const char *getType() {return "userAccount";}
     virtual void methodCall(unsigned int method) {
