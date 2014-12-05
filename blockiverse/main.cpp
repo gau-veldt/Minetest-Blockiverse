@@ -156,7 +156,7 @@ void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
     //cout << "    SHA1: " << rcsha << endl;
     //UNLOCK_COUT
     s->send_string(rcsha);
-    s->send_call(1 /* serverRoot */,2 /* AnswerChallenge */,
+    s->send_call(1 /* serverRoot */,4 /* AnswerChallenge */,
                  boost::bind(loginDone,s,
                              authOk,doneFlag),
                  1 /* expects one argument */);
@@ -316,7 +316,7 @@ int main(int argc, char** argv)
         u32 acctId=0;
         client_session.send_string(client_kpair->GetPublicKey().GetModulus());
         client_session.send_string(client_kpair->GetPublicKey().GetExponent());
-        client_session.send_call(1 /* serverRoot */,1 /* LoginClient */,
+        client_session.send_call(1 /* serverRoot */,3 /* LoginClient */,
                                  boost::bind(testLogin,&client_session,
                                              client_kpair,&authOk,&authDone),
                                  1 /* expects one result */);
@@ -338,7 +338,7 @@ int main(int argc, char** argv)
             // password
             client_session.send_string(RSA::Encrypt(userPass,client_kpair->GetPrivateKey()));
             authDone=false;
-            client_session.send_call(1 /* serverRoot */,3 /* GetAccount */,
+            client_session.send_call(1 /* serverRoot */,5 /* GetAccount */,
                                      boost::bind(onGetAccount,&client_session,
                                                  &acctId,&authDone),
                                      1 /* expects one result */);

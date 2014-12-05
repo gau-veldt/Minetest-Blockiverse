@@ -215,11 +215,12 @@ namespace bvnet {
         /** @brief notifies callback when expected number of return arguments arrive */
         void check_argnotify();
 
-        /* value stack */
-        value_stack argstack;   /**< @brief incoming results stack */
-        value_queue sendq;      /**< @brief outgoing values queue */
-        proxy_map   proxy;      /**< @brief cache of available remote objects */
-        cb_queue    argnotify;  /**< @brief callbacks to notify when remote methods complete */
+        value_stack     argstack;   /**< @brief incoming results stack */
+        value_queue     sendq;      /**< @brief outgoing values queue */
+        proxy_map       proxy;      /**< @brief cache of available remote objects */
+        cb_queue        argnotify;  /**< @brief callbacks to notify when remote methods complete */
+        /** @todo automatic querying contracts of received objects */
+        //contract_map    contracts;
 
         registry *reg;      /**< @brief registered objects in session */
         mutex *synchro;     /**< @brief mutex on session manipulation */
@@ -460,7 +461,9 @@ namespace bvnet {
             throw method_notimpl(getType(),1+dmcIndex.size());
         }
 
-        void dmc_GetType(value_queue&); /**< @brief the GetType dispatched method call (dmc) */
+        void dmc_GetType(value_queue&);         /**< @brief the GetType dispatched method call (dmc) */
+        void dmc_GetIfaceSize(value_queue&);    /**< @brief size of object's current interface */
+        void dmc_GetInterface(value_queue&);    /**< @brief enumerate object's current interface */
     public:
         /** @brief construction of an object @param sess reference to session to attach */
         object(session &sess) :
@@ -471,6 +474,8 @@ namespace bvnet {
                 ctx.register_object(this);
                 // dmcTable[0] is the GetType method
                 register_dmc("GetType",&object::dmc_GetType);
+                register_dmc("GetIFaceSize",&object::dmc_GetIfaceSize);
+                register_dmc("GetInterface",&object::dmc_GetInterface);
             }
         /** @brief base dtor to automatically unregister the object */
         virtual ~object() {
@@ -493,6 +498,15 @@ namespace bvnet {
     */
     inline void object::dmc_GetType(value_queue &vqueue) {
         vqueue.push(string(getType()));
+    }
+    inline void object::dmc_GetIfaceSize(value_queue &vqueue) {
+        vqueue.push((s64)dmcLabel.size());
+    }
+    inline void object::dmc_GetInterface(value_queue &vqueue) {
+        for (int i=dmcLabel.size();i>0;--i) {
+            vqueue.push(dmcLabel[i-1]);
+            vqueue.push((s64)(i-1));
+        }
     }
 
     /*
