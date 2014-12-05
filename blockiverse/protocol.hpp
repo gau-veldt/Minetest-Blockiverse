@@ -40,6 +40,7 @@
 #define BV_PROTOCOL_H_INCLUDED
 
 #include "common.hpp"
+#include <memory>
 #include <functional>
 #include <iomanip>
 #include <typeinfo>
@@ -53,6 +54,8 @@
 #include <boost/asio.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
+#include <boost/core/enable_if.hpp>
+#include <boost/type_traits.hpp>
 
 using boost::asio::ip::tcp;
 typedef boost::asio::io_service io_service;
@@ -64,6 +67,10 @@ typedef boost::function<void()> lpvFunc;
 
 namespace bvnet {
     extern u32 reg_objects_softmax;
+
+    using boost::enable_if;
+    using boost::is_base_of;
+
 
     /**
     * @typedef valtype
@@ -140,7 +147,7 @@ namespace bvnet {
     typedef std::map<u32,bool> proxy_map;
     typedef std::queue<method_call> cb_queue;
     typedef boost::mutex mutex;
-    typedef boost::mutex::scoped_lock scoped_lock;
+    //typedef boost::mutex::scoped_lock scoped_lock;
 
     typedef std::function<void(object*,value_queue&)> dmcMethod;
     typedef std::map<unsigned int,dmcMethod> call_map;
@@ -187,7 +194,17 @@ namespace bvnet {
     *   calls received from the remote).
     */
     class session {
+    public:
+        /** @brief when you want make dynamic objects on the session
+        *
+        *   Then have those objects automatically go away when the
+        *   session ends if they don't die sooner
+        */
+        typedef std::shared_ptr<object> shared;
     private:
+        /** @brief for session's dynamic object management */
+        typedef std::map<u32,shared> gc_map;
+
         io_service *io_;            /**< @brief io_service for this session  */
         object *root;               /**< @brief session's root (bootstrap) object */
         bool isActive;              /**< @brief connection is alive */
@@ -239,21 +256,37 @@ namespace bvnet {
         tcp::socket *conn;  /**< @brief connection */
 
         u32 remoteRoot;     /**< @brief once booted has remote_root */
+
+        gc_map gc_mgr;      /**< @brief tracks dynamically created objects */
     public:
         session();
         virtual ~session();
 
+        /** @brief update interface of specified object */
         void UpdateInterface(u32,string,u32);
-        u32 getIdOf(object *ob);                    /** @brief gets id of specified object */
+        /** @brief gets id of specified object */
+        u32 getIdOf(object *ob);
+        /** @brief manage object, given object ptr */
+        shared get_shared(object*);
+        /** @brief manage object, given object id */
+        shared get_shared(u32);
 
-        void notify_remove(u32 id);                 /**< @brief signals that object no longer valid */
-        void disconnect() {isActive=false;}         /**< @brief close the conncetion */
-        int register_object(object *o);             /**< @brief register object as available to remote */
-        u32 getRemote() {return remoteRoot;}        /**< @brief get remote's root (bootstrap) object */
-        bool hasRemote() {return 0!=remoteRoot;}    /**< @brief true indicates remote root object valid */
-        bool unregister(u32 id);                    /**< @brief unregister object by-id and inform remote */
-        bool unregister(object *ob);                /**< @brief unregister object by-address and inform remote */
-        void encode(const boost::any &a);           /**< @brief sends any queued values over the wire */
+        /** @brief signals that object no longer valid */
+        void notify_remove(u32 id);
+        /** @brief close the conncetion */
+        void disconnect() {isActive=false;}
+        /** @brief register object as available to remote */
+        int register_object(object *o);
+        /** @brief get remote's root (bootstrap) object */
+        u32 getRemote() {return remoteRoot;}
+        /** @brief true indicates remote root object valid */
+        bool hasRemote() {return 0!=remoteRoot;}
+        /** @brief unregister object by-id and inform remote */
+        bool unregister(u32 id);
+        /** @brief unregister object by-address and inform remote */
+        bool unregister(object *ob);
+        /** @brief sends any queued values over the wire */
+        void encode(const boost::any &a);
         /**
         * @brief Determine type of result stack top value.
         * @throw argstack_empty if the result stack is empty when attempted
@@ -414,6 +447,9 @@ namespace bvnet {
     class object {
     private:
         friend class session;
+        call_map dmcTable;  /**< @brief method mapper for method call and OO mechanism */
+        name_map dmcLabel;  /**< @brief name labels of dmc methods */
+        indx_map dmcIndex;  /**< @brief method indices of dmc method */
         /**
         *   @brief Dispatched Method Call
         *
@@ -423,15 +459,15 @@ namespace bvnet {
         *   callable by the remote.  A superclass sets up his
         *   dmc methods in his ctor by accessing object's dmcTable
         *
-        *   As a plus the lock and value queue boilerplate has been
-        *   been moved to the base class dispatcher and the dmc methods
-        *   will be in locked context and given the value queue as a
-        *   parameter.  He also has an exception now to trap calls to
-        *   an unimplemented method index.
+        *   As a plus the value queue boilerplate has been moved
+        *   to the base class dispatcher and the dmc methods will
+        *   be given the value queue as a parameter.
+        *
+        *   He also has an exception now to trap calls to an
+        *   unimplemented method index.
         */
         void methodCall(unsigned int idx) {
-            bvnet::scoped_lock lock(ctx.getMutex());
-            bvnet::value_queue &vqueue=ctx.getSendQueue();
+            value_queue &vqueue=ctx.getSendQueue();
             auto dmcFunc=dmcTable.find(idx);
             if (dmcFunc!=dmcTable.end()) {
                 (dmcFunc->second)(this,vqueue);
@@ -440,9 +476,6 @@ namespace bvnet {
                 throw method_notimpl(getType(),idx);
             }
         }
-        call_map dmcTable;  /**< @brief method mapper for method call and OO mechanism */
-        name_map dmcLabel;  /**< @brief name labels of dmc methods */
-        indx_map dmcIndex;  /**< @brief method indices of dmc method */
     protected:
         session &ctx;       /**< @brief for objects to attach to the session's registry */
 
@@ -532,48 +565,45 @@ namespace bvnet {
             throw object_null();
         }
 
-        {
-            scoped_lock lock(*synchro);
-
-            if (objects.size()>=reg_objects_softmax) {
-                /*
-                ** enforce an object store softmax
-                **
-                ** A softmax exception can be caught and the offending session
-                ** simply disconnected whether due to a configuration/program
-                ** error (softmax too low), or a deliberate attack by a malicious
-                ** client attempting to create enough objects to exhaust the free
-                ** store hardmax which may lead to a system crash and subsequent
-                ** collateral damage.
-                */
-                throw registry_full();
-            }
-
+        if (objects.size()>=reg_objects_softmax) {
             /*
-                For security do not assume next_slot+1
-                is an unoccupied slot.
-
-                An attacker could use rapid creation and deletion of
-                objects to execute a wraparound attack on next_slot
-                then register a new object in a low numbered slot to
-                overwrite an existing object in the registry.
+            ** enforce an object store softmax
+            **
+            ** A softmax exception can be caught and the offending session
+            ** simply disconnected whether due to a configuration/program
+            ** error (softmax too low), or a deliberate attack by a malicious
+            ** client attempting to create enough objects to exhaust the free
+            ** store hardmax which may lead to a system crash and subsequent
+            ** collateral damage.
             */
-            omap_select_id &table=objects.by<object_id>();
-            omap_iter_byid row=table.find(next_slot);
-            while (row!=table.end()) {
-                ++next_slot;
-                /* skip 0 as it's reserved */
-                if (next_slot==0) ++next_slot;
-                row=table.find(next_slot);
-            }
-            /* invariant: objects[next_slot] empty */
-
-            /* make thread-safe copy for retval */
-            chosen_slot=next_slot;
-
-            /* register object */
-            objects.insert(ob_relation(chosen_slot,ob));
+            throw registry_full();
         }
+
+        /*
+            For security do not assume next_slot+1
+            is an unoccupied slot.
+
+            An attacker could use rapid creation and deletion of
+            objects to execute a wraparound attack on next_slot
+            then register a new object in a low numbered slot to
+            overwrite an existing object in the registry.
+        */
+        omap_select_id &table=objects.by<object_id>();
+        omap_iter_byid row=table.find(next_slot);
+        while (row!=table.end()) {
+            ++next_slot;
+            /* skip 0 as it's reserved */
+            if (next_slot==0) ++next_slot;
+            row=table.find(next_slot);
+        }
+        /* invariant: objects[next_slot] empty */
+
+        /* make thread-safe copy for retval */
+        chosen_slot=next_slot;
+
+        /* register object */
+        objects.insert(ob_relation(chosen_slot,ob));
+
         return chosen_slot;
     }
 
@@ -588,8 +618,6 @@ namespace bvnet {
         **  remove object from registry
         **  and notify upstream event sink
         */
-        scoped_lock lock(*synchro);
-
         omap_select_id &table=objects.by<object_id>();
         omap_iter_byid victim=table.find(id);
         if (victim!=table.end()) {
@@ -606,18 +634,15 @@ namespace bvnet {
         **  and notify upstream event sink
         */
         if (ob==NULL) return false;     /* indicate not found if NULL */
-        {
-            scoped_lock lock(*synchro);
 
-            omap_select_addr &table=objects.by<object_addr>();
-            omap_iter_byptr victim=table.find(ob);
-            if (victim!=table.end()) {
-                notify(victim->get<object_id>());
-                table.erase(victim);
-                return true;
-            }
-            return false;
+        omap_select_addr &table=objects.by<object_addr>();
+        omap_iter_byptr victim=table.find(ob);
+        if (victim!=table.end()) {
+            notify(victim->get<object_id>());
+            table.erase(victim);
+            return true;
         }
+        return false;
     }
 
     inline u32 registry::idOf(object *ob) {
@@ -626,8 +651,6 @@ namespace bvnet {
         */
         if (ob==NULL) throw object_not_reg();   /* indicate DNE if NULL */
         {
-            scoped_lock lock(*synchro);
-
             omap_select_addr &table=objects.by<object_addr>();
             omap_iter_byptr row=table.find(ob);
             if (row!=table.end()) {
@@ -643,8 +666,6 @@ namespace bvnet {
         */
         if (id==0) throw object_not_reg();  /* object id==0 is reserved */
         {
-            scoped_lock lock(*synchro);
-
             omap_select_id &table=objects.by<object_id>();
             omap_iter_byid row=table.find(id);
             if (row!=table.end()) {
@@ -656,8 +677,6 @@ namespace bvnet {
 
     inline registry::~registry() {
         {
-            scoped_lock lock(*synchro);
-
             /*
             ** destructor must cleanly clear/notify
             ** any remaining objects
@@ -716,6 +735,13 @@ namespace bvnet {
         delete reg;
         delete synchro;
     }
+    /** Updates known interface of specifed object
+    *   as indicated by the given parameters.
+    *
+    *   @param ob       [in] object id of interface to update
+    *   @param label    [in] name of the new method
+    *   @param slot     [in] slot number used to call the new method
+    */
     inline void session::UpdateInterface(u32 ob,string label,u32 slot) {
         LOCK_COUT
         cout << "Session [" << this << "] remote obid "
@@ -724,11 +750,35 @@ namespace bvnet {
         UNLOCK_COUT
         contracts[ob][label]=slot;
     }
+    /** @brief Determine registry id given object ptr */
     inline u32 session::getIdOf(object *ob)  {
         return reg->idOf(ob);
     }
+    /** @brief manage object, given object ptr
+    *   @param p [in] ptr to object
+    *   @return object smartptr
+    *   @throw object_not_reg if p is not part of session
+    */
+    inline session::shared session::get_shared(object* p) {
+        u32 id=reg->idOf(p);
+        if (gc_mgr.find(id)==gc_mgr.end()) {
+            gc_mgr[id]=shared(p);
+        }
+        return gc_mgr[id];
+    }
+    /** @brief manage object, given object id
+    *   @param p [in] object id
+    *   @return object smartptr
+    *   @throw object_not_reg if id is not part of session
+    */
+    inline session::shared session::get_shared(u32 id) {
+        object *p=reg->obOf(id);
+        if (gc_mgr.find(id)==gc_mgr.end()) {
+            gc_mgr[id]=shared(p);
+        }
+        return gc_mgr[id];
+    }
     inline void session::notify_remove(u32 id) {
-        scoped_lock lock(*synchro);
         sendq.push(ob_is_gone(id));
     }
     inline int session::register_object(object *o) {
