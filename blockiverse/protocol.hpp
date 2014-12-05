@@ -387,6 +387,9 @@ namespace bvnet {
         void dump(std::ostream &os);
     };
 
+    /** @brief helper typecast symbol for usage of dmc mechanism */
+    typedef void(bvnet::object::*dmc)(value_queue&);
+
     /**
     ** @brief ABC for remotable objects.
     **
@@ -408,7 +411,6 @@ namespace bvnet {
     ** track object lifetime a registry reference
     ** is required for construction.
     */
-    typedef void(bvnet::object::*dmc)(value_queue&);
     class object {
     private:
         /**
