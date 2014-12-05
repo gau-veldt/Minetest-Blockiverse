@@ -47,12 +47,13 @@ public:
     Account(bvnet::session &sess,s64 who)
         : bvnet::object(sess),userId(who) {
         LOCK_COUT
-        cout << "Account ctor (num=" << userId << ")" << endl;
+        cout << "Account [" << this << "] ctor (num="
+             << userId << ")" << endl;
         UNLOCK_COUT
     }
     virtual ~Account() {
         LOCK_COUT
-        cout << "Account dtor" << endl;
+        cout << "Account [" << this << "] dtor" << endl;
         UNLOCK_COUT
     }
     virtual const char *getType() {return "userAccount";}

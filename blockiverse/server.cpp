@@ -326,10 +326,6 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
     //cout << "         password " << pass << endl;
     UNLOCK_COUT
 
-    // === TEST ONLY ===
-    Account *p=new Account(ctx,666);
-    bvnet::session::shared shared_p=ctx.get_shared(p);
-
     if (clientValid) {
         std::ostringstream key;
         key << cli_pub_mod << ":" << cli_pub_exp;

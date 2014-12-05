@@ -270,6 +270,10 @@ namespace bvnet {
         shared get_shared(object*);
         /** @brief manage object, given object id */
         shared get_shared(u32);
+        /** @brief delete object, given object ptr */
+        void delete_ob(object*);
+        /** @brief delete object, given object id */
+        void delete_ob(u32);
 
         /** @brief signals that object no longer valid */
         void notify_remove(u32 id);
@@ -777,6 +781,25 @@ namespace bvnet {
             gc_mgr[id]=shared(p);
         }
         return gc_mgr[id];
+    }
+    /** @brief delete object, given object ptr
+    *   @param p [in] ptr to object
+    *   @throw object_not_reg if p is not part of session
+    */
+    inline void session::delete_ob(object* p) {
+        u32 id=reg->idOf(p);
+        if (gc_mgr.find(id)!=gc_mgr.end()) {
+            gc_mgr.erase(id);
+        }
+    }
+    /** @brief delete object, given object id
+    *   @param p [in] object id
+    *   @throw object_not_reg if id is not part of session
+    */
+    inline void session::delete_ob(u32 id) {
+        if (gc_mgr.find(id)!=gc_mgr.end()) {
+            gc_mgr.erase(id);
+        }
     }
     inline void session::notify_remove(u32 id) {
         sendq.push(ob_is_gone(id));
