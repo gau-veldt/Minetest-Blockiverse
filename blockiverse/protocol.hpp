@@ -135,9 +135,10 @@ namespace bvnet {
     typedef boost::mutex mutex;
     typedef boost::mutex::scoped_lock scoped_lock;
 
-    typedef std::function<void(object*,value_queue&)> method_of_ob;
-    typedef std::map<unsigned int,method_of_ob> call_map;
+    typedef std::function<void(object*,value_queue&)> dmcMethod;
+    typedef std::map<unsigned int,dmcMethod> call_map;
     typedef std::map<unsigned int,string> name_map;
+    typedef std::map<string,unsigned int> indx_map;
 
     /** @brief Indicates registry exceeded reg_objects_softmax */
     class registry_full : public exception {
@@ -423,13 +424,26 @@ namespace bvnet {
                 throw method_notimpl(getType(),idx);
             }
         }
-    protected:
-        session &ctx;       /**< @brief for objects to attach to the session's registry */
         call_map dmcTable;  /**< @brief method mapper for method call and OO mechanism */
         name_map dmcLabel;  /**< @brief name labels of dmc methods */
+        indx_map dmcIndex;  /**< @brief method indices of dmc method */
+    protected:
+        session &ctx;       /**< @brief for objects to attach to the session's registry */
 
-        void dmc_GetType(value_queue&); /**< @brief the GetType dispatched method call (dmc) */
-    private:
+        /** @brief register dmc method @param label method label @param func method function */
+        void register_dmc(string label,dmc func) {
+            unsigned int slot;
+            auto dmcEnt=dmcIndex.find(label);
+            if (dmcEnt!=dmcIndex.end()) {
+                slot=dmcEnt->second;
+            } else {
+                slot=dmcIndex.size();
+                dmcIndex[label]=slot;
+            }
+            dmcLabel[slot]=label;
+            dmcTable[slot]=func;
+        }
+
         const string methodLabel(const unsigned int idx) {
             const auto &s=dmcLabel.find(idx);
             if (s!=dmcLabel.end()) {
@@ -437,6 +451,16 @@ namespace bvnet {
             }
             return std::to_string(idx);
         }
+
+        const unsigned int methodSlot(const string &label) {
+            const auto &s=dmcIndex.find(label);
+            if (s!=dmcIndex.end()) {
+                return s->second;
+            }
+            throw method_notimpl(getType(),1+dmcIndex.size());
+        }
+
+        void dmc_GetType(value_queue&); /**< @brief the GetType dispatched method call (dmc) */
     public:
         /** @brief construction of an object @param sess reference to session to attach */
         object(session &sess) :
@@ -445,9 +469,8 @@ namespace bvnet {
                 cout << "object [" << this << "] ctor" << endl;
                 UNLOCK_COUT
                 ctx.register_object(this);
-                // dmtTable[0] is the GetType method
-                dmcTable[0]=&object::dmc_GetType;
-                dmcLabel[0]="GetType";
+                // dmcTable[0] is the GetType method
+                register_dmc("GetType",&object::dmc_GetType);
             }
         /** @brief base dtor to automatically unregister the object */
         virtual ~object() {

@@ -37,31 +37,6 @@ namespace bvdb {
             throw NotThreadable("SQLite3 compiled single-thread-only.");
         }
         SQLiteDB::init(where);
-
-        // Create DB tables (if they don't exist)
-        try {
-            SQLiteDB db;    // RAII
-
-            // Generate client ownership table
-            db.runOnce( "CREATE TABLE IF NOT EXISTS Owner ("
-                            "userid INTEGER PRIMARY KEY ASC NOT NULL"
-                            ",username TEXT UNIQUE NOT NULL"
-                            ",userkey TEXT UNIQUE NOT NULL"
-                        ") WITHOUT ROWID");
-
-            // Generate client whitelist table
-            db.runOnce( "CREATE TABLE IF NOT EXISTS AllowedClient ("
-                            "userid INTEGER NOT NULL REFERENCES Owner (userid) ON DELETE CASCADE"
-                            ",allowkey TEXT NOT NULL"
-                            ",passwd TEXT UNIQUE NOT NULL"
-                            ",PRIMARY KEY (userid,allowkey)"
-                        ")");
-        } catch (DBError &e) {
-            LOCK_COUT
-            cout << "[DB] Error creating tables:" << endl
-                      << "     " << e.what()       << endl;
-            UNLOCK_COUT
-        }
     }
 
 };
