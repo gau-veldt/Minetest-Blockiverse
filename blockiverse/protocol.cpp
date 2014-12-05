@@ -40,4 +40,5 @@ void protocol_main_init() {
     bvnet::typeMap.insert(mappedType(typeid(bvnet::obref      ).name(),bvnet::vtObref));
     bvnet::typeMap.insert(mappedType(typeid(bvnet::ob_is_gone ).name(),bvnet::vtDeath));
     bvnet::typeMap.insert(mappedType(typeid(bvnet::method_call).name(),bvnet::vtMethod));
+    bvnet::typeMap.insert(mappedType(typeid(bvnet::dmc_msg    ).name(),bvnet::vtDMC));
 }

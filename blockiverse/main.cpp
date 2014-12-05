@@ -156,7 +156,7 @@ void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
     //cout << "    SHA1: " << rcsha << endl;
     //UNLOCK_COUT
     s->send_string(rcsha);
-    s->send_call(1 /* serverRoot */,4 /* AnswerChallenge */,
+    s->send_call(1 /* serverRoot */,"AnswerChallenge",
                  boost::bind(loginDone,s,
                              authOk,doneFlag),
                  1 /* expects one argument */);
@@ -308,7 +308,7 @@ int main(int argc, char** argv)
         /*
         **  Test method call mechanism
         */
-        client_session.send_call(1 /* serverRoot */,0 /* getType */,
+        client_session.send_call(1 /* serverRoot */,"GetType",
                                  boost::bind(testNotify,&client_session),
                                  1 /* expects one argument */);
 
@@ -316,7 +316,7 @@ int main(int argc, char** argv)
         u32 acctId=0;
         client_session.send_string(client_kpair->GetPublicKey().GetModulus());
         client_session.send_string(client_kpair->GetPublicKey().GetExponent());
-        client_session.send_call(1 /* serverRoot */,3 /* LoginClient */,
+        client_session.send_call(1 /* serverRoot */,"LoginClient",
                                  boost::bind(testLogin,&client_session,
                                              client_kpair,&authOk,&authDone),
                                  1 /* expects one result */);
@@ -338,7 +338,7 @@ int main(int argc, char** argv)
             // password
             client_session.send_string(RSA::Encrypt(userPass,client_kpair->GetPrivateKey()));
             authDone=false;
-            client_session.send_call(1 /* serverRoot */,5 /* GetAccount */,
+            client_session.send_call(1 /* serverRoot */,"GetAccount",
                                      boost::bind(onGetAccount,&client_session,
                                                  &acctId,&authDone),
                                      1 /* expects one result */);
@@ -460,33 +460,37 @@ int main(int argc, char** argv)
                     switch (vt) {
                     case bvnet::vtInt:
                         cout << "Client got int: "
-                                  << client_session.getarg<s64>()
-                                  << endl;
+                             << client_session.getarg<s64>()
+                             << endl;
                         break;
                     case bvnet::vtFloat:
                         cout << "Client got float: "
-                                  << client_session.getarg<float>()
-                                  << endl;
+                             << client_session.getarg<float>()
+                             << endl;
                         break;
                     case bvnet::vtBlob:
                     case bvnet::vtString:
                         cout << "Client got std::string/blob: "
-                                  << client_session.getarg<std::string>()
-                                  << endl;
+                             << client_session.getarg<std::string>()
+                             << endl;
                         break;
                     case bvnet::vtObref:
                         cout << "Client got objectref id="
-                                  << client_session.getarg<bvnet::obref>().id
-                                  << endl;
+                             << client_session.getarg<bvnet::obref>().id
+                             << endl;
                         break;
                     case bvnet::vtDeath:
                         cout << "Client's objectref #"
-                                  << client_session.getarg<bvnet::ob_is_gone>().id
-                                  << " is dead" << endl;
+                             << client_session.getarg<bvnet::ob_is_gone>().id
+                             << " is dead" << endl;
                         break;
                     case bvnet::vtMethod:
                         cout << "<Method calls should not be visible>"
-                                  << endl;
+                             << endl;
+                        break;
+                    case bvnet::vtDMC:
+                        cout << "<DMC messages should not be visible>"
+                             << endl;
                         break;
                     }
                     UNLOCK_COUT

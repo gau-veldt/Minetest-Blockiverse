@@ -79,7 +79,8 @@ namespace bvnet {
         vtString=4,     /**< @brief Length-prefixed string */
         vtObref=5,      /**< @brief Object reference */
         vtDeath=6,      /**< @brief Object no longer exists */
-        vtMethod=7      /**< @brief Object method call */
+        vtMethod=7,     /**< @brief Object method call */
+        vtDMC=8         /**< @brief dmc message */
     } valtype;
     /** @typedef type_map @brief map of protocol valuetype class to corresponding data type */
     typedef std::map<const char*,valtype> type_map;
@@ -110,6 +111,12 @@ namespace bvnet {
         method_call(u32 i,u32 m,lpvFunc cb,int rnum):id(i),idx(m),callbk(cb),rcount(rnum) {}
         ~method_call() {}
     };
+    /** @brief protocol valuetype class for dmc messages */
+    struct dmc_msg {
+        u32 ob;
+        string label;
+        u32 slot;
+    };
 
     class object;
     class registry;
@@ -138,7 +145,8 @@ namespace bvnet {
     typedef std::function<void(object*,value_queue&)> dmcMethod;
     typedef std::map<unsigned int,dmcMethod> call_map;
     typedef std::map<unsigned int,string> name_map;
-    typedef std::map<string,unsigned int> indx_map;
+    typedef std::map<string,u32> indx_map;
+    typedef std::map<u32,indx_map> iface_map;
 
     /** @brief Indicates registry exceeded reg_objects_softmax */
     class registry_full : public exception {
@@ -208,6 +216,11 @@ namespace bvnet {
         void on_recv_len(const boost::system::error_code &ec,size_t rlen);
         /** @brief various async data reception callbacks */
         void on_recv_s64(const boost::system::error_code &ec,u32 bsize);
+        /** @brief various async data reception callbacks */
+        void on_recv_dmc_obid(const boost::system::error_code &ec);
+        void on_recv_dmc_len(const boost::system::error_code &ec,dmc_msg mk_dmc);
+        void on_recv_dmc_label(const boost::system::error_code &ec,dmc_msg mk_dmc,char* buf);
+        void on_recv_dmc_slot(const boost::system::error_code &ec,dmc_msg mk_dmc);
         /** @brief various async trasnfer completion callbacks */
         void on_write_done(string *finsihedbuf);
         /** @brief various async trasnfer completion callbacks */
@@ -219,8 +232,7 @@ namespace bvnet {
         value_queue     sendq;      /**< @brief outgoing values queue */
         proxy_map       proxy;      /**< @brief cache of available remote objects */
         cb_queue        argnotify;  /**< @brief callbacks to notify when remote methods complete */
-        /** @todo automatic querying contracts of received objects */
-        //contract_map    contracts;
+        iface_map       contracts;  /**< @brief interfaces map of all remote objects */
 
         registry *reg;      /**< @brief registered objects in session */
         mutex *synchro;     /**< @brief mutex on session manipulation */
@@ -230,6 +242,9 @@ namespace bvnet {
     public:
         session();
         virtual ~session();
+
+        void UpdateInterface(u32,string,u32);
+        u32 getIdOf(object *ob);                    /** @brief gets id of specified object */
 
         void notify_remove(u32 id);                 /**< @brief signals that object no longer valid */
         void disconnect() {isActive=false;}         /**< @brief close the conncetion */
@@ -291,7 +306,16 @@ namespace bvnet {
         *   @param rcount expected number of returned values.
         *          Default: 0 (no values returned).
         */
-        void send_call(u32 id,u32 m,lpvFunc cb=NULL,int rcount=0) {sendq.push(method_call(id,m,cb,rcount));}
+        void send_call(u32 id,u32 m,lpvFunc cb=NULL,int rcount=0) {
+            sendq.push(method_call(id,m,cb,rcount));
+        }
+        void send_call(u32 id,string m_name,lpvFunc cb=NULL,int rcount=0) {
+            if (contracts.find(id)==contracts.end())
+                throw object_not_reg();
+            if (contracts[id].find(m_name)==contracts[id].end())
+                throw method_notimpl(m_name,-1);
+            sendq.push(method_call(id,contracts[id][m_name],cb,rcount));
+        }
         /** @brief Queries if an object still valid  and useable on remote.
         *   @param obid object id.
         *   @return true if oject useable false otherwise.
@@ -443,6 +467,8 @@ namespace bvnet {
             }
             dmcLabel[slot]=label;
             dmcTable[slot]=func;
+            u32 ob=ctx.getIdOf(this);
+            ctx.getSendQueue().push((dmc_msg){ob,label,slot});
         }
 
         const string methodLabel(const unsigned int idx) {
@@ -462,8 +488,6 @@ namespace bvnet {
         }
 
         void dmc_GetType(value_queue&);         /**< @brief the GetType dispatched method call (dmc) */
-        void dmc_GetIfaceSize(value_queue&);    /**< @brief size of object's current interface */
-        void dmc_GetInterface(value_queue&);    /**< @brief enumerate object's current interface */
     public:
         /** @brief construction of an object @param sess reference to session to attach */
         object(session &sess) :
@@ -474,8 +498,6 @@ namespace bvnet {
                 ctx.register_object(this);
                 // dmcTable[0] is the GetType method
                 register_dmc("GetType",&object::dmc_GetType);
-                register_dmc("GetIFaceSize",&object::dmc_GetIfaceSize);
-                register_dmc("GetInterface",&object::dmc_GetInterface);
             }
         /** @brief base dtor to automatically unregister the object */
         virtual ~object() {
@@ -498,15 +520,6 @@ namespace bvnet {
     */
     inline void object::dmc_GetType(value_queue &vqueue) {
         vqueue.push(string(getType()));
-    }
-    inline void object::dmc_GetIfaceSize(value_queue &vqueue) {
-        vqueue.push((s64)dmcLabel.size());
-    }
-    inline void object::dmc_GetInterface(value_queue &vqueue) {
-        for (int i=dmcLabel.size();i>0;--i) {
-            vqueue.push(dmcLabel[i-1]);
-            vqueue.push((s64)(i-1));
-        }
     }
 
     /*
@@ -712,6 +725,17 @@ namespace bvnet {
         delete reg;
         delete synchro;
     }
+    inline void session::UpdateInterface(u32 ob,string label,u32 slot) {
+        LOCK_COUT
+        cout << "Session [" << this << "] remote obid "
+             << ob << " added method " << label
+             << " (slot=" << slot << ")" << endl;
+        UNLOCK_COUT
+        contracts[ob][label]=slot;
+    }
+    inline u32 session::getIdOf(object *ob)  {
+        return reg->idOf(ob);
+    }
     inline void session::notify_remove(u32 id) {
         scoped_lock lock(*synchro);
         sendq.push(ob_is_gone(id));
@@ -812,6 +836,13 @@ namespace bvnet {
                 u32 obid=*((u32*)in_idx);
                 /* proxy eliminates need for death messages in argstack */
                 proxy.erase(obid);
+                /* if there's a contract cached remove it also */
+                auto iface=contracts.find(obid);
+                if (iface!=contracts.end())
+                    contracts.erase(obid);
+                LOCK_COUT
+                cout << "session [" << this << "] recv ~" << obid << endl;
+                UNLOCK_COUT
             } else {
                 LOCK_COUT
                 cout << "session [" << this
@@ -837,6 +868,96 @@ namespace bvnet {
                 LOCK_COUT
                 cout << "session [" << this
                           << "] expected callee objectid got EOF"
+                          << " (" << ec << ")"
+                          << endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
+        }
+    }
+    inline void session::on_recv_dmc_obid(const boost::system::error_code &ec) {
+        if (isActive) {
+            if (!ec) {
+                dmc_msg mk_dmc;
+                mk_dmc.ob=*((u32*)in_idx);
+                boost::asio::async_read(
+                    *conn,
+                    boost::asio::buffer(in_idx,4),
+                    boost::bind(&session::on_recv_dmc_len,this,
+                        boost::asio::placeholders::error,
+                        mk_dmc));
+            } else {
+                LOCK_COUT
+                cout << "session [" << this
+                          << "] expected dmc objectid got EOF"
+                          << " (" << ec << ")"
+                          << endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
+        }
+    }
+    inline void session::on_recv_dmc_len(const boost::system::error_code &ec,dmc_msg mk_dmc) {
+        if (isActive) {
+            if (!ec) {
+                u32 idx=*((u32*)in_idx);
+                char* pstr=new char[1+idx];
+                pstr[idx]='\0';
+                boost::asio::async_read(
+                    *conn,
+                    boost::asio::buffer(pstr,idx),
+                    boost::bind(&session::on_recv_dmc_label,this,
+                        boost::asio::placeholders::error,
+                        mk_dmc,pstr));
+
+            } else {
+                LOCK_COUT
+                cout << "session [" << this
+                          << "] expected dmc objectid got EOF"
+                          << " (" << ec << ")"
+                          << endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
+        }
+    }
+    inline void session::on_recv_dmc_label(const boost::system::error_code &ec,dmc_msg mk_dmc,char* buf) {
+        if (isActive) {
+            if (!ec) {
+                mk_dmc.label=buf;
+                boost::asio::async_read(
+                    *conn,
+                    boost::asio::buffer(in_idx,4),
+                    boost::bind(&session::on_recv_dmc_slot,this,
+                        boost::asio::placeholders::error,
+                        mk_dmc));
+
+            } else {
+                LOCK_COUT
+                cout << "session [" << this
+                          << "] expected string data got EOF"
+                          << " (" << ec << ")"
+                          << endl;
+                UNLOCK_COUT
+                isActive=false;
+            }
+        }
+        delete [] buf;
+    }
+    inline void session::on_recv_dmc_slot(const boost::system::error_code &ec,dmc_msg mk_dmc) {
+        if (isActive) {
+            if (!ec) {
+                mk_dmc.slot=*((u32*)in_idx);
+                contracts[mk_dmc.ob][mk_dmc.label]=mk_dmc.slot;
+                LOCK_COUT
+                cout << "session [" << this << "] recv dmc ("
+                     << mk_dmc.ob << "." << mk_dmc.label
+                     << "=" << mk_dmc.slot << ")" << endl;
+                UNLOCK_COUT
+            } else {
+                LOCK_COUT
+                cout << "session [" << this
+                          << "] expected dmc objectid got EOF"
                           << " (" << ec << ")"
                           << endl;
                 UNLOCK_COUT
@@ -951,6 +1072,13 @@ namespace bvnet {
                             boost::bind(&session::on_recv_oref,this,
                                 boost::asio::placeholders::error,
                                 boost::asio::placeholders::bytes_transferred));
+                        break;
+                    case ':':
+                        boost::asio::async_read(
+                            *conn,
+                            boost::asio::buffer(in_idx,4),
+                            boost::bind(&session::on_recv_dmc_obid,this,
+                                boost::asio::placeholders::error));
                         break;
                     case '.':
                         boost::asio::async_read(
@@ -1073,6 +1201,7 @@ namespace bvnet {
         std::ostringstream ss;
         u32 idx;
         method_call mc(0,0,NULL,0);
+        dmc_msg v_dmc;
         const char *idx_byte=(const char*)&idx;
         type_map::iterator tmi=typeMap.find(raw.type().name());
         if (tmi==typeMap.end()) {
@@ -1126,6 +1255,17 @@ namespace bvnet {
                 idx=boost::any_cast<ob_is_gone>(raw).id;
                 ss << '~'
                    << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
+                break;
+            case vtDMC:
+                v_dmc=boost::any_cast<dmc_msg>(raw);
+                ss << ':';
+                idx=v_dmc.ob;
+                ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
+                idx=v_dmc.label.size();
+                ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3]
+                   << v_dmc.label;
+                idx=v_dmc.slot;
+                ss << idx_byte[0] << idx_byte[1] << idx_byte[2] << idx_byte[3];
                 break;
             case vtMethod:
                 mc=boost::any_cast<method_call>(raw);
@@ -1194,7 +1334,6 @@ namespace bvnet {
         }
         UNLOCK_COUT
     }
-
 };  // bvnet
 
 using bvnet::dmc;
