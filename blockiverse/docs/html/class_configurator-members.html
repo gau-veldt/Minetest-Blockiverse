@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -95,7 +96,7 @@ $(document).ready(function(){initNavTree('class_configurator.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,20 +113,28 @@ $(document).ready(function(){initNavTree('class_configurator.html','');});
 
 <p>This is the complete list of members for <a class="el" href="class_configurator.html">Configurator</a>, including all inherited members.</p>
 <table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>begin</b>() (defined in <a class="el" href="class_configurator.html">Configurator</a>)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>Configurator</b>(const string &amp;, defaultor=NULL) (defined in <a class="el" href="class_configurator.html">Configurator</a>)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>end</b>() (defined in <a class="el" href="class_configurator.html">Configurator</a>)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>iterator</b> typedef (defined in <a class="el" href="class_configurator.html">Configurator</a>)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>operator[]</b>(const cfg_key &amp;id) (defined in <a class="el" href="class_configurator.html">Configurator</a>)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>process_clause</b>(const string &amp;, const string &amp;) (defined in <a class="el" href="class_configurator.html">Configurator</a>)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>read_cmdline</b>(int, char **) (defined in <a class="el" href="class_configurator.html">Configurator</a>)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>~Configurator</b>() (defined in <a class="el" href="class_configurator.html">Configurator</a>)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_configurator.html#ae6fc4151df9d5b52f0547f31f9e53ae7">begin</a>()</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_configurator.html#aa7a3e5b5b03b2bf6879fcd75cbf858a7">cfg</a></td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_configurator.html#afe333d6dcfbace9b25e3c339444cc269">cfg_key</a> typedef</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_configurator.html#acc11653c63c38fed4bfa2705afa84805">cfg_val</a> typedef</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">cfgFile</a></td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_configurator.html#a754ad28757f64fc63bbefb71778d5da2">Configurator</a>(const string &amp;, defaultor=NULL)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_configurator.html#a6bcb19fd0375e58abccce7ad98e1d39e">defaultor</a> typedef</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_configurator.html#a9e96a7030cb83c0d4693137bd6439bf5">end</a>()</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">iterator</a> typedef</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_configurator.html#aff19a4bcf1ecb7dd7a83d94e4f751f72">operator[]</a>(const cfg_key &amp;id)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_configurator.html#a62ffd6299e5580e7348880e1981bfb67">process_clause</a>(const string &amp;, const string &amp;)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_configurator.html#ac9e3e4518e7bc2e0a46f74c08a382c6f">process_line</a>(const string &amp;)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_configurator.html#abc00f7a291ee7f054fad7566ed17e13a">read</a>()</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_configurator.html#acb03e9fa70fed2c2ced7973ed141b0f3">read_cmdline</a>(int, char **)</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_configurator.html#a9e1a5b43bc645efaf6a35babd0339747">write</a>()</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_configurator.html#a746eb3439c34f99927d46eff5722a93a">~Configurator</a>()</td><td class="entry"><a class="el" href="class_configurator.html">Configurator</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:32 for Blockiverse by
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:19 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

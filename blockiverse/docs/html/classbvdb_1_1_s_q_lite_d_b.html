@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -95,7 +96,7 @@ $(document).ready(function(){initNavTree('classbvdb_1_1_s_q_lite_d_b.html','');}
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -109,6 +110,8 @@ $(document).ready(function(){initNavTree('classbvdb_1_1_s_q_lite_d_b.html','');}
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classbvdb_1_1_s_q_lite_d_b-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">bvdb::SQLiteDB Class Reference</div>  </div>
@@ -130,33 +133,33 @@ Inheritance diagram for bvdb::SQLiteDB:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aead478ae523c301f574e979f33ffbc5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aead478ae523c301f574e979f33ffbc5a"></a>
-typedef std::shared_ptr&lt; Result &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>query_result</b></td></tr>
+<tr class="memitem:aead478ae523c301f574e979f33ffbc5a"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="namespacebvdb.html#a0de15bfb2999fea178eccb20b1f36bf7">Result</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aead478ae523c301f574e979f33ffbc5a">query_result</a></td></tr>
 <tr class="separator:aead478ae523c301f574e979f33ffbc5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a134cd74adeeb3fcf3ee4224ca7208faf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a134cd74adeeb3fcf3ee4224ca7208faf"></a>
-typedef sqlite3_stmt *&#160;</td><td class="memItemRight" valign="bottom"><b>statement</b></td></tr>
+<tr class="memitem:a134cd74adeeb3fcf3ee4224ca7208faf"><td class="memItemLeft" align="right" valign="top">typedef sqlite3_stmt *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a></td></tr>
 <tr class="separator:a134cd74adeeb3fcf3ee4224ca7208faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a291406415044e2ecd0f7e8c17bdd604f"><td class="memTemplParams" colspan="2"><a class="anchor" id="a291406415044e2ecd0f7e8c17bdd604f"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a291406415044e2ecd0f7e8c17bdd604f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>get_result</b> (query_result rslt, int row, int col)</td></tr>
+<tr class="memitem:a41f891fefcf726ff9eb7be993d279f5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a41f891fefcf726ff9eb7be993d279f5d">SQLiteDB</a> ()</td></tr>
+<tr class="separator:a41f891fefcf726ff9eb7be993d279f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff28eda2e8db4e6df2b292faa93eb893"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aff28eda2e8db4e6df2b292faa93eb893">~SQLiteDB</a> ()</td></tr>
+<tr class="separator:aff28eda2e8db4e6df2b292faa93eb893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a291406415044e2ecd0f7e8c17bdd604f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a291406415044e2ecd0f7e8c17bdd604f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a291406415044e2ecd0f7e8c17bdd604f">get_result</a> (<a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aead478ae523c301f574e979f33ffbc5a">query_result</a> rslt, int row, int col)</td></tr>
 <tr class="separator:a291406415044e2ecd0f7e8c17bdd604f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8af765fd4bd55f03e01dc23fa6526b59"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8af765fd4bd55f03e01dc23fa6526b59"></a>
-query_result&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (sqlite3_stmt *stmt)</td></tr>
+<tr class="memitem:a8af765fd4bd55f03e01dc23fa6526b59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aead478ae523c301f574e979f33ffbc5a">query_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a8af765fd4bd55f03e01dc23fa6526b59">run</a> (sqlite3_stmt *stmt)</td></tr>
 <tr class="separator:a8af765fd4bd55f03e01dc23fa6526b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9b8ce8924b3d14088c764244f63a917"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#ac9b8ce8924b3d14088c764244f63a917">bind</a> (statement s, int idx, const string &amp;val)</td></tr>
+<tr class="memitem:ac9b8ce8924b3d14088c764244f63a917"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#ac9b8ce8924b3d14088c764244f63a917">bind</a> (<a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a> s, int idx, const string &amp;val)</td></tr>
 <tr class="separator:ac9b8ce8924b3d14088c764244f63a917"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81522dc4b26856e42539f211e815b7d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a81522dc4b26856e42539f211e815b7d7">bind</a> (statement s, int idx, const char *val, int len)</td></tr>
+<tr class="memitem:a81522dc4b26856e42539f211e815b7d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a81522dc4b26856e42539f211e815b7d7">bind</a> (<a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a> s, int idx, const char *val, int len)</td></tr>
 <tr class="separator:a81522dc4b26856e42539f211e815b7d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c9a9335999294af4d9c3ba648aa24a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a8c9a9335999294af4d9c3ba648aa24a8">bind</a> (statement s, int idx, s64 &amp;val)</td></tr>
+<tr class="memitem:a8c9a9335999294af4d9c3ba648aa24a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a8c9a9335999294af4d9c3ba648aa24a8">bind</a> (<a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a> s, int idx, <a class="el" href="common_8hpp.html#a93680f46d09022794e3923824923b42b">s64</a> &amp;val)</td></tr>
 <tr class="separator:a8c9a9335999294af4d9c3ba648aa24a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a30428b23e5d10fd2b83ab0e332f0b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a6a30428b23e5d10fd2b83ab0e332f0b9">bind</a> (statement s, int idx, int &amp;val)</td></tr>
+<tr class="memitem:a6a30428b23e5d10fd2b83ab0e332f0b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a6a30428b23e5d10fd2b83ab0e332f0b9">bind</a> (<a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a> s, int idx, int &amp;val)</td></tr>
 <tr class="separator:a6a30428b23e5d10fd2b83ab0e332f0b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa51abb5e6e2b498057b34a14babbeda0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aa51abb5e6e2b498057b34a14babbeda0">bind</a> (statement s, int idx, double &amp;val)</td></tr>
+<tr class="memitem:aa51abb5e6e2b498057b34a14babbeda0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aa51abb5e6e2b498057b34a14babbeda0">bind</a> (<a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a> s, int idx, double &amp;val)</td></tr>
 <tr class="separator:aa51abb5e6e2b498057b34a14babbeda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0aa950593ad57ba19b36a2422ff49eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aa0aa950593ad57ba19b36a2422ff49eb">bind_null</a> (statement s, int idx)</td></tr>
+<tr class="memitem:aa0aa950593ad57ba19b36a2422ff49eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aa0aa950593ad57ba19b36a2422ff49eb">bind_null</a> (<a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a> s, int idx)</td></tr>
 <tr class="separator:aa0aa950593ad57ba19b36a2422ff49eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a982ee6bad804db6458d3162cb45bcb41"><td class="memItemLeft" align="right" valign="top">sqlite3_stmt *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a982ee6bad804db6458d3162cb45bcb41">prepare</a> (string sql)</td></tr>
 <tr class="separator:a982ee6bad804db6458d3162cb45bcb41"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,9 +168,21 @@ query_result&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (sqli
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a383ff29a81afe74d64cf514201c2328f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a383ff29a81afe74d64cf514201c2328f"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (const string path)</td></tr>
+<tr class="memitem:a383ff29a81afe74d64cf514201c2328f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a383ff29a81afe74d64cf514201c2328f">init</a> (const string path)</td></tr>
 <tr class="separator:a383ff29a81afe74d64cf514201c2328f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae38baf1f36fd016115a307d1b661ece7"><td class="memItemLeft" align="right" valign="top">sqlite3 *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#ae38baf1f36fd016115a307d1b661ece7">db</a></td></tr>
+<tr class="separator:ae38baf1f36fd016115a307d1b661ece7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa869eea495ac0a0e22a12a0cc740fb69"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebvdb.html#aa6f2d4a8ad32afb092e09f3a3ae063be">stmt_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aa869eea495ac0a0e22a12a0cc740fb69">stmtCache</a></td></tr>
+<tr class="memdesc:aa869eea495ac0a0e22a12a0cc740fb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">optimizer cache of statements for faster operations These will be appropriately released in dtor  <a href="#aa869eea495ac0a0e22a12a0cc740fb69">More...</a><br /></td></tr>
+<tr class="separator:aa869eea495ac0a0e22a12a0cc740fb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:aaa144fa6295f23f1173736aed08fe1f4"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aaa144fa6295f23f1173736aed08fe1f4">file</a></td></tr>
+<tr class="separator:aaa144fa6295f23f1173736aed08fe1f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manager class for SQLite3 database and connections. </p>
@@ -175,7 +190,91 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 <p>Cacheing system utilizes prepared statements to remember SQL statements on first use to prevent the overhead of subsequent compilations of SQL statements so long as class user utilizes binding semantics versus inline parameters. </p>
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00167">167</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="aead478ae523c301f574e979f33ffbc5a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::shared_ptr&lt;<a class="el" href="namespacebvdb.html#a0de15bfb2999fea178eccb20b1f36bf7">Result</a>&gt; <a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aead478ae523c301f574e979f33ffbc5a">bvdb::SQLiteDB::query_result</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00205">205</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a134cd74adeeb3fcf3ee4224ca7208faf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef sqlite3_stmt* <a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">bvdb::SQLiteDB::statement</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00257">257</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a41f891fefcf726ff9eb7be993d279f5d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bvdb::SQLiteDB::SQLiteDB </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00181">181</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, and <a class="el" href="database_8hpp_source.html#l00170">db</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aff28eda2e8db4e6df2b292faa93eb893"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bvdb::SQLiteDB::~SQLiteDB </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00191">191</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>References <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ac9b8ce8924b3d14088c764244f63a917"></a>
 <div class="memitem">
 <div class="memproto">
@@ -186,7 +285,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
         <tr>
           <td class="memname">void bvdb::SQLiteDB::bind </td>
           <td>(</td>
-          <td class="paramtype">statement&#160;</td>
+          <td class="paramtype"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a>&#160;</td>
           <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
@@ -217,6 +316,10 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00258">258</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
 
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00276">serverRoot::dmc_GetAccount()</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a81522dc4b26856e42539f211e815b7d7"></a>
@@ -229,7 +332,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
         <tr>
           <td class="memname">void bvdb::SQLiteDB::bind </td>
           <td>(</td>
-          <td class="paramtype">statement&#160;</td>
+          <td class="paramtype"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a>&#160;</td>
           <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
@@ -266,6 +369,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00268">268</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
 
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a8c9a9335999294af4d9c3ba648aa24a8"></a>
@@ -278,7 +383,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
         <tr>
           <td class="memname">void bvdb::SQLiteDB::bind </td>
           <td>(</td>
-          <td class="paramtype">statement&#160;</td>
+          <td class="paramtype"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a>&#160;</td>
           <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
@@ -290,7 +395,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">s64 &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="common_8hpp.html#a93680f46d09022794e3923824923b42b">s64</a> &amp;&#160;</td>
           <td class="paramname"><em>val</em>&#160;</td>
         </tr>
         <tr>
@@ -309,6 +414,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00278">278</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
 
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a6a30428b23e5d10fd2b83ab0e332f0b9"></a>
@@ -321,7 +428,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
         <tr>
           <td class="memname">void bvdb::SQLiteDB::bind </td>
           <td>(</td>
-          <td class="paramtype">statement&#160;</td>
+          <td class="paramtype"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a>&#160;</td>
           <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
@@ -352,6 +459,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00288">288</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
 
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="aa51abb5e6e2b498057b34a14babbeda0"></a>
@@ -364,7 +473,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
         <tr>
           <td class="memname">void bvdb::SQLiteDB::bind </td>
           <td>(</td>
-          <td class="paramtype">statement&#160;</td>
+          <td class="paramtype"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a>&#160;</td>
           <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
@@ -395,6 +504,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00298">298</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
 
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="aa0aa950593ad57ba19b36a2422ff49eb"></a>
@@ -407,7 +518,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
         <tr>
           <td class="memname">void bvdb::SQLiteDB::bind_null </td>
           <td>(</td>
-          <td class="paramtype">statement&#160;</td>
+          <td class="paramtype"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a134cd74adeeb3fcf3ee4224ca7208faf">statement</a>&#160;</td>
           <td class="paramname"><em>s</em>, </td>
         </tr>
         <tr>
@@ -431,6 +542,82 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 <p>bind argument with nothing (null) </p>
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00308">308</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a291406415044e2ecd0f7e8c17bdd604f"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T bvdb::SQLiteDB::get_result </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aead478ae523c301f574e979f33ffbc5a">query_result</a>&#160;</td>
+          <td class="paramname"><em>rslt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>row</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>col</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00207">207</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00276">serverRoot::dmc_GetAccount()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a383ff29a81afe74d64cf514201c2328f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void bvdb::SQLiteDB::init </td>
+          <td>(</td>
+          <td class="paramtype">const string&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00175">175</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="database_8cpp_source.html#l00026">bvdb::init_db()</a>.</p>
 
 </div>
 </div>
@@ -458,6 +645,40 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 <p>compile sql to prepared statement Results will be cached so compiles aren't repeated. Statement will be reset on cache hit.</p>
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00318">318</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00276">serverRoot::dmc_GetAccount()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8af765fd4bd55f03e01dc23fa6526b59"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aead478ae523c301f574e979f33ffbc5a">query_result</a> bvdb::SQLiteDB::run </td>
+          <td>(</td>
+          <td class="paramtype">sqlite3_stmt *&#160;</td>
+          <td class="paramname"><em>stmt</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00209">209</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00276">serverRoot::dmc_GetAccount()</a>.</p>
 
 </div>
 </div>
@@ -500,6 +721,81 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00355">355</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
 
+<p>References <a class="el" href="database_8hpp_source.html#l00050">bvdb::DBError::busy_aware_throw()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, <a class="el" href="database_8hpp_source.html#l00049">bvdb::DBError::release</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00090">server_main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ae38baf1f36fd016115a307d1b661ece7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sqlite3* bvdb::SQLiteDB::db</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00170">170</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="database_8hpp_source.html#l00181">SQLiteDB()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaa144fa6295f23f1173736aed08fe1f4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string bvdb::SQLiteDB::file</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00169">169</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa869eea495ac0a0e22a12a0cc740fb69"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacebvdb.html#aa6f2d4a8ad32afb092e09f3a3ae063be">stmt_map</a> bvdb::SQLiteDB::stmtCache</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>optimizer cache of statements for faster operations These will be appropriately released in dtor </p>
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00173">173</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
@@ -511,8 +807,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (cons
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>bvdb</b></li><li class="navelem"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html">SQLiteDB</a></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:32 for Blockiverse by
+    <li class="navelem"><a class="el" href="namespacebvdb.html">bvdb</a></li><li class="navelem"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html">SQLiteDB</a></li>
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:19 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

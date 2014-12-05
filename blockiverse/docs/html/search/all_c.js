@@ -1,12 +1,11 @@
 var searchData=
 [
-  ['reg',['reg',['../classbvnet_1_1session.html#adb33549327393a068c2d0cd4ec44dc20',1,'bvnet::session']]],
-  ['register_5fdmc',['register_dmc',['../classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c',1,'bvnet::object']]],
-  ['register_5fobject',['register_object',['../classbvnet_1_1session.html#a307d06f726fde4e3024720dfb9b05bca',1,'bvnet::session::register_object()'],['../classbvnet_1_1registry.html#abde38854a900adb81da31e5bcf659539',1,'bvnet::registry::register_object()']]],
-  ['registry',['registry',['../classbvnet_1_1registry.html',1,'bvnet']]],
-  ['registry',['registry',['../classbvnet_1_1registry.html#a7843ddab5fc117a8d5c518b8b8299c13',1,'bvnet::registry']]],
-  ['registry_5ffull',['registry_full',['../classbvnet_1_1registry__full.html',1,'bvnet']]],
-  ['remoteroot',['remoteRoot',['../classbvnet_1_1session.html#a417f61bb5fca67101205c779c67b6e13',1,'bvnet::session']]],
-  ['run',['run',['../classbvnet_1_1session.html#a4f4c7ce4d9b9a2c90667937accc7a2c3',1,'bvnet::session']]],
-  ['runonce',['runOnce',['../classbvdb_1_1_s_q_lite_d_b.html#a3b6ec611f23c029ad8f8fbfc9a32a430',1,'bvdb::SQLiteDB']]]
+  ['name_5fmap',['name_map',['../namespacebvnet.html#a3594176940b3e43c14afa5ad8dc1f4f8',1,'bvnet']]],
+  ['next_5fslot',['next_slot',['../classbvnet_1_1registry.html#afa470ee026dbf0aa7e546bc857531c02',1,'bvnet::registry']]],
+  ['noop',['noop',['../structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844a95d103c37ddff2a88f4509df30941953',1,'bvdb::DBError']]],
+  ['notify',['notify',['../classbvnet_1_1registry.html#a06a4accc79d0cc68b4bebbaad7432fb4',1,'bvnet::registry']]],
+  ['notify_5fremove',['notify_remove',['../classbvnet_1_1session.html#ac9d0a1ae5d8bcdb2348361e58dab6ba5',1,'bvnet::session']]],
+  ['notthreadable',['NotThreadable',['../structbvdb_1_1_not_threadable.html',1,'bvdb']]],
+  ['notthreadable',['NotThreadable',['../structbvdb_1_1_not_threadable.html#a900dcbaa93ce765a65bdb0baebb1f8bd',1,'bvdb::NotThreadable']]],
+  ['null',['null',['../classbvdb_1_1db_value.html#a93673c75ee99fefd9539e42d9cbfb778a92c458fee8aef7109a63ccc1426c271b',1,'bvdb::dbValue']]]
 ];

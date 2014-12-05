@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -95,7 +96,7 @@ $(document).ready(function(){initNavTree('structbvdb_1_1_d_b_error.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -130,28 +131,135 @@ Inheritance diagram for bvdb::DBError:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a1b410cec58fa57779d2f516e0d860844"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b410cec58fa57779d2f516e0d860844"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>_flags</b> { <b>noop</b>, 
-<b>release</b>
+<tr class="memitem:a1b410cec58fa57779d2f516e0d860844"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844">_flags</a> { <a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844a95d103c37ddff2a88f4509df30941953">noop</a>, 
+<a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844a7b003d10324516dd46f71e510df95c79">release</a>
  }</td></tr>
 <tr class="separator:a1b410cec58fa57779d2f516e0d860844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9604592718c94ee9133020158787c217"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9604592718c94ee9133020158787c217"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>DBError</b> (const char *msg, _flags f=noop)</td></tr>
+<tr class="memitem:a9604592718c94ee9133020158787c217"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbvdb_1_1_d_b_error.html#a9604592718c94ee9133020158787c217">DBError</a> (const char *msg, <a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844">_flags</a> f=<a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844a95d103c37ddff2a88f4509df30941953">noop</a>)</td></tr>
 <tr class="separator:a9604592718c94ee9133020158787c217"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af8f6e1101e41ccd9a8dba8a2b3084c14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8f6e1101e41ccd9a8dba8a2b3084c14"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>busy_aware_throw</b> (int code, const char *msg, _flags f=noop)</td></tr>
+<tr class="memitem:af8f6e1101e41ccd9a8dba8a2b3084c14"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbvdb_1_1_d_b_error.html#af8f6e1101e41ccd9a8dba8a2b3084c14">busy_aware_throw</a> (int code, const char *msg, <a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844">_flags</a> f=<a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844a95d103c37ddff2a88f4509df30941953">noop</a>)</td></tr>
 <tr class="separator:af8f6e1101e41ccd9a8dba8a2b3084c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Errors SQLite and database access errors Bad parameters, incorrect usage, violated constraints, etc. </p>
 
 <p>Definition at line <a class="el" href="database_8hpp_source.html#l00048">48</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a class="anchor" id="a1b410cec58fa57779d2f516e0d860844"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844">bvdb::DBError::_flags</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a1b410cec58fa57779d2f516e0d860844a95d103c37ddff2a88f4509df30941953"></a>noop&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a1b410cec58fa57779d2f516e0d860844a7b003d10324516dd46f71e510df95c79"></a>release&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00049">49</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a9604592718c94ee9133020158787c217"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bvdb::DBError::DBError </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844">_flags</a>&#160;</td>
+          <td class="paramname"><em>f</em> = <code><a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844a95d103c37ddff2a88f4509df30941953">noop</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00057">57</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>References <a class="el" href="database_8hpp_source.html#l00049">release</a>.</p>
+
+<p>Referenced by <a class="el" href="database_8hpp_source.html#l00050">busy_aware_throw()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="af8f6e1101e41ccd9a8dba8a2b3084c14"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void bvdb::DBError::busy_aware_throw </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844">_flags</a>&#160;</td>
+          <td class="paramname"><em>f</em> = <code><a class="el" href="structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844a95d103c37ddff2a88f4509df30941953">noop</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="database_8hpp_source.html#l00050">50</a> of file <a class="el" href="database_8hpp_source.html">database.hpp</a>.</p>
+
+<p>References <a class="el" href="database_8hpp_source.html#l00057">DBError()</a>.</p>
+
+<p>Referenced by <a class="el" href="database_8hpp_source.html#l00258">bvdb::SQLiteDB::bind()</a>, <a class="el" href="database_8hpp_source.html#l00308">bvdb::SQLiteDB::bind_null()</a>, <a class="el" href="database_8hpp_source.html#l00318">bvdb::SQLiteDB::prepare()</a>, <a class="el" href="database_8hpp_source.html#l00209">bvdb::SQLiteDB::run()</a>, <a class="el" href="database_8hpp_source.html#l00355">bvdb::SQLiteDB::runOnce()</a>, and <a class="el" href="database_8hpp_source.html#l00181">bvdb::SQLiteDB::SQLiteDB()</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="database_8hpp_source.html">database.hpp</a></li>
 </ul>
 </div><!-- contents -->
@@ -159,8 +267,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>busy_aware_thr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>bvdb</b></li><li class="navelem"><a class="el" href="structbvdb_1_1_d_b_error.html">DBError</a></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:32 for Blockiverse by
+    <li class="navelem"><a class="el" href="namespacebvdb.html">bvdb</a></li><li class="navelem"><a class="el" href="structbvdb_1_1_d_b_error.html">DBError</a></li>
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:19 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

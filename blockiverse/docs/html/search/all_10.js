@@ -1,5 +1,24 @@
 var searchData=
 [
-  ['_7eobject',['~object',['../classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791',1,'bvnet::object']]],
-  ['_7eregistry',['~registry',['../classbvnet_1_1registry.html#aa2b648066a89226f8726d2a0bbf3a5c2',1,'bvnet::registry']]]
+  ['randbits',['randbits',['../classserver_root.html#a503b6b1a02ccf0aafd0ba772dd69f4b4',1,'serverRoot']]],
+  ['rcount',['rcount',['../structbvnet_1_1method__call.html#adbab3254607f041597ddaa2a08e193de',1,'bvnet::method_call']]],
+  ['read',['read',['../class_configurator.html#abc00f7a291ee7f054fad7566ed17e13a',1,'Configurator']]],
+  ['read_5fcmdline',['read_cmdline',['../class_configurator.html#acb03e9fa70fed2c2ced7973ed141b0f3',1,'Configurator']]],
+  ['readme_2emd',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
+  ['real',['real',['../classbvdb_1_1db_value.html#a93673c75ee99fefd9539e42d9cbfb778ae0a74fd06e73276b7ef27083f5061611',1,'bvdb::dbValue']]],
+  ['reg',['reg',['../classbvnet_1_1session.html#adb33549327393a068c2d0cd4ec44dc20',1,'bvnet::session']]],
+  ['reg_5fobjects_5fsoftmax',['reg_objects_softmax',['../namespacebvnet.html#ad18ae8426cd2a901c662f6fa2d9a4acb',1,'bvnet']]],
+  ['register_5fdmc',['register_dmc',['../classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c',1,'bvnet::object']]],
+  ['register_5fobject',['register_object',['../classbvnet_1_1session.html#a307d06f726fde4e3024720dfb9b05bca',1,'bvnet::session::register_object()'],['../classbvnet_1_1registry.html#abde38854a900adb81da31e5bcf659539',1,'bvnet::registry::register_object()']]],
+  ['registry',['registry',['../classbvnet_1_1registry.html',1,'bvnet']]],
+  ['registry',['registry',['../classbvnet_1_1registry.html#a7843ddab5fc117a8d5c518b8b8299c13',1,'bvnet::registry']]],
+  ['registry_5ffull',['registry_full',['../classbvnet_1_1registry__full.html',1,'bvnet']]],
+  ['release',['release',['../structbvdb_1_1_d_b_error.html#a1b410cec58fa57779d2f516e0d860844a7b003d10324516dd46f71e510df95c79',1,'bvdb::DBError']]],
+  ['remoteroot',['remoteRoot',['../classbvnet_1_1session.html#a417f61bb5fca67101205c779c67b6e13',1,'bvnet::session']]],
+  ['req_5fserverquit',['req_serverQuit',['../main_8cpp.html#ac6e5237a42d4905b3da152a0b29fbbb3',1,'req_serverQuit():&#160;main.cpp'],['../server_8hpp.html#ac6e5237a42d4905b3da152a0b29fbbb3',1,'req_serverQuit():&#160;main.cpp'],['../server__main_8cpp.html#ac6e5237a42d4905b3da152a0b29fbbb3',1,'req_serverQuit():&#160;server_main.cpp']]],
+  ['result',['Result',['../namespacebvdb.html#a0de15bfb2999fea178eccb20b1f36bf7',1,'bvdb']]],
+  ['root',['root',['../classbvnet_1_1session.html#ab807b310a839c6700752251e63e51f19',1,'bvnet::session::root()'],['../server_8cpp.html#a8525ba4e212cc43c699520a50bf4f3cf',1,'context::root()']]],
+  ['rowresult',['rowResult',['../namespacebvdb.html#ad2a1cd069a280f183613c2c25ff5fba8',1,'bvdb']]],
+  ['run',['run',['../classbvdb_1_1_s_q_lite_d_b.html#a8af765fd4bd55f03e01dc23fa6526b59',1,'bvdb::SQLiteDB::run()'],['../classbvnet_1_1session.html#a4f4c7ce4d9b9a2c90667937accc7a2c3',1,'bvnet::session::run()']]],
+  ['runonce',['runOnce',['../classbvdb_1_1_s_q_lite_d_b.html#a3b6ec611f23c029ad8f8fbfc9a32a430',1,'bvdb::SQLiteDB']]]
 ];

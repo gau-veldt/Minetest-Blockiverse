@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['poll',['poll',['../classbvnet_1_1session.html#a1741c6c7e00b73cbd906d33f0a950b97',1,'bvnet::session']]],
-  ['prepare',['prepare',['../classbvdb_1_1_s_q_lite_d_b.html#a982ee6bad804db6458d3162cb45bcb41',1,'bvdb::SQLiteDB']]]
+  ['notify',['notify',['../classbvnet_1_1registry.html#a06a4accc79d0cc68b4bebbaad7432fb4',1,'bvnet::registry']]],
+  ['notify_5fremove',['notify_remove',['../classbvnet_1_1session.html#ac9d0a1ae5d8bcdb2348361e58dab6ba5',1,'bvnet::session']]],
+  ['notthreadable',['NotThreadable',['../structbvdb_1_1_not_threadable.html#a900dcbaa93ce765a65bdb0baebb1f8bd',1,'bvdb::NotThreadable']]]
 ];

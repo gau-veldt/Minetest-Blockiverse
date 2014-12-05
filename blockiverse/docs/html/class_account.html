@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -95,7 +96,7 @@ $(document).ready(function(){initNavTree('class_account.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -107,26 +108,30 @@ $(document).ready(function(){initNavTree('class_account.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_account-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Account Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="server_8hpp_source.html">server.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Account:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_account.png" usemap="#Account_map" alt=""/>
   <map id="Account_map" name="Account_map">
-<area href="classbvnet_1_1object.html" alt="bvnet::object" shape="rect" coords="0,0,83,24"/>
+<area href="classbvnet_1_1object.html" title="ABC for remotable objects. " alt="bvnet::object" shape="rect" coords="0,0,83,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae426bfd7645775ada9a1d42362416ee5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae426bfd7645775ada9a1d42362416ee5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Account</b> (<a class="el" href="classbvnet_1_1session.html">bvnet::session</a> &amp;sess, s64 who)</td></tr>
+<tr class="memitem:ae426bfd7645775ada9a1d42362416ee5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_account.html#ae426bfd7645775ada9a1d42362416ee5">Account</a> (<a class="el" href="classbvnet_1_1session.html">bvnet::session</a> &amp;sess, <a class="el" href="common_8hpp.html#a93680f46d09022794e3923824923b42b">s64</a> who)</td></tr>
 <tr class="separator:ae426bfd7645775ada9a1d42362416ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25ff886382db8ce92963411082805658"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_account.html#a25ff886382db8ce92963411082805658">~Account</a> ()</td></tr>
+<tr class="separator:a25ff886382db8ce92963411082805658"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a906b5fee76e343176a2a2e36a6b46a0c"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_account.html#a906b5fee76e343176a2a2e36a6b46a0c">getType</a> ()</td></tr>
 <tr class="memdesc:a906b5fee76e343176a2a2e36a6b46a0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get object's identity.  <a href="#a906b5fee76e343176a2a2e36a6b46a0c">More...</a><br /></td></tr>
 <tr class="separator:a906b5fee76e343176a2a2e36a6b46a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,37 +139,99 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7122d96ee6c8685e5830cd9c403afa7a inherit pub_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7122d96ee6c8685e5830cd9c403afa7a">object</a> (<a class="el" href="classbvnet_1_1session.html">session</a> &amp;sess)</td></tr>
 <tr class="memdesc:a7122d96ee6c8685e5830cd9c403afa7a inherit pub_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">construction of an object  <a href="#a7122d96ee6c8685e5830cd9c403afa7a">More...</a><br /></td></tr>
 <tr class="separator:a7122d96ee6c8685e5830cd9c403afa7a inherit pub_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b65a31e0d72dd4f35ef621c94ad9791"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">~object</a> ()</td></tr>
-<tr class="memdesc:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">base dtor to automatically unregister the object <br /></td></tr>
+<tr class="memitem:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">~object</a> ()</td></tr>
+<tr class="memdesc:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">base dtor to automatically unregister the object  <a href="#a7b65a31e0d72dd4f35ef621c94ad9791">More...</a><br /></td></tr>
 <tr class="separator:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab9880323d63bae14f5e0e3bbf5b78009"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8hpp.html#a93680f46d09022794e3923824923b42b">s64</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_account.html#ab9880323d63bae14f5e0e3bbf5b78009">userId</a></td></tr>
+<tr class="separator:ab9880323d63bae14f5e0e3bbf5b78009"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_classbvnet_1_1object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classbvnet_1_1object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td></tr>
-<tr class="memitem:aa825a910fb0f8899ac9d3f654444151c inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c">register_dmc</a> (string label, dmc func)</td></tr>
+<tr class="memitem:aa825a910fb0f8899ac9d3f654444151c inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c">register_dmc</a> (string label, <a class="el" href="namespacebvnet.html#ad554e789b85a7c5f0d0da112be4d54b7">dmc</a> func)</td></tr>
 <tr class="memdesc:aa825a910fb0f8899ac9d3f654444151c inherit pro_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">register dmc method  <a href="#aa825a910fb0f8899ac9d3f654444151c">More...</a><br /></td></tr>
 <tr class="separator:aa825a910fb0f8899ac9d3f654444151c inherit pro_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a550f9bd67f6ac15355b9ca2be9de1d52 inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a550f9bd67f6ac15355b9ca2be9de1d52"></a>
-const string&#160;</td><td class="memItemRight" valign="bottom"><b>methodLabel</b> (const unsigned int idx)</td></tr>
+<tr class="memitem:a550f9bd67f6ac15355b9ca2be9de1d52 inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a550f9bd67f6ac15355b9ca2be9de1d52">methodLabel</a> (const unsigned int idx)</td></tr>
 <tr class="separator:a550f9bd67f6ac15355b9ca2be9de1d52 inherit pro_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7121f34d58daaaaa6bb7212e87955507 inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7121f34d58daaaaa6bb7212e87955507"></a>
-const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>methodSlot</b> (const string &amp;label)</td></tr>
+<tr class="memitem:a7121f34d58daaaaa6bb7212e87955507 inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7121f34d58daaaaa6bb7212e87955507">methodSlot</a> (const string &amp;label)</td></tr>
 <tr class="separator:a7121f34d58daaaaa6bb7212e87955507 inherit pro_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b41a8ff80c9b185d628d1b1f93f2e9b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a4b41a8ff80c9b185d628d1b1f93f2e9b">dmc_GetType</a> (value_queue &amp;)</td></tr>
-<tr class="memdesc:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">the GetType dispatched method call (dmc) <br /></td></tr>
+<tr class="memitem:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a4b41a8ff80c9b185d628d1b1f93f2e9b">dmc_GetType</a> (<a class="el" href="namespacebvnet.html#a1ca61e863b7b73782d9c5ecb990d9618">value_queue</a> &amp;)</td></tr>
+<tr class="memdesc:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">the GetType dispatched method call (dmc)  <a href="#a4b41a8ff80c9b185d628d1b1f93f2e9b">More...</a><br /></td></tr>
 <tr class="separator:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classbvnet_1_1object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classbvnet_1_1object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td></tr>
-<tr class="memitem:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc0211ae67284eccf20e9bfe1c25e0cc"></a>
-<a class="el" href="classbvnet_1_1session.html">session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td></tr>
-<tr class="memdesc:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">for objects to attach to the session's registry <br /></td></tr>
+<tr class="memitem:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbvnet_1_1session.html">session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td></tr>
+<tr class="memdesc:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">for objects to attach to the session's registry  <a href="#acc0211ae67284eccf20e9bfe1c25e0cc">More...</a><br /></td></tr>
 <tr class="separator:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p>Definition at line <a class="el" href="server_8hpp_source.html#l00042">42</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ae426bfd7645775ada9a1d42362416ee5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Account::Account </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbvnet_1_1session.html">bvnet::session</a> &amp;&#160;</td>
+          <td class="paramname"><em>sess</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="common_8hpp.html#a93680f46d09022794e3923824923b42b">s64</a>&#160;</td>
+          <td class="paramname"><em>who</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00047">47</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a25ff886382db8ce92963411082805658"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual Account::~Account </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00050">50</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a906b5fee76e343176a2a2e36a6b46a0c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -196,6 +263,29 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ab9880323d63bae14f5e0e3bbf5b78009"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8hpp.html#a93680f46d09022794e3923824923b42b">s64</a> Account::userId</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00044">44</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="server_8hpp_source.html">server.hpp</a></li>
 </ul>
@@ -205,7 +295,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_account.html">Account</a></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:32 for Blockiverse by
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:18 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

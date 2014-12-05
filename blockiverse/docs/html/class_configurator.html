@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -95,7 +96,7 @@ $(document).ready(function(){initNavTree('class_configurator.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -109,46 +110,496 @@ $(document).ready(function(){initNavTree('class_configurator.html','');});
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_configurator-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Configurator Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="settings_8hpp_source.html">settings.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a5fb31ada99aa34a9ad36591f05bcd537"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5fb31ada99aa34a9ad36591f05bcd537"></a>
-typedef property_map::iterator&#160;</td><td class="memItemRight" valign="bottom"><b>iterator</b></td></tr>
+<tr class="memitem:a5fb31ada99aa34a9ad36591f05bcd537"><td class="memItemLeft" align="right" valign="top">typedef property_map::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">iterator</a></td></tr>
 <tr class="separator:a5fb31ada99aa34a9ad36591f05bcd537"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a754ad28757f64fc63bbefb71778d5da2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a754ad28757f64fc63bbefb71778d5da2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Configurator</b> (const string &amp;, defaultor=NULL)</td></tr>
+<tr class="memitem:a754ad28757f64fc63bbefb71778d5da2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#a754ad28757f64fc63bbefb71778d5da2">Configurator</a> (const string &amp;, <a class="el" href="class_configurator.html#a6bcb19fd0375e58abccce7ad98e1d39e">defaultor</a>=NULL)</td></tr>
 <tr class="separator:a754ad28757f64fc63bbefb71778d5da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb03e9fa70fed2c2ced7973ed141b0f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb03e9fa70fed2c2ced7973ed141b0f3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>read_cmdline</b> (int, char **)</td></tr>
+<tr class="memitem:a746eb3439c34f99927d46eff5722a93a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#a746eb3439c34f99927d46eff5722a93a">~Configurator</a> ()</td></tr>
+<tr class="separator:a746eb3439c34f99927d46eff5722a93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb03e9fa70fed2c2ced7973ed141b0f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#acb03e9fa70fed2c2ced7973ed141b0f3">read_cmdline</a> (int, char **)</td></tr>
 <tr class="separator:acb03e9fa70fed2c2ced7973ed141b0f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6fc4151df9d5b52f0547f31f9e53ae7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6fc4151df9d5b52f0547f31f9e53ae7"></a>
-iterator&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
+<tr class="memitem:ae6fc4151df9d5b52f0547f31f9e53ae7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#ae6fc4151df9d5b52f0547f31f9e53ae7">begin</a> ()</td></tr>
 <tr class="separator:ae6fc4151df9d5b52f0547f31f9e53ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e96a7030cb83c0d4693137bd6439bf5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e96a7030cb83c0d4693137bd6439bf5"></a>
-iterator&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
+<tr class="memitem:a9e96a7030cb83c0d4693137bd6439bf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#a9e96a7030cb83c0d4693137bd6439bf5">end</a> ()</td></tr>
 <tr class="separator:a9e96a7030cb83c0d4693137bd6439bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff19a4bcf1ecb7dd7a83d94e4f751f72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff19a4bcf1ecb7dd7a83d94e4f751f72"></a>
-cfg_val &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const cfg_key &amp;id)</td></tr>
+<tr class="memitem:aff19a4bcf1ecb7dd7a83d94e4f751f72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_configurator.html#acc11653c63c38fed4bfa2705afa84805">cfg_val</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#aff19a4bcf1ecb7dd7a83d94e4f751f72">operator[]</a> (const <a class="el" href="class_configurator.html#afe333d6dcfbace9b25e3c339444cc269">cfg_key</a> &amp;id)</td></tr>
 <tr class="separator:aff19a4bcf1ecb7dd7a83d94e4f751f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a62ffd6299e5580e7348880e1981bfb67"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62ffd6299e5580e7348880e1981bfb67"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>process_clause</b> (const string &amp;, const string &amp;)</td></tr>
+<tr class="memitem:a62ffd6299e5580e7348880e1981bfb67"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#a62ffd6299e5580e7348880e1981bfb67">process_clause</a> (const string &amp;, const string &amp;)</td></tr>
 <tr class="separator:a62ffd6299e5580e7348880e1981bfb67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:afe333d6dcfbace9b25e3c339444cc269"><td class="memItemLeft" align="right" valign="top">typedef property_map::key_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#afe333d6dcfbace9b25e3c339444cc269">cfg_key</a></td></tr>
+<tr class="separator:afe333d6dcfbace9b25e3c339444cc269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc11653c63c38fed4bfa2705afa84805"><td class="memItemLeft" align="right" valign="top">typedef property_map::mapped_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#acc11653c63c38fed4bfa2705afa84805">cfg_val</a></td></tr>
+<tr class="separator:acc11653c63c38fed4bfa2705afa84805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bcb19fd0375e58abccce7ad98e1d39e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#a6bcb19fd0375e58abccce7ad98e1d39e">defaultor</a> )(<a class="el" href="class_configurator.html">Configurator</a> &amp;)</td></tr>
+<tr class="separator:a6bcb19fd0375e58abccce7ad98e1d39e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:abc00f7a291ee7f054fad7566ed17e13a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#abc00f7a291ee7f054fad7566ed17e13a">read</a> ()</td></tr>
+<tr class="separator:abc00f7a291ee7f054fad7566ed17e13a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e1a5b43bc645efaf6a35babd0339747"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#a9e1a5b43bc645efaf6a35babd0339747">write</a> ()</td></tr>
+<tr class="separator:a9e1a5b43bc645efaf6a35babd0339747"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9e3e4518e7bc2e0a46f74c08a382c6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#ac9e3e4518e7bc2e0a46f74c08a382c6f">process_line</a> (const string &amp;)</td></tr>
+<tr class="separator:ac9e3e4518e7bc2e0a46f74c08a382c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa7a3e5b5b03b2bf6879fcd75cbf858a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="settings_8hpp.html#a39c8bf81f4feff58e9c151f4b2d2208c">property_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#aa7a3e5b5b03b2bf6879fcd75cbf858a7">cfg</a></td></tr>
+<tr class="separator:aa7a3e5b5b03b2bf6879fcd75cbf858a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6fd8b07e08798a2d26934b1771368ed"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">cfgFile</a></td></tr>
+<tr class="separator:ad6fd8b07e08798a2d26934b1771368ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p>Definition at line <a class="el" href="settings_8hpp_source.html#l00031">31</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="afe333d6dcfbace9b25e3c339444cc269"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef property_map::key_type <a class="el" href="class_configurator.html#afe333d6dcfbace9b25e3c339444cc269">Configurator::cfg_key</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00033">33</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acc11653c63c38fed4bfa2705afa84805"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef property_map::mapped_type <a class="el" href="class_configurator.html#acc11653c63c38fed4bfa2705afa84805">Configurator::cfg_val</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00034">34</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6bcb19fd0375e58abccce7ad98e1d39e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* Configurator::defaultor)(<a class="el" href="class_configurator.html">Configurator</a> &amp;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00040">40</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5fb31ada99aa34a9ad36591f05bcd537"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef property_map::iterator <a class="el" href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">Configurator::iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00049">49</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a754ad28757f64fc63bbefb71778d5da2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Configurator::Configurator </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_configurator.html#a6bcb19fd0375e58abccce7ad98e1d39e">defaultor</a>&#160;</td>
+          <td class="paramname"> = <code>NULL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8cpp_source.html#l00031">31</a> of file <a class="el" href="settings_8cpp_source.html">settings.cpp</a>.</p>
+
+<p>References <a class="el" href="settings_8hpp_source.html#l00036">cfgFile</a>, and <a class="el" href="settings_8cpp_source.html#l00064">read()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a746eb3439c34f99927d46eff5722a93a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Configurator::~Configurator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00045">45</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+<p>References <a class="el" href="settings_8cpp_source.html#l00077">write()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ae6fc4151df9d5b52f0547f31f9e53ae7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">iterator</a> Configurator::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00050">50</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9e96a7030cb83c0d4693137bd6439bf5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">iterator</a> Configurator::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00051">51</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aff19a4bcf1ecb7dd7a83d94e4f751f72"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_configurator.html#acc11653c63c38fed4bfa2705afa84805">cfg_val</a>&amp; Configurator::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_configurator.html#afe333d6dcfbace9b25e3c339444cc269">cfg_key</a> &amp;&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00052">52</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a62ffd6299e5580e7348880e1981bfb67"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Configurator::process_clause </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8cpp_source.html#l00047">47</a> of file <a class="el" href="settings_8cpp_source.html">settings.cpp</a>.</p>
+
+<p>References <a class="el" href="settings_8hpp_source.html#l00035">cfg</a>, <a class="el" href="settings_8hpp_source.html#l00036">cfgFile</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+<p>Referenced by <a class="el" href="settings_8cpp_source.html#l00039">process_line()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac9e3e4518e7bc2e0a46f74c08a382c6f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Configurator::process_line </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8cpp_source.html#l00039">39</a> of file <a class="el" href="settings_8cpp_source.html">settings.cpp</a>.</p>
+
+<p>References <a class="el" href="settings_8cpp_source.html#l00047">process_clause()</a>.</p>
+
+<p>Referenced by <a class="el" href="settings_8cpp_source.html#l00064">read()</a>, and <a class="el" href="settings_8cpp_source.html#l00055">read_cmdline()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abc00f7a291ee7f054fad7566ed17e13a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Configurator::read </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8cpp_source.html#l00064">64</a> of file <a class="el" href="settings_8cpp_source.html">settings.cpp</a>.</p>
+
+<p>References <a class="el" href="settings_8hpp_source.html#l00036">cfgFile</a>, and <a class="el" href="settings_8cpp_source.html#l00039">process_line()</a>.</p>
+
+<p>Referenced by <a class="el" href="settings_8cpp_source.html#l00031">Configurator()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acb03e9fa70fed2c2ced7973ed141b0f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Configurator::read_cmdline </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>argv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8cpp_source.html#l00055">55</a> of file <a class="el" href="settings_8cpp_source.html">settings.cpp</a>.</p>
+
+<p>References <a class="el" href="settings_8cpp_source.html#l00039">process_line()</a>.</p>
+
+<p>Referenced by <a class="el" href="main_8cpp_source.html#l00165">main()</a>, and <a class="el" href="server_8cpp_source.html#l00090">server_main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9e1a5b43bc645efaf6a35babd0339747"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Configurator::write </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8cpp_source.html#l00077">77</a> of file <a class="el" href="settings_8cpp_source.html">settings.cpp</a>.</p>
+
+<p>References <a class="el" href="settings_8hpp_source.html#l00035">cfg</a>, and <a class="el" href="settings_8hpp_source.html#l00036">cfgFile</a>.</p>
+
+<p>Referenced by <a class="el" href="settings_8hpp_source.html#l00045">~Configurator()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="aa7a3e5b5b03b2bf6879fcd75cbf858a7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="settings_8hpp.html#a39c8bf81f4feff58e9c151f4b2d2208c">property_map</a> Configurator::cfg</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00035">35</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="settings_8cpp_source.html#l00047">process_clause()</a>, and <a class="el" href="settings_8cpp_source.html#l00077">write()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad6fd8b07e08798a2d26934b1771368ed"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string Configurator::cfgFile</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="settings_8hpp_source.html#l00036">36</a> of file <a class="el" href="settings_8hpp_source.html">settings.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="settings_8cpp_source.html#l00031">Configurator()</a>, <a class="el" href="settings_8cpp_source.html#l00047">process_clause()</a>, <a class="el" href="settings_8cpp_source.html#l00064">read()</a>, and <a class="el" href="settings_8cpp_source.html#l00077">write()</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="settings_8hpp_source.html">settings.hpp</a></li>
 <li><a class="el" href="settings_8cpp_source.html">settings.cpp</a></li>
 </ul>
@@ -158,7 +609,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>process_claus
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_configurator.html">Configurator</a></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:32 for Blockiverse by
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:19 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

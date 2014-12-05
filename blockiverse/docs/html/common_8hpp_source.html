@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,6 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -92,7 +94,7 @@ $(document).ready(function(){initNavTree('common_8hpp_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -106,7 +108,7 @@ $(document).ready(function(){initNavTree('common_8hpp_source.html','');});
 <div class="title">common.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="common_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">**</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">**  Minetest-Blockiverse</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">**</span></div>
@@ -141,36 +143,36 @@ $(document).ready(function(){initNavTree('common_8hpp_source.html','');});
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">using</span> std::exception;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">// quick and dirty synchronized ostream</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> boost::mutex cout_mutex;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> <a class="code" href="namespacebvnet.html#a2b074598bcd81ed60e4bc95a1c486921">boost::mutex</a> <a class="code" href="common_8hpp.html#a8246db01e9a8332d1288a4cbe94ea449">cout_mutex</a>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classscoped__cout__lock.html">   37</a></span>&#160;<span class="keyword">class </span><a class="code" href="classscoped__cout__lock.html">scoped_cout_lock</a> {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::ios state;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classscoped__cout__lock.html#a59932c4ec2521bd9238e97a56c55c314">   38</a></span>&#160;    std::ios <a class="code" href="classscoped__cout__lock.html#a59932c4ec2521bd9238e97a56c55c314">state</a>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classscoped__cout__lock.html">scoped_cout_lock</a>() : state(NULL) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        cout_mutex.lock();</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classscoped__cout__lock.html#a3239bbe8b5e4ae4001fd9b736b3d3b9d">   40</a></span>&#160;    <a class="code" href="classscoped__cout__lock.html#a3239bbe8b5e4ae4001fd9b736b3d3b9d">scoped_cout_lock</a>() : state(NULL) {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="common_8hpp.html#a8246db01e9a8332d1288a4cbe94ea449">cout_mutex</a>.lock();</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        state.copyfmt(cout);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classscoped__cout__lock.html">scoped_cout_lock</a>() {</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classscoped__cout__lock.html#a9d38af0301c5a1c0de1a7497423db252">   44</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classscoped__cout__lock.html#a9d38af0301c5a1c0de1a7497423db252">~scoped_cout_lock</a>() {</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        cout.flush();</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        cout.copyfmt(state);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        cout_mutex.unlock();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="common_8hpp.html#a8246db01e9a8332d1288a4cbe94ea449">cout_mutex</a>.unlock();</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#define LOCK_COUT {scoped_cout_lock __scl;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#define UNLOCK_COUT }</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="common_8hpp.html#aa7a3774f1def16a09030e971ad832c36">   50</a></span>&#160;<span class="preprocessor">#define LOCK_COUT {scoped_cout_lock __scl;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="common_8hpp.html#a4e6a91d8d0fbb428a9188d5b7d84caa8">   51</a></span>&#160;<span class="preprocessor">#define UNLOCK_COUT }</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> u64;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> s64;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">typedef</span> irr::u32 u32;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="common_8hpp.html#ad758b7a5c3f18ed79d2fcd23d9f16357">   53</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="common_8hpp.html#ad758b7a5c3f18ed79d2fcd23d9f16357">u64</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="common_8hpp.html#a93680f46d09022794e3923824923b42b">   54</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="common_8hpp.html#a93680f46d09022794e3923824923b42b">s64</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">   55</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">irr::u32</a> <a class="code" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">** meters per parsec</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">*/</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">extern</span> u64 m_per_parsec;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">extern</span> <a class="code" href="common_8hpp.html#ad758b7a5c3f18ed79d2fcd23d9f16357">u64</a> <a class="code" href="common_8hpp.html#a0cc7f5ded9bb00451886d195b90be51e">m_per_parsec</a>;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
 <div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structargset.html">   62</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structargset.html">argset</a> {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">int</span>    c;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">char</span>** v;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="structargset.html">argset</a>(<span class="keywordtype">int</span> argc,<span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structargset.html#a8dd78d30244237cd017290001e056599">   63</a></span>&#160;    <span class="keywordtype">int</span>    <a class="code" href="structargset.html#a8dd78d30244237cd017290001e056599">c</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structargset.html#af7053fcaa9f11cecbabfe5059d45f3dd">   64</a></span>&#160;    <span class="keywordtype">char</span>** <a class="code" href="structargset.html#af7053fcaa9f11cecbabfe5059d45f3dd">v</a>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="structargset.html#a5b9d6e5dc603c5fcc5e296aee8912efa">   65</a></span>&#160;    <a class="code" href="structargset.html#a5b9d6e5dc603c5fcc5e296aee8912efa">argset</a>(<span class="keywordtype">int</span> argc,<span class="keywordtype">char</span> **argv)</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        : c(argc),v(argv) {}</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;};</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
@@ -178,31 +180,49 @@ $(document).ready(function(){initNavTree('common_8hpp_source.html','');});
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">class </span><a class="code" href="class_i_visitable.html">IVisitable</a>;</div>
 <div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="class_i_visitor.html">   73</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_i_visitor.html">IVisitor</a> {</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="class_i_visitor.html">IVisitor</a>()=<span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    ~<a class="code" href="class_i_visitor.html">IVisitor</a>()=<span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="class_i_visitor.html#a79952e5b7005ad1edd5ee7b38d8d3bc5">IVisitor</a>()=<span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="class_i_visitor.html#af0d2677553ffa623f1f368bc4eb2c340">~IVisitor</a>()=<span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> visit(<a class="code" href="class_i_visitable.html">IVisitable</a> *)=0;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_i_visitor.html#a17a9a08c3bee933c50d0ce83b1d83a22">visit</a>(<a class="code" href="class_i_visitable.html">IVisitable</a> *)=0;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div>
 <div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="class_i_visitable.html">   80</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_i_visitable.html">IVisitable</a> {</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="class_i_visitable.html">IVisitable</a>()=<span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    ~<a class="code" href="class_i_visitable.html">IVisitable</a>()=<span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="class_i_visitable.html#a97da02ee7ae59189bfc1dd13ea5d0f4b">IVisitable</a>()=<span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="class_i_visitable.html#a8623f6049ab0484698afe05d457e02fb">~IVisitable</a>()=<span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> accept(<a class="code" href="class_i_visitor.html">IVisitor</a> &amp;v) {v.visit(<span class="keyword">this</span>);}</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="class_i_visitable.html#a466be0567b89cb18c55ffe9ca0c033fe">   85</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_i_visitable.html#a466be0567b89cb18c55ffe9ca0c033fe">accept</a>(<a class="code" href="class_i_visitor.html">IVisitor</a> &amp;v) {v.<a class="code" href="class_i_visitor.html#a17a9a08c3bee933c50d0ce83b1d83a22">visit</a>(<span class="keyword">this</span>);}</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;};</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif // BV_COMMON_HPP_INCLUDED</span></div>
+<div class="ttc" id="class_i_visitor_html_af0d2677553ffa623f1f368bc4eb2c340"><div class="ttname"><a href="class_i_visitor.html#af0d2677553ffa623f1f368bc4eb2c340">IVisitor::~IVisitor</a></div><div class="ttdeci">~IVisitor()=default</div></div>
+<div class="ttc" id="common_8hpp_html_a0b750b081f2d1589d030fa4bd7a33b5d"><div class="ttname"><a href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a></div><div class="ttdeci">irr::u32 u32</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00055">common.hpp:55</a></div></div>
+<div class="ttc" id="structargset_html_a5b9d6e5dc603c5fcc5e296aee8912efa"><div class="ttname"><a href="structargset.html#a5b9d6e5dc603c5fcc5e296aee8912efa">argset::argset</a></div><div class="ttdeci">argset(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00065">common.hpp:65</a></div></div>
+<div class="ttc" id="structargset_html_af7053fcaa9f11cecbabfe5059d45f3dd"><div class="ttname"><a href="structargset.html#af7053fcaa9f11cecbabfe5059d45f3dd">argset::v</a></div><div class="ttdeci">char ** v</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00064">common.hpp:64</a></div></div>
 <div class="ttc" id="structargset_html"><div class="ttname"><a href="structargset.html">argset</a></div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00062">common.hpp:62</a></div></div>
 <div class="ttc" id="class_i_visitable_html"><div class="ttname"><a href="class_i_visitable.html">IVisitable</a></div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00080">common.hpp:80</a></div></div>
 <div class="ttc" id="classscoped__cout__lock_html"><div class="ttname"><a href="classscoped__cout__lock.html">scoped_cout_lock</a></div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00037">common.hpp:37</a></div></div>
+<div class="ttc" id="classscoped__cout__lock_html_a9d38af0301c5a1c0de1a7497423db252"><div class="ttname"><a href="classscoped__cout__lock.html#a9d38af0301c5a1c0de1a7497423db252">scoped_cout_lock::~scoped_cout_lock</a></div><div class="ttdeci">virtual ~scoped_cout_lock()</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00044">common.hpp:44</a></div></div>
+<div class="ttc" id="class_i_visitor_html_a17a9a08c3bee933c50d0ce83b1d83a22"><div class="ttname"><a href="class_i_visitor.html#a17a9a08c3bee933c50d0ce83b1d83a22">IVisitor::visit</a></div><div class="ttdeci">virtual void visit(IVisitable *)=0</div></div>
+<div class="ttc" id="namespacebvnet_html_a2b074598bcd81ed60e4bc95a1c486921"><div class="ttname"><a href="namespacebvnet.html#a2b074598bcd81ed60e4bc95a1c486921">bvnet::mutex</a></div><div class="ttdeci">boost::mutex mutex</div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00142">protocol.hpp:142</a></div></div>
+<div class="ttc" id="common_8hpp_html_a93680f46d09022794e3923824923b42b"><div class="ttname"><a href="common_8hpp.html#a93680f46d09022794e3923824923b42b">s64</a></div><div class="ttdeci">long long s64</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00054">common.hpp:54</a></div></div>
+<div class="ttc" id="common_8hpp_html_ad758b7a5c3f18ed79d2fcd23d9f16357"><div class="ttname"><a href="common_8hpp.html#ad758b7a5c3f18ed79d2fcd23d9f16357">u64</a></div><div class="ttdeci">unsigned long long u64</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00053">common.hpp:53</a></div></div>
+<div class="ttc" id="common_8hpp_html_a8246db01e9a8332d1288a4cbe94ea449"><div class="ttname"><a href="common_8hpp.html#a8246db01e9a8332d1288a4cbe94ea449">cout_mutex</a></div><div class="ttdeci">boost::mutex cout_mutex</div><div class="ttdef"><b>Definition:</b> <a href="protocol_8cpp_source.html#l00025">protocol.cpp:25</a></div></div>
+<div class="ttc" id="classscoped__cout__lock_html_a3239bbe8b5e4ae4001fd9b736b3d3b9d"><div class="ttname"><a href="classscoped__cout__lock.html#a3239bbe8b5e4ae4001fd9b736b3d3b9d">scoped_cout_lock::scoped_cout_lock</a></div><div class="ttdeci">scoped_cout_lock()</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00040">common.hpp:40</a></div></div>
+<div class="ttc" id="classscoped__cout__lock_html_a59932c4ec2521bd9238e97a56c55c314"><div class="ttname"><a href="classscoped__cout__lock.html#a59932c4ec2521bd9238e97a56c55c314">scoped_cout_lock::state</a></div><div class="ttdeci">std::ios state</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00038">common.hpp:38</a></div></div>
+<div class="ttc" id="class_i_visitable_html_a8623f6049ab0484698afe05d457e02fb"><div class="ttname"><a href="class_i_visitable.html#a8623f6049ab0484698afe05d457e02fb">IVisitable::~IVisitable</a></div><div class="ttdeci">~IVisitable()=default</div></div>
+<div class="ttc" id="class_i_visitable_html_a97da02ee7ae59189bfc1dd13ea5d0f4b"><div class="ttname"><a href="class_i_visitable.html#a97da02ee7ae59189bfc1dd13ea5d0f4b">IVisitable::IVisitable</a></div><div class="ttdeci">IVisitable()=default</div></div>
+<div class="ttc" id="class_i_visitor_html_a79952e5b7005ad1edd5ee7b38d8d3bc5"><div class="ttname"><a href="class_i_visitor.html#a79952e5b7005ad1edd5ee7b38d8d3bc5">IVisitor::IVisitor</a></div><div class="ttdeci">IVisitor()=default</div></div>
 <div class="ttc" id="class_i_visitor_html"><div class="ttname"><a href="class_i_visitor.html">IVisitor</a></div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00073">common.hpp:73</a></div></div>
+<div class="ttc" id="class_i_visitable_html_a466be0567b89cb18c55ffe9ca0c033fe"><div class="ttname"><a href="class_i_visitable.html#a466be0567b89cb18c55ffe9ca0c033fe">IVisitable::accept</a></div><div class="ttdeci">virtual void accept(IVisitor &amp;v)</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00085">common.hpp:85</a></div></div>
+<div class="ttc" id="structargset_html_a8dd78d30244237cd017290001e056599"><div class="ttname"><a href="structargset.html#a8dd78d30244237cd017290001e056599">argset::c</a></div><div class="ttdeci">int c</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00063">common.hpp:63</a></div></div>
+<div class="ttc" id="common_8hpp_html_a0cc7f5ded9bb00451886d195b90be51e"><div class="ttname"><a href="common_8hpp.html#a0cc7f5ded9bb00451886d195b90be51e">m_per_parsec</a></div><div class="ttdeci">u64 m_per_parsec</div><div class="ttdoc">meters per parsec </div><div class="ttdef"><b>Definition:</b> <a href="common_8cpp_source.html#l00022">common.cpp:22</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>common.hpp</b></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:31 for Blockiverse by
+    <li class="navelem"><a class="el" href="common_8hpp.html">common.hpp</a></li>
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:17 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

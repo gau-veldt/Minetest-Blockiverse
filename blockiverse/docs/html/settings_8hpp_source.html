@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,6 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -92,7 +94,7 @@ $(document).ready(function(){initNavTree('settings_8hpp_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -106,7 +108,7 @@ $(document).ready(function(){initNavTree('settings_8hpp_source.html','');});
 <div class="title">settings.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="settings_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">**</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">**  Minetest-Blockiverse</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">**</span></div>
@@ -130,45 +132,62 @@ $(document).ready(function(){initNavTree('settings_8hpp_source.html','');});
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;boost/lexical_cast.hpp&gt;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">typedef</span> std::map&lt;string,string&gt; property_map;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="settings_8hpp.html#a39c8bf81f4feff58e9c151f4b2d2208c">   25</a></span>&#160;<span class="keyword">typedef</span> std::map&lt;string,string&gt; <a class="code" href="settings_8hpp.html#a39c8bf81f4feff58e9c151f4b2d2208c">property_map</a>;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define v2int boost::lexical_cast&lt;int&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define v2str boost::lexical_cast&lt;std::string&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define v2flt boost::lexical_cast&lt;float&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="settings_8hpp.html#abf550cf5d90f98823a01b3fec02e20df">   27</a></span>&#160;<span class="preprocessor">#define v2int boost::lexical_cast&lt;int&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="settings_8hpp.html#a4097b6cd8f7657b0efc3625b78ad7543">   28</a></span>&#160;<span class="preprocessor">#define v2str boost::lexical_cast&lt;std::string&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="settings_8hpp.html#a9d3590dcd560a4742bcbad799b68f762">   29</a></span>&#160;<span class="preprocessor">#define v2flt boost::lexical_cast&lt;float&gt;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_configurator.html">   31</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_configurator.html">Configurator</a> {</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">typedef</span> property_map::key_type cfg_key;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">typedef</span> property_map::mapped_type cfg_val;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    property_map cfg;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">string</span> cfgFile;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> read();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> write();</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> process_line(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">typedef</span> void (*defaultor)(<a class="code" href="class_configurator.html">Configurator</a> &amp;);</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_configurator.html#afe333d6dcfbace9b25e3c339444cc269">   33</a></span>&#160;    <span class="keyword">typedef</span> property_map::key_type <a class="code" href="class_configurator.html#afe333d6dcfbace9b25e3c339444cc269">cfg_key</a>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_configurator.html#acc11653c63c38fed4bfa2705afa84805">   34</a></span>&#160;    <span class="keyword">typedef</span> property_map::mapped_type <a class="code" href="class_configurator.html#acc11653c63c38fed4bfa2705afa84805">cfg_val</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_configurator.html#aa7a3e5b5b03b2bf6879fcd75cbf858a7">   35</a></span>&#160;    <a class="code" href="settings_8hpp.html#a39c8bf81f4feff58e9c151f4b2d2208c">property_map</a> <a class="code" href="class_configurator.html#aa7a3e5b5b03b2bf6879fcd75cbf858a7">cfg</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">   36</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">cfgFile</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_configurator.html#abc00f7a291ee7f054fad7566ed17e13a">read</a>();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_configurator.html#a9e1a5b43bc645efaf6a35babd0339747">write</a>();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_configurator.html#ac9e3e4518e7bc2e0a46f74c08a382c6f">process_line</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;);</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_configurator.html#a6bcb19fd0375e58abccce7ad98e1d39e">   40</a></span>&#160;    <span class="keyword">typedef</span> void (*<a class="code" href="class_configurator.html#a6bcb19fd0375e58abccce7ad98e1d39e">defaultor</a>)(<a class="code" href="class_configurator.html">Configurator</a> &amp;);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> process_clause(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;,<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_configurator.html#a62ffd6299e5580e7348880e1981bfb67">process_clause</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;,<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="class_configurator.html">Configurator</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;,defaultor=NULL);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    ~<a class="code" href="class_configurator.html">Configurator</a>() {<span class="keywordflow">try</span> {write();} <span class="keywordflow">catch</span> (exception &amp;e) {}}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="class_configurator.html#a754ad28757f64fc63bbefb71778d5da2">Configurator</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;,<a class="code" href="class_configurator.html#a6bcb19fd0375e58abccce7ad98e1d39e">defaultor</a>=NULL);</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_configurator.html#a746eb3439c34f99927d46eff5722a93a">   45</a></span>&#160;    <a class="code" href="class_configurator.html#a746eb3439c34f99927d46eff5722a93a">~Configurator</a>() {<span class="keywordflow">try</span> {<a class="code" href="class_configurator.html#a9e1a5b43bc645efaf6a35babd0339747">write</a>();} <span class="keywordflow">catch</span> (exception &amp;e) {}}</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> read_cmdline(<span class="keywordtype">int</span>,<span class="keywordtype">char</span>**);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_configurator.html#acb03e9fa70fed2c2ced7973ed141b0f3">read_cmdline</a>(<span class="keywordtype">int</span>,<span class="keywordtype">char</span>**);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">typedef</span> property_map::iterator iterator;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    iterator begin() {<span class="keywordflow">return</span> cfg.begin();}</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    iterator end() {<span class="keywordflow">return</span> cfg.end();}</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    cfg_val &amp;operator [](<span class="keyword">const</span> cfg_key &amp;<span class="keywordtype">id</span>) {<span class="keywordflow">return</span> cfg[id];}</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">   49</a></span>&#160;    <span class="keyword">typedef</span> property_map::iterator <a class="code" href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">iterator</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_configurator.html#ae6fc4151df9d5b52f0547f31f9e53ae7">   50</a></span>&#160;    iterator <a class="code" href="class_configurator.html#ae6fc4151df9d5b52f0547f31f9e53ae7">begin</a>() {<span class="keywordflow">return</span> cfg.begin();}</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="class_configurator.html#a9e96a7030cb83c0d4693137bd6439bf5">   51</a></span>&#160;    iterator <a class="code" href="class_configurator.html#a9e96a7030cb83c0d4693137bd6439bf5">end</a>() {<span class="keywordflow">return</span> cfg.end();}</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_configurator.html#aff19a4bcf1ecb7dd7a83d94e4f751f72">   52</a></span>&#160;    cfg_val &amp;<a class="code" href="class_configurator.html#aff19a4bcf1ecb7dd7a83d94e4f751f72">operator []</a>(<span class="keyword">const</span> cfg_key &amp;<span class="keywordtype">id</span>) {<span class="keywordflow">return</span> cfg[id];}</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif // BV_SETTINGS_HPP_INCLUDED</span></div>
+<div class="ttc" id="class_configurator_html_a754ad28757f64fc63bbefb71778d5da2"><div class="ttname"><a href="class_configurator.html#a754ad28757f64fc63bbefb71778d5da2">Configurator::Configurator</a></div><div class="ttdeci">Configurator(const string &amp;, defaultor=NULL)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00031">settings.cpp:31</a></div></div>
+<div class="ttc" id="class_configurator_html_a62ffd6299e5580e7348880e1981bfb67"><div class="ttname"><a href="class_configurator.html#a62ffd6299e5580e7348880e1981bfb67">Configurator::process_clause</a></div><div class="ttdeci">virtual void process_clause(const string &amp;, const string &amp;)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00047">settings.cpp:47</a></div></div>
+<div class="ttc" id="class_configurator_html_aa7a3e5b5b03b2bf6879fcd75cbf858a7"><div class="ttname"><a href="class_configurator.html#aa7a3e5b5b03b2bf6879fcd75cbf858a7">Configurator::cfg</a></div><div class="ttdeci">property_map cfg</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00035">settings.hpp:35</a></div></div>
+<div class="ttc" id="settings_8hpp_html_a39c8bf81f4feff58e9c151f4b2d2208c"><div class="ttname"><a href="settings_8hpp.html#a39c8bf81f4feff58e9c151f4b2d2208c">property_map</a></div><div class="ttdeci">std::map&lt; string, string &gt; property_map</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00025">settings.hpp:25</a></div></div>
 <div class="ttc" id="class_configurator_html"><div class="ttname"><a href="class_configurator.html">Configurator</a></div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00031">settings.hpp:31</a></div></div>
+<div class="ttc" id="class_configurator_html_a5fb31ada99aa34a9ad36591f05bcd537"><div class="ttname"><a href="class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537">Configurator::iterator</a></div><div class="ttdeci">property_map::iterator iterator</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00049">settings.hpp:49</a></div></div>
+<div class="ttc" id="class_configurator_html_a9e96a7030cb83c0d4693137bd6439bf5"><div class="ttname"><a href="class_configurator.html#a9e96a7030cb83c0d4693137bd6439bf5">Configurator::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00051">settings.hpp:51</a></div></div>
+<div class="ttc" id="class_configurator_html_ae6fc4151df9d5b52f0547f31f9e53ae7"><div class="ttname"><a href="class_configurator.html#ae6fc4151df9d5b52f0547f31f9e53ae7">Configurator::begin</a></div><div class="ttdeci">iterator begin()</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00050">settings.hpp:50</a></div></div>
+<div class="ttc" id="class_configurator_html_ac9e3e4518e7bc2e0a46f74c08a382c6f"><div class="ttname"><a href="class_configurator.html#ac9e3e4518e7bc2e0a46f74c08a382c6f">Configurator::process_line</a></div><div class="ttdeci">void process_line(const string &amp;)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00039">settings.cpp:39</a></div></div>
+<div class="ttc" id="class_configurator_html_a9e1a5b43bc645efaf6a35babd0339747"><div class="ttname"><a href="class_configurator.html#a9e1a5b43bc645efaf6a35babd0339747">Configurator::write</a></div><div class="ttdeci">void write()</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00077">settings.cpp:77</a></div></div>
+<div class="ttc" id="class_configurator_html_a746eb3439c34f99927d46eff5722a93a"><div class="ttname"><a href="class_configurator.html#a746eb3439c34f99927d46eff5722a93a">Configurator::~Configurator</a></div><div class="ttdeci">~Configurator()</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00045">settings.hpp:45</a></div></div>
+<div class="ttc" id="class_configurator_html_aff19a4bcf1ecb7dd7a83d94e4f751f72"><div class="ttname"><a href="class_configurator.html#aff19a4bcf1ecb7dd7a83d94e4f751f72">Configurator::operator[]</a></div><div class="ttdeci">cfg_val &amp; operator[](const cfg_key &amp;id)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00052">settings.hpp:52</a></div></div>
+<div class="ttc" id="class_configurator_html_acc11653c63c38fed4bfa2705afa84805"><div class="ttname"><a href="class_configurator.html#acc11653c63c38fed4bfa2705afa84805">Configurator::cfg_val</a></div><div class="ttdeci">property_map::mapped_type cfg_val</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00034">settings.hpp:34</a></div></div>
+<div class="ttc" id="class_configurator_html_acb03e9fa70fed2c2ced7973ed141b0f3"><div class="ttname"><a href="class_configurator.html#acb03e9fa70fed2c2ced7973ed141b0f3">Configurator::read_cmdline</a></div><div class="ttdeci">void read_cmdline(int, char **)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00055">settings.cpp:55</a></div></div>
+<div class="ttc" id="class_configurator_html_afe333d6dcfbace9b25e3c339444cc269"><div class="ttname"><a href="class_configurator.html#afe333d6dcfbace9b25e3c339444cc269">Configurator::cfg_key</a></div><div class="ttdeci">property_map::key_type cfg_key</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00033">settings.hpp:33</a></div></div>
+<div class="ttc" id="class_configurator_html_abc00f7a291ee7f054fad7566ed17e13a"><div class="ttname"><a href="class_configurator.html#abc00f7a291ee7f054fad7566ed17e13a">Configurator::read</a></div><div class="ttdeci">void read()</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00064">settings.cpp:64</a></div></div>
+<div class="ttc" id="class_configurator_html_a6bcb19fd0375e58abccce7ad98e1d39e"><div class="ttname"><a href="class_configurator.html#a6bcb19fd0375e58abccce7ad98e1d39e">Configurator::defaultor</a></div><div class="ttdeci">void(* defaultor)(Configurator &amp;)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00040">settings.hpp:40</a></div></div>
+<div class="ttc" id="class_configurator_html_ad6fd8b07e08798a2d26934b1771368ed"><div class="ttname"><a href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">Configurator::cfgFile</a></div><div class="ttdeci">string cfgFile</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00036">settings.hpp:36</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>settings.hpp</b></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:31 for Blockiverse by
+    <li class="navelem"><a class="el" href="settings_8hpp.html">settings.hpp</a></li>
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:18 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

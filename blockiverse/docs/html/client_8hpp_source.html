@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,6 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -92,7 +94,7 @@ $(document).ready(function(){initNavTree('client_8hpp_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -106,7 +108,7 @@ $(document).ready(function(){initNavTree('client_8hpp_source.html','');});
 <div class="title">client.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="client_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">**</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">**  Minetest-Blockiverse</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">**</span></div>
@@ -127,17 +129,17 @@ $(document).ready(function(){initNavTree('client_8hpp_source.html','');});
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#ifndef BV_CLIENT_HPP_INCLUDED</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define BV_CLIENT_HPP_INCLUDED</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;common.hpp&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;protocol.hpp&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_8hpp.html">common.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="protocol_8hpp.html">protocol.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
 <div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classclient_root.html">   25</a></span>&#160;<span class="keyword">class </span><a class="code" href="classclient_root.html">clientRoot</a> : <span class="keyword">public</span> <a class="code" href="classbvnet_1_1object.html">bvnet::object</a> {</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classclient_root.html">clientRoot</a>(<a class="code" href="classbvnet_1_1session.html">bvnet::session</a> &amp;sess)</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        : <a class="code" href="classbvnet_1_1object.html">bvnet::object</a>(sess) {</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classclient_root.html#a08b58a2ee28c7ebf383bc6f9d9745dc1">   29</a></span>&#160;    <a class="code" href="classclient_root.html#a08b58a2ee28c7ebf383bc6f9d9745dc1">clientRoot</a>(<a class="code" href="classbvnet_1_1session.html">bvnet::session</a> &amp;sess)</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        : <a class="code" href="namespacebvnet.html">bvnet</a>::<a class="code" href="classbvnet_1_1object.html#a7122d96ee6c8685e5830cd9c403afa7a">object</a>(sess) {</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    }</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classclient_root.html">clientRoot</a>() {}</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classclient_root.html#a66c5fab42730e45c8e59c5f47070272e">   32</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classclient_root.html#a66c5fab42730e45c8e59c5f47070272e">~clientRoot</a>() {}</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classclient_root.html#a452d300aba48c73218e0204421c43a8d">   34</a></span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classclient_root.html#a452d300aba48c73218e0204421c43a8d">getType</a>() {<span class="keywordflow">return</span> <span class="stringliteral">&quot;clientRoot&quot;</span>;}</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;};</div>
@@ -145,15 +147,21 @@ $(document).ready(function(){initNavTree('client_8hpp_source.html','');});
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif // BV_CLIENT_HPP_INCLUDED</span></div>
 <div class="ttc" id="classclient_root_html"><div class="ttname"><a href="classclient_root.html">clientRoot</a></div><div class="ttdef"><b>Definition:</b> <a href="client_8hpp_source.html#l00025">client.hpp:25</a></div></div>
 <div class="ttc" id="classclient_root_html_a452d300aba48c73218e0204421c43a8d"><div class="ttname"><a href="classclient_root.html#a452d300aba48c73218e0204421c43a8d">clientRoot::getType</a></div><div class="ttdeci">virtual const char * getType()</div><div class="ttdoc">Get object&#39;s identity. </div><div class="ttdef"><b>Definition:</b> <a href="client_8hpp_source.html#l00034">client.hpp:34</a></div></div>
+<div class="ttc" id="common_8hpp_html"><div class="ttname"><a href="common_8hpp.html">common.hpp</a></div></div>
+<div class="ttc" id="protocol_8hpp_html"><div class="ttname"><a href="protocol_8hpp.html">protocol.hpp</a></div></div>
 <div class="ttc" id="classbvnet_1_1session_html"><div class="ttname"><a href="classbvnet_1_1session.html">bvnet::session</a></div><div class="ttdoc">Symmetrical endpoint session for established connection. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00189">protocol.hpp:189</a></div></div>
-<div class="ttc" id="classbvnet_1_1object_html"><div class="ttname"><a href="classbvnet_1_1object.html">bvnet::object</a></div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00412">protocol.hpp:412</a></div></div>
+<div class="ttc" id="classclient_root_html_a66c5fab42730e45c8e59c5f47070272e"><div class="ttname"><a href="classclient_root.html#a66c5fab42730e45c8e59c5f47070272e">clientRoot::~clientRoot</a></div><div class="ttdeci">virtual ~clientRoot()</div><div class="ttdef"><b>Definition:</b> <a href="client_8hpp_source.html#l00032">client.hpp:32</a></div></div>
+<div class="ttc" id="classclient_root_html_a08b58a2ee28c7ebf383bc6f9d9745dc1"><div class="ttname"><a href="classclient_root.html#a08b58a2ee28c7ebf383bc6f9d9745dc1">clientRoot::clientRoot</a></div><div class="ttdeci">clientRoot(bvnet::session &amp;sess)</div><div class="ttdef"><b>Definition:</b> <a href="client_8hpp_source.html#l00029">client.hpp:29</a></div></div>
+<div class="ttc" id="classbvnet_1_1object_html"><div class="ttname"><a href="classbvnet_1_1object.html">bvnet::object</a></div><div class="ttdoc">ABC for remotable objects. </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00414">protocol.hpp:414</a></div></div>
+<div class="ttc" id="classbvnet_1_1object_html_a7122d96ee6c8685e5830cd9c403afa7a"><div class="ttname"><a href="classbvnet_1_1object.html#a7122d96ee6c8685e5830cd9c403afa7a">bvnet::object::object</a></div><div class="ttdeci">object(session &amp;sess)</div><div class="ttdoc">construction of an object </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00495">protocol.hpp:495</a></div></div>
+<div class="ttc" id="namespacebvnet_html"><div class="ttname"><a href="namespacebvnet.html">bvnet</a></div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00065">protocol.hpp:65</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>client.hpp</b></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:31 for Blockiverse by
+    <li class="navelem"><a class="el" href="client_8hpp.html">client.hpp</a></li>
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:17 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

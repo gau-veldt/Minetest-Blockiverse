@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -95,7 +96,7 @@ $(document).ready(function(){initNavTree('classbvnet_1_1registry.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -107,6 +108,7 @@ $(document).ready(function(){initNavTree('classbvnet_1_1registry.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classbvnet_1_1registry-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">bvnet::registry Class Reference</div>  </div>
@@ -123,32 +125,45 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7843ddab5fc117a8d5c518b8b8299c13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#a7843ddab5fc117a8d5c518b8b8299c13">registry</a> (<a class="el" href="classbvnet_1_1session.html">session</a> *host)</td></tr>
 <tr class="memdesc:a7843ddab5fc117a8d5c518b8b8299c13"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor  <a href="#a7843ddab5fc117a8d5c518b8b8299c13">More...</a><br /></td></tr>
 <tr class="separator:a7843ddab5fc117a8d5c518b8b8299c13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2b648066a89226f8726d2a0bbf3a5c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa2b648066a89226f8726d2a0bbf3a5c2"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#aa2b648066a89226f8726d2a0bbf3a5c2">~registry</a> ()</td></tr>
-<tr class="memdesc:aa2b648066a89226f8726d2a0bbf3a5c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor <br /></td></tr>
+<tr class="memitem:aa2b648066a89226f8726d2a0bbf3a5c2"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#aa2b648066a89226f8726d2a0bbf3a5c2">~registry</a> ()</td></tr>
+<tr class="memdesc:aa2b648066a89226f8726d2a0bbf3a5c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor  <a href="#aa2b648066a89226f8726d2a0bbf3a5c2">More...</a><br /></td></tr>
 <tr class="separator:aa2b648066a89226f8726d2a0bbf3a5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abde38854a900adb81da31e5bcf659539"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#abde38854a900adb81da31e5bcf659539">register_object</a> (<a class="el" href="classbvnet_1_1object.html">object</a> *ob)</td></tr>
 <tr class="memdesc:abde38854a900adb81da31e5bcf659539"><td class="mdescLeft">&#160;</td><td class="mdescRight">add object to registry  <a href="#abde38854a900adb81da31e5bcf659539">More...</a><br /></td></tr>
 <tr class="separator:abde38854a900adb81da31e5bcf659539"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06a4accc79d0cc68b4bebbaad7432fb4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#a06a4accc79d0cc68b4bebbaad7432fb4">notify</a> (u32 id)</td></tr>
+<tr class="memitem:a06a4accc79d0cc68b4bebbaad7432fb4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#a06a4accc79d0cc68b4bebbaad7432fb4">notify</a> (<a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a> id)</td></tr>
 <tr class="memdesc:a06a4accc79d0cc68b4bebbaad7432fb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">notify upstream of object destruction  <a href="#a06a4accc79d0cc68b4bebbaad7432fb4">More...</a><br /></td></tr>
 <tr class="separator:a06a4accc79d0cc68b4bebbaad7432fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11132d3e93ca80b59a1be4e97627d6cf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#a11132d3e93ca80b59a1be4e97627d6cf">unregister</a> (u32 id)</td></tr>
+<tr class="memitem:a11132d3e93ca80b59a1be4e97627d6cf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#a11132d3e93ca80b59a1be4e97627d6cf">unregister</a> (<a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a> id)</td></tr>
 <tr class="memdesc:a11132d3e93ca80b59a1be4e97627d6cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">remove object from registry by-id  <a href="#a11132d3e93ca80b59a1be4e97627d6cf">More...</a><br /></td></tr>
 <tr class="separator:a11132d3e93ca80b59a1be4e97627d6cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ba9b3170878500319f591f52275744c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#a3ba9b3170878500319f591f52275744c">unregister</a> (<a class="el" href="classbvnet_1_1object.html">object</a> *ob)</td></tr>
 <tr class="memdesc:a3ba9b3170878500319f591f52275744c"><td class="mdescLeft">&#160;</td><td class="mdescRight">remove object from registry by-ptr  <a href="#a3ba9b3170878500319f591f52275744c">More...</a><br /></td></tr>
 <tr class="separator:a3ba9b3170878500319f591f52275744c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81eb3ad92ee4b21050dce0ddf109ea1d"><td class="memItemLeft" align="right" valign="top">u32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#a81eb3ad92ee4b21050dce0ddf109ea1d">idOf</a> (<a class="el" href="classbvnet_1_1object.html">object</a> *ob)</td></tr>
+<tr class="memitem:a81eb3ad92ee4b21050dce0ddf109ea1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#a81eb3ad92ee4b21050dce0ddf109ea1d">idOf</a> (<a class="el" href="classbvnet_1_1object.html">object</a> *ob)</td></tr>
 <tr class="memdesc:a81eb3ad92ee4b21050dce0ddf109ea1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">query id for given object ptr  <a href="#a81eb3ad92ee4b21050dce0ddf109ea1d">More...</a><br /></td></tr>
 <tr class="separator:a81eb3ad92ee4b21050dce0ddf109ea1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad09c9ec75dfa8354bba8816db1e7d09f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbvnet_1_1object.html">object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#ad09c9ec75dfa8354bba8816db1e7d09f">obOf</a> (u32 id)</td></tr>
+<tr class="memitem:ad09c9ec75dfa8354bba8816db1e7d09f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbvnet_1_1object.html">object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#ad09c9ec75dfa8354bba8816db1e7d09f">obOf</a> (<a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a> id)</td></tr>
 <tr class="memdesc:ad09c9ec75dfa8354bba8816db1e7d09f"><td class="mdescLeft">&#160;</td><td class="mdescRight">query ptr for given object id  <a href="#ad09c9ec75dfa8354bba8816db1e7d09f">More...</a><br /></td></tr>
 <tr class="separator:ad09c9ec75dfa8354bba8816db1e7d09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd413899eedfde46189f9903f66bdcd9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd413899eedfde46189f9903f66bdcd9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#abd413899eedfde46189f9903f66bdcd9">dump</a> (std::ostream &amp;os)</td></tr>
-<tr class="memdesc:abd413899eedfde46189f9903f66bdcd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">for debugging - dumps data about registry <br /></td></tr>
+<tr class="memitem:abd413899eedfde46189f9903f66bdcd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#abd413899eedfde46189f9903f66bdcd9">dump</a> (std::ostream &amp;os)</td></tr>
+<tr class="memdesc:abd413899eedfde46189f9903f66bdcd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">for debugging - dumps data about registry  <a href="#abd413899eedfde46189f9903f66bdcd9">More...</a><br /></td></tr>
 <tr class="separator:abd413899eedfde46189f9903f66bdcd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af09170cbd3d53d9950c8cd434a962e0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebvnet.html#a2b074598bcd81ed60e4bc95a1c486921">mutex</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#af09170cbd3d53d9950c8cd434a962e0f">synchro</a></td></tr>
+<tr class="memdesc:af09170cbd3d53d9950c8cd434a962e0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">mutex on registry manipulation  <a href="#af09170cbd3d53d9950c8cd434a962e0f">More...</a><br /></td></tr>
+<tr class="separator:af09170cbd3d53d9950c8cd434a962e0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace779355981c8cffd2440b56717b249b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbvnet_1_1session.html">session</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#ace779355981c8cffd2440b56717b249b">listener</a></td></tr>
+<tr class="memdesc:ace779355981c8cffd2440b56717b249b"><td class="mdescLeft">&#160;</td><td class="mdescRight">notify sink for object removals  <a href="#ace779355981c8cffd2440b56717b249b">More...</a><br /></td></tr>
+<tr class="separator:ace779355981c8cffd2440b56717b249b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa470ee026dbf0aa7e546bc857531c02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#afa470ee026dbf0aa7e546bc857531c02">next_slot</a></td></tr>
+<tr class="memdesc:afa470ee026dbf0aa7e546bc857531c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">id for next object [must be thread-synced]  <a href="#afa470ee026dbf0aa7e546bc857531c02">More...</a><br /></td></tr>
+<tr class="separator:afa470ee026dbf0aa7e546bc857531c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06f05fafe7cbc9bc7e1177fddada0ce2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebvnet.html#a02549d19e0d3d8403292b767f6d6503b">object_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1registry.html#a06f05fafe7cbc9bc7e1177fddada0ce2">objects</a></td></tr>
+<tr class="memdesc:a06f05fafe7cbc9bc7e1177fddada0ce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">registered objects [must be thread-synced]  <a href="#a06f05fafe7cbc9bc7e1177fddada0ce2">More...</a><br /></td></tr>
+<tr class="separator:a06f05fafe7cbc9bc7e1177fddada0ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>object reigstry class </p>
@@ -193,7 +208,64 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="aa2b648066a89226f8726d2a0bbf3a5c2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bvnet::registry::~registry </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>destructor </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00668">668</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="abd413899eedfde46189f9903f66bdcd9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bvnet::registry::dump </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>for debugging - dumps data about registry </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l01324">1324</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>References <a class="el" href="protocol_8hpp_source.html#l00517">bvnet::object::getType()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a81eb3ad92ee4b21050dce0ddf109ea1d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -202,7 +274,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">u32 bvnet::registry::idOf </td>
+          <td class="memname"><a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a> bvnet::registry::idOf </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classbvnet_1_1object.html">object</a> *&#160;</td>
           <td class="paramname"><em>ob</em></td><td>)</td>
@@ -225,7 +297,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object id </dd></dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00632">632</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00634">634</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -239,7 +311,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname">void bvnet::registry::notify </td>
           <td>(</td>
-          <td class="paramtype">u32&#160;</td>
+          <td class="paramtype"><a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a>&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
@@ -260,7 +332,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>allocated slot </dd></dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00589">589</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00591">591</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -274,7 +346,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname"><a class="el" href="classbvnet_1_1object.html">object</a> * bvnet::registry::obOf </td>
           <td>(</td>
-          <td class="paramtype">u32&#160;</td>
+          <td class="paramtype"><a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a>&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
@@ -295,7 +367,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object ptr </dd></dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00649">649</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00651">651</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -337,7 +409,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00528">528</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00530">530</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>References <a class="el" href="protocol_8cpp_source.html#l00028">bvnet::reg_objects_softmax</a>.</p>
 
 </div>
 </div>
@@ -351,7 +425,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname">bool bvnet::registry::unregister </td>
           <td>(</td>
-          <td class="paramtype">u32&#160;</td>
+          <td class="paramtype"><a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a>&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
@@ -371,7 +445,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00595">595</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00597">597</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -405,7 +479,104 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00612">612</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00614">614</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ace779355981c8cffd2440b56717b249b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbvnet_1_1session.html">session</a>* bvnet::registry::listener</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>notify sink for object removals </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00364">364</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afa470ee026dbf0aa7e546bc857531c02"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8hpp.html#a0b750b081f2d1589d030fa4bd7a33b5d">u32</a> bvnet::registry::next_slot</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>id for next object [must be thread-synced] </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00366">366</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a06f05fafe7cbc9bc7e1177fddada0ce2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacebvnet.html#a02549d19e0d3d8403292b767f6d6503b">object_map</a> bvnet::registry::objects</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>registered objects [must be thread-synced] </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00367">367</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af09170cbd3d53d9950c8cd434a962e0f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacebvnet.html#a2b074598bcd81ed60e4bc95a1c486921">mutex</a>* bvnet::registry::synchro</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>mutex on registry manipulation </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00363">363</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -417,8 +588,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>bvnet</b></li><li class="navelem"><a class="el" href="classbvnet_1_1registry.html">registry</a></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:33 for Blockiverse by
+    <li class="navelem"><a class="el" href="namespacebvnet.html">bvnet</a></li><li class="navelem"><a class="el" href="classbvnet_1_1registry.html">registry</a></li>
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:19 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

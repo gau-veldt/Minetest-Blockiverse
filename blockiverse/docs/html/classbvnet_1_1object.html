@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -95,7 +96,7 @@ $(document).ready(function(){initNavTree('classbvnet_1_1object.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -109,12 +110,19 @@ $(document).ready(function(){initNavTree('classbvnet_1_1object.html','');});
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classbvnet_1_1object-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">bvnet::object Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>ABC for remotable objects.  
+ <a href="classbvnet_1_1object.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for bvnet::object:</div>
 <div class="dyncontent">
@@ -132,9 +140,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7122d96ee6c8685e5830cd9c403afa7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7122d96ee6c8685e5830cd9c403afa7a">object</a> (<a class="el" href="classbvnet_1_1session.html">session</a> &amp;sess)</td></tr>
 <tr class="memdesc:a7122d96ee6c8685e5830cd9c403afa7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">construction of an object  <a href="#a7122d96ee6c8685e5830cd9c403afa7a">More...</a><br /></td></tr>
 <tr class="separator:a7122d96ee6c8685e5830cd9c403afa7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b65a31e0d72dd4f35ef621c94ad9791"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b65a31e0d72dd4f35ef621c94ad9791"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">~object</a> ()</td></tr>
-<tr class="memdesc:a7b65a31e0d72dd4f35ef621c94ad9791"><td class="mdescLeft">&#160;</td><td class="mdescRight">base dtor to automatically unregister the object <br /></td></tr>
+<tr class="memitem:a7b65a31e0d72dd4f35ef621c94ad9791"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">~object</a> ()</td></tr>
+<tr class="memdesc:a7b65a31e0d72dd4f35ef621c94ad9791"><td class="mdescLeft">&#160;</td><td class="mdescRight">base dtor to automatically unregister the object  <a href="#a7b65a31e0d72dd4f35ef621c94ad9791">More...</a><br /></td></tr>
 <tr class="separator:a7b65a31e0d72dd4f35ef621c94ad9791"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57798d2be75fcb4257749ad7f3ec985a"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a57798d2be75fcb4257749ad7f3ec985a">getType</a> ()</td></tr>
 <tr class="memdesc:a57798d2be75fcb4257749ad7f3ec985a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get object's identity.  <a href="#a57798d2be75fcb4257749ad7f3ec985a">More...</a><br /></td></tr>
@@ -142,26 +149,39 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:aa825a910fb0f8899ac9d3f654444151c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c">register_dmc</a> (string label, dmc func)</td></tr>
+<tr class="memitem:aa825a910fb0f8899ac9d3f654444151c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c">register_dmc</a> (string label, <a class="el" href="namespacebvnet.html#ad554e789b85a7c5f0d0da112be4d54b7">dmc</a> func)</td></tr>
 <tr class="memdesc:aa825a910fb0f8899ac9d3f654444151c"><td class="mdescLeft">&#160;</td><td class="mdescRight">register dmc method  <a href="#aa825a910fb0f8899ac9d3f654444151c">More...</a><br /></td></tr>
 <tr class="separator:aa825a910fb0f8899ac9d3f654444151c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a550f9bd67f6ac15355b9ca2be9de1d52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a550f9bd67f6ac15355b9ca2be9de1d52"></a>
-const string&#160;</td><td class="memItemRight" valign="bottom"><b>methodLabel</b> (const unsigned int idx)</td></tr>
+<tr class="memitem:a550f9bd67f6ac15355b9ca2be9de1d52"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a550f9bd67f6ac15355b9ca2be9de1d52">methodLabel</a> (const unsigned int idx)</td></tr>
 <tr class="separator:a550f9bd67f6ac15355b9ca2be9de1d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7121f34d58daaaaa6bb7212e87955507"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7121f34d58daaaaa6bb7212e87955507"></a>
-const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>methodSlot</b> (const string &amp;label)</td></tr>
+<tr class="memitem:a7121f34d58daaaaa6bb7212e87955507"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7121f34d58daaaaa6bb7212e87955507">methodSlot</a> (const string &amp;label)</td></tr>
 <tr class="separator:a7121f34d58daaaaa6bb7212e87955507"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b41a8ff80c9b185d628d1b1f93f2e9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b41a8ff80c9b185d628d1b1f93f2e9b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a4b41a8ff80c9b185d628d1b1f93f2e9b">dmc_GetType</a> (value_queue &amp;)</td></tr>
-<tr class="memdesc:a4b41a8ff80c9b185d628d1b1f93f2e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">the GetType dispatched method call (dmc) <br /></td></tr>
+<tr class="memitem:a4b41a8ff80c9b185d628d1b1f93f2e9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a4b41a8ff80c9b185d628d1b1f93f2e9b">dmc_GetType</a> (<a class="el" href="namespacebvnet.html#a1ca61e863b7b73782d9c5ecb990d9618">value_queue</a> &amp;)</td></tr>
+<tr class="memdesc:a4b41a8ff80c9b185d628d1b1f93f2e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">the GetType dispatched method call (dmc)  <a href="#a4b41a8ff80c9b185d628d1b1f93f2e9b">More...</a><br /></td></tr>
 <tr class="separator:a4b41a8ff80c9b185d628d1b1f93f2e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc0211ae67284eccf20e9bfe1c25e0cc"></a>
-<a class="el" href="classbvnet_1_1session.html">session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td></tr>
-<tr class="memdesc:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">for objects to attach to the session's registry <br /></td></tr>
+<tr class="memitem:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbvnet_1_1session.html">session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td></tr>
+<tr class="memdesc:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">for objects to attach to the session's registry  <a href="#acc0211ae67284eccf20e9bfe1c25e0cc">More...</a><br /></td></tr>
 <tr class="separator:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a7ac166f95debb0377702fac7baebae83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7ac166f95debb0377702fac7baebae83">methodCall</a> (unsigned int idx)</td></tr>
+<tr class="separator:a7ac166f95debb0377702fac7baebae83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a89fc856d099cd9c7af10094201b72db2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebvnet.html#a673640e4b0ae49cccaeae148d37b1376">call_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a89fc856d099cd9c7af10094201b72db2">dmcTable</a></td></tr>
+<tr class="memdesc:a89fc856d099cd9c7af10094201b72db2"><td class="mdescLeft">&#160;</td><td class="mdescRight">method mapper for method call and OO mechanism  <a href="#a89fc856d099cd9c7af10094201b72db2">More...</a><br /></td></tr>
+<tr class="separator:a89fc856d099cd9c7af10094201b72db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d89b72492789bd9bb5ffe7ead194350"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebvnet.html#a3594176940b3e43c14afa5ad8dc1f4f8">name_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a5d89b72492789bd9bb5ffe7ead194350">dmcLabel</a></td></tr>
+<tr class="memdesc:a5d89b72492789bd9bb5ffe7ead194350"><td class="mdescLeft">&#160;</td><td class="mdescRight">name labels of dmc methods  <a href="#a5d89b72492789bd9bb5ffe7ead194350">More...</a><br /></td></tr>
+<tr class="separator:a5d89b72492789bd9bb5ffe7ead194350"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a096e64352bfa4016b0fb7a37d8806262"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebvnet.html#adaa6d94bd4837bcf9da8e6b0a985a43e">indx_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a096e64352bfa4016b0fb7a37d8806262">dmcIndex</a></td></tr>
+<tr class="memdesc:a096e64352bfa4016b0fb7a37d8806262"><td class="mdescLeft">&#160;</td><td class="mdescRight">method indices of dmc method  <a href="#a096e64352bfa4016b0fb7a37d8806262">More...</a><br /></td></tr>
+<tr class="separator:a096e64352bfa4016b0fb7a37d8806262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -170,8 +190,12 @@ Friends</h2></td></tr>
 <tr class="separator:a1cd56837b3198c4dad1d426c22545537"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00412">412</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<div class="textblock"><p>ABC for remotable objects. </p>
+<p>Base used for objects exchangeable via object references.</p>
+<p>Objects with active references may have methods invoked via the implemented dispatched method call mechanism. This system is OO-friendly and allows runtime polymorphism. Each object instance has its own dmc table (think c++ vtable) which may be be modified at runtime after initial setting by the ctor. One use is to swap out initial (compiled) methods for methods invoking lua scripted forms executed via the (future) embedded lua interpretor. In this form you get the javascript-esque object method redefinition capability. The other purpose is to allow proper OO inheritence in derived classes in the heararchy which may override previous bases' dmc table entries within their ctors.</p>
+<p>Since secure referencing requires a way to track object lifetime a registry reference is required for construction. </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00414">414</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7122d96ee6c8685e5830cd9c403afa7a"></a>
 <div class="memitem">
@@ -203,11 +227,72 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00493">493</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00495">495</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>References <a class="el" href="protocol_8hpp_source.html#l00523">dmc_GetType()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, <a class="el" href="protocol_8hpp_source.html#l00745">bvnet::session::register_object()</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7b65a31e0d72dd4f35ef621c94ad9791"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bvnet::object::~object </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>base dtor to automatically unregister the object </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00505">505</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>References <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>, and <a class="el" href="protocol_8hpp_source.html#l00748">bvnet::session::unregister()</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a4b41a8ff80c9b185d628d1b1f93f2e9b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bvnet::object::dmc_GetType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacebvnet.html#a1ca61e863b7b73782d9c5ecb990d9618">value_queue</a> &amp;&#160;</td>
+          <td class="paramname"><em>vqueue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>the GetType dispatched method call (dmc) </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00523">523</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="protocol_8hpp_source.html#l00495">object()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a57798d2be75fcb4257749ad7f3ec985a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -235,7 +320,91 @@ Friends</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classserver_root.html#a3e22b92d44917a86e12c0155c6169b15">serverRoot</a>, <a class="el" href="class_account.html#a906b5fee76e343176a2a2e36a6b46a0c">Account</a>, and <a class="el" href="classclient_root.html#a452d300aba48c73218e0204421c43a8d">clientRoot</a>.</p>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00515">515</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00517">517</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="protocol_8hpp_source.html#l01324">bvnet::registry::dump()</a>, and <a class="el" href="protocol_8hpp_source.html#l00970">bvnet::session::on_recv_call_idx()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7ac166f95debb0377702fac7baebae83"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bvnet::object::methodCall </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00443">443</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="protocol_8hpp_source.html#l00970">bvnet::session::on_recv_call_idx()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a550f9bd67f6ac15355b9ca2be9de1d52"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string bvnet::object::methodLabel </td>
+          <td>(</td>
+          <td class="paramtype">const unsigned int&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00476">476</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="protocol_8hpp_source.html#l00970">bvnet::session::on_recv_call_idx()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7121f34d58daaaaa6bb7212e87955507"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const unsigned int bvnet::object::methodSlot </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>label</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00484">484</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -255,7 +424,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">dmc&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacebvnet.html#ad554e789b85a7c5f0d0da112be4d54b7">dmc</a>&#160;</td>
           <td class="paramname"><em>func</em>&#160;</td>
         </tr>
         <tr>
@@ -280,7 +449,11 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00459">459</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00461">461</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>References <a class="el" href="protocol_8hpp_source.html#l00738">bvnet::session::getIdOf()</a>, and <a class="el" href="protocol_8hpp_source.html#l00331">bvnet::session::getSendQueue()</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8hpp_source.html#l00068">serverRoot::serverRoot()</a>.</p>
 
 </div>
 </div>
@@ -310,7 +483,106 @@ Friends</h2></td></tr>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>some sort of static enum to get rid of the magic number method call #s from remote POV? I'll have the ctors store method labels in the base class dmcName map while it is setting up the dmc methods.</dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>automatically declare the methods for method calling via some sort of macro or metacode?</dd></dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00440">440</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00442">442</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="acc0211ae67284eccf20e9bfe1c25e0cc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbvnet_1_1session.html">session</a>&amp; bvnet::object::ctx</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>for objects to attach to the session's registry </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00458">458</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00239">serverRoot::dmc_AnswerChallenge()</a>, <a class="el" href="server_8cpp_source.html#l00276">serverRoot::dmc_GetAccount()</a>, and <a class="el" href="server_8cpp_source.html#l00204">serverRoot::dmc_LoginClient()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a096e64352bfa4016b0fb7a37d8806262"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacebvnet.html#adaa6d94bd4837bcf9da8e6b0a985a43e">indx_map</a> bvnet::object::dmcIndex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>method indices of dmc method </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00456">456</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5d89b72492789bd9bb5ffe7ead194350"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacebvnet.html#a3594176940b3e43c14afa5ad8dc1f4f8">name_map</a> bvnet::object::dmcLabel</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>name labels of dmc methods </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00455">455</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a89fc856d099cd9c7af10094201b72db2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacebvnet.html#a673640e4b0ae49cccaeae148d37b1376">call_map</a> bvnet::object::dmcTable</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>method mapper for method call and OO mechanism </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00454">454</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -322,8 +594,8 @@ Friends</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>bvnet</b></li><li class="navelem"><a class="el" href="classbvnet_1_1object.html">object</a></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:32 for Blockiverse by
+    <li class="navelem"><a class="el" href="namespacebvnet.html">bvnet</a></li><li class="navelem"><a class="el" href="classbvnet_1_1object.html">object</a></li>
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:19 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

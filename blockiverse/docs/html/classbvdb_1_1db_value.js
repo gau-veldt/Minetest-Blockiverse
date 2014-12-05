@@ -17,5 +17,7 @@ var classbvdb_1_1db_value =
     [ "operator double", "classbvdb_1_1db_value.html#a752874c2a6ff8acead7ba60435a1c443", null ],
     [ "operator s64", "classbvdb_1_1db_value.html#a97afa2d58d973779d36c1dd8443dc32d", null ],
     [ "operator string", "classbvdb_1_1db_value.html#a5bb74d4a242360b29161e4c79caf8d5f", null ],
-    [ "type", "classbvdb_1_1db_value.html#a7d8d3a23f171a32031c8efbffd076524", null ]
+    [ "type", "classbvdb_1_1db_value.html#a7d8d3a23f171a32031c8efbffd076524", null ],
+    [ "affinity", "classbvdb_1_1db_value.html#a46d309e7e1704b8af17ca95b256f11a4", null ],
+    [ "data", "classbvdb_1_1db_value.html#a7b8cc4fd88ec6435808f93c5ec079823", null ]
 ];

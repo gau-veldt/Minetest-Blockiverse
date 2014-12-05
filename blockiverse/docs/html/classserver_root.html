@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -95,7 +96,7 @@ $(document).ready(function(){initNavTree('classserver_root.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -108,26 +109,30 @@ $(document).ready(function(){initNavTree('classserver_root.html','');});
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classserver_root-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">serverRoot Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="server_8hpp_source.html">server.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for serverRoot:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classserver_root.png" usemap="#serverRoot_map" alt=""/>
   <map id="serverRoot_map" name="serverRoot_map">
-<area href="classbvnet_1_1object.html" alt="bvnet::object" shape="rect" coords="0,0,83,24"/>
+<area href="classbvnet_1_1object.html" title="ABC for remotable objects. " alt="bvnet::object" shape="rect" coords="0,0,83,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad8b6aae950057cd142edcb8d8184e2f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8b6aae950057cd142edcb8d8184e2f6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>serverRoot</b> (<a class="el" href="classbvnet_1_1session.html">bvnet::session</a> &amp;sess)</td></tr>
+<tr class="memitem:ad8b6aae950057cd142edcb8d8184e2f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#ad8b6aae950057cd142edcb8d8184e2f6">serverRoot</a> (<a class="el" href="classbvnet_1_1session.html">bvnet::session</a> &amp;sess)</td></tr>
 <tr class="separator:ad8b6aae950057cd142edcb8d8184e2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5343f04cc76edc0cefc9b68b7b55f6c6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a5343f04cc76edc0cefc9b68b7b55f6c6">~serverRoot</a> ()</td></tr>
+<tr class="separator:a5343f04cc76edc0cefc9b68b7b55f6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e22b92d44917a86e12c0155c6169b15"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a3e22b92d44917a86e12c0155c6169b15">getType</a> ()</td></tr>
 <tr class="memdesc:a3e22b92d44917a86e12c0155c6169b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get object's identity.  <a href="#a3e22b92d44917a86e12c0155c6169b15">More...</a><br /></td></tr>
 <tr class="separator:a3e22b92d44917a86e12c0155c6169b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,49 +140,204 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7122d96ee6c8685e5830cd9c403afa7a inherit pub_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7122d96ee6c8685e5830cd9c403afa7a">object</a> (<a class="el" href="classbvnet_1_1session.html">session</a> &amp;sess)</td></tr>
 <tr class="memdesc:a7122d96ee6c8685e5830cd9c403afa7a inherit pub_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">construction of an object  <a href="#a7122d96ee6c8685e5830cd9c403afa7a">More...</a><br /></td></tr>
 <tr class="separator:a7122d96ee6c8685e5830cd9c403afa7a inherit pub_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b65a31e0d72dd4f35ef621c94ad9791"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">~object</a> ()</td></tr>
-<tr class="memdesc:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">base dtor to automatically unregister the object <br /></td></tr>
+<tr class="memitem:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">~object</a> ()</td></tr>
+<tr class="memdesc:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">base dtor to automatically unregister the object  <a href="#a7b65a31e0d72dd4f35ef621c94ad9791">More...</a><br /></td></tr>
 <tr class="separator:a7b65a31e0d72dd4f35ef621c94ad9791 inherit pub_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a8576ee294c7caca077fa7582c2150a4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8576ee294c7caca077fa7582c2150a4a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>dmc_LoginClient</b> (value_queue &amp;vqueue)</td></tr>
+<tr class="memitem:a8576ee294c7caca077fa7582c2150a4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a8576ee294c7caca077fa7582c2150a4a">dmc_LoginClient</a> (<a class="el" href="server_8hpp.html#a4f5d42db5c6e71cd04d3d7e823490351">value_queue</a> &amp;vqueue)</td></tr>
 <tr class="separator:a8576ee294c7caca077fa7582c2150a4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99db36d0beed52ae40ededac1fe28e37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99db36d0beed52ae40ededac1fe28e37"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>dmc_AnswerChallenge</b> (value_queue &amp;vqueue)</td></tr>
+<tr class="memitem:a99db36d0beed52ae40ededac1fe28e37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a99db36d0beed52ae40ededac1fe28e37">dmc_AnswerChallenge</a> (<a class="el" href="server_8hpp.html#a4f5d42db5c6e71cd04d3d7e823490351">value_queue</a> &amp;vqueue)</td></tr>
 <tr class="separator:a99db36d0beed52ae40ededac1fe28e37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41f50d600d209f25f428b7eecc4848ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41f50d600d209f25f428b7eecc4848ab"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>dmc_GetAccount</b> (value_queue &amp;vqueue)</td></tr>
+<tr class="memitem:a41f50d600d209f25f428b7eecc4848ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a41f50d600d209f25f428b7eecc4848ab">dmc_GetAccount</a> (<a class="el" href="server_8hpp.html#a4f5d42db5c6e71cd04d3d7e823490351">value_queue</a> &amp;vqueue)</td></tr>
 <tr class="separator:a41f50d600d209f25f428b7eecc4848ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classbvnet_1_1object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classbvnet_1_1object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td></tr>
-<tr class="memitem:aa825a910fb0f8899ac9d3f654444151c inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c">register_dmc</a> (string label, dmc func)</td></tr>
+<tr class="memitem:aa825a910fb0f8899ac9d3f654444151c inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c">register_dmc</a> (string label, <a class="el" href="namespacebvnet.html#ad554e789b85a7c5f0d0da112be4d54b7">dmc</a> func)</td></tr>
 <tr class="memdesc:aa825a910fb0f8899ac9d3f654444151c inherit pro_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">register dmc method  <a href="#aa825a910fb0f8899ac9d3f654444151c">More...</a><br /></td></tr>
 <tr class="separator:aa825a910fb0f8899ac9d3f654444151c inherit pro_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a550f9bd67f6ac15355b9ca2be9de1d52 inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a550f9bd67f6ac15355b9ca2be9de1d52"></a>
-const string&#160;</td><td class="memItemRight" valign="bottom"><b>methodLabel</b> (const unsigned int idx)</td></tr>
+<tr class="memitem:a550f9bd67f6ac15355b9ca2be9de1d52 inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a550f9bd67f6ac15355b9ca2be9de1d52">methodLabel</a> (const unsigned int idx)</td></tr>
 <tr class="separator:a550f9bd67f6ac15355b9ca2be9de1d52 inherit pro_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7121f34d58daaaaa6bb7212e87955507 inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7121f34d58daaaaa6bb7212e87955507"></a>
-const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>methodSlot</b> (const string &amp;label)</td></tr>
+<tr class="memitem:a7121f34d58daaaaa6bb7212e87955507 inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a7121f34d58daaaaa6bb7212e87955507">methodSlot</a> (const string &amp;label)</td></tr>
 <tr class="separator:a7121f34d58daaaaa6bb7212e87955507 inherit pro_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b41a8ff80c9b185d628d1b1f93f2e9b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a4b41a8ff80c9b185d628d1b1f93f2e9b">dmc_GetType</a> (value_queue &amp;)</td></tr>
-<tr class="memdesc:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">the GetType dispatched method call (dmc) <br /></td></tr>
+<tr class="memitem:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a4b41a8ff80c9b185d628d1b1f93f2e9b">dmc_GetType</a> (<a class="el" href="namespacebvnet.html#a1ca61e863b7b73782d9c5ecb990d9618">value_queue</a> &amp;)</td></tr>
+<tr class="memdesc:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">the GetType dispatched method call (dmc)  <a href="#a4b41a8ff80c9b185d628d1b1f93f2e9b">More...</a><br /></td></tr>
 <tr class="separator:a4b41a8ff80c9b185d628d1b1f93f2e9b inherit pro_methods_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae567e3fc05d9907714f38a44d72f66f8"><td class="memItemLeft" align="right" valign="top">BigInt&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#ae567e3fc05d9907714f38a44d72f66f8">cli_pub_mod</a></td></tr>
+<tr class="separator:ae567e3fc05d9907714f38a44d72f66f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bf7fde3497327034f3d8e3316d5bfec"><td class="memItemLeft" align="right" valign="top">BigInt&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a0bf7fde3497327034f3d8e3316d5bfec">cli_pub_exp</a></td></tr>
+<tr class="separator:a0bf7fde3497327034f3d8e3316d5bfec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a248c4fc00fedd07fc0c401ef5fe4d066"><td class="memItemLeft" align="right" valign="top">Key *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a248c4fc00fedd07fc0c401ef5fe4d066">clientKey</a></td></tr>
+<tr class="separator:a248c4fc00fedd07fc0c401ef5fe4d066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae78829bda283699e50e92262e81e8a24"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#ae78829bda283699e50e92262e81e8a24">clientValid</a></td></tr>
+<tr class="separator:ae78829bda283699e50e92262e81e8a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bf6c2dad5586e9dc9e9508ca82c0807"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a1bf6c2dad5586e9dc9e9508ca82c0807">challenge</a></td></tr>
+<tr class="separator:a1bf6c2dad5586e9dc9e9508ca82c0807"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47dbac76dcefc57af95525ee1030fe54"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html">SQLiteDB</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a47dbac76dcefc57af95525ee1030fe54">db</a></td></tr>
+<tr class="separator:a47dbac76dcefc57af95525ee1030fe54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a503b6b1a02ccf0aafd0ba772dd69f4b4"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classserver_root.html#a503b6b1a02ccf0aafd0ba772dd69f4b4">randbits</a> [8]</td></tr>
+<tr class="separator:a503b6b1a02ccf0aafd0ba772dd69f4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_classbvnet_1_1object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classbvnet_1_1object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td></tr>
-<tr class="memitem:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc0211ae67284eccf20e9bfe1c25e0cc"></a>
-<a class="el" href="classbvnet_1_1session.html">session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td></tr>
-<tr class="memdesc:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">for objects to attach to the session's registry <br /></td></tr>
+<tr class="memitem:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbvnet_1_1session.html">session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td></tr>
+<tr class="memdesc:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="mdescLeft">&#160;</td><td class="mdescRight">for objects to attach to the session's registry  <a href="#acc0211ae67284eccf20e9bfe1c25e0cc">More...</a><br /></td></tr>
 <tr class="separator:acc0211ae67284eccf20e9bfe1c25e0cc inherit pro_attribs_classbvnet_1_1object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p>Definition at line <a class="el" href="server_8hpp_source.html#l00054">54</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ad8b6aae950057cd142edcb8d8184e2f6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">serverRoot::serverRoot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbvnet_1_1session.html">bvnet::session</a> &amp;&#160;</td>
+          <td class="paramname"><em>sess</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00068">68</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+<p>References <a class="el" href="server_8cpp_source.html#l00239">dmc_AnswerChallenge()</a>, <a class="el" href="server_8cpp_source.html#l00276">dmc_GetAccount()</a>, <a class="el" href="server_8cpp_source.html#l00204">dmc_LoginClient()</a>, and <a class="el" href="protocol_8hpp_source.html#l00461">bvnet::object::register_dmc()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5343f04cc76edc0cefc9b68b7b55f6c6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual serverRoot::~serverRoot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00077">77</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+<p>References <a class="el" href="server_8hpp_source.html#l00058">clientKey</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a99db36d0beed52ae40ededac1fe28e37"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void serverRoot::dmc_AnswerChallenge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="server_8hpp.html#a4f5d42db5c6e71cd04d3d7e823490351">value_queue</a> &amp;&#160;</td>
+          <td class="paramname"><em>vqueue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00239">239</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+
+<p>References <a class="el" href="server_8hpp_source.html#l00060">challenge</a>, <a class="el" href="server_8hpp_source.html#l00059">clientValid</a>, <a class="el" href="protocol_8hpp_source.html#l00458">bvnet::object::ctx</a>, <a class="el" href="protocol_8hpp_source.html#l00250">bvnet::session::disconnect()</a>, and <a class="el" href="protocol_8hpp_source.html#l00279">bvnet::session::getarg()</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8hpp_source.html#l00068">serverRoot()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a41f50d600d209f25f428b7eecc4848ab"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void serverRoot::dmc_GetAccount </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="server_8hpp.html#a4f5d42db5c6e71cd04d3d7e823490351">value_queue</a> &amp;&#160;</td>
+          <td class="paramname"><em>vqueue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00276">276</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+
+<p>References <a class="el" href="database_8hpp_source.html#l00258">bvdb::SQLiteDB::bind()</a>, <a class="el" href="server_8hpp_source.html#l00057">cli_pub_exp</a>, <a class="el" href="server_8hpp_source.html#l00056">cli_pub_mod</a>, <a class="el" href="server_8hpp_source.html#l00058">clientKey</a>, <a class="el" href="server_8hpp_source.html#l00059">clientValid</a>, <a class="el" href="protocol_8hpp_source.html#l00458">bvnet::object::ctx</a>, <a class="el" href="server_8hpp_source.html#l00061">db</a>, <a class="el" href="protocol_8hpp_source.html#l00250">bvnet::session::disconnect()</a>, <a class="el" href="database_8hpp_source.html#l00207">bvdb::SQLiteDB::get_result()</a>, <a class="el" href="protocol_8hpp_source.html#l00279">bvnet::session::getarg()</a>, <a class="el" href="common_8hpp_source.html#l00050">LOCK_COUT</a>, <a class="el" href="database_8hpp_source.html#l00318">bvdb::SQLiteDB::prepare()</a>, <a class="el" href="database_8hpp_source.html#l00209">bvdb::SQLiteDB::run()</a>, and <a class="el" href="common_8hpp_source.html#l00051">UNLOCK_COUT</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8hpp_source.html#l00068">serverRoot()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8576ee294c7caca077fa7582c2150a4a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void serverRoot::dmc_LoginClient </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="server_8hpp.html#a4f5d42db5c6e71cd04d3d7e823490351">value_queue</a> &amp;&#160;</td>
+          <td class="paramname"><em>vqueue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8cpp_source.html#l00204">204</a> of file <a class="el" href="server_8cpp_source.html">server.cpp</a>.</p>
+
+<p>References <a class="el" href="server_8hpp_source.html#l00060">challenge</a>, <a class="el" href="server_8hpp_source.html#l00057">cli_pub_exp</a>, <a class="el" href="server_8hpp_source.html#l00056">cli_pub_mod</a>, <a class="el" href="server_8hpp_source.html#l00058">clientKey</a>, <a class="el" href="protocol_8hpp_source.html#l00458">bvnet::object::ctx</a>, <a class="el" href="server_8cpp_source.html#l00032">entropy</a>, <a class="el" href="protocol_8hpp_source.html#l00279">bvnet::session::getarg()</a>, and <a class="el" href="server_8hpp_source.html#l00062">randbits</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8hpp_source.html#l00068">serverRoot()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a3e22b92d44917a86e12c0155c6169b15"></a>
 <div class="memitem">
 <div class="memproto">
@@ -209,6 +369,175 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a1bf6c2dad5586e9dc9e9508ca82c0807"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string serverRoot::challenge</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00060">60</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00239">dmc_AnswerChallenge()</a>, and <a class="el" href="server_8cpp_source.html#l00204">dmc_LoginClient()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0bf7fde3497327034f3d8e3316d5bfec"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">BigInt serverRoot::cli_pub_exp</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00057">57</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00276">dmc_GetAccount()</a>, and <a class="el" href="server_8cpp_source.html#l00204">dmc_LoginClient()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae567e3fc05d9907714f38a44d72f66f8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">BigInt serverRoot::cli_pub_mod</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00056">56</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00276">dmc_GetAccount()</a>, and <a class="el" href="server_8cpp_source.html#l00204">dmc_LoginClient()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a248c4fc00fedd07fc0c401ef5fe4d066"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Key* serverRoot::clientKey</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00058">58</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00276">dmc_GetAccount()</a>, <a class="el" href="server_8cpp_source.html#l00204">dmc_LoginClient()</a>, and <a class="el" href="server_8hpp_source.html#l00077">~serverRoot()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae78829bda283699e50e92262e81e8a24"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool serverRoot::clientValid</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00059">59</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00239">dmc_AnswerChallenge()</a>, and <a class="el" href="server_8cpp_source.html#l00276">dmc_GetAccount()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a47dbac76dcefc57af95525ee1030fe54"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbvdb_1_1_s_q_lite_d_b.html">SQLiteDB</a> serverRoot::db</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00061">61</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00276">dmc_GetAccount()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a503b6b1a02ccf0aafd0ba772dd69f4b4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int serverRoot::randbits[8]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="server_8hpp_source.html#l00062">62</a> of file <a class="el" href="server_8hpp_source.html">server.hpp</a>.</p>
+
+<p>Referenced by <a class="el" href="server_8cpp_source.html#l00204">dmc_LoginClient()</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="server_8hpp_source.html">server.hpp</a></li>
 <li><a class="el" href="server_8cpp_source.html">server.cpp</a></li>
@@ -219,7 +548,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classserver_root.html">serverRoot</a></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:32 for Blockiverse by
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:19 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

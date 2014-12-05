@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,6 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -92,7 +94,7 @@ $(document).ready(function(){initNavTree('settings_8cpp_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -106,7 +108,7 @@ $(document).ready(function(){initNavTree('settings_8cpp_source.html','');});
 <div class="title">settings.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="settings_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">**</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">**  Minetest-Blockiverse</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">**</span></div>
@@ -124,8 +126,8 @@ $(document).ready(function(){initNavTree('settings_8cpp_source.html','');});
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">**  config/settings implementation</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">**</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">*/</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;common.hpp&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;settings.hpp&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_8hpp.html">common.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="settings_8hpp.html">settings.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;boost/algorithm/string.hpp&gt;</span></div>
@@ -136,65 +138,77 @@ $(document).ready(function(){initNavTree('settings_8cpp_source.html','');});
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">using</span> boost::filesystem::path;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">using</span> boost::split;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;Configurator::Configurator(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;cfgPath,defaultor init_defaults) {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    cfgFile=cfgPath;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_configurator.html#a754ad28757f64fc63bbefb71778d5da2">   31</a></span>&#160;<a class="code" href="class_configurator.html#a754ad28757f64fc63bbefb71778d5da2">Configurator::Configurator</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;cfgPath,defaultor init_defaults) {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">cfgFile</a>=cfgPath;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordflow">if</span> (init_defaults!=NULL) {</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        init_defaults(*<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    read();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="class_configurator.html#abc00f7a291ee7f054fad7566ed17e13a">read</a>();</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">void</span> Configurator::process_line(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;line) {</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="class_configurator.html#ac9e3e4518e7bc2e0a46f74c08a382c6f">   39</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_configurator.html#ac9e3e4518e7bc2e0a46f74c08a382c6f">Configurator::process_line</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;line) {</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    std::vector&lt;string&gt; parts;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    split(parts,line,boost::is_any_of(<span class="stringliteral">&quot;=&quot;</span>),boost::token_compress_on);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">if</span> (parts.size()&gt;1) {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        process_clause(parts[0],parts[1]);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="class_configurator.html#a62ffd6299e5580e7348880e1981bfb67">process_clause</a>(parts[0],parts[1]);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> Configurator::process_clause(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;key,<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;val) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    LOCK_COUT</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;[conf] &quot;</span> &lt;&lt; path(cfgFile).filename().string()</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="class_configurator.html#a62ffd6299e5580e7348880e1981bfb67">   47</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_configurator.html#a62ffd6299e5580e7348880e1981bfb67">Configurator::process_clause</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;key,<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;val) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="common_8hpp.html#aa7a3774f1def16a09030e971ad832c36">LOCK_COUT</a></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;[conf] &quot;</span> &lt;&lt; path(<a class="code" href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">cfgFile</a>).filename().string()</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;              &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot;=&quot;</span> &lt;&lt; val &lt;&lt; endl;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    UNLOCK_COUT</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    cfg[key]=val;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="common_8hpp.html#a4e6a91d8d0fbb428a9188d5b7d84caa8">UNLOCK_COUT</a></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="class_configurator.html#aa7a3e5b5b03b2bf6879fcd75cbf858a7">cfg</a>[key]=val;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">void</span> Configurator::read_cmdline(<span class="keywordtype">int</span> argc,<span class="keywordtype">char</span> **argv) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="class_configurator.html#acb03e9fa70fed2c2ced7973ed141b0f3">   55</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_configurator.html#acb03e9fa70fed2c2ced7973ed141b0f3">Configurator::read_cmdline</a>(<span class="keywordtype">int</span> argc,<span class="keywordtype">char</span> **argv) {</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0;i&lt;argc;++i) {</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="comment">/*LOCK_COUT</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">        cout &lt;&lt; &quot;from cmdline: &quot; &lt;&lt; line &lt;&lt; endl;</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">        UNLOCK_COUT*/</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        process_line(argv[i]);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="class_configurator.html#ac9e3e4518e7bc2e0a46f74c08a382c6f">process_line</a>(argv[i]);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> Configurator::read() {</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="class_configurator.html#abc00f7a291ee7f054fad7566ed17e13a">   64</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_configurator.html#abc00f7a291ee7f054fad7566ed17e13a">Configurator::read</a>() {</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">string</span> line;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    std::ifstream in(cfgFile);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    std::ifstream in(<a class="code" href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">cfgFile</a>);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    std::getline(in,line);</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">while</span> (in) {</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="comment">/*LOCK_COUT</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">        cout &lt;&lt; &quot;from &quot; &lt;&lt; cfgFile &lt;&lt; &quot;: &quot; &lt;&lt; line &lt;&lt; endl;</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">        UNLOCK_COUT*/</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        process_line(line);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="class_configurator.html#ac9e3e4518e7bc2e0a46f74c08a382c6f">process_line</a>(line);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        std::getline(in,line);</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">void</span> Configurator::write() {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    std::ofstream out(cfgFile);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;each : cfg) {</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="class_configurator.html#a9e1a5b43bc645efaf6a35babd0339747">   77</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_configurator.html#a9e1a5b43bc645efaf6a35babd0339747">Configurator::write</a>() {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    std::ofstream out(<a class="code" href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">cfgFile</a>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;each : <a class="code" href="class_configurator.html#aa7a3e5b5b03b2bf6879fcd75cbf858a7">cfg</a>) {</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        out &lt;&lt; each.first &lt;&lt; <span class="stringliteral">&quot;=&quot;</span> &lt;&lt; each.second &lt;&lt; endl;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
+<div class="ttc" id="class_configurator_html_a754ad28757f64fc63bbefb71778d5da2"><div class="ttname"><a href="class_configurator.html#a754ad28757f64fc63bbefb71778d5da2">Configurator::Configurator</a></div><div class="ttdeci">Configurator(const string &amp;, defaultor=NULL)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00031">settings.cpp:31</a></div></div>
+<div class="ttc" id="class_configurator_html_a62ffd6299e5580e7348880e1981bfb67"><div class="ttname"><a href="class_configurator.html#a62ffd6299e5580e7348880e1981bfb67">Configurator::process_clause</a></div><div class="ttdeci">virtual void process_clause(const string &amp;, const string &amp;)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00047">settings.cpp:47</a></div></div>
+<div class="ttc" id="class_configurator_html_aa7a3e5b5b03b2bf6879fcd75cbf858a7"><div class="ttname"><a href="class_configurator.html#aa7a3e5b5b03b2bf6879fcd75cbf858a7">Configurator::cfg</a></div><div class="ttdeci">property_map cfg</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00035">settings.hpp:35</a></div></div>
+<div class="ttc" id="common_8hpp_html_a4e6a91d8d0fbb428a9188d5b7d84caa8"><div class="ttname"><a href="common_8hpp.html#a4e6a91d8d0fbb428a9188d5b7d84caa8">UNLOCK_COUT</a></div><div class="ttdeci">#define UNLOCK_COUT</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00051">common.hpp:51</a></div></div>
+<div class="ttc" id="common_8hpp_html"><div class="ttname"><a href="common_8hpp.html">common.hpp</a></div></div>
+<div class="ttc" id="settings_8hpp_html"><div class="ttname"><a href="settings_8hpp.html">settings.hpp</a></div></div>
+<div class="ttc" id="class_configurator_html_ac9e3e4518e7bc2e0a46f74c08a382c6f"><div class="ttname"><a href="class_configurator.html#ac9e3e4518e7bc2e0a46f74c08a382c6f">Configurator::process_line</a></div><div class="ttdeci">void process_line(const string &amp;)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00039">settings.cpp:39</a></div></div>
+<div class="ttc" id="class_configurator_html_a9e1a5b43bc645efaf6a35babd0339747"><div class="ttname"><a href="class_configurator.html#a9e1a5b43bc645efaf6a35babd0339747">Configurator::write</a></div><div class="ttdeci">void write()</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00077">settings.cpp:77</a></div></div>
+<div class="ttc" id="class_configurator_html_acb03e9fa70fed2c2ced7973ed141b0f3"><div class="ttname"><a href="class_configurator.html#acb03e9fa70fed2c2ced7973ed141b0f3">Configurator::read_cmdline</a></div><div class="ttdeci">void read_cmdline(int, char **)</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00055">settings.cpp:55</a></div></div>
+<div class="ttc" id="class_configurator_html_abc00f7a291ee7f054fad7566ed17e13a"><div class="ttname"><a href="class_configurator.html#abc00f7a291ee7f054fad7566ed17e13a">Configurator::read</a></div><div class="ttdeci">void read()</div><div class="ttdef"><b>Definition:</b> <a href="settings_8cpp_source.html#l00064">settings.cpp:64</a></div></div>
+<div class="ttc" id="common_8hpp_html_aa7a3774f1def16a09030e971ad832c36"><div class="ttname"><a href="common_8hpp.html#aa7a3774f1def16a09030e971ad832c36">LOCK_COUT</a></div><div class="ttdeci">#define LOCK_COUT</div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00050">common.hpp:50</a></div></div>
+<div class="ttc" id="class_configurator_html_ad6fd8b07e08798a2d26934b1771368ed"><div class="ttname"><a href="class_configurator.html#ad6fd8b07e08798a2d26934b1771368ed">Configurator::cfgFile</a></div><div class="ttdeci">string cfgFile</div><div class="ttdef"><b>Definition:</b> <a href="settings_8hpp_source.html#l00036">settings.hpp:36</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>settings.cpp</b></li>
-    <li class="footer">Generated on Fri Dec 5 2014 05:42:31 for Blockiverse by
+    <li class="navelem"><a class="el" href="settings_8cpp.html">settings.cpp</a></li>
+    <li class="footer">Generated on Fri Dec 5 2014 06:22:18 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

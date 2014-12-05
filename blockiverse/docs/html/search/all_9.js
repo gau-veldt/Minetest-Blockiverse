@@ -1,6 +1,22 @@
 var searchData=
 [
-  ['notify',['notify',['../classbvnet_1_1registry.html#a06a4accc79d0cc68b4bebbaad7432fb4',1,'bvnet::registry']]],
-  ['notify_5fremove',['notify_remove',['../classbvnet_1_1session.html#ac9d0a1ae5d8bcdb2348361e58dab6ba5',1,'bvnet::session']]],
-  ['notthreadable',['NotThreadable',['../structbvdb_1_1_not_threadable.html',1,'bvdb']]]
+  ['id',['id',['../structbvnet_1_1obref.html#a6d6220a378b2de38458bd72c675abfa1',1,'bvnet::obref::id()'],['../structbvnet_1_1ob__is__gone.html#ab2f4428cd7b5e648c1d09fbc063a0604',1,'bvnet::ob_is_gone::id()'],['../structbvnet_1_1method__call.html#ad1523e304df333e4f8fc325fde6338fc',1,'bvnet::method_call::id()']]],
+  ['idof',['idOf',['../classbvnet_1_1registry.html#a81eb3ad92ee4b21050dce0ddf109ea1d',1,'bvnet::registry']]],
+  ['idx',['idx',['../structbvnet_1_1method__call.html#a7142a05e942647dd188d63231d4a5140',1,'bvnet::method_call']]],
+  ['iface_5fmap',['iface_map',['../namespacebvnet.html#a9ce8ee53f71d380f8b5c7effd2f32b07',1,'bvnet']]],
+  ['in_5fch',['in_ch',['../classbvnet_1_1session.html#af1dc4f4f39d88fcfe2d830e21b50b650',1,'bvnet::session']]],
+  ['in_5fidx',['in_idx',['../classbvnet_1_1session.html#a0ceebd49eb9bef485215deb9c0f4a712',1,'bvnet::session']]],
+  ['in_5fs64',['in_s64',['../classbvnet_1_1session.html#a01ebf5a2540739318bdab4f5d658abfc',1,'bvnet::session']]],
+  ['indx_5fmap',['indx_map',['../namespacebvnet.html#adaa6d94bd4837bcf9da8e6b0a985a43e',1,'bvnet']]],
+  ['init',['init',['../classbvdb_1_1_s_q_lite_d_b.html#a383ff29a81afe74d64cf514201c2328f',1,'bvdb::SQLiteDB']]],
+  ['init_5fdb',['init_db',['../namespacebvdb.html#a935a56ffcab58b8fd097be19eb802dc7',1,'bvdb']]],
+  ['integer',['integer',['../classbvdb_1_1db_value.html#a93673c75ee99fefd9539e42d9cbfb778a23a7b19175a93ae338ce2b284c208a92',1,'bvdb::dbValue']]],
+  ['io_5f',['io_',['../classbvnet_1_1session.html#a337c4bb5e7b2e07ea146297164e822c6',1,'bvnet::session']]],
+  ['io_5fservice',['io_service',['../protocol_8hpp.html#ae7f98f547b9d464de389168d5e642794',1,'protocol.hpp']]],
+  ['isactive',['isActive',['../classbvnet_1_1session.html#ad5383856264b1bf4dbef55f5e70c7425',1,'bvnet::session']]],
+  ['isbooting',['isBooting',['../classbvnet_1_1session.html#a5f541527be84a927ed8e9568f152fd94',1,'bvnet::session']]],
+  ['isvalidobject',['isValidObject',['../classbvnet_1_1session.html#a20e446cd31e2f453ae15c39b487474c0',1,'bvnet::session']]],
+  ['iterator',['iterator',['../class_configurator.html#a5fb31ada99aa34a9ad36591f05bcd537',1,'Configurator']]],
+  ['ivisitable',['IVisitable',['../class_i_visitable.html',1,'IVisitable'],['../class_i_visitable.html#a97da02ee7ae59189bfc1dd13ea5d0f4b',1,'IVisitable::IVisitable()']]],
+  ['ivisitor',['IVisitor',['../class_i_visitor.html',1,'IVisitor'],['../class_i_visitor.html#a79952e5b7005ad1edd5ee7b38d8d3bc5',1,'IVisitor::IVisitor()']]]
 ];
