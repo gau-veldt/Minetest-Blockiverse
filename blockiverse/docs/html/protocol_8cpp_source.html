@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('protocol_8cpp_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -141,22 +141,24 @@ $(document).ready(function(){initNavTree('protocol_8cpp_source.html','');});
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">void</span> protocol_main_init() {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    bvnet::typeMap.insert(mappedType(<span class="keyword">typeid</span>(s64                ).name(),bvnet::vtInt));</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    bvnet::typeMap.insert(mappedType(<span class="keyword">typeid</span>(<span class="keywordtype">float</span>              ).name(),bvnet::vtFloat));</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="comment">//bvnet::typeMap.insert(mappedType(typeid(std::string       ).name(),bvnet::vtBlob));</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    bvnet::typeMap.insert(mappedType(<span class="keyword">typeid</span>(std::string       ).name(),bvnet::vtString));</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="comment">//bvnet::typeMap.insert(mappedType(typeid(string       ).name(),bvnet::vtBlob));</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    bvnet::typeMap.insert(mappedType(<span class="keyword">typeid</span>(<span class="keywordtype">string</span>       ).name(),bvnet::vtString));</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    bvnet::typeMap.insert(mappedType(<span class="keyword">typeid</span>(<a class="code" href="structbvnet_1_1obref.html">bvnet::obref</a>      ).name(),bvnet::vtObref));</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    bvnet::typeMap.insert(mappedType(<span class="keyword">typeid</span>(<a class="code" href="structbvnet_1_1ob__is__gone.html">bvnet::ob_is_gone</a> ).name(),bvnet::vtDeath));</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    bvnet::typeMap.insert(mappedType(<span class="keyword">typeid</span>(<a class="code" href="structbvnet_1_1method__call.html">bvnet::method_call</a>).name(),bvnet::vtMethod));</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
-<div class="ttc" id="structbvnet_1_1method__call_html"><div class="ttname"><a href="structbvnet_1_1method__call.html">bvnet::method_call</a></div><div class="ttdoc">protocol valuetype class for object method calls </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00103">protocol.hpp:103</a></div></div>
-<div class="ttc" id="structbvnet_1_1ob__is__gone_html"><div class="ttname"><a href="structbvnet_1_1ob__is__gone.html">bvnet::ob_is_gone</a></div><div class="ttdoc">protocol valuetype class for indicating object no longer exists </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00096">protocol.hpp:96</a></div></div>
-<div class="ttc" id="structbvnet_1_1obref_html"><div class="ttname"><a href="structbvnet_1_1obref.html">bvnet::obref</a></div><div class="ttdoc">protocol valuetype class for object reference </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00089">protocol.hpp:89</a></div></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    bvnet::typeMap.insert(mappedType(<span class="keyword">typeid</span>(<a class="code" href="structbvnet_1_1dmc__msg.html">bvnet::dmc_msg</a>    ).name(),bvnet::vtDMC));</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="ttc" id="structbvnet_1_1dmc__msg_html"><div class="ttname"><a href="structbvnet_1_1dmc__msg.html">bvnet::dmc_msg</a></div><div class="ttdoc">protocol valuetype class for dmc messages </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00115">protocol.hpp:115</a></div></div>
+<div class="ttc" id="structbvnet_1_1method__call_html"><div class="ttname"><a href="structbvnet_1_1method__call.html">bvnet::method_call</a></div><div class="ttdoc">protocol valuetype class for object method calls </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00105">protocol.hpp:105</a></div></div>
+<div class="ttc" id="structbvnet_1_1ob__is__gone_html"><div class="ttname"><a href="structbvnet_1_1ob__is__gone.html">bvnet::ob_is_gone</a></div><div class="ttdoc">protocol valuetype class for indicating object no longer exists </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00098">protocol.hpp:98</a></div></div>
+<div class="ttc" id="structbvnet_1_1obref_html"><div class="ttname"><a href="structbvnet_1_1obref.html">bvnet::obref</a></div><div class="ttdoc">protocol valuetype class for object reference </div><div class="ttdef"><b>Definition:</b> <a href="protocol_8hpp_source.html#l00091">protocol.hpp:91</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>protocol.cpp</b></li>
-    <li class="footer">Generated on Sun Nov 30 2014 13:25:36 for Blockiverse by
+    <li class="footer">Generated on Fri Dec 5 2014 05:42:31 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

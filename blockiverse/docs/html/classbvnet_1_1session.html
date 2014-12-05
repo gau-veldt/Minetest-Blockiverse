@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('classbvnet_1_1session.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -122,9 +122,14 @@ $(document).ready(function(){initNavTree('classbvnet_1_1session.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac9d0a1ae5d8bcdb2348361e58dab6ba5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9d0a1ae5d8bcdb2348361e58dab6ba5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#ac9d0a1ae5d8bcdb2348361e58dab6ba5">notify_remove</a> (u32 id)</td></tr>
-<tr class="memdesc:ac9d0a1ae5d8bcdb2348361e58dab6ba5"><td class="mdescLeft">&#160;</td><td class="mdescRight">signals that object no longer valid <br /></td></tr>
+<tr class="memitem:a003e1ce8ceb9e02a4cdcfd4276b3f0a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a003e1ce8ceb9e02a4cdcfd4276b3f0a5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateInterface</b> (u32, string, u32)</td></tr>
+<tr class="separator:a003e1ce8ceb9e02a4cdcfd4276b3f0a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2713c9125f1de96a0ca2c5b3cb8d565"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2713c9125f1de96a0ca2c5b3cb8d565"></a>
+u32&#160;</td><td class="memItemRight" valign="bottom"><b>getIdOf</b> (<a class="el" href="classbvnet_1_1object.html">object</a> *ob)</td></tr>
+<tr class="separator:ac2713c9125f1de96a0ca2c5b3cb8d565"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9d0a1ae5d8bcdb2348361e58dab6ba5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#ac9d0a1ae5d8bcdb2348361e58dab6ba5">notify_remove</a> (u32 id)</td></tr>
+<tr class="memdesc:ac9d0a1ae5d8bcdb2348361e58dab6ba5"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets id of specified object  <a href="#ac9d0a1ae5d8bcdb2348361e58dab6ba5">More...</a><br /></td></tr>
 <tr class="separator:ac9d0a1ae5d8bcdb2348361e58dab6ba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adff1f9a58b2de9efd9be73ff71a57603"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adff1f9a58b2de9efd9be73ff71a57603"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#adff1f9a58b2de9efd9be73ff71a57603">disconnect</a> ()</td></tr>
@@ -177,14 +182,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a54cdc07be63c20c4af1c00407e6074bc">send_float</a> (float val)</td></tr>
 <tr class="memdesc:a54cdc07be63c20c4af1c00407e6074bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">send float to remote <br /></td></tr>
 <tr class="separator:a54cdc07be63c20c4af1c00407e6074bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3603554fa7f1ebb122c4a9a635f91a71"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3603554fa7f1ebb122c4a9a635f91a71"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a3603554fa7f1ebb122c4a9a635f91a71">send_blob</a> (std::string val)</td></tr>
-<tr class="memdesc:a3603554fa7f1ebb122c4a9a635f91a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">send blob (as string) to remote <br /></td></tr>
-<tr class="separator:a3603554fa7f1ebb122c4a9a635f91a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af974a78a309e4f7aff43e9ecc7304077"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af974a78a309e4f7aff43e9ecc7304077"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#af974a78a309e4f7aff43e9ecc7304077">send_string</a> (std::string val)</td></tr>
-<tr class="memdesc:af974a78a309e4f7aff43e9ecc7304077"><td class="mdescLeft">&#160;</td><td class="mdescRight">send string to remote <br /></td></tr>
-<tr class="separator:af974a78a309e4f7aff43e9ecc7304077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d0b84a0b87657fe097839de161af5ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d0b84a0b87657fe097839de161af5ac"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a4d0b84a0b87657fe097839de161af5ac">send_blob</a> (string val)</td></tr>
+<tr class="memdesc:a4d0b84a0b87657fe097839de161af5ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">send blob (as string) to remote <br /></td></tr>
+<tr class="separator:a4d0b84a0b87657fe097839de161af5ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2240dc9a5153b6ae20335e766de467e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2240dc9a5153b6ae20335e766de467e5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a2240dc9a5153b6ae20335e766de467e5">send_string</a> (string val)</td></tr>
+<tr class="memdesc:a2240dc9a5153b6ae20335e766de467e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">send string to remote <br /></td></tr>
+<tr class="separator:a2240dc9a5153b6ae20335e766de467e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7bc97917863742f0bea82d49f3e0b7ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7bc97917863742f0bea82d49f3e0b7ab"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a7bc97917863742f0bea82d49f3e0b7ab">send_obref</a> (u32 id)</td></tr>
 <tr class="memdesc:a7bc97917863742f0bea82d49f3e0b7ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">send object referebce to remote <br /></td></tr>
@@ -192,6 +197,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a0a94a03781b72154e82f951c68320598"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a0a94a03781b72154e82f951c68320598">send_call</a> (u32 id, u32 m, lpvFunc cb=NULL, int rcount=0)</td></tr>
 <tr class="memdesc:a0a94a03781b72154e82f951c68320598"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remote method call.  <a href="#a0a94a03781b72154e82f951c68320598">More...</a><br /></td></tr>
 <tr class="separator:a0a94a03781b72154e82f951c68320598"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f510c5086deedb14c71b049f0c46294"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f510c5086deedb14c71b049f0c46294"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>send_call</b> (u32 id, string m_name, lpvFunc cb=NULL, int rcount=0)</td></tr>
+<tr class="separator:a0f510c5086deedb14c71b049f0c46294"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20e446cd31e2f453ae15c39b487474c0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a20e446cd31e2f453ae15c39b487474c0">isValidObject</a> (u32 obid)</td></tr>
 <tr class="memdesc:a20e446cd31e2f453ae15c39b487474c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queries if an object still valid and useable on remote.  <a href="#a20e446cd31e2f453ae15c39b487474c0">More...</a><br /></td></tr>
 <tr class="separator:a20e446cd31e2f453ae15c39b487474c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,14 +261,27 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#aa32bab5ae8663e64aeb429146746274d">on_recv_s64</a> (const boost::system::error_code &amp;ec, u32 bsize)</td></tr>
 <tr class="memdesc:aa32bab5ae8663e64aeb429146746274d"><td class="mdescLeft">&#160;</td><td class="mdescRight">various async data reception callbacks <br /></td></tr>
 <tr class="separator:aa32bab5ae8663e64aeb429146746274d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac31decbe980c827edcd3193d4bf27853"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac31decbe980c827edcd3193d4bf27853"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#ac31decbe980c827edcd3193d4bf27853">on_write_done</a> (std::string *finsihedbuf)</td></tr>
-<tr class="memdesc:ac31decbe980c827edcd3193d4bf27853"><td class="mdescLeft">&#160;</td><td class="mdescRight">various async trasnfer completion callbacks <br /></td></tr>
-<tr class="separator:ac31decbe980c827edcd3193d4bf27853"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a708cb5242726962e0884950183dc7fc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a708cb5242726962e0884950183dc7fc5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a708cb5242726962e0884950183dc7fc5">on_write_call_done</a> (std::string *finishedbuf, lpvFunc cb)</td></tr>
-<tr class="memdesc:a708cb5242726962e0884950183dc7fc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">various async trasnfer completion callbacks <br /></td></tr>
-<tr class="separator:a708cb5242726962e0884950183dc7fc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abef1623c8449a1f7f1705938651bd389"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abef1623c8449a1f7f1705938651bd389"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#abef1623c8449a1f7f1705938651bd389">on_recv_dmc_obid</a> (const boost::system::error_code &amp;ec)</td></tr>
+<tr class="memdesc:abef1623c8449a1f7f1705938651bd389"><td class="mdescLeft">&#160;</td><td class="mdescRight">various async data reception callbacks <br /></td></tr>
+<tr class="separator:abef1623c8449a1f7f1705938651bd389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4df41090f3e87da5854ae1214fd1af5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4df41090f3e87da5854ae1214fd1af5a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>on_recv_dmc_len</b> (const boost::system::error_code &amp;ec, <a class="el" href="structbvnet_1_1dmc__msg.html">dmc_msg</a> mk_dmc)</td></tr>
+<tr class="separator:a4df41090f3e87da5854ae1214fd1af5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7b288fe769541bf204f28053a68f087"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7b288fe769541bf204f28053a68f087"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>on_recv_dmc_label</b> (const boost::system::error_code &amp;ec, <a class="el" href="structbvnet_1_1dmc__msg.html">dmc_msg</a> mk_dmc, char *buf)</td></tr>
+<tr class="separator:ae7b288fe769541bf204f28053a68f087"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acedcace2c21861b01bddf84cd19092f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acedcace2c21861b01bddf84cd19092f8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>on_recv_dmc_slot</b> (const boost::system::error_code &amp;ec, <a class="el" href="structbvnet_1_1dmc__msg.html">dmc_msg</a> mk_dmc)</td></tr>
+<tr class="separator:acedcace2c21861b01bddf84cd19092f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf99bf462c6bb352dde0d62aedbf2882"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf99bf462c6bb352dde0d62aedbf2882"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#abf99bf462c6bb352dde0d62aedbf2882">on_write_done</a> (string *finsihedbuf)</td></tr>
+<tr class="memdesc:abf99bf462c6bb352dde0d62aedbf2882"><td class="mdescLeft">&#160;</td><td class="mdescRight">various async trasnfer completion callbacks <br /></td></tr>
+<tr class="separator:abf99bf462c6bb352dde0d62aedbf2882"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bf9ddf382ed8247a706ccbe38f893f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bf9ddf382ed8247a706ccbe38f893f6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a9bf9ddf382ed8247a706ccbe38f893f6">on_write_call_done</a> (string *finishedbuf, lpvFunc cb)</td></tr>
+<tr class="memdesc:a9bf9ddf382ed8247a706ccbe38f893f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">various async trasnfer completion callbacks <br /></td></tr>
+<tr class="separator:a9bf9ddf382ed8247a706ccbe38f893f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac62fd489c0d1fa896f4d85dfc5c1144d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#ac62fd489c0d1fa896f4d85dfc5c1144d">check_argnotify</a> ()</td></tr>
 <tr class="memdesc:ac62fd489c0d1fa896f4d85dfc5c1144d"><td class="mdescLeft">&#160;</td><td class="mdescRight">notifies callback when expected number of return arguments arrive  <a href="#ac62fd489c0d1fa896f4d85dfc5c1144d">More...</a><br /></td></tr>
 <tr class="separator:ac62fd489c0d1fa896f4d85dfc5c1144d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -283,6 +304,10 @@ proxy_map&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 cb_queue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#af78e3970a3f0f904dfeee040ef350c7d">argnotify</a></td></tr>
 <tr class="memdesc:af78e3970a3f0f904dfeee040ef350c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">callbacks to notify when remote methods complete <br /></td></tr>
 <tr class="separator:af78e3970a3f0f904dfeee040ef350c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a038ba6ce37dd32e9d8cdc1b913933159"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a038ba6ce37dd32e9d8cdc1b913933159"></a>
+iface_map&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#a038ba6ce37dd32e9d8cdc1b913933159">contracts</a></td></tr>
+<tr class="memdesc:a038ba6ce37dd32e9d8cdc1b913933159"><td class="mdescLeft">&#160;</td><td class="mdescRight">interfaces map of all remote objects <br /></td></tr>
+<tr class="separator:a038ba6ce37dd32e9d8cdc1b913933159"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb33549327393a068c2d0cd4ec44dc20"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb33549327393a068c2d0cd4ec44dc20"></a>
 <a class="el" href="classbvnet_1_1registry.html">registry</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1session.html#adb33549327393a068c2d0cd4ec44dc20">reg</a></td></tr>
 <tr class="memdesc:adb33549327393a068c2d0cd4ec44dc20"><td class="mdescLeft">&#160;</td><td class="mdescRight">registered objects in session <br /></td></tr>
@@ -304,7 +329,7 @@ u32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <div class="textblock"><p>Symmetrical endpoint session for established connection. </p>
 <p>Maintains the state of the session while the endpoint is connected. The protocol is mainly symmetrical &ndash; both endpoints have the same communication language. Once a bootstrap/hnadshake announces the root object the session will asynchronously wait for incoming data with the possibility of sending data or method calls upstream to the remote (and symmetrically processing any such data or method calls received from the remote). </p>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00166">166</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00189">189</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="af7ade0024a10ac1d235e2da3a1728f43"></a>
 <div class="memitem">
@@ -335,7 +360,7 @@ u32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00230">230</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00261">261</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -363,7 +388,7 @@ u32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>notifies callback when expected number of return arguments arrive </p>
 <p>Notifies stored callback when argstack reaches specified size</p>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00887">887</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l01127">1127</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -399,7 +424,7 @@ template&lt;typename V &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00248">248</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00279">279</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -434,7 +459,36 @@ template&lt;typename V &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if oject useable false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00283">283</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00323">323</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac9d0a1ae5d8bcdb2348361e58dab6ba5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bvnet::session::notify_remove </td>
+          <td>(</td>
+          <td class="paramtype">u32&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>gets id of specified object </p>
+<p>signals that object no longer valid </p>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00739">739</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -494,7 +548,7 @@ template&lt;typename V &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00278">278</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00309">309</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -528,7 +582,7 @@ template&lt;typename V &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00295">295</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00335">335</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -541,7 +595,7 @@ template&lt;typename V &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>bvnet</b></li><li class="navelem"><a class="el" href="classbvnet_1_1session.html">session</a></li>
-    <li class="footer">Generated on Sun Nov 30 2014 13:25:37 for Blockiverse by
+    <li class="footer">Generated on Fri Dec 5 2014 05:42:33 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

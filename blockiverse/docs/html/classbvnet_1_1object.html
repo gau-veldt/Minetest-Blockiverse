@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('classbvnet_1_1object.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -107,17 +107,14 @@ $(document).ready(function(){initNavTree('classbvnet_1_1object.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classbvnet_1_1object-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">bvnet::object Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">bvnet::object Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>ABC for remotable objects.  
- <a href="classbvnet_1_1object.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for bvnet::object:</div>
 <div class="dyncontent">
@@ -142,9 +139,22 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a57798d2be75fcb4257749ad7f3ec985a"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a57798d2be75fcb4257749ad7f3ec985a">getType</a> ()</td></tr>
 <tr class="memdesc:a57798d2be75fcb4257749ad7f3ec985a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get object's identity.  <a href="#a57798d2be75fcb4257749ad7f3ec985a">More...</a><br /></td></tr>
 <tr class="separator:a57798d2be75fcb4257749ad7f3ec985a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac522ae7e71b2c98ec4ff0473fa97ff26"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#ac522ae7e71b2c98ec4ff0473fa97ff26">methodCall</a> (unsigned int idx)=0</td></tr>
-<tr class="memdesc:ac522ae7e71b2c98ec4ff0473fa97ff26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method call switchboard.  <a href="#ac522ae7e71b2c98ec4ff0473fa97ff26">More...</a><br /></td></tr>
-<tr class="separator:ac522ae7e71b2c98ec4ff0473fa97ff26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aa825a910fb0f8899ac9d3f654444151c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c">register_dmc</a> (string label, dmc func)</td></tr>
+<tr class="memdesc:aa825a910fb0f8899ac9d3f654444151c"><td class="mdescLeft">&#160;</td><td class="mdescRight">register dmc method  <a href="#aa825a910fb0f8899ac9d3f654444151c">More...</a><br /></td></tr>
+<tr class="separator:aa825a910fb0f8899ac9d3f654444151c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a550f9bd67f6ac15355b9ca2be9de1d52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a550f9bd67f6ac15355b9ca2be9de1d52"></a>
+const string&#160;</td><td class="memItemRight" valign="bottom"><b>methodLabel</b> (const unsigned int idx)</td></tr>
+<tr class="separator:a550f9bd67f6ac15355b9ca2be9de1d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7121f34d58daaaaa6bb7212e87955507"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7121f34d58daaaaa6bb7212e87955507"></a>
+const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>methodSlot</b> (const string &amp;label)</td></tr>
+<tr class="separator:a7121f34d58daaaaa6bb7212e87955507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b41a8ff80c9b185d628d1b1f93f2e9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b41a8ff80c9b185d628d1b1f93f2e9b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a4b41a8ff80c9b185d628d1b1f93f2e9b">dmc_GetType</a> (value_queue &amp;)</td></tr>
+<tr class="memdesc:a4b41a8ff80c9b185d628d1b1f93f2e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">the GetType dispatched method call (dmc) <br /></td></tr>
+<tr class="separator:a4b41a8ff80c9b185d628d1b1f93f2e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -152,13 +162,16 @@ Protected Attributes</h2></td></tr>
 <a class="el" href="classbvnet_1_1session.html">session</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td></tr>
 <tr class="memdesc:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">for objects to attach to the session's registry <br /></td></tr>
 <tr class="separator:acc0211ae67284eccf20e9bfe1c25e0cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a1cd56837b3198c4dad1d426c22545537"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbvnet_1_1object.html#a1cd56837b3198c4dad1d426c22545537">session</a></td></tr>
+<tr class="memdesc:a1cd56837b3198c4dad1d426c22545537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displateched Method Call.  <a href="#a1cd56837b3198c4dad1d426c22545537">More...</a><br /></td></tr>
+<tr class="separator:a1cd56837b3198c4dad1d426c22545537"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ABC for remotable objects. </p>
-<p>Base used for objects exchangeable via object references.</p>
-<p>Since secure referencing requires a way to track object lifetime a registry reference is required for construction. </p>
-
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00359">359</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<div class="textblock">
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00412">412</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7122d96ee6c8685e5830cd9c403afa7a"></a>
 <div class="memitem">
@@ -190,7 +203,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00364">364</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00493">493</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -222,11 +235,11 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classserver_root.html#a3e22b92d44917a86e12c0155c6169b15">serverRoot</a>, <a class="el" href="class_account.html#a906b5fee76e343176a2a2e36a6b46a0c">Account</a>, and <a class="el" href="classclient_root.html#a452d300aba48c73218e0204421c43a8d">clientRoot</a>.</p>
 
-<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00384">384</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00515">515</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac522ae7e71b2c98ec4ff0473fa97ff26"></a>
+<a class="anchor" id="aa825a910fb0f8899ac9d3f654444151c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -234,28 +247,70 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void bvnet::object::methodCall </td>
+          <td class="memname">void bvnet::object::register_dmc </td>
           <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">dmc&#160;</td>
+          <td class="paramname"><em>func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Method call switchboard. </p>
-<p>Overidden by superclass to implement methods callable by the remote. Currently the superclasses are using big switchbanks which looks plain evil but at this point I'm not sure of what to refactor with.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd><p class="startdd">Base class to implement some sort of glue to take out the switch boilerplate? </p>
-<p>some sort of static enum to get rid of the magic number method call #s from remote POV? </p>
-<p class="enddd">automatically declare the methods for method calling via some sort of macro or metacode?</p>
-</dd></dl>
+<p>register dmc method </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">label</td><td>method label </td></tr>
+    <tr><td class="paramname">func</td><td>method function </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implemented in <a class="el" href="classserver_root.html#a36cbaa849cfef2c6f2d7fef1762d6346">serverRoot</a>, <a class="el" href="class_account.html#a31165e7bd325fef5138e0d1cc02b273b">Account</a>, and <a class="el" href="classclient_root.html#a6ceee709573a2a655a44a1a483eaad28">clientRoot</a>.</p>
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00459">459</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a class="anchor" id="a1cd56837b3198c4dad1d426c22545537"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classbvnet_1_1session.html">session</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Displateched Method Call. </p>
+<p>Implements dispatched method call (dmc)</p>
+<p>Superclass-installed dmc methods in dmcTable are callable by the remote. A superclass sets up his dmc methods in his ctor by accessing object's dmcTable</p>
+<p>As a plus the lock and value queue boilerplate has been been moved to the base class dispatcher and the dmc methods will be in locked context and given the value queue as a parameter. He also has an exception now to trap calls to an unimplemented method index.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>some sort of static enum to get rid of the magic number method call #s from remote POV? I'll have the ctors store method labels in the base class dmcName map while it is setting up the dmc methods.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>automatically declare the methods for method calling via some sort of macro or metacode?</dd></dl>
+
+<p>Definition at line <a class="el" href="protocol_8hpp_source.html#l00440">440</a> of file <a class="el" href="protocol_8hpp_source.html">protocol.hpp</a>.</p>
 
 </div>
 </div>
@@ -268,7 +323,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>bvnet</b></li><li class="navelem"><a class="el" href="classbvnet_1_1object.html">object</a></li>
-    <li class="footer">Generated on Sun Nov 30 2014 13:25:37 for Blockiverse by
+    <li class="footer">Generated on Fri Dec 5 2014 05:42:32 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

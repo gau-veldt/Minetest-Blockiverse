@@ -80,6 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_rela.html"><span>Related&#160;Functions</span></a></li>
     </ul>
   </div>
   <div id="navrow4" class="tabs3">
@@ -92,7 +93,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_h"><span>h</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
-      <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -151,6 +151,12 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 
 <h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
+<li>bind()
+: <a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#ac9b8ce8924b3d14088c764244f63a917">bvdb::SQLiteDB</a>
+</li>
+<li>bind_null()
+: <a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#aa0aa950593ad57ba19b36a2422ff49eb">bvdb::SQLiteDB</a>
+</li>
 <li>bootstrap()
 : <a class="el" href="classbvnet_1_1session.html#a72fc82d1ae205d8df51a94eff45201a4">bvnet::session</a>
 </li>
@@ -164,6 +170,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>conn
 : <a class="el" href="classbvnet_1_1session.html#a2783797cda41a489ada01f8936ab04b5">bvnet::session</a>
 </li>
+<li>contracts
+: <a class="el" href="classbvnet_1_1session.html#a038ba6ce37dd32e9d8cdc1b913933159">bvnet::session</a>
+</li>
 <li>ctx
 : <a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">bvnet::object</a>
 </li>
@@ -173,6 +182,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
 <li>disconnect()
 : <a class="el" href="classbvnet_1_1session.html#adff1f9a58b2de9efd9be73ff71a57603">bvnet::session</a>
+</li>
+<li>dmc_GetType()
+: <a class="el" href="classbvnet_1_1object.html#a4b41a8ff80c9b185d628d1b1f93f2e9b">bvnet::object</a>
 </li>
 <li>dump()
 : <a class="el" href="classbvnet_1_1registry.html#abd413899eedfde46189f9903f66bdcd9">bvnet::registry</a>
@@ -227,16 +239,6 @@ $(document).ready(function(){initNavTree('functions.html','');});
 </ul>
 
 
-<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
-<li>methodCall()
-: <a class="el" href="class_account.html#a31165e7bd325fef5138e0d1cc02b273b">Account</a>
-, <a class="el" href="classbvnet_1_1object.html#ac522ae7e71b2c98ec4ff0473fa97ff26">bvnet::object</a>
-, <a class="el" href="classclient_root.html#a6ceee709573a2a655a44a1a483eaad28">clientRoot</a>
-, <a class="el" href="classserver_root.html#a36cbaa849cfef2c6f2d7fef1762d6346">serverRoot</a>
-</li>
-</ul>
-
-
 <h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
 <li>notify()
 : <a class="el" href="classbvnet_1_1registry.html#a06a4accc79d0cc68b4bebbaad7432fb4">bvnet::registry</a>
@@ -266,6 +268,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>on_recv_dead_obid()
 : <a class="el" href="classbvnet_1_1session.html#ac7866f3782244a8225dc21be182503ee">bvnet::session</a>
 </li>
+<li>on_recv_dmc_obid()
+: <a class="el" href="classbvnet_1_1session.html#abef1623c8449a1f7f1705938651bd389">bvnet::session</a>
+</li>
 <li>on_recv_len()
 : <a class="el" href="classbvnet_1_1session.html#afc74827c63f0d732ac3e34dcee8d23be">bvnet::session</a>
 </li>
@@ -279,10 +284,10 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classbvnet_1_1session.html#a9568ff729105fc5f8265cd18139f6cd4">bvnet::session</a>
 </li>
 <li>on_write_call_done()
-: <a class="el" href="classbvnet_1_1session.html#a708cb5242726962e0884950183dc7fc5">bvnet::session</a>
+: <a class="el" href="classbvnet_1_1session.html#a9bf9ddf382ed8247a706ccbe38f893f6">bvnet::session</a>
 </li>
 <li>on_write_done()
-: <a class="el" href="classbvnet_1_1session.html#ac31decbe980c827edcd3193d4bf27853">bvnet::session</a>
+: <a class="el" href="classbvnet_1_1session.html#abf99bf462c6bb352dde0d62aedbf2882">bvnet::session</a>
 </li>
 </ul>
 
@@ -290,6 +295,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
 <li>poll()
 : <a class="el" href="classbvnet_1_1session.html#a1741c6c7e00b73cbd906d33f0a950b97">bvnet::session</a>
+</li>
+<li>prepare()
+: <a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a982ee6bad804db6458d3162cb45bcb41">bvdb::SQLiteDB</a>
 </li>
 <li>proxy
 : <a class="el" href="classbvnet_1_1session.html#a24780d12ee4c123ec6478c5461209b85">bvnet::session</a>
@@ -300,6 +308,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
 <li>reg
 : <a class="el" href="classbvnet_1_1session.html#adb33549327393a068c2d0cd4ec44dc20">bvnet::session</a>
+</li>
+<li>register_dmc()
+: <a class="el" href="classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c">bvnet::object</a>
 </li>
 <li>register_object()
 : <a class="el" href="classbvnet_1_1registry.html#abde38854a900adb81da31e5bcf659539">bvnet::registry</a>
@@ -314,12 +325,15 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>run()
 : <a class="el" href="classbvnet_1_1session.html#a4f4c7ce4d9b9a2c90667937accc7a2c3">bvnet::session</a>
 </li>
+<li>runOnce()
+: <a class="el" href="classbvdb_1_1_s_q_lite_d_b.html#a3b6ec611f23c029ad8f8fbfc9a32a430">bvdb::SQLiteDB</a>
+</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
 <li>send_blob()
-: <a class="el" href="classbvnet_1_1session.html#a3603554fa7f1ebb122c4a9a635f91a71">bvnet::session</a>
+: <a class="el" href="classbvnet_1_1session.html#a4d0b84a0b87657fe097839de161af5ac">bvnet::session</a>
 </li>
 <li>send_call()
 : <a class="el" href="classbvnet_1_1session.html#a0a94a03781b72154e82f951c68320598">bvnet::session</a>
@@ -334,10 +348,13 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classbvnet_1_1session.html#a7bc97917863742f0bea82d49f3e0b7ab">bvnet::session</a>
 </li>
 <li>send_string()
-: <a class="el" href="classbvnet_1_1session.html#af974a78a309e4f7aff43e9ecc7304077">bvnet::session</a>
+: <a class="el" href="classbvnet_1_1session.html#a2240dc9a5153b6ae20335e766de467e5">bvnet::session</a>
 </li>
 <li>sendq
 : <a class="el" href="classbvnet_1_1session.html#a97a650651948f346c85b44d959b9ee2f">bvnet::session</a>
+</li>
+<li>session
+: <a class="el" href="classbvnet_1_1object.html#a1cd56837b3198c4dad1d426c22545537">bvnet::object</a>
 </li>
 <li>set_conn()
 : <a class="el" href="classbvnet_1_1session.html#aecc4b55e7de514acb6c944f5fc3ee3ca">bvnet::session</a>
@@ -369,7 +386,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Nov 30 2014 13:25:37 for Blockiverse by
+    <li class="footer">Generated on Fri Dec 5 2014 05:42:33 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

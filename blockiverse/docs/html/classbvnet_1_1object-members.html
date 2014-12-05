@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('classbvnet_1_1object.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -113,16 +113,20 @@ $(document).ready(function(){initNavTree('classbvnet_1_1object.html','');});
 <p>This is the complete list of members for <a class="el" href="classbvnet_1_1object.html">bvnet::object</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classbvnet_1_1object.html#acc0211ae67284eccf20e9bfe1c25e0cc">ctx</a></td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classbvnet_1_1object.html#a57798d2be75fcb4257749ad7f3ec985a">getType</a>()</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classbvnet_1_1object.html#ac522ae7e71b2c98ec4ff0473fa97ff26">methodCall</a>(unsigned int idx)=0</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classbvnet_1_1object.html#a4b41a8ff80c9b185d628d1b1f93f2e9b">dmc_GetType</a>(value_queue &amp;)</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classbvnet_1_1object.html#a57798d2be75fcb4257749ad7f3ec985a">getType</a>()</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>methodLabel</b>(const unsigned int idx) (defined in <a class="el" href="classbvnet_1_1object.html">bvnet::object</a>)</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>methodSlot</b>(const string &amp;label) (defined in <a class="el" href="classbvnet_1_1object.html">bvnet::object</a>)</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="classbvnet_1_1object.html#a7122d96ee6c8685e5830cd9c403afa7a">object</a>(session &amp;sess)</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classbvnet_1_1object.html#aa825a910fb0f8899ac9d3f654444151c">register_dmc</a>(string label, dmc func)</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classbvnet_1_1object.html#a1cd56837b3198c4dad1d426c22545537">session</a> class</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">friend</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classbvnet_1_1object.html#a7b65a31e0d72dd4f35ef621c94ad9791">~object</a>()</td><td class="entry"><a class="el" href="classbvnet_1_1object.html">bvnet::object</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Nov 30 2014 13:25:37 for Blockiverse by
+    <li class="footer">Generated on Fri Dec 5 2014 05:42:32 for Blockiverse by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

@@ -4,6 +4,7 @@ var files =
     [ "blank.hpp", "blank_8hpp_source.html", null ],
     [ "client.cpp", "client_8cpp_source.html", null ],
     [ "client.hpp", "client_8hpp_source.html", null ],
+    [ "common.cpp", "common_8cpp_source.html", null ],
     [ "common.hpp", "common_8hpp_source.html", null ],
     [ "database.cpp", "database_8cpp_source.html", null ],
     [ "database.hpp", "database_8hpp_source.html", null ],
