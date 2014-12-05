@@ -18,7 +18,7 @@ var indexSectionsWithContent =
   8: "binrtv",
   9: "s",
   10: "abluv",
-  11: "bmt"
+  11: "bm"
 };
 
 var indexSectionNames =

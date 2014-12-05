@@ -413,8 +413,9 @@ namespace bvnet {
     */
     class object {
     private:
+        friend class session;
         /**
-        *   @brief Displateched Method Call
+        *   @brief Dispatched Method Call
         *
         *   Implements dispatched method call (dmc)
         *
@@ -427,19 +428,7 @@ namespace bvnet {
         *   will be in locked context and given the value queue as a
         *   parameter.  He also has an exception now to trap calls to
         *   an unimplemented method index.
-        *
-        *   @todo
-        *   some sort of static enum to get rid of the magic number
-        *   method call #s from remote POV?  I'll have the ctors store
-        *   method labels in the base class dmcName map while it is
-        *   setting up the dmc methods.
-        *
-        *   @todo
-        *   automatically declare the methods for method calling
-        *   via some sort of macro or metacode?
-        *
         */
-        friend class session;
         void methodCall(unsigned int idx) {
             bvnet::scoped_lock lock(ctx.getMutex());
             bvnet::value_queue &vqueue=ctx.getSendQueue();
