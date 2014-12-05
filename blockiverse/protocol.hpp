@@ -147,7 +147,7 @@ namespace bvnet {
     typedef std::map<u32,bool> proxy_map;
     typedef std::queue<method_call> cb_queue;
     typedef boost::mutex mutex;
-    //typedef boost::mutex::scoped_lock scoped_lock;
+    typedef boost::mutex::scoped_lock scoped_lock;
 
     typedef std::function<void(object*,value_queue&)> dmcMethod;
     typedef std::map<unsigned int,dmcMethod> call_map;
