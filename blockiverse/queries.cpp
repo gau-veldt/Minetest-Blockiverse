@@ -29,7 +29,7 @@ namespace bvquery {
             "userid INTEGER PRIMARY KEY ASC NOT NULL"
             ",username TEXT UNIQUE NOT NULL"
             ",userkey TEXT UNIQUE NOT NULL"
-        ") WITHOUT ROWID",
+        ")"/* WITHOUT ROWID*/,
 
         /** @brief Init client whitelist table */
         "CREATE TABLE IF NOT EXISTS AllowedClient ("
@@ -68,5 +68,13 @@ namespace bvquery {
             "userid=?1 "
             "AND allowkey=?2 "
             "AND passwd=?3";
+
+    /** @brief Create new account for specified username and client (pubkey) */
+    const char *createAccount=
+        "INSERT "
+            "INTO Owner "
+                "(username,userkey) "
+            "VALUES "
+                "(?1,?2)";
 
 };

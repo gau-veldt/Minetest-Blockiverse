@@ -341,8 +341,10 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
         statement findOwner=db.prepare(bvquery::findOwner);
         db.bind(findOwner,1,key.str());
         query_result rsltOwner;
+        retry_login:
         try_again=false;
         do {
+            try_again=false;
             try {
                 rsltOwner=db.run(findOwner);
             } catch (DBIsBusy &busy) {
@@ -350,14 +352,14 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
             }
         } while (try_again);
         if (rsltOwner->size()>0)
-            IdOfOwner=db.get_result<s64>(rsltOwner,0,0/* userid */);
+            IdOfOwner=db.get_result<s64>(rsltOwner,0,bvquery::result::findOwner::userid);
 
         // see if account exists for this username
         statement findUser=db.prepare(bvquery::findUser);
         db.bind(findUser,1,user);
         query_result rsltUser;
-        try_again=false;
         do {
+            try_again=false;
             try {
                 rsltUser=db.run(findUser);
             } catch (DBIsBusy &busy) {
@@ -365,15 +367,51 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
             }
         } while (try_again);
         if (rsltUser->size()>0)
-            IdOfUsername=db.get_result<s64>(rsltUser,0,0/* userid */);
+            IdOfUsername=db.get_result<s64>(rsltUser,0,bvquery::result::findUser::userid);
 
         if ((IdOfUsername<0)&&(IdOfUsername<0)) {
             // client has no account and username is unused
-            // action: create it (on success login succeeds)
-            LOCK_COUT
-            cout << "[server] TODO: Create account for "
-                 << user << " on pubkey " << key.str() << endl;
-            UNLOCK_COUT
+            // action: create it (on success login succeeds) then
+            // goto retries the login.  This allows simpler error
+            // checking on the INSERT query and allows using the
+            // normal autocommit semantics.
+            statement createAccount=db.prepare(bvquery::createAccount);
+            db.bind(createAccount,1,user);
+            db.bind(createAccount,2,key.str());
+            query_result dontcare;
+            bool insert_ok=false;
+            try {
+                do {
+                    try_again=false;
+                    try {
+                        dontcare=db.run(createAccount);
+                    } catch (DBIsBusy &busy) {
+                        try_again=true;
+                    }
+                } while (try_again);
+                insert_ok=true;
+            } catch (DBError &e) {
+                LOCK_COUT
+                cout << "[DB] Failed to create account for " << user
+                     << " via " << key.str() << " due to:" << endl
+                     << "     " << e.what() << endl;
+                UNLOCK_COUT
+            }
+            if (insert_ok) {
+                // retry the login as we don't yet know the auto column's userid
+                goto retry_login;
+            }
+            //
+            // insert failed (not due to busy)
+            //
+            // probably a race codition where someone else
+            // concurrently created an account on this
+            // username between us checking availability
+            // and performing the insert so login fails.
+            //
+            // not worth the hassler of a transaction
+            //
+            authOK=false;
         } else {
             if (IdOfOwner==IdOfUsername) {
                 // userid of owner matches userid of username

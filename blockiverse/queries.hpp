@@ -24,6 +24,35 @@
 
 namespace bvquery {
 
+    namespace table {
+        namespace Owner {
+            enum _schema {
+                userid=0,
+                username=1,
+                userkey=2
+            };
+        };
+        namespace AllowedClient {
+            enum _schema {
+                userid=0,
+                allowkey=1,
+                passwd=2
+            };
+        };
+    };
+
+    namespace result {
+        namespace findOwner {
+            using namespace bvquery::table::Owner;
+        };
+        namespace findUser {
+            using namespace bvquery::table::Owner;
+        };
+        namespace findAllowed {
+            using namespace bvquery::table::AllowedClient;
+        };
+    };
+
     /** @brief Iterable for initializing all tables via loop */
     extern std::vector<const char *> init_tables;
 
@@ -33,6 +62,8 @@ namespace bvquery {
     extern const char *findUser;
     /** @brief Search for whitelist entry allowing access via specified client (pubkey) */
     extern const char *findAllowed;
+    /** @brief Create new account for specified username and client (pubkey) */
+    extern const char *createAccount;
 
 };
 
