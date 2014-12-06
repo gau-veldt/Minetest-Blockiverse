@@ -338,11 +338,10 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
         s64 IdOfOwner=-1;
         s64 IdOfUsername=-1;
         // see if account exists for this owner
+        retry_login:
         statement findOwner=db.prepare(bvquery::findOwner);
         db.bind(findOwner,1,key.str());
         query_result rsltOwner;
-        retry_login:
-        try_again=false;
         do {
             try_again=false;
             try {
@@ -404,6 +403,8 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
             }
             if (insert_ok) {
                 // retry the login as we don't yet know the auto column's userid
+                IdOfOwner=-1;
+                IdOfUsername=-1;
                 goto retry_login;
             }
             //
@@ -428,9 +429,15 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
                      << " (owner)" << endl;
                 UNLOCK_COUT
 
-                /* Don't uncomment until an Account object
-                ** is created and its objref put on the output queue */
-                //authOK=true;
+                bvnet::session::shared acct=ctx.get_shared(new Account(ctx,IdOfOwner));
+                auto &obLval=*acct;
+                u32 acctId=ctx.getIdOf(&obLval);
+                LOCK_COUT
+                cout << "[server] Account login " << user << " on session "
+                     << &ctx <<  " objectid=" << acctId << endl;
+                UNLOCK_COUT
+                vqueue.push(bvnet::obref(acctId));
+                authOK=true;
             } else {
                 if (IdOfUsername>=0) {
                     LOCK_COUT
@@ -460,28 +467,40 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
                     db.bind(findAllowed,2,key.str());
                     db.bind(findAllowed,3,hPass.str());
                     query_result rsltAllowed;
-                    try_again=false;
                     do {
+                        try_again=false;
                         try {
-                            rsltUser=db.run(findUser);
+                            rsltAllowed=db.run(findUser);
                         } catch (DBIsBusy &busy) {
                             try_again=true;
                         }
                     } while (try_again);
-                    if (rsltUser->size()>0) {
+                    if (rsltAllowed->size()>0) {
+                        s64 IdOfOtherOwner;
+                        IdOfOtherOwner=db.get_result<s64>(rsltAllowed,0,bvquery::result::findAllowed::userid);
                         // a result row indicates whitelist had
                         // an allowance entry for this client's pubkey
                         // and that the passwords matched up
+                        /** TODO:
+                        *
+                        *   Ensure we aren't logging in the same user twice.
+                        */
                         LOCK_COUT
                         cout << "[server] TODO: Login succeeds for "
-                             << user << "(" << IdOfUsername
+                             << user << "(" << IdOfOtherOwner
                              << ") on pubkey " << key.str()
                              << " (via whitelist)" << endl;
                         UNLOCK_COUT
 
-                        /* Don't uncomment until an Account object
-                        ** is created and its objref put on the output queue */
-                        //authOK=true
+                        bvnet::session::shared acct=ctx.get_shared(new Account(ctx,IdOfOtherOwner));
+                        auto &obLval=*acct;
+                        u32 acctId=ctx.getIdOf(&obLval);
+                        LOCK_COUT
+                        cout << "[server] Account login " << user << " on session "
+                             << &ctx <<  " objectid=" << acctId << endl;
+                        UNLOCK_COUT
+                        vqueue.push(bvnet::obref(acctId));
+                        authOK=true;
                     }
                 } else {
                     LOCK_COUT
@@ -500,10 +519,7 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
             }
         }
 
-        if (authOK) {
-            // login successful spawn Account
-            // object and return its objectref
-        } else {
+        if (!authOK) {
             // authentication failure
             vqueue.push(s64(1));
         }
