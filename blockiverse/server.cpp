@@ -26,6 +26,7 @@
 #include "server.hpp"
 #include "settings.hpp"
 #include "database.hpp"
+#include "queries.hpp"
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
 
@@ -114,21 +115,8 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     bvdb::init_db((cwd/"bv_db").string());
     try {
         SQLiteDB db;    // RAII
-
-        // Generate client ownership table
-        db.runOnce( "CREATE TABLE IF NOT EXISTS Owner ("
-                        "userid INTEGER PRIMARY KEY ASC NOT NULL"
-                        ",username TEXT UNIQUE NOT NULL"
-                        ",userkey TEXT UNIQUE NOT NULL"
-                    ") WITHOUT ROWID");
-
-        // Generate client whitelist table
-        db.runOnce( "CREATE TABLE IF NOT EXISTS AllowedClient ("
-                        "userid INTEGER NOT NULL REFERENCES Owner (userid) ON DELETE CASCADE"
-                        ",allowkey TEXT NOT NULL"
-                        ",passwd TEXT UNIQUE NOT NULL"
-                        ",PRIMARY KEY (userid,allowkey)"
-                    ")");
+        for (auto query : bvquery::init_tables)
+            db.runOnce(query);
     } catch (DBError &e) {
         LOCK_COUT
         cout << "[DB] Error creating tables:" << endl
@@ -350,7 +338,7 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
         s64 IdOfOwner=-1;
         s64 IdOfUsername=-1;
         // see if account exists for this owner
-        statement findOwner=db.prepare("SELECT * FROM Owner WHERE userkey=?1");
+        statement findOwner=db.prepare(bvquery::findOwner);
         db.bind(findOwner,1,key.str());
         query_result rsltOwner;
         try_again=false;
@@ -365,7 +353,7 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
             IdOfOwner=db.get_result<s64>(rsltOwner,0,0/* userid */);
 
         // see if account exists for this username
-        statement findUser=db.prepare("SELECT * FROM Owner WHERE username=?1");
+        statement findUser=db.prepare(bvquery::findUser);
         db.bind(findUser,1,user);
         query_result rsltUser;
         try_again=false;
@@ -420,15 +408,7 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
                         hPass << std::setfill('0') << std::setw(2) << std::hex
                               << (unsigned int)dig[i];
                     free(dig);
-                    statement findAllowed=db.prepare(
-                        "SELECT "
-                            "* "
-                        "FROM "
-                            "AllowedClient "
-                        "WHERE "
-                            "userid=?1 "
-                            "AND allowkey=?2 "
-                            "AND passwd=?3");
+                    statement findAllowed=db.prepare(bvquery::findAllowed);
                     db.bind(findAllowed,1,IdOfUsername);
                     db.bind(findAllowed,2,key.str());
                     db.bind(findAllowed,3,hPass.str());

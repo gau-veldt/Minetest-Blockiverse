@@ -156,6 +156,11 @@
 		</Unit>
 		<Unit filename="protocol.cpp" />
 		<Unit filename="protocol.hpp" />
+		<Unit filename="queries.cpp" />
+		<Unit filename="queries.hpp">
+			<Option target="ServerDebug" />
+			<Option target="ServerRelease" />
+		</Unit>
 		<Unit filename="rsa/BigInt.cpp" />
 		<Unit filename="rsa/BigInt.h" />
 		<Unit filename="rsa/Key.cpp" />
