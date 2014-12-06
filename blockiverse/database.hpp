@@ -27,6 +27,12 @@
 #include "sqlite/sqlite3.h"
 
 namespace bvdb {
+    class dbValue;
+};
+
+std::ostream& operator<<(std::ostream &,const bvdb::dbValue &);
+
+namespace bvdb {
 
     extern void init_db(string);
 
@@ -88,6 +94,8 @@ namespace bvdb {
                 affinity=null;
             }
         }
+
+        friend std::ostream& ::operator<<(std::ostream &,const dbValue &);
 
         dbValue() {
             data=NULL;
@@ -213,33 +221,33 @@ namespace bvdb {
                 rc=sqlite3_step(stmt);
                 if (rc==SQLITE_ROW) {
                     data->resize(data->size()+1);
-                    rowResult cur=data->back();
+                    rowResult &cur=data->back();
                     int nrows=sqlite3_column_count(stmt);
                     for (int i=0;i<nrows;++i) {
-                        LOCK_COUT
-                        cout << "[DB] query " << stmt
-                                  << ": result row " << i+1 << "/" << nrows
-                                  << endl;
-                        UNLOCK_COUT
+                        s64 int_val;
+                        double double_val;
+                        const char *data_val;
+                        int data_len;
                         switch (sqlite3_column_type(stmt,i)) {
                         case SQLITE_NULL:
                             cur[i]=dbValue::ptr(new dbValue);
                             break;
                         case SQLITE_INTEGER:
-                            cur[i]=dbValue::ptr(new dbValue((s64)sqlite3_column_int(stmt,i)));
+                            int_val=sqlite3_column_int(stmt,i);
+                            cur[i]=dbValue::ptr(new dbValue(int_val));
                             break;
                         case SQLITE_FLOAT:
-                            cur[i]=dbValue::ptr(new dbValue((double)sqlite3_column_double(stmt,i)));
+                            double_val=sqlite3_column_double(stmt,i);
+                            cur[i]=dbValue::ptr(new dbValue(double_val));
                             break;
                         case SQLITE_TEXT:
-                            cur[i]=dbValue::ptr(new dbValue((const char *)sqlite3_column_text(stmt,i)));
+                            data_val=(const char *)sqlite3_column_text(stmt,i);
+                            cur[i]=dbValue::ptr(new dbValue(data_val));
                             break;
                         case SQLITE_BLOB:
-                            cur[i]=dbValue::ptr(
-                                new dbValue(
-                                    (const char *)sqlite3_column_text(stmt,i),
-                                    sqlite3_column_bytes(stmt,i)
-                                ));
+                            data_val=(const char *)sqlite3_column_blob(stmt,i);
+                            data_len=sqlite3_column_bytes(stmt,i);
+                            cur[i]=dbValue::ptr(new dbValue(data_val,data_len));
                             break;
                         }
                     }
@@ -378,5 +386,51 @@ namespace bvdb {
     };
 
 };
+
+inline std::ostream& operator<<(std::ostream &os,const bvdb::dbValue &dbv) {
+    os << "Data<";
+    switch (dbv.affinity) {
+    case bvdb::dbValue::integer:
+        os << "int>="
+           << *((s64*)dbv.data);
+        break;
+    case bvdb::dbValue::real:
+        os << "real>="
+           << *((double*)dbv.data);
+        break;
+    case bvdb::dbValue::text:
+        os << "text>="
+           << *((string*)dbv.data);
+        break;
+    case bvdb::dbValue::blob:
+        os << "blob len="
+           << ((string*)dbv.data)->size()
+           << ">";
+        break;
+    default:
+        os << "null>";
+        break;
+    }
+    return os;
+}
+
+inline std::ostream& operator <<(std::ostream& os,bvdb::SQLiteDB::query_result r) {
+    os << "Query Result" << endl;
+    int nrow=0;
+    for (auto row : *r) {
+        os << "    " << ++nrow << ": (";
+        bool comma=false;
+        for (auto col : row) {
+            if (comma)
+                os << ',';
+            os << *(col.second);
+            comma=true;
+        }
+        os << ")" << endl;
+    }
+    if (nrow==0)
+        os << "    Nothing." << endl;
+    return os;
+}
 
 #endif // BV_DATABASE_HPP_INCLUDED

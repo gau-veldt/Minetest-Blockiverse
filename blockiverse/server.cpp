@@ -369,7 +369,12 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
         if (rsltUser->size()>0)
             IdOfUsername=db.get_result<s64>(rsltUser,0,bvquery::result::findUser::userid);
 
-        if ((IdOfUsername<0)&&(IdOfUsername<0)) {
+        LOCK_COUT
+        cout << "rsltOwner " << rsltOwner;
+        cout << "rsltUser " << rsltUser;
+        UNLOCK_COUT
+
+        if ((IdOfOwner<0)&&(IdOfUsername<0)) {
             // client has no account and username is unused
             // action: create it (on success login succeeds) then
             // goto retries the login.  This allows simpler error
@@ -428,6 +433,10 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
                 //authOK=true;
             } else {
                 if (IdOfUsername>=0) {
+                    LOCK_COUT
+                    cout << "[server] session " << &(this->ctx) << ": Account "
+                         << user << " belongs to someone else." << endl;
+                    UNLOCK_COUT
                     // This is the attempt to log in as
                     // an existing username via a client
                     // (pubkey) that does not own the account
@@ -475,6 +484,11 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
                         //authOK=true
                     }
                 } else {
+                    LOCK_COUT
+                    cout << "[server] session " << &(this->ctx)
+                         << ": attempt to create 2nd account "
+                         << user << endl;
+                    UNLOCK_COUT
                     // this would be the case of creating
                     // a new account (username not in use)
                     // by a client (pubkey) already posessing
