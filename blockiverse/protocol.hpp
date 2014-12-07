@@ -261,6 +261,10 @@ namespace bvnet {
     public:
         session();
         virtual ~session();
+        /** @brief pre-destruct objects depending on root object
+        *   Used by the context manager to eliminate any root-dependent
+        *   objects prior to root object elimination. */
+        void clear_rooted_objects() {gc_mgr.clear();}
 
         /** @brief update interface of specified object */
         void UpdateInterface(u32,string,u32);
@@ -530,7 +534,7 @@ namespace bvnet {
         /** @brief base dtor to automatically unregister the object */
         virtual ~object() {
             LOCK_COUT
-            cout << "object [" << this << "] dtor" << endl;
+            cout << "object [" << this << "] dtor (using session " << &ctx << ')' << endl;
             UNLOCK_COUT
             ctx.unregister(this);
         }
@@ -695,6 +699,9 @@ namespace bvnet {
         }
         delete synchro;
         synchro=NULL;
+        LOCK_COUT
+        cout << "Registry [" << this << "] gone" << endl;
+        UNLOCK_COUT
     }
 
     /*
@@ -735,10 +742,19 @@ namespace bvnet {
         _opcode_read_queued=false;
         remoteRoot=0;
     }
+
     inline session::~session() {
+        // must destroy all managed objects
+        // before deleting registry
+        gc_mgr.clear();
+
         delete reg;
         delete synchro;
+        LOCK_COUT
+        cout << "Session [" << this << "] gone" << endl;
+        UNLOCK_COUT
     }
+
     /** Updates known interface of specifed object
     *   as indicated by the given parameters.
     *

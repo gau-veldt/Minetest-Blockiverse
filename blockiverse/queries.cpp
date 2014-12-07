@@ -29,7 +29,7 @@ namespace bvquery {
             "userid INTEGER PRIMARY KEY ASC NOT NULL"
             ",username TEXT UNIQUE NOT NULL"
             ",userkey TEXT UNIQUE NOT NULL"
-        ")"/* WITHOUT ROWID*/,
+        ")",
 
         /** @brief Init client whitelist table */
         "CREATE TABLE IF NOT EXISTS AllowedClient ("
@@ -42,7 +42,6 @@ namespace bvquery {
         /** @brief Account logins table */
         "CREATE TABLE IF NOT EXISTS LoggedIn ("
             "userid INTEGER NOT NULL REFERENCES Owner (userid) ON DELETE CASCADE"
-            ",viakey TEXT NOT NULL"
             ",PRIMARY KEY (userid)"
         ");",
         "DELETE FROM LoggedIn"
@@ -84,5 +83,23 @@ namespace bvquery {
                 "(username,userkey) "
             "VALUES "
                 "(?1,?2)";
+
+    /** @brief Logs user into account
+    *   Catchable constraint error on attempt to login
+    *   to the same account more than once. */
+    const char *loginAccount=
+        "INSERT "
+            "INTO LoggedIn "
+                "(userid) "
+            "VALUES "
+                "(?1)";
+
+    /** @brief Log user out of account */
+    const char *logoutAccount=
+        "DELETE "
+            "FROM "
+                "LoggedIn "
+            "WHERE "
+                "userid=?1";
 
 };

@@ -29,7 +29,11 @@ public:
     clientRoot(bvnet::session &sess)
         : bvnet::object(sess) {
     }
-    virtual ~clientRoot() {}
+    virtual ~clientRoot() {
+        LOCK_COUT
+        cout << "clientRoot [" << this << "] gone (via session " << &ctx << ')' << endl;
+        UNLOCK_COUT
+    }
 
     virtual const char *getType() {return "clientRoot";}
 };

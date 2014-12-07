@@ -53,6 +53,8 @@ protected:
     void dmc_AnswerChallenge(value_queue &vqueue);
     void dmc_GetAccount(value_queue &vqueue);
 public:
+    SQLiteDB &get_db() {return db;}
+
     serverRoot(bvnet::session &sess)
         : bvnet::object(sess) {
         register_dmc("LoginClient"      ,(dmc)&serverRoot::dmc_LoginClient);
@@ -65,6 +67,9 @@ public:
     virtual ~serverRoot() {
         if (clientKey!=NULL)
             delete clientKey;
+        LOCK_COUT
+        cout << "serverRoot [" << this << "] gone (via session " << &ctx << ')' << endl;
+        UNLOCK_COUT
     }
 
     virtual const char *getType() {return "serverRoot";}

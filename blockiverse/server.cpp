@@ -52,6 +52,7 @@ private:
 public:
     context_manager(context *raii_ctx) : ctx(raii_ctx) {}
     ~context_manager() {
+        ctx->session->clear_rooted_objects();
         delete ctx->root;
         ctx->root=NULL;
         delete ctx->session;
@@ -343,6 +344,7 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
         s64 IdOfUsername=-1;
         // see if account exists for this owner
         retry_login:
+        authOK=false;
         statement findOwner=db.prepare(bvquery::findOwner);
         db.bind(findOwner,1,key.str());
         query_result rsltOwner;
@@ -433,15 +435,23 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
                      << " (owner)" << endl;
                 UNLOCK_COUT
 
-                bvnet::session::shared acct=ctx.get_shared(new Account(ctx,IdOfOwner));
-                auto &obLval=*acct;
-                u32 acctId=ctx.getIdOf(&obLval);
-                LOCK_COUT
-                cout << "[server] Account login " << user << " on session "
-                     << &ctx <<  " objectid=" << acctId << endl;
-                UNLOCK_COUT
-                vqueue.push(bvnet::obref(acctId));
-                authOK=true;
+                try {
+                    bvnet::session::shared acct=ctx.get_shared(new Account(ctx,this,IdOfOwner));
+                    auto &obLval=*acct;
+                    u32 acctId=ctx.getIdOf(&obLval);
+                    LOCK_COUT
+                    cout << "[server] Account login " << user << " on session "
+                         << &ctx <<  " objectid=" << acctId << endl;
+                    UNLOCK_COUT
+                    vqueue.push(bvnet::obref(acctId));
+                    authOK=true;
+                } catch (DBError &e) {
+                    LOCK_COUT
+                    cout << "[server] Account (userid=" << IdOfOwner
+                         << ") login failed: " << e.what() << endl;
+                    UNLOCK_COUT
+                    authOK=false;
+                }
             } else {
                 if (IdOfUsername>=0) {
                     LOCK_COUT
@@ -496,15 +506,23 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
                              << " (via whitelist)" << endl;
                         UNLOCK_COUT
 
-                        bvnet::session::shared acct=ctx.get_shared(new Account(ctx,IdOfOtherOwner));
-                        auto &obLval=*acct;
-                        u32 acctId=ctx.getIdOf(&obLval);
-                        LOCK_COUT
-                        cout << "[server] Account login " << user << " on session "
-                             << &ctx <<  " objectid=" << acctId << endl;
-                        UNLOCK_COUT
-                        vqueue.push(bvnet::obref(acctId));
-                        authOK=true;
+                        try {
+                            bvnet::session::shared acct=ctx.get_shared(new Account(ctx,this,IdOfOtherOwner));
+                            auto &obLval=*acct;
+                            u32 acctId=ctx.getIdOf(&obLval);
+                            LOCK_COUT
+                            cout << "[server] Account login " << user << " on session "
+                                 << &ctx <<  " objectid=" << acctId << endl;
+                            UNLOCK_COUT
+                            vqueue.push(bvnet::obref(acctId));
+                            authOK=true;
+                        } catch (DBError &e) {
+                            LOCK_COUT
+                            cout << "[server] Account (userid=" << IdOfOtherOwner
+                                 << ") login failed: " << e.what() << endl;
+                            UNLOCK_COUT
+                            authOK=false;
+                        }
                     }
                 } else {
                     LOCK_COUT

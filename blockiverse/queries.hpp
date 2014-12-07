@@ -39,6 +39,11 @@ namespace bvquery {
                 passwd=2
             };
         };
+        namespace LoggedIn {
+            enum _schema {
+                userid=0,
+            };
+        };
     };
 
     namespace result {
@@ -64,6 +69,12 @@ namespace bvquery {
     extern const char *findAllowed;
     /** @brief Create new account for specified username and client (pubkey) */
     extern const char *createAccount;
+    /** @brief Logs user into account
+    *   Catchable constraint error on attempt to login
+    *   to the same account more than once. */
+    extern const char *loginAccount;
+    /** @brief Log user out of account */
+    extern const char *logoutAccount;
 
 };
 
