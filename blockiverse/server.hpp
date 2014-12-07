@@ -39,26 +39,6 @@ typedef SQLiteDB::statement statement;
 typedef SQLiteDB::query_result query_result;
 typedef bvnet::value_queue value_queue;
 
-class Account : public bvnet::object {
-private:
-    s64 userId;
-protected:
-public:
-    Account(bvnet::session &sess,s64 who)
-        : bvnet::object(sess),userId(who) {
-        LOCK_COUT
-        cout << "Account [" << this << "] ctor (num="
-             << userId << ")" << endl;
-        UNLOCK_COUT
-    }
-    virtual ~Account() {
-        LOCK_COUT
-        cout << "Account [" << this << "] dtor" << endl;
-        UNLOCK_COUT
-    }
-    virtual const char *getType() {return "userAccount";}
-};
-
 class serverRoot : public bvnet::object {
 private:
     BigInt cli_pub_mod;

@@ -30,7 +30,11 @@
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
 
+#include "Account.hpp"
+
 boost::random::random_device entropy;
+
+using bv::Account;
 
 void server_default_config(Configurator &cfg) {
     cfg["port"]="37001";

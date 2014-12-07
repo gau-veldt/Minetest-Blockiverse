@@ -136,6 +136,8 @@
 		<Unit filename="../LICENSE" />
 		<Unit filename=".gitattributes" />
 		<Unit filename=".gitignore" />
+		<Unit filename="Account.cpp" />
+		<Unit filename="Account.hpp" />
 		<Unit filename="auto/version.h" />
 		<Unit filename="client.cpp">
 			<Option target="ClientDebug" />
