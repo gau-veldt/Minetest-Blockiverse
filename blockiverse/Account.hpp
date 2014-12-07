@@ -32,7 +32,7 @@ namespace bv {
         Account(bvnet::session &sess,s64 who)
             : bvnet::object(sess),userId(who) {
             LOCK_COUT
-            cout << "Account [" << this << "] ctor (num="
+            cout << "Account [" << this << "] ctor (userid="
                  << userId << ")" << endl;
             UNLOCK_COUT
         }

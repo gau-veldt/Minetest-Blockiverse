@@ -37,7 +37,15 @@ namespace bvquery {
             ",allowkey TEXT NOT NULL"
             ",passwd TEXT UNIQUE NOT NULL"
             ",PRIMARY KEY (userid,allowkey)"
-        ")"
+        ")",
+
+        /** @brief Account logins table */
+        "CREATE TABLE IF NOT EXISTS LoggedIn ("
+            "userid INTEGER NOT NULL REFERENCES Owner (userid) ON DELETE CASCADE"
+            ",viakey TEXT NOT NULL"
+            ",PRIMARY KEY (userid)"
+        ");",
+        "DELETE FROM LoggedIn"
     };
 
     /** @brief Search for account owned by specified client (pubkey) */
