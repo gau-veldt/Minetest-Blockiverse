@@ -156,6 +156,9 @@
 			<Option target="ClientDebug" />
 			<Option target="ClientRelease" />
 		</Unit>
+		<Unit filename="pre.hpp">
+			<Option weight="100" />
+		</Unit>
 		<Unit filename="protocol.cpp" />
 		<Unit filename="protocol.hpp" />
 		<Unit filename="queries.cpp" />

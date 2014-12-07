@@ -16,6 +16,7 @@
 **  Server implementation
 **
 */
+#include "pre.hpp"
 #include "auto/version.h"
 #include "common.hpp"
 #include <windows.h>
