@@ -16,7 +16,6 @@
 **  Server main driver code.
 **
 */
-
 #include "server.hpp"
 
 //  init: main thread

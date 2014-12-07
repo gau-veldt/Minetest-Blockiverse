@@ -16,7 +16,6 @@
 **  database access to Blockiverse data
 **
 */
-
 #include "database.hpp"
 
 namespace bvdb {

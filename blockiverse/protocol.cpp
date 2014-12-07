@@ -16,7 +16,6 @@
 **  Implements the protocol for server/client comms
 **
 */
-
 #include "protocol.hpp"
 
 int log2_tbl[]={0,1,2,2,3,3,3,3}; /* log2(x) */

@@ -16,7 +16,6 @@
 **  User account implementation
 **
 */
-
 #include "Account.hpp"
 
 namespace bv {

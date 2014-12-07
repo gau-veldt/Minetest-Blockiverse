@@ -16,7 +16,6 @@
 **  Client main driver code.
 **
 */
-
 #include "auto/version.h"
 #include "common.hpp"
 #include <windows.h>
