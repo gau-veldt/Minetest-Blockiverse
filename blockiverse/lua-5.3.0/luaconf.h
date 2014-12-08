@@ -8,8 +8,12 @@
 #ifndef lconfig_h
 #define lconfig_h
 
+// Blockiverse modification in order to have
+// configuration do the right thing under MINGW
 #ifdef _WIN32_WINNT
+#ifndef _WIN32
 #define _WIN32
+#endif
 #endif
 
 /*

@@ -24,6 +24,9 @@
 #include "database.hpp"
 #include "queries.hpp"
 #include "server.hpp"
+#include "lua-5.3.0/lua.h"
+#include "lua-5.3.0/lualib.h"
+#include "lua-5.3.0/lauxlib.h"
 
 using bvdb::SQLiteDB;
 using bvdb::DBIsBusy;
@@ -38,13 +41,15 @@ namespace bv {
         serverRoot &root;
         SQLiteDB &db;
         s64 userId;
+        lua_State *asUser;
     protected:
     public:
         Account(bvnet::session &sess,serverRoot *server,s64 who) :
             bvnet::object(sess),
             root(*server),
             db(server->get_db()),
-            userId(who) {
+            userId(who),
+            asUser(luaL_newstate()) {
 
             LOCK_COUT
             cout << "Account [" << this << "] ctor (userid="
@@ -70,6 +75,9 @@ namespace bv {
             LOCK_COUT
             cout << "Account [" << this << "] dtor" << endl;
             UNLOCK_COUT
+
+            lua_close(asUser);
+
             // logout user
             // gobble exceptions since this is a dtor
             try {
