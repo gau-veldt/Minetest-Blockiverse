@@ -152,6 +152,136 @@
 		<Unit filename="docs/server-client protocol.md" />
 		<Unit filename="docs/universe_sector_and_object_organization-draft.png" />
 		<Unit filename="gitstamp.bat" />
+		<Unit filename="lua-5.3.0/lapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lapi.h" />
+		<Unit filename="lua-5.3.0/lauxlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lauxlib.h" />
+		<Unit filename="lua-5.3.0/lbaselib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lbitlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lcode.h" />
+		<Unit filename="lua-5.3.0/lcorolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lctype.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lctype.h" />
+		<Unit filename="lua-5.3.0/ldblib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/ldebug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/ldebug.h" />
+		<Unit filename="lua-5.3.0/ldo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/ldo.h" />
+		<Unit filename="lua-5.3.0/ldump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lfunc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lfunc.h" />
+		<Unit filename="lua-5.3.0/lgc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lgc.h" />
+		<Unit filename="lua-5.3.0/linit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/liolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/llex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/llex.h" />
+		<Unit filename="lua-5.3.0/llimits.h" />
+		<Unit filename="lua-5.3.0/lmathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lmem.h" />
+		<Unit filename="lua-5.3.0/loadlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lobject.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lobject.h" />
+		<Unit filename="lua-5.3.0/lopcodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lopcodes.h" />
+		<Unit filename="lua-5.3.0/loslib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lparser.h" />
+		<Unit filename="lua-5.3.0/lstate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lstate.h" />
+		<Unit filename="lua-5.3.0/lstring.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lstring.h" />
+		<Unit filename="lua-5.3.0/lstrlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/ltable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/ltable.h" />
+		<Unit filename="lua-5.3.0/ltablib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/ltm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/ltm.h" />
+		<Unit filename="lua-5.3.0/lua.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lua.h" />
+		<Unit filename="lua-5.3.0/lua.hpp" />
+		<Unit filename="lua-5.3.0/luac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/luaconf.h" />
+		<Unit filename="lua-5.3.0/lualib.h" />
+		<Unit filename="lua-5.3.0/lundump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lundump.h" />
+		<Unit filename="lua-5.3.0/lutf8lib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lvm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lvm.h" />
+		<Unit filename="lua-5.3.0/lzio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua-5.3.0/lzio.h" />
 		<Unit filename="main.cpp">
 			<Option target="ClientDebug" />
 			<Option target="ClientRelease" />
