@@ -24,9 +24,7 @@
 #include "database.hpp"
 #include "queries.hpp"
 #include "server.hpp"
-#include "lua-5.3.0/lua.h"
-#include "lua-5.3.0/lualib.h"
-#include "lua-5.3.0/lauxlib.h"
+#include "lua-5.3.0/lua_all.h"
 
 using bvdb::SQLiteDB;
 using bvdb::DBIsBusy;
