@@ -123,7 +123,7 @@ void onGetAccount(bvnet::session *s,u32 *acctOb,bool *doneFlag) {
     if (loginOK) {
         *acctOb=acct.id;
         LOCK_COUT
-        cout << "serverRoot.GetAccount returned objectref id= " << acct.id << endl;
+        cout << "serverRoot.GetAccount returned objectref id=" << acct.id << endl;
         UNLOCK_COUT
     } else {
         *acctOb=0;
