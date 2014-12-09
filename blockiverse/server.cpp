@@ -428,13 +428,6 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
             if (IdOfOwner==IdOfUsername) {
                 // userid of owner matches userid of username
                 // action: login succeeds
-                LOCK_COUT
-                cout << "[server] TODO: Login succeeds for "
-                     << user << "(" << IdOfOwner
-                     << ") on pubkey " << key.str()
-                     << " (owner)" << endl;
-                UNLOCK_COUT
-
                 try {
                     bvnet::session::shared acct=ctx.get_shared(new Account(ctx,this,IdOfOwner));
                     auto &obLval=*acct;
@@ -495,17 +488,6 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
                         // a result row indicates whitelist had
                         // an allowance entry for this client's pubkey
                         // and that the passwords matched up
-                        /** TODO:
-                        *
-                        *   Ensure we aren't logging in the same user twice.
-                        */
-                        LOCK_COUT
-                        cout << "[server] TODO: Login succeeds for "
-                             << user << "(" << IdOfOtherOwner
-                             << ") on pubkey " << key.str()
-                             << " (via whitelist)" << endl;
-                        UNLOCK_COUT
-
                         try {
                             bvnet::session::shared acct=ctx.get_shared(new Account(ctx,this,IdOfOtherOwner));
                             auto &obLval=*acct;
@@ -517,6 +499,7 @@ void serverRoot::dmc_GetAccount(value_queue &vqueue) {
                             vqueue.push(bvnet::obref(acctId));
                             authOK=true;
                         } catch (DBError &e) {
+                            // typically an attmept to login same account twice
                             LOCK_COUT
                             cout << "[server] Account (userid=" << IdOfOtherOwner
                                  << ") login failed: " << e.what() << endl;

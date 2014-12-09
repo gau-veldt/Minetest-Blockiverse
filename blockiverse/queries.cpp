@@ -69,6 +69,55 @@ namespace bvquery {
             ",luaver TEXT NOT NULL"
             ",binary BLOB NOT NULL"
             ",UNIQUE(moduleId,name)"
+        ")",
+
+        /** @brief objects in Blockiverse
+        *   axis range: +- [0,2^29)
+        *   Bx,By,Bz Blockiverse   coordinate (step ~149.45 parsec, max 80.2378 gigaparsec)
+        *   Gx,Gy,Gz Galactic Zone coordiante (step ~8.5899 Gm, max ~149.45 parsec)
+        *   Cx,Cy,Cz Chunk Zone    coordinate (step 16 m, ~ max ~8.5899 Gm)
+        *   Px,Py,Pz Finepos       coordinate (step ~30 nm, max 16 m)
+        *
+        *   Finepos being a sub-chunk unit is not likely to participate
+        *   in object-in-range search queries so the 2^29 limit does not apply
+        *   as the 2^29 limit is only to allow square domain searches for any
+        *   objects in range of some point (without a sqrt it is necessary to
+        *   ensure the distance expansion in square domain does not overflow
+        *   signed int64 given max magnitude of 2^63 (an axis magnitude doubles
+        *   when sign bit added so when k=29 2^k magnitude is actually 2^30 thus
+        *   the k+1 when you square it in the range calc 2^30 becomes 2^60, finally
+        *   log(3*(2^60))/log(2) is 61.585 so would fit in 62 bits so all good.
+        *   3*((2^(k+1))^2) <= 2^63  k=29 is largest k satisfying this limit
+        */
+        "CREATE TABLE IF NOT EXISTS PivotType ("
+            "pivotTypeId INTEGER PRIMARY KEY ASC NOT NULL"
+            ",pivotType TEXT"
+        ")",
+        "CREATE TABLE IF NOT EXISTS EntityType ("
+            "entityTypeId INTEGER PRIMARY KEY ASC NOT NULL"
+            ",entityType TEXT"
+        ")",
+        "CREATE TABLE IF NOT EXISTS Entity ("
+            "entityId INTEGER PRIMARY KEY ASC NOT NULL"
+            // when not null specifies a gravitational
+            // reference object for coupling (eg: vehicle),
+            // orbiting (eg: planet) or falling (eg: player)
+            ",pivotId INTEGER REFERENCES Entity(entityId)"
+            ",pivotType TEXT DEFAULT \"\""
+            // position in Blockiverse
+            // (BxGxCxPx,ByGyCyPy,BzGzCzPz)
+            ",Bx INTEGER NOT NULL"
+            ",By INTEGER NOT NULL"
+            ",Bz INTEGER NOT NULL"
+            ",Gx INTEGER NOT NULL"
+            ",Gy INTEGER NOT NULL"
+            ",Gz INTEGER NOT NULL"
+            ",Cx INTEGER NOT NULL"
+            ",Cy INTEGER NOT NULL"
+            ",Cz INTEGER NOT NULL"
+            ",Px INTEGER NOT NULL"
+            ",Py INTEGER NOT NULL"
+            ",Pz INTEGER NOT NULL"
         ")"
     };
 
