@@ -43,8 +43,33 @@ namespace bvquery {
         "CREATE TABLE IF NOT EXISTS LoggedIn ("
             "userid INTEGER NOT NULL REFERENCES Owner (userid) ON DELETE CASCADE"
             ",PRIMARY KEY (userid)"
-        ");",
-        "DELETE FROM LoggedIn"
+        ")",
+        "DELETE FROM LoggedIn",
+
+        /** @brief Modules table */
+        "CREATE TABLE IF NOT EXISTS Modules ("
+            "moduleId INTEGER PRIMARY KEY ASC NOT NULL"
+            ",name TEXT UNIQUE NOT NULL"
+            ",description TEXT DEFAULT \"\""
+        ")",
+        /** @brief Module dependency
+        *   TODO: disallow cycles */
+        "CREATE TABLE IF NOT EXISTS ModDepends ("
+            "moduleId INTEGER NOT NULL REFERENCES Modules(moduleId) ON DELETE CASCADE"
+            ",requiresId INTEGER NOT NULL REFERENCES Modules(moduleId) ON DELETE RESTRICT"
+            ",PRIMARY KEY (moduleId,requiresId)"
+        ")",
+        /** @brief Scripts table */
+        "CREATE TABLE IF NOT EXISTS Scripts ("
+            "scriptId INTEGER PRIMARY KEY ASC NOT NULL"
+            ",moduleId INTEGER NOT NULL REFERENCES Modules(moduleId) ON DELETE CASCADE"
+            ",name TEXT NOT NULL"
+            ",hash TEXT NOT NULL"
+            ",source TEXT NOT NULL"
+            ",luaver TEXT NOT NULL"
+            ",binary BLOB NOT NULL"
+            ",UNIQUE(moduleId,name)"
+        ")"
     };
 
     /** @brief Search for account owned by specified client (pubkey) */

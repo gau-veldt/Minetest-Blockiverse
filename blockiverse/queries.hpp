@@ -44,6 +44,30 @@ namespace bvquery {
                 userid=0,
             };
         };
+        namespace Modules {
+            enum _schema {
+                moduleId=0,
+                name=1,
+                description=2
+            };
+        };
+        namespace ModDepends {
+            enum _schema {
+                modeId=0,
+                requiresId=1
+            };
+        };
+        namespace Scripts {
+            enum _schema {
+                scriptId=0,
+                moduleId=1,
+                name=2,
+                hash=3,
+                source=4,
+                luaver=5,
+                binary=6
+            };
+        };
     };
 
     namespace result {
