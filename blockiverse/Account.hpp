@@ -54,6 +54,24 @@ namespace bv {
                  << userId << ")" << endl;
             UNLOCK_COUT
 
+            /** TODO:
+            *   Some of the standard lualibs are not going to behave well
+            *   (like the os time stuff) in multithreaded (shared) context.
+            *
+            *   I'd like to enable as much of it as possible however
+            *   and just override the problem implementations with
+            *   patched implementations that fix any issues.
+            *
+            *   (eg: luaB_print which isn't using (UN)LOCK_COUT
+            *    it needs an override as it is not sufficient to
+            *    merely redefine the print macros in luaconf.h
+            *    since the argument loop in luaB_print will
+            *    execute across locking cycles thus potentially
+            *    have multiargument output being interleaved with
+            *    output from other threads.)
+            */
+            luaL_openlibs(asUser);
+
             // attempts login
             // throws if multiple login attempt for same account)
             bool try_again;
