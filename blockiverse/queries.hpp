@@ -68,6 +68,38 @@ namespace bvquery {
                 binary=6
             };
         };
+        namespace PivotType {
+            enum _schema {
+                pivotTypeId=0,
+                pivotType=1
+            };
+        };
+        namespace EntityType {
+            enum _schema {
+                entityTypeId=0,
+                entityType=1
+            };
+        };
+        namespace Entity {
+            enum _schema {
+                entityId=0,
+                entityType=1,
+                pivotId=2,
+                pivotType=3,
+                Bx=4,
+                By=5,
+                Bz=6,
+                Gx=7,
+                Gy=8,
+                Gz=9,
+                Cx=10,
+                Cy=11,
+                Cz=12,
+                Px=13,
+                Py=14,
+                Pz=15
+            };
+        };
     };
 
     namespace result {

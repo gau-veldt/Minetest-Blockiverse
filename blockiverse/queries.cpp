@@ -99,11 +99,12 @@ namespace bvquery {
         ")",
         "CREATE TABLE IF NOT EXISTS Entity ("
             "entityId INTEGER PRIMARY KEY ASC NOT NULL"
+            ",entityType INTEGER NOT NULL REFERENCES EntityType(entityTypeId)"
             // when not null specifies a gravitational
             // reference object for coupling (eg: vehicle),
             // orbiting (eg: planet) or falling (eg: player)
             ",pivotId INTEGER REFERENCES Entity(entityId)"
-            ",pivotType TEXT DEFAULT \"\""
+            ",pivotType INTEGER REFERENCES PivotType(pivotTypeId)"
             // position in Blockiverse
             // (BxGxCxPx,ByGyCyPy,BzGzCzPz)
             ",Bx INTEGER NOT NULL"

@@ -195,6 +195,7 @@ namespace bvdb {
             if (rc) {
                 DBError::busy_aware_throw(rc,sqlite3_errmsg(db));
             }
+            runOnce("PRAGMA foreign_keys=ON;");
         }
         virtual ~SQLiteDB() {
             for (auto&& i : stmtCache) {
@@ -374,7 +375,11 @@ namespace bvdb {
             *   @throw DBError should execution fail
             */
             LOCK_COUT
-            cout << "[DB] runOnce: " << sql << endl;
+            if (sql.size()>180) {
+                cout << "[DB] runOnce: " << sql.substr(0,177) << "..." << endl;
+            } else {
+                cout << "[DB] runOnce: " << sql << endl;
+            }
             UNLOCK_COUT
 
             char *err=NULL;
