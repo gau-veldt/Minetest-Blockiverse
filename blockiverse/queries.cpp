@@ -92,10 +92,12 @@ namespace bvquery {
         "CREATE TABLE IF NOT EXISTS PivotType ("
             "pivotTypeId INTEGER PRIMARY KEY ASC NOT NULL"
             ",pivotType TEXT"
+            ",UNIQUE(pivotType)"
         ")",
         "CREATE TABLE IF NOT EXISTS EntityType ("
             "entityTypeId INTEGER PRIMARY KEY ASC NOT NULL"
             ",entityType TEXT"
+            ",UNIQUE(entityType)"
         ")",
         "CREATE TABLE IF NOT EXISTS Entity ("
             "entityId INTEGER PRIMARY KEY ASC NOT NULL"
