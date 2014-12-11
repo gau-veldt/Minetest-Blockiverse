@@ -176,8 +176,8 @@ int main(int argc, char** argv)
     config.read_cmdline(argc,argv);
 
     LOCK_COUT
-    cout << "Version is: " << auto_ver << endl;
-    cout << "Starting in: " << cwd << endl;
+    cout << "Client version is: " << auto_ver << endl;
+    cout << "Client starting in: " << cwd << endl;
     /* test settings map */
     /*for (auto &setting : config) {
         cout << setting.first << "="
