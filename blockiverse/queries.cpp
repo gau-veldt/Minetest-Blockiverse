@@ -91,22 +91,24 @@ namespace bvquery {
         */
         "CREATE TABLE IF NOT EXISTS PivotType ("
             "pivotTypeId INTEGER PRIMARY KEY ASC NOT NULL"
+            ",ownerMod INTEGER NOT NULL REFERENCES Modules(moduleId) ON DELETE CASCADE"
             ",pivotType TEXT"
             ",UNIQUE(pivotType)"
         ")",
         "CREATE TABLE IF NOT EXISTS EntityType ("
             "entityTypeId INTEGER PRIMARY KEY ASC NOT NULL"
+            ",ownerMod INTEGER NOT NULL REFERENCES Modules(moduleId) ON DELETE CASCADE"
             ",entityType TEXT"
             ",UNIQUE(entityType)"
         ")",
         "CREATE TABLE IF NOT EXISTS Entity ("
             "entityId INTEGER PRIMARY KEY ASC NOT NULL"
-            ",entityType INTEGER NOT NULL REFERENCES EntityType(entityTypeId)"
+            ",entityType INTEGER NOT NULL REFERENCES EntityType(entityTypeId) ON DELETE CASCADE"
             // when not null specifies a gravitational
             // reference object for coupling (eg: vehicle),
             // orbiting (eg: planet) or falling (eg: player)
-            ",pivotId INTEGER REFERENCES Entity(entityId)"
-            ",pivotType INTEGER REFERENCES PivotType(pivotTypeId)"
+            ",pivotId INTEGER REFERENCES Entity(entityId) ON DELETE SET NULL"
+            ",pivotType INTEGER REFERENCES PivotType(pivotTypeId) ON DELETE SET NULL"
             // position in Blockiverse
             // (BxGxCxPx,ByGyCyPy,BzGzCzPz)
             ",Bx INTEGER NOT NULL"
