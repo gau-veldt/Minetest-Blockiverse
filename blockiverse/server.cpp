@@ -105,7 +105,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     server_config.read_cmdline(argc,argv);
 
     LOCK_COUT
-    cout << "[server] Version is: " << auto_ver << endl;
+    cout << "[server] Version is: " << auto_ver << "-sqlite-" << sqlite3_version << endl;
     cout << "[server] Starting in: " << cwd << endl;
     /*if (argc==0) {
         cout << "[server] Argument passing failed (argc==0)" << endl;
