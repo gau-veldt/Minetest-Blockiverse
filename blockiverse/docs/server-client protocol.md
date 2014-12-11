@@ -10,10 +10,14 @@ opcode overview:
    objectref: o id
  method call: . id method
  object gone: ~ id
+ dmc message: : id len name midx
+      atomic: ( <params> <method call> )
 ```
 - db is a raw databyte
 - len is a LE 32-bit unsigned integer
 - id is LE 32-bit unsigned integer object id
+- midx is LE 32-bit unsigned integer method index
+- name is a string (preceeding len is length)
 - method is LE 32-bit unsigned integer method index
 
 debug mode:
@@ -21,6 +25,41 @@ when built debug all binary values (except blobs)
 will be indicated as hexadecimal representations matching the
 length of data involved
 0xNNNNNNNN for #, 0xNN for databytes
+
+atomic blocks:
+
+If the endpoints were to invoke a method call with arguments then
+concurrnecy issues may occur as parameters of endpoint B's method
+call get interpreted by enpoint A as return values to its current
+method call (or vice versa).  To prevent such problems one endpoint
+(the server by convention since its calls tend to be preemptive in
+nature) brackets its calls with the atomic operators ( and ) which
+tells the receiver not to use the normal argument stack to hold the
+bracketed values.  This stack is destroyed when the closing ) is
+encountered.  Atomic blocks are meant to make preemptive (out of
+band) informational calls to 'sink' type methods that may accept
+arguments but may not push return values.
+
+NB: Method calls that neither accept parameters nor generate
+return values do not need to use atomic blocks.
+
+*** TODO ***
+The current protocol implementation does not yet implement
+atomic blocks.
+
+dynamic method call (DMC):
+
+Objects may be polymorphic (as a derived class during program
+compilation) and may also add additional methods at runtime.
+
+Whenever the object first becomes valid at one endpoint an
+initial set of dmc messages will convey the initial interface
+to the other endpoint.
+
+If the object instance polymorphs further at runtime then
+additional dmc messages may be emitted whenever such changes
+occur.  Instances may only add new methods to the existing
+contract, never remove an existing method.
 
 ##datatypes
 

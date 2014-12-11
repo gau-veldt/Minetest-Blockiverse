@@ -38,26 +38,7 @@
 #include "client.hpp"
 #include "settings.hpp"
 
-/*
-In the Irrlicht Engine, everything can be found in the namespace
-'irr'. So if you want to use a class of the engine, you have to
-write an irr:: before the name of the class. For example to use
-the IrrlichtDevice write: irr::IrrlichtDevice. To get rid of the
-irr:: in front of the name of every class, we tell the compiler
-that we use that namespace from now on, and we will not have to
-write that 'irr::'.
-*/
 using namespace irr;
-
-/*
-There are 5 sub namespaces in the Irrlicht Engine. Take a look
-at them, you can read a detailed description of them in the
-documentation by clicking on the top menu item 'Namespace List'
-or using this link: http://irrlicht.sourceforge.net/docu/namespaces.html.
-Like the irr Namespace, we do not want these 5 sub namespaces now,
-to keep this example simple. Hence we tell the compiler again
-that we do not want always to write their names:
-*/
 using namespace core;
 using namespace scene;
 using namespace video;
@@ -175,8 +156,11 @@ int main(int argc, char** argv)
     Configurator config((cwd/"client.cfg").string(),client_default_config);
     config.read_cmdline(argc,argv);
 
+    std::string ver=auto_ver;
+    std::wstring wcvt;
+
     LOCK_COUT
-    cout << "Client version is: " << auto_ver << endl;
+    cout << "Client version is: " << ver << endl;
     cout << "Client starting in: " << cwd << endl;
     /* test settings map */
     /*for (auto &setting : config) {
@@ -184,6 +168,44 @@ int main(int argc, char** argv)
             << setting.second << endl;
     }*/
     UNLOCK_COUT
+
+    E_DRIVER_TYPE vdrv=EDT_SOFTWARE;
+    if (v2str(config["driver"])=="opengl") vdrv=EDT_OPENGL;
+
+    int winW,winH;
+    winW=v2int(config["window_width"]);
+    winH=v2int(config["window_height"]);
+    IrrlichtDevice *device =
+        createDevice(vdrv, dimension2d<u32>(winW, winH), 16,
+            false, false, false, 0);
+    device->setWindowCaption(L"Blockiverse client");
+    IVideoDriver* driver = device->getVideoDriver();
+    ISceneManager* smgr = device->getSceneManager();
+    IGUIEnvironment* guienv = device->getGUIEnvironment();
+
+    guienv->clear();
+    widen(wcvt,std::string("Blockiverse version ")+ver+" starting up...");
+    guienv->addStaticText(wcvt.data(),
+        rect<int>(10,10,200,22), false);
+    if (!device->run()) {return 0;}
+    driver->beginScene(true, true, SColor(0,200,200,200));
+    smgr->drawAll();
+    guienv->drawAll();
+    driver->endScene();
+
+    /*
+    ** start server when running standalone
+    ** so there will be something to connect to
+    */
+    bool standalone=(0!=v2int(config["standalone"]));
+    if (standalone) {
+        LOCK_COUT
+        cout << "Starting server." << endl;
+        UNLOCK_COUT
+        serverActive=true;
+        req_serverQuit=false;
+        server_thread=new boost::thread(server_main,&args);
+    }
 
     /*
     ** load client keypair
@@ -214,9 +236,23 @@ int main(int argc, char** argv)
         UNLOCK_COUT
     }
     if (client_kpair==NULL) {
+
+        guienv->clear();
+        widen(wcvt,std::string(
+            "Generating new client key.\n"
+            "    This is only done once after installation,\n"
+            "    but may take a few minutes..."));
+        guienv->addStaticText(wcvt.data(),
+            rect<int>(10,10,200,10+(12*3)), false);
+        if (!device->run()) {return 0;}
+        driver->beginScene(true, true, SColor(0,200,200,200));
+        smgr->drawAll();
+        guienv->drawAll();
+        driver->endScene();
+
         LOCK_COUT
         cout << "Generating new client key" << endl
-                  << "  This is only done once,"  << endl
+                  << "  This is only done once after installation,"  << endl
                   << "  but it takes several minutes..." << endl;
         UNLOCK_COUT
         /*
@@ -254,19 +290,17 @@ int main(int argc, char** argv)
     //cout << *client_kpair << endl;
     //UNLOCK_COUT
 
-    /*
-    ** start server when running standalone
-    ** so there will be something to connect to
-    */
-    bool standalone=(0!=v2int(config["standalone"]));
-    if (standalone) {
-        LOCK_COUT
-        cout << "Starting server." << endl;
-        UNLOCK_COUT
-        serverActive=true;
-        req_serverQuit=false;
-        server_thread=new boost::thread(server_main,&args);
-    }
+    guienv->clear();
+    widen(wcvt,std::string("Logging into ")
+          +config["address"]+":"+config["port"]
+          +" as "+config["user"]+"...");
+    guienv->addStaticText(wcvt.data(),
+        rect<int>(10,10,400,22), false);
+    if (!device->run()) {return 0;}
+    driver->beginScene(true, true, SColor(0,200,200,200));
+    smgr->drawAll();
+    guienv->drawAll();
+    driver->endScene();
 
     /*
     ** create stuff client needs such as
@@ -356,54 +390,7 @@ int main(int argc, char** argv)
         UNLOCK_COUT
 
         if (acctId>0){
-            /*
-            The most important function of the engine is the 'createDevice'
-            function. The Irrlicht Device can be created with it, which is the
-            root object for doing everything with the engine.
-            createDevice() has 7 paramters:
-            deviceType: Type of the device. This can currently be the Null-device,
-               the Software device, DirectX8, DirectX9, or OpenGL. In this example we use
-               EDT_SOFTWARE, but to try out, you might want to change it to
-               EDT_NULL, EDT_DIRECTX8 , EDT_DIRECTX9, or EDT_OPENGL.
-            windowSize: Size of the Window or FullscreenMode to be created. In this
-               example we use 640x480.
-            bits: Amount of bits per pixel when in fullscreen mode. This should
-               be 16 or 32. This parameter is ignored when running in windowed mode.
-            fullscreen: Specifies if we want the device to run in fullscreen mode
-               or not.
-            stencilbuffer: Specifies if we want to use the stencil buffer for drawing shadows.
-            vsync: Specifies if we want to have vsync enabled, this is only useful in fullscreen
-              mode.
-            eventReceiver: An object to receive events. We do not want to use this
-               parameter here, and set it to 0.
-            */
-
-            E_DRIVER_TYPE vdrv=EDT_SOFTWARE;
-            if (v2str(config["driver"])=="opengl") vdrv=EDT_OPENGL;
-
-            int winW,winH;
-            winW=v2int(config["window_width"]);
-            winH=v2int(config["window_height"]);
-            IrrlichtDevice *device =
-                createDevice(vdrv, dimension2d<u32>(winW, winH), 16,
-                    false, false, false, 0);
-
-            /*
-            Set the caption of the window to some nice text. Note that there is
-            a 'L' in front of the std::string. The Irrlicht Engine uses wide character
-            std::strings when displaying text.
-            */
-            device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
-
-            /*
-            Get a pointer to the video driver, the SceneManager and the
-            graphical user interface environment, so that
-            we do not always have to write device->getVideoDriver(),
-            device->getSceneManager() and device->getGUIEnvironment().
-            */
-            IVideoDriver* driver = device->getVideoDriver();
-            ISceneManager* smgr = device->getSceneManager();
-            IGUIEnvironment* guienv = device->getGUIEnvironment();
+            guienv->clear();
 
             /*
             We add a hello world label to the window, using the GUI environment.
@@ -498,31 +485,12 @@ int main(int argc, char** argv)
                     UNLOCK_COUT
                 }
 
-                /*
-                Anything can be drawn between a beginScene() and an endScene()
-                call. The beginScene clears the screen with a color and also the
-                depth buffer if wanted. Then we let the Scene Manager and the
-                GUI Environment draw their content. With the endScene() call
-                everything is presented on the screen.
-                */
                 driver->beginScene(true, true, SColor(0,200,200,200));
-
                 smgr->drawAll();
                 guienv->drawAll();
-
                 driver->endScene();
             }
 
-            /*
-            After we are finished, we have to delete the Irrlicht Device
-            created before with createDevice(). In the Irrlicht Engine,
-            you will have to delete all objects you created with a method or
-            function which starts with 'create'. The object is simply deleted
-            by calling ->drop().
-            See the documentation at
-            http://irrlicht.sourceforge.net//docu/classirr_1_1IUnknown.html#a3
-            for more information.
-            */
             device->drop();
         }
     }
@@ -533,21 +501,23 @@ int main(int argc, char** argv)
     UNLOCK_COUT
     socket.close();
 
-    // defibrilates if server in blocking accept
-    LOCK_COUT
-    cout << "Requesting server quit." << endl;
-    UNLOCK_COUT
-    req_serverQuit=true;
-    boost::asio::connect(socket,target);
-    socket.close();
+    if (standalone) {
+        // defibrilates main server thread if blocked
+        LOCK_COUT
+        cout << "Requesting server quit." << endl;
+        UNLOCK_COUT
+        req_serverQuit=true;
+        boost::asio::connect(socket,target);
+        socket.close();
 
-    LOCK_COUT
-    cout << "Waiting for server shutdown." << endl;
-    UNLOCK_COUT
-    if (server_thread!=NULL) {
-        server_thread->join();  //while (serverActive) ;
-        delete server_thread;
-        server_thread=NULL;
+        LOCK_COUT
+        cout << "Waiting for server shutdown." << endl;
+        UNLOCK_COUT
+        if (server_thread!=NULL) {
+            server_thread->join();  //while (serverActive) ;
+            delete server_thread;
+            server_thread=NULL;
+        }
     }
 
     return 0;

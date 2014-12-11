@@ -20,3 +20,10 @@
 
 /** @brief meters per parsec */
 u64 m_per_parsec=30856775800000000;
+
+int widen(std::wstring &wide,const std::string &narrow) {
+    std::wstring ws(narrow.size(), L' '); // Overestimate number of code points.
+    ws.resize(mbstowcs(&ws[0], narrow.c_str(), narrow.size())); // Shrink to fit.
+    wide=ws;
+    return 0;
+}

@@ -85,4 +85,6 @@ public:
     virtual void accept(IVisitor &v) {v.visit(this);}
 };
 
+extern int widen(std::wstring &,const std::string &);
+
 #endif // BV_COMMON_HPP_INCLUDED
