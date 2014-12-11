@@ -102,6 +102,21 @@ namespace bvquery {
                 Pz=15
             };
         };
+        namespace Property {
+            enum _schema {
+                propId=0,
+                Owner=1,
+                Type=2,
+                Name=3
+            };
+        };
+        namespace EntityData {
+            enum _schema {
+                entityId=0,
+                propId=1,
+                Value=2
+            };
+        };
     };
 
     namespace result {
