@@ -71,13 +71,15 @@ namespace bvquery {
         namespace PivotType {
             enum _schema {
                 pivotTypeId=0,
-                pivotType=1
+                onwerMod=1,
+                pivotType=2
             };
         };
         namespace EntityType {
             enum _schema {
                 entityTypeId=0,
-                entityType=1
+                onwerMod=1,
+                entityType=2
             };
         };
         namespace Entity {

@@ -123,6 +123,28 @@ namespace bvquery {
             ",Px INTEGER NOT NULL"
             ",Py INTEGER NOT NULL"
             ",Pz INTEGER NOT NULL"
+        ")",
+
+        /** @brief Property definitions */
+        "CREATE TABLE IF NOT EXISTS Property ("
+            // property id
+            "propId INTEGER PRIMARY KEY ASC NOT NULL"
+            // module defining property
+            ",Owner INTEGER NOT NULL REFERENCES Modules(moduleId) ON DELETE CASCADE"
+            // type of property:
+            // SQL_INTEGER,SQL_FLOAT,SQL_TEXT,SQL_BLOB
+            ",Type INTEGER NOT NULL"
+            // property name
+            ",Name TEXT NOT NULL"
+        ")",
+        /** @brief Property values */
+        "CREATE TABLE IF NOT EXISTS EntityData ("
+            // entity the property data is assigned to
+            "entityId INTEGER NOT NULL REFERENCES Entity(entityId) ON DELETE CASCADE"
+            // which property
+            ",propId INTEGER NOT NULL REFERENCES Property(propId) ON DELETE CASCADE"
+            // property data
+            ",Value TEXT"
         ")"
     };
 
