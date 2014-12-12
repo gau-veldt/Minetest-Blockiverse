@@ -169,6 +169,29 @@ void DoGenerateKey(bool *whenDone,
     *whenDone=true;
 }
 
+bool putGUIMessage(
+        IrrlichtDevice* device,
+        IVideoDriver* driver,
+        IGUIEnvironment* guienv,
+        ISceneManager* smgr,
+        int textHeight,
+        int lines,
+        std::string msg) {
+    guienv->clear();
+    std::wstring wcvt;
+    widen(wcvt,msg);
+    guienv->addStaticText(wcvt.data(),
+        rect<int>(10,10,410,10+(textHeight*lines)), false);
+    if (!device->run()) {
+        return false;
+    }
+    driver->beginScene(true, true, SColor(0,200,200,200));
+    smgr->drawAll();
+    guienv->drawAll();
+    driver->endScene();
+    return true;
+}
+
 int main(int argc, char** argv)
 {
     extern void protocol_main_init();
@@ -185,7 +208,6 @@ int main(int argc, char** argv)
     config.read_cmdline(argc,argv);
 
     std::string ver=auto_ver;
-    std::wstring wcvt;
 
     LOCK_COUT
     cout << "Client version is: " << ver << endl;
@@ -222,15 +244,10 @@ int main(int argc, char** argv)
     cout << "Text height: " << textHeight << endl;
     UNLOCK_COUT
 
-    guienv->clear();
-    widen(wcvt,std::string("Blockiverse version ")+ver+" starting up...");
-    guienv->addStaticText(wcvt.data(),
-        rect<int>(10,10,410,10+textHeight), false);
-    if (!device->run()) {return 0;}
-    driver->beginScene(true, true, SColor(0,200,200,200));
-    smgr->drawAll();
-    guienv->drawAll();
-    driver->endScene();
+    if (!putGUIMessage(device,driver,guienv,smgr,textHeight,1,
+        std::string("Blockiverse version ")+ver+" starting up...")) {
+        return 0;
+    }
 
     /*
     ** start server when running standalone
@@ -276,25 +293,15 @@ int main(int argc, char** argv)
     }
     if (client_kpair==NULL) {
 
-        guienv->clear();
-        widen(wcvt,std::string(
-            "Generating new client key.\n"
-            "    This is only done once after installation,\n"
-            "    but may take a few minutes..."));
-        guienv->addStaticText(wcvt.data(),
-            rect<int>(10,10,410,10+(textHeight*3)), false);
-        if (!device->run()) {return 0;}
-        driver->beginScene(true, true, SColor(0,200,200,200));
-        smgr->drawAll();
-        guienv->drawAll();
-        driver->endScene();
+        if (!putGUIMessage(device,driver,guienv,smgr,textHeight,3,
+            std::string(
+                "Generating new client key.\n"
+                "    This is only done once after installation,\n"
+                "    but may take a few minutes..."))) {
+            return 0;
+        }
         bool keyIsDone=false;
         boost::thread* task_GenKey=new boost::thread(DoGenerateKey,&keyIsDone,v2int(config["key_size"]),&priv_mod,&priv_exp,&pub_mod,&pub_exp);
-        //KeyPair temp_kp=RSA::GenerateKeyPair(/*100 too slow while debugging*/32);
-        //priv_mod=temp_kp.GetPrivateKey().GetModulus();
-        //priv_exp=temp_kp.GetPrivateKey().GetExponent();
-        //pub_mod=temp_kp.GetPublicKey().GetModulus();
-        //pub_exp=temp_kp.GetPublicKey().GetExponent();
         while (!keyIsDone) {
             if (!device->run()) {
                 delete task_GenKey;
@@ -329,17 +336,12 @@ int main(int argc, char** argv)
     //cout << *client_kpair << endl;
     //UNLOCK_COUT
 
-    guienv->clear();
-    widen(wcvt,std::string("Logging into ")
-          +config["address"]+":"+config["port"]
-          +" as "+config["user"]+"...");
-    guienv->addStaticText(wcvt.data(),
-        rect<int>(10,10,410,10+textHeight), false);
-    if (!device->run()) {return 0;}
-    driver->beginScene(true, true, SColor(0,200,200,200));
-    smgr->drawAll();
-    guienv->drawAll();
-    driver->endScene();
+    if (!putGUIMessage(device,driver,guienv,smgr,textHeight,1,
+        std::string("Logging into ")
+            +config["address"]+":"+config["port"]
+            +" as "+config["user"]+"...")) {
+        return 0;
+    }
 
     /*
     ** create stuff client needs such as
