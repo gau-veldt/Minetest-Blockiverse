@@ -152,7 +152,11 @@ int main(int argc, char** argv)
 
     boost::thread *server_thread=NULL;
     argset args(argc,argv);
+
     boost::filesystem::path cwd=boost::filesystem::current_path();
+    boost::filesystem::path media=cwd/".."/"client";
+    boost::filesystem::path fonts=media/"fonts";
+
     Configurator config((cwd/"client.cfg").string(),client_default_config);
     config.read_cmdline(argc,argv);
 
@@ -183,10 +187,21 @@ int main(int argc, char** argv)
     ISceneManager* smgr = device->getSceneManager();
     IGUIEnvironment* guienv = device->getGUIEnvironment();
 
+    IGUISkin* skin = guienv->getSkin();
+    IGUIFont* font = guienv->getFont((fonts/"fontlucida.png").string().c_str());
+    int textHeight=12;
+    if (font) {
+        skin->setFont(font);
+        textHeight=(font->getDimension(L"_")).Height;
+    }
+    LOCK_COUT
+    cout << "Text height: " << textHeight << endl;
+    UNLOCK_COUT
+
     guienv->clear();
     widen(wcvt,std::string("Blockiverse version ")+ver+" starting up...");
     guienv->addStaticText(wcvt.data(),
-        rect<int>(10,10,200,22), false);
+        rect<int>(10,10,410,10+textHeight), false);
     if (!device->run()) {return 0;}
     driver->beginScene(true, true, SColor(0,200,200,200));
     smgr->drawAll();
@@ -243,7 +258,7 @@ int main(int argc, char** argv)
             "    This is only done once after installation,\n"
             "    but may take a few minutes..."));
         guienv->addStaticText(wcvt.data(),
-            rect<int>(10,10,200,10+(12*3)), false);
+            rect<int>(10,10,410,10+(textHeight*3)), false);
         if (!device->run()) {return 0;}
         driver->beginScene(true, true, SColor(0,200,200,200));
         smgr->drawAll();
@@ -295,7 +310,7 @@ int main(int argc, char** argv)
           +config["address"]+":"+config["port"]
           +" as "+config["user"]+"...");
     guienv->addStaticText(wcvt.data(),
-        rect<int>(10,10,400,22), false);
+        rect<int>(10,10,410,10+textHeight), false);
     if (!device->run()) {return 0;}
     driver->beginScene(true, true, SColor(0,200,200,200));
     smgr->drawAll();
@@ -399,7 +414,7 @@ int main(int argc, char** argv)
             if (vdrv==EDT_OPENGL)
                 helloText=L"Hello World! This is the Irrlicht OpenGL renderer!";
             guienv->addStaticText(helloText,
-                rect<int>(10,10,200,22), true);
+                rect<int>(10,10,410,10+textHeight), true);
 
             /*
             To display something interesting, we load a Quake 2 model
