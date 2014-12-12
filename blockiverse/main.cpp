@@ -67,6 +67,13 @@ void client_default_config(Configurator &cfg) {
     cfg["port"]="37001";
     cfg["user"]="singleplayer";
     cfg["passwd"]="";
+    /*
+    ** 100 is 332-bit RSA key
+    ** this already takes several minutes
+    ** and the industry is moving to
+    ** 2048-bit keys (617)!!! :(
+    */
+    cfg["key_size"]="32";
 }
 
 class ClientEventReceiver : public IEventReceiver {
@@ -143,6 +150,23 @@ void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
                  boost::bind(loginDone,s,
                              authOk,doneFlag),
                  1 /* expects one argument */);
+}
+
+void DoGenerateKey(bool *whenDone,
+                   int keysize,
+                   BigInt *priv_mod,
+                   BigInt *priv_exp,
+                   BigInt *pub_mod,
+                   BigInt *pub_exp) {
+    LOCK_COUT
+    cout << "Generating new client key (size=" << keysize << ")" << endl;
+    UNLOCK_COUT
+    KeyPair temp_kp=RSA::GenerateKeyPair(keysize);
+    *priv_mod=temp_kp.GetPrivateKey().GetModulus();
+    *priv_exp=temp_kp.GetPrivateKey().GetExponent();
+    *pub_mod=temp_kp.GetPublicKey().GetModulus();
+    *pub_exp=temp_kp.GetPublicKey().GetExponent();
+    *whenDone=true;
 }
 
 int main(int argc, char** argv)
@@ -264,23 +288,23 @@ int main(int argc, char** argv)
         smgr->drawAll();
         guienv->drawAll();
         driver->endScene();
+        bool keyIsDone=false;
+        boost::thread* task_GenKey=new boost::thread(DoGenerateKey,&keyIsDone,v2int(config["key_size"]),&priv_mod,&priv_exp,&pub_mod,&pub_exp);
+        //KeyPair temp_kp=RSA::GenerateKeyPair(/*100 too slow while debugging*/32);
+        //priv_mod=temp_kp.GetPrivateKey().GetModulus();
+        //priv_exp=temp_kp.GetPrivateKey().GetExponent();
+        //pub_mod=temp_kp.GetPublicKey().GetModulus();
+        //pub_exp=temp_kp.GetPublicKey().GetExponent();
+        while (!keyIsDone) {
+            if (!device->run()) {
+                delete task_GenKey;
+                return 0;
+            }
+        }
+        task_GenKey->join();
+        delete task_GenKey;
+        task_GenKey=NULL;
 
-        LOCK_COUT
-        cout << "Generating new client key" << endl
-                  << "  This is only done once after installation,"  << endl
-                  << "  but it takes several minutes..." << endl;
-        UNLOCK_COUT
-        /*
-        ** 100 is 332-bit RSA key
-        ** this already takes several minutes
-        ** and the industry is moving to
-        ** 2048-bit keys (617)!!! :(
-        */
-        KeyPair temp_kp=RSA::GenerateKeyPair(/*100 too slow while debugging*/32);
-        priv_mod=temp_kp.GetPrivateKey().GetModulus();
-        priv_exp=temp_kp.GetPrivateKey().GetExponent();
-        pub_mod=temp_kp.GetPublicKey().GetModulus();
-        pub_exp=temp_kp.GetPublicKey().GetExponent();
         client_kpair=new KeyPair(Key(priv_mod,priv_exp),Key(pub_mod,pub_exp));
         LOCK_COUT
         cout << "New client key generated." << endl;
