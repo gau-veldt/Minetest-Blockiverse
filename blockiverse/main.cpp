@@ -28,6 +28,7 @@
 #include <vector>
 #include "rsa/RSA.h"
 #include "sha1.hpp"
+#include "settings.hpp"
 #include "protocol.hpp"
 #include <boost/thread/thread.hpp>
 #include <boost/filesystem.hpp>
@@ -36,7 +37,6 @@
 #include <boost/uuid/sha1.hpp>
 #include "server.hpp"
 #include "client.hpp"
-#include "settings.hpp"
 
 using namespace irr;
 using namespace core;
@@ -169,70 +169,8 @@ void DoGenerateKey(bool *whenDone,
     *whenDone=true;
 }
 
-class ClientFrontEnd {
-protected:
-    IrrlichtDevice* device;
-    IVideoDriver* driver;
-    IGUIEnvironment* guienv;
-    ISceneManager* smgr;
-    int textHeight;
-public:
-    ClientFrontEnd(IrrlichtDevice* dev) :
-        device(dev),
-        driver(dev->getVideoDriver()),
-        guienv(dev->getGUIEnvironment()),
-        smgr(dev->getSceneManager()),
-        textHeight(12) {
-    }
-    ~ClientFrontEnd() {
-        device->drop();
-    }
-
-    ISceneManager* getSceneManager() {return smgr;}
-
-    bool run() {return device->run();}
-
-    void drawAll() {
-        driver->beginScene(true, true, SColor(0,200,200,200));
-        smgr->drawAll();
-        guienv->drawAll();
-        driver->endScene();
-    }
-
-    ITexture* getTexture(std::string texfile) {
-        return driver->getTexture(texfile.c_str());
-    }
-
-    void clearGUI() {
-        guienv->clear();
-    }
-
-    void setGUIFont(std::string fontfile) {
-        IGUISkin* skin = guienv->getSkin();
-        IGUIFont* font = guienv->getFont(fontfile.c_str());
-        if (font) {
-            skin->setFont(font);
-            textHeight=(font->getDimension(L"_")).Height;
-        }
-    }
-
-    bool putGUIMessage(int lines,std::string msg) {
-        guienv->clear();
-        std::wstring wcvt;
-        widen(wcvt,msg);
-        guienv->addStaticText(wcvt.data(),
-            rect<int>(10,10,410,10+(textHeight*lines)), false);
-        if (!device->run()) {
-            return false;
-        }
-        driver->beginScene(true, true, SColor(0,200,200,200));
-        smgr->drawAll();
-        guienv->drawAll();
-        driver->endScene();
-        return true;
-    }
-
-};
+using bvclient::clientRoot;
+using bvclient::ClientFrontEnd;
 
 int main(int argc, char** argv)
 {
