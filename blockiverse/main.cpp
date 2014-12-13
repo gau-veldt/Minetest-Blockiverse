@@ -199,6 +199,9 @@ int main(int argc, char** argv)
     }*/
     UNLOCK_COUT
 
+    bool taskIsDone=false;
+    boost::thread* task_Worker=NULL;
+
     E_DRIVER_TYPE vdrv=EDT_SOFTWARE;
     if (v2str(config["driver"])=="opengl") vdrv=EDT_OPENGL;
 
@@ -268,17 +271,16 @@ int main(int argc, char** argv)
                 "    but may take a few minutes..."))) {
             return 0;
         }
-        bool keyIsDone=false;
-        boost::thread* task_GenKey=new boost::thread(DoGenerateKey,&keyIsDone,v2int(config["key_size"]),&priv_mod,&priv_exp,&pub_mod,&pub_exp);
-        while (!keyIsDone) {
+        task_Worker=new boost::thread(DoGenerateKey,&taskIsDone,v2int(config["key_size"]),&priv_mod,&priv_exp,&pub_mod,&pub_exp);
+        while (!taskIsDone) {
             if (!device->run()) {
-                delete task_GenKey;
+                delete task_Worker;
                 return 0;
             }
         }
-        task_GenKey->join();
-        delete task_GenKey;
-        task_GenKey=NULL;
+        task_Worker->join();
+        delete task_Worker;
+        task_Worker=NULL;
 
         client_kpair=new KeyPair(Key(priv_mod,priv_exp),Key(pub_mod,pub_exp));
         LOCK_COUT
@@ -365,7 +367,12 @@ int main(int argc, char** argv)
                                              client_kpair,&authOk,&authDone),
                                  1 /* expects one result */);
 
-        while (!authDone && client_session.run());
+        while (!authDone
+               && client_session.run()
+               && FrontEnd.run());
+        if (!FrontEnd.run()) {
+            return 0;
+        }
         LOCK_COUT
         if (authOk) {
             cout << "Server accepted client auth." << endl;
