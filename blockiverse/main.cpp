@@ -169,28 +169,70 @@ void DoGenerateKey(bool *whenDone,
     *whenDone=true;
 }
 
-bool putGUIMessage(
-        IrrlichtDevice* device,
-        IVideoDriver* driver,
-        IGUIEnvironment* guienv,
-        ISceneManager* smgr,
-        int textHeight,
-        int lines,
-        std::string msg) {
-    guienv->clear();
-    std::wstring wcvt;
-    widen(wcvt,msg);
-    guienv->addStaticText(wcvt.data(),
-        rect<int>(10,10,410,10+(textHeight*lines)), false);
-    if (!device->run()) {
-        return false;
+class ClientFrontEnd {
+protected:
+    IrrlichtDevice* device;
+    IVideoDriver* driver;
+    IGUIEnvironment* guienv;
+    ISceneManager* smgr;
+    int textHeight;
+public:
+    ClientFrontEnd(IrrlichtDevice* dev) :
+        device(dev),
+        driver(dev->getVideoDriver()),
+        guienv(dev->getGUIEnvironment()),
+        smgr(dev->getSceneManager()),
+        textHeight(12) {
     }
-    driver->beginScene(true, true, SColor(0,200,200,200));
-    smgr->drawAll();
-    guienv->drawAll();
-    driver->endScene();
-    return true;
-}
+    ~ClientFrontEnd() {
+        device->drop();
+    }
+
+    ISceneManager* getSceneManager() {return smgr;}
+
+    bool run() {return device->run();}
+
+    void drawAll() {
+        driver->beginScene(true, true, SColor(0,200,200,200));
+        smgr->drawAll();
+        guienv->drawAll();
+        driver->endScene();
+    }
+
+    ITexture* getTexture(std::string texfile) {
+        return driver->getTexture(texfile.c_str());
+    }
+
+    void clearGUI() {
+        guienv->clear();
+    }
+
+    void setGUIFont(std::string fontfile) {
+        IGUISkin* skin = guienv->getSkin();
+        IGUIFont* font = guienv->getFont(fontfile.c_str());
+        if (font) {
+            skin->setFont(font);
+            textHeight=(font->getDimension(L"_")).Height;
+        }
+    }
+
+    bool putGUIMessage(int lines,std::string msg) {
+        guienv->clear();
+        std::wstring wcvt;
+        widen(wcvt,msg);
+        guienv->addStaticText(wcvt.data(),
+            rect<int>(10,10,410,10+(textHeight*lines)), false);
+        if (!device->run()) {
+            return false;
+        }
+        driver->beginScene(true, true, SColor(0,200,200,200));
+        smgr->drawAll();
+        guienv->drawAll();
+        driver->endScene();
+        return true;
+    }
+
+};
 
 int main(int argc, char** argv)
 {
@@ -229,23 +271,12 @@ int main(int argc, char** argv)
         createDevice(vdrv, dimension2d<u32>(winW, winH), 16,
             false, false, false, 0);
     device->setWindowCaption(L"Blockiverse client");
-    IVideoDriver* driver = device->getVideoDriver();
-    ISceneManager* smgr = device->getSceneManager();
-    IGUIEnvironment* guienv = device->getGUIEnvironment();
+    ClientFrontEnd FrontEnd(device);
 
-    IGUISkin* skin = guienv->getSkin();
-    IGUIFont* font = guienv->getFont((fonts/"fontlucida.png").string().c_str());
-    int textHeight=12;
-    if (font) {
-        skin->setFont(font);
-        textHeight=(font->getDimension(L"_")).Height;
-    }
-    LOCK_COUT
-    cout << "Text height: " << textHeight << endl;
-    UNLOCK_COUT
+    FrontEnd.setGUIFont((fonts/"fontlucida.png").string());
 
-    if (!putGUIMessage(device,driver,guienv,smgr,textHeight,1,
-        std::string("Blockiverse version ")+ver+" starting up...")) {
+    if (!FrontEnd.putGUIMessage(1,std::string(
+        "Blockiverse version ")+ver+" starting up...")) {
         return 0;
     }
 
@@ -293,8 +324,7 @@ int main(int argc, char** argv)
     }
     if (client_kpair==NULL) {
 
-        if (!putGUIMessage(device,driver,guienv,smgr,textHeight,3,
-            std::string(
+        if (!FrontEnd.putGUIMessage(3,std::string(
                 "Generating new client key.\n"
                 "    This is only done once after installation,\n"
                 "    but may take a few minutes..."))) {
@@ -336,10 +366,9 @@ int main(int argc, char** argv)
     //cout << *client_kpair << endl;
     //UNLOCK_COUT
 
-    if (!putGUIMessage(device,driver,guienv,smgr,textHeight,1,
-        std::string("Logging into ")
-            +config["address"]+":"+config["port"]
-            +" as "+config["user"]+"...")) {
+    if (!FrontEnd.putGUIMessage(1,std::string("Logging into ")
+        +config["address"]+":"+config["port"]
+        +" as "+config["user"]+"...")) {
         return 0;
     }
 
@@ -431,16 +460,15 @@ int main(int argc, char** argv)
         UNLOCK_COUT
 
         if (acctId>0){
-            guienv->clear();
+            FrontEnd.clearGUI();
 
-            /*
-            We add a hello world label to the window, using the GUI environment.
-            */
-            const wchar_t *helloText=L"Hello World! This is the Irrlicht Software renderer!";
-            if (vdrv==EDT_OPENGL)
-                helloText=L"Hello World! This is the Irrlicht OpenGL renderer!";
-            guienv->addStaticText(helloText,
-                rect<int>(10,10,410,10+textHeight), true);
+            if (vdrv==EDT_OPENGL) {
+                FrontEnd.putGUIMessage(1,"Hello World! This is the Irrlicht OpenGL renderer!");
+            } else {
+                FrontEnd.putGUIMessage(1,"Hello World! This is the Irrlicht Software renderer!");
+            }
+
+            ISceneManager* smgr=FrontEnd.getSceneManager();
 
             /*
             To display something interesting, we load a Quake 2 model
@@ -467,7 +495,7 @@ int main(int argc, char** argv)
             {
                 node->setMaterialFlag(EMF_LIGHTING, false);
                 node->setFrameLoop(0, 310);
-                node->setMaterialTexture( 0, driver->getTexture("../../media/sydney.bmp") );
+                node->setMaterialTexture(0, FrontEnd.getTexture("../../media/sydney.bmp"));
             }
 
             /*
@@ -482,57 +510,10 @@ int main(int argc, char** argv)
             want to run any more. This would be when the user closed the window
             or pressed ALT+F4 in windows.
             */
-            while(device->run() && client_session.poll() /* client still connected */)
-            {
-                if (client_session.argcount()>0) {
-                    LOCK_COUT
-                    bvnet::valtype vt=client_session.argtype();
-                    switch (vt) {
-                    case bvnet::vtInt:
-                        cout << "Client got int: "
-                             << client_session.getarg<s64>()
-                             << endl;
-                        break;
-                    case bvnet::vtFloat:
-                        cout << "Client got float: "
-                             << client_session.getarg<float>()
-                             << endl;
-                        break;
-                    case bvnet::vtBlob:
-                    case bvnet::vtString:
-                        cout << "Client got std::string/blob: "
-                             << client_session.getarg<std::string>()
-                             << endl;
-                        break;
-                    case bvnet::vtObref:
-                        cout << "Client got objectref id="
-                             << client_session.getarg<bvnet::obref>().id
-                             << endl;
-                        break;
-                    case bvnet::vtDeath:
-                        cout << "Client's objectref #"
-                             << client_session.getarg<bvnet::ob_is_gone>().id
-                             << " is dead" << endl;
-                        break;
-                    case bvnet::vtMethod:
-                        cout << "<Method calls should not be visible>"
-                             << endl;
-                        break;
-                    case bvnet::vtDMC:
-                        cout << "<DMC messages should not be visible>"
-                             << endl;
-                        break;
-                    }
-                    UNLOCK_COUT
-                }
-
-                driver->beginScene(true, true, SColor(0,200,200,200));
-                smgr->drawAll();
-                guienv->drawAll();
-                driver->endScene();
+            while(FrontEnd.run()
+                && client_session.poll() /* client still connected */) {
+                FrontEnd.drawAll();
             }
-
-            device->drop();
         }
     }
 
