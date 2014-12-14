@@ -19,8 +19,11 @@
 
 #include "../common.hpp"
 #include "core.hpp"
+#include <vector>
 
 namespace bvgame {
+
+    typedef std::vector<string> rsvdList;
 
     const char* queryHasModule=
         "SELECT "
@@ -64,57 +67,66 @@ namespace bvgame {
         return s;
     }
 
+    s64 initModule(SQLiteDB &db,const string moduleName,const string moduleDesc) {
+        statement stmtHasModule;
+        statement stmtAddModule;
+        s64 modId=-1;
+        while (modId==-1) {
+            stmtHasModule=db.prepare(queryHasModule);
+            db.bind(stmtHasModule,1,moduleName);
+            query_result rsltHasModule;
+            rsltHasModule=db.loop_run(stmtHasModule);
+            if (rsltHasModule->size()>0) {
+                modId=db.get_result<s64>(rsltHasModule,0,0);
+            } else {
+                stmtAddModule=db.prepare(queryAddModule);
+                db.bind(stmtAddModule,1,moduleName);
+                db.bind(stmtAddModule,2,moduleDesc);
+                db.loop_run(stmtAddModule);
+            }
+        }
+        return modId;
+    }
+
+
+    void initRsvd(SQLiteDB &db,s64 ownerId,const char* tbl,const char* col, const rsvdList &rsvd) {
+        statement stmtDelRsvd;
+        statement stmtChkRsvd;
+        statement stmtAddRsvd;
+        query_result chkRslt;
+        for (auto i : rsvd) {
+            stmtDelRsvd=db.prepare(queryDelRsvd(tbl,col));
+            db.bind(stmtDelRsvd,1,ownerId);
+            db.bind(stmtDelRsvd,2,i);
+            db.loop_run(stmtDelRsvd);
+
+            stmtChkRsvd=db.prepare(queryChkRsvd(tbl,col));
+            db.bind(stmtChkRsvd,1,ownerId);
+            db.bind(stmtChkRsvd,2,i);
+            chkRslt=db.loop_run(stmtChkRsvd);
+
+            if (chkRslt->size()==0) {
+                stmtAddRsvd=db.prepare(queryAddRsvd(tbl,col));
+                db.bind(stmtAddRsvd,1,ownerId);
+                db.bind(stmtAddRsvd,2,i);
+                db.loop_run(stmtAddRsvd);
+            }
+        }
+   }
+
     namespace core {
 
-        string coreModule="core";
-        string coreDesc="Main internal Blockiverse game module.";
-
         void init(SQLiteDB &db) {
-            statement stmtHasModule;
-            statement stmtAddModule;
-            s64 coreId=-1;
-            {
-                reread_HasCore:
-                stmtHasModule=db.prepare(queryHasModule);
-                db.bind(stmtHasModule,1,coreModule);
-                query_result rsltHasCore;
-                rsltHasCore=db.loop_run(stmtHasModule);
-                if (rsltHasCore->size()>0) {
-                    coreId=db.get_result<s64>(rsltHasCore,0,0);
-                } else {
-                    stmtAddModule=db.prepare(queryAddModule);
-                    db.bind(stmtAddModule,1,coreModule);
-                    db.bind(stmtAddModule,2,coreDesc);
-                    query_result rsltAddCore;
-                    rsltAddCore=db.loop_run(stmtAddModule);
-                    goto reread_HasCore;
-                }
-            }{
-                statement stmtDelRsvd;
-                statement stmtChkRsvd;
-                statement stmtAddRsvd;
-                query_result chkRslt;
-                const char* rsvd[]={"Vehicular","Orbital","Falling"};
-                for (auto i : rsvd) {
-                    stmtDelRsvd=db.prepare(queryDelRsvd("PivotType","pivotType"));
-                    db.bind(stmtDelRsvd,1,coreId);
-                    db.bind(stmtDelRsvd,2,i);
-                    db.loop_run(stmtDelRsvd);
+            s64 coreId=initModule(db,
+                "core",
+                "Main internal Blockiverse game module.");
+            rsvdList rsvd;
 
-                    stmtChkRsvd=db.prepare(queryChkRsvd("PivotType","pivotType"));
-                    db.bind(stmtChkRsvd,1,coreId);
-                    db.bind(stmtChkRsvd,2,i);
-                    chkRslt=db.loop_run(stmtChkRsvd);
+            rsvd=rsvdList({"Vehicular","Orbital","Falling"});
+            initRsvd(db,coreId,"PivotType","pivotType",rsvd);
 
-                    if (chkRslt->size()==0) {
-                        stmtAddRsvd=db.prepare(queryAddRsvd("PivotType","pivotType"));
-                        db.bind(stmtAddRsvd,1,coreId);
-                        db.bind(stmtAddRsvd,2,i);
-                        db.loop_run(stmtAddRsvd);
-                    }
-                }
-            }
-
+            rsvd=rsvdList({"Star","Planet","Chunkoid","Vehicle","Player","Mob"});
+            initRsvd(db,coreId,"EntityType","entityType",rsvd);
         }
 
     }
