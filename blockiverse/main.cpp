@@ -326,7 +326,7 @@ int main(int argc, char** argv)
     //cout << *client_kpair << endl;
     //UNLOCK_COUT
 
-    if (!FrontEnd.putGUIMessage(1,std::string("Logging into ")
+    if (!FrontEnd.putGUIMessage(1,std::string("Connecting to ")
         +config["address"]+":"+config["port"]
         +" as "+config["user"]+"...")) {
         return 0;
@@ -401,6 +401,7 @@ int main(int argc, char** argv)
         }
         UNLOCK_COUT
 
+        FrontEnd.putGUIMessage(1,std::string("Logging in..."));
         std::string userName=config["user"];
         std::string userPass=config["passwd"];
         if (authOk) {
