@@ -139,6 +139,8 @@
 		<Unit filename="Account.cpp" />
 		<Unit filename="Account.hpp" />
 		<Unit filename="auto/version.h" />
+		<Unit filename="bvgame/core.cpp" />
+		<Unit filename="bvgame/core.hpp" />
 		<Unit filename="client.cpp">
 			<Option target="ClientDebug" />
 			<Option target="ClientRelease" />

@@ -29,6 +29,7 @@
 #include "queries.hpp"
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
+#include "bvgame/core.hpp"
 
 #include "Account.hpp"
 
@@ -125,6 +126,15 @@ DWORD WINAPI server_main(LPVOID argvoid) {
     } catch (DBError &e) {
         LOCK_COUT
         cout << "[DB] Error creating tables:" << endl
+                  << "     " << e.what()       << endl;
+        UNLOCK_COUT
+    }
+    try {
+        SQLiteDB db;    // RAII
+        bvgame::core::init(db);
+    } catch (DBError &e) {
+        LOCK_COUT
+        cout << "[DB] Error creating game:" << endl
                   << "     " << e.what()       << endl;
         UNLOCK_COUT
     }
