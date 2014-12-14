@@ -22,9 +22,47 @@
 
 namespace bvgame {
 
-    const char* queryHasModule="SELECT moduleId FROM Modules WHERE name=?1";
-    const char* queryAddModule="INSERT INTO Modules (name,description) VALUES (?1,?2)";
+    const char* queryHasModule=
+        "SELECT "
+            "moduleId "
+        "FROM "
+            "Modules "
+        "WHERE "
+            "name=?1";
+    const char* queryAddModule=
+        "INSERT "
+            "INTO Modules "
+                "(name,description) "
+            "VALUES "
+                "(?1,?2)";
 
+    string queryDelRsvd(const char *tbl,const char *col) {
+        string s;
+        s="DELETE FROM ";
+        s+=tbl;
+        s+=" WHERE ";
+        s+=col;
+        s+="=?2 AND NOT ownerMod=?1";
+        return s;
+    }
+    string queryChkRsvd(const char *tbl,const char *col) {
+        string s;
+        s="SELECT * FROM ";
+        s+=tbl;
+        s+=" WHERE ownerMod=?1 AND ";
+        s+=col;
+        s+="=?2";
+        return s;
+    }
+    string queryAddRsvd(const char *tbl,const char *col) {
+        string s;
+        s="INSERT INTO ";
+        s+=tbl;
+        s+=" (ownerMod,";
+        s+=col;
+        s+=") VALUES (?1,?2)";
+        return s;
+    }
 
     namespace core {
 
@@ -34,22 +72,13 @@ namespace bvgame {
         void init(SQLiteDB &db) {
             statement stmtHasModule;
             statement stmtAddModule;
-            bool try_again;
             s64 coreId=-1;
-
             {
                 reread_HasCore:
                 stmtHasModule=db.prepare(queryHasModule);
                 db.bind(stmtHasModule,1,coreModule);
                 query_result rsltHasCore;
-                do {
-                    try_again=false;
-                    try {
-                        rsltHasCore=db.run(stmtHasModule);
-                    } catch (DBIsBusy &busy) {
-                        try_again=true;
-                    }
-                } while (try_again);
+                rsltHasCore=db.loop_run(stmtHasModule);
                 if (rsltHasCore->size()>0) {
                     coreId=db.get_result<s64>(rsltHasCore,0,0);
                 } else {
@@ -57,20 +86,35 @@ namespace bvgame {
                     db.bind(stmtAddModule,1,coreModule);
                     db.bind(stmtAddModule,2,coreDesc);
                     query_result rsltAddCore;
-                    do {
-                        try_again=false;
-                        try {
-                            rsltAddCore=db.run(stmtAddModule);
-                        } catch (DBIsBusy &busy) {
-                            try_again=true;
-                        }
-                    } while (try_again);
+                    rsltAddCore=db.loop_run(stmtAddModule);
                     goto reread_HasCore;
                 }
+            }{
+                statement stmtDelRsvd;
+                statement stmtChkRsvd;
+                statement stmtAddRsvd;
+                query_result chkRslt;
+                const char* rsvd[]={"Vehicular","Orbital","Falling"};
+                for (auto i : rsvd) {
+                    stmtDelRsvd=db.prepare(queryDelRsvd("PivotType","pivotType"));
+                    db.bind(stmtDelRsvd,1,coreId);
+                    db.bind(stmtDelRsvd,2,i);
+                    db.loop_run(stmtDelRsvd);
+
+                    stmtChkRsvd=db.prepare(queryChkRsvd("PivotType","pivotType"));
+                    db.bind(stmtChkRsvd,1,coreId);
+                    db.bind(stmtChkRsvd,2,i);
+                    chkRslt=db.loop_run(stmtChkRsvd);
+
+                    if (chkRslt->size()==0) {
+                        stmtAddRsvd=db.prepare(queryAddRsvd("PivotType","pivotType"));
+                        db.bind(stmtAddRsvd,1,coreId);
+                        db.bind(stmtAddRsvd,2,i);
+                        db.loop_run(stmtAddRsvd);
+                    }
+                }
             }
-            LOCK_COUT
-            cout << "[bvgame] core: module id is " << coreId << endl;
-            UNLOCK_COUT
+
         }
 
     }

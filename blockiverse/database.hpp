@@ -263,6 +263,21 @@ namespace bvdb {
             return data;
         }
 
+        query_result loop_run(sqlite3_stmt *stmt) {
+            bool try_again;
+            query_result rc;
+            do {
+                try_again=false;
+                try {
+                    rc=run(stmt);
+                } catch (DBIsBusy &busy) {
+                    try_again=true;
+                }
+            } while (try_again);
+            return rc;
+        }
+
+
         typedef sqlite3_stmt *statement;
         void bind(statement s,int idx,const string &val) {
             /** @brief bind argument with a string */
