@@ -123,13 +123,33 @@ void onGetAccount(bvnet::session *s,u32 *acctOb,bool *doneFlag) {
     *doneFlag=true;
 }
 
-void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag) {
+void Decrypt(std::string *coded,const Key *key,std::string *uncoded,bool *whenDone) {
+    *uncoded=RSA::Decrypt(*coded,*key);
+    *whenDone=true;
+}
+
+void testLogin(bvnet::session *s,KeyPair *ckey,bool *authOk,bool *doneFlag,bvclient::ClientFrontEnd *fe) {
+    boost::thread *worker;
+    bool workerDone;
+
     std::string erc=s->getarg<std::string>();
     std::string rcsha;
     //LOCK_COUT
     //cout << "Decrypting server challenge..." << endl;
     //UNLOCK_COUT
-    std::string rc=RSA::Decrypt(erc,ckey->GetPrivateKey());
+    std::string rc;
+    //rc=RSA::Decrypt(erc,ckey->GetPrivateKey());
+    fe->putGUIMessage(1,std::string("Authenticating client..."));
+    workerDone=false;
+    worker=new boost::thread(Decrypt,&erc,&(ckey->GetPrivateKey()),&rc,&workerDone);
+    while (!workerDone) {
+        if (!fe->run()) {
+            worker->join();
+        }
+    }
+    delete worker;
+    worker=NULL;
+
     //LOCK_COUT
     //cout << "    decrypted: " << rc << endl;
     //UNLOCK_COUT
@@ -364,7 +384,7 @@ int main(int argc, char** argv)
         client_session.send_string(client_kpair->GetPublicKey().GetExponent());
         client_session.send_call(1 /* serverRoot */,"LoginClient",
                                  boost::bind(testLogin,&client_session,
-                                             client_kpair,&authOk,&authDone),
+                                             client_kpair,&authOk,&authDone,&FrontEnd),
                                  1 /* expects one result */);
 
         while (!authDone
