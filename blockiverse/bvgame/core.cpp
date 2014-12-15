@@ -33,6 +33,8 @@ namespace bvgame {
     };
 
     typedef std::vector<string> rsvdList;
+    typedef std::pair<SQLType::_type,string> propSlot;
+    typedef std::vector<propSlot> propList;
 
     const char* queryHasModule=
         "SELECT "
@@ -75,6 +77,20 @@ namespace bvgame {
         s+=") VALUES (?1,?2)";
         return s;
     }
+
+    string queryChkProp=
+        "SELECT * "
+            "FROM "
+                "Property "
+            "WHERE "
+                "ownerMod=?1 AND name=?2";
+
+    string queryAddProp=
+        "INSERT INTO "
+            "Property "
+                "(ownerMod,type,name) "
+            "VALUES "
+                "(?1,?2,?3)";
 
     s64 initModule(SQLiteDB &db,const string moduleName,const string moduleDesc) {
         statement stmtHasModule;
@@ -123,6 +139,28 @@ namespace bvgame {
         }
     }
 
+    void initProp(SQLiteDB &db,s64 ownerId,const propList &props) {
+        statement stmtChkProp;
+        statement stmtAddProp;
+        query_result chkRslt;
+        for (auto i : props) {
+
+            stmtChkProp=db.prepare(queryChkProp);
+            db.bind(stmtChkProp,1,ownerId);
+            db.bind(stmtChkProp,2,i.second);
+            chkRslt=db.loop_run(stmtChkProp);
+
+            if (chkRslt->size()==0) {
+                s64 pType=i.first;
+                stmtAddProp=db.prepare(queryAddProp);
+                db.bind(stmtAddProp,1,ownerId);
+                db.bind(stmtAddProp,2,pType);
+                db.bind(stmtAddProp,3,i.second);
+                db.loop_run(stmtAddProp);
+            }
+        }
+    }
+
     namespace core {
 
         void init(SQLiteDB &db) {
@@ -136,6 +174,10 @@ namespace bvgame {
 
             rsvd=rsvdList({"Star","Planet","Chunkoid","Vehicle","Player","Mob"});
             initRsvd(db,coreId,"EntityType","entityType",rsvd);
+
+            propList props;
+            props.push_back(propSlot(SQLType::integer,"PlayerAccount"));
+            initProp(db,coreId,props);
         }
 
     }
