@@ -109,6 +109,10 @@ namespace bvquery {
             // orbiting (eg: planet) or falling (eg: player)
             ",pivotId INTEGER REFERENCES Entity(entityId) ON DELETE SET NULL"
             ",pivotType INTEGER REFERENCES PivotType(pivotTypeId) ON DELETE SET NULL"
+            // rotation
+            ",rotX FLOAT NOT NULL DEFAULT 0.0"
+            ",rotY FLOAT NOT NULL DEFAULT 0.0"
+            ",rotZ FLOAT NOT NULL DEFAULT 0.0"
             // position in Blockiverse
             // (BxGxCxPx,ByGyCyPy,BzGzCzPz)
             ",Bx INTEGER NOT NULL"
@@ -123,6 +127,19 @@ namespace bvquery {
             ",Px INTEGER NOT NULL"
             ",Py INTEGER NOT NULL"
             ",Pz INTEGER NOT NULL"
+        ")",
+        "CREATE TABLE IF NOT EXISTS Chunk ("
+            "sha TEXT PRIMARY KEY NOT NULL"
+            ",refcount INTEGER NOT NULL DEFAULT 1"
+            ",data BLOB NOT NULL"
+        ")",
+        "CREATE TABLE IF NOT EXISTS ChunkRef ("
+            "chunkRefId INTEGER PRIMARY KEY ASC NOT NULL"
+            ",entityId INTEGER NOT NULL REFERENCES Entity(entityId)"
+            ",sha TEXT NOT NULL REFERENCES Chunk(sha)"
+            ",Cx INTEGER NOT NULL"
+            ",Cy INTEGER NOT NULL"
+            ",Cz INTEGER NOT NULL"
         ")",
 
         /** @brief Property definitions */
