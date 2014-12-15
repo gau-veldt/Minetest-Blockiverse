@@ -23,6 +23,15 @@
 
 namespace bvgame {
 
+    struct SQLType {
+        typedef enum {
+            integer=SQLITE_INTEGER,
+            real=SQLITE_FLOAT,
+            text=SQLITE_TEXT,
+            blob=SQLITE_BLOB
+        } _type;
+    };
+
     typedef std::vector<string> rsvdList;
 
     const char* queryHasModule=
@@ -112,7 +121,7 @@ namespace bvgame {
                 db.loop_run(stmtAddRsvd);
             }
         }
-   }
+    }
 
     namespace core {
 
