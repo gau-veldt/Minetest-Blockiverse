@@ -130,12 +130,12 @@ namespace bvquery {
             // property id
             "propId INTEGER PRIMARY KEY ASC NOT NULL"
             // module defining property
-            ",Owner INTEGER NOT NULL REFERENCES Modules(moduleId) ON DELETE CASCADE"
+            ",ownerMod INTEGER NOT NULL REFERENCES Modules(moduleId) ON DELETE CASCADE"
             // type of property:
             // SQL_INTEGER,SQL_FLOAT,SQL_TEXT,SQL_BLOB
-            ",Type INTEGER NOT NULL"
+            ",type INTEGER NOT NULL"
             // property name
-            ",Name TEXT NOT NULL"
+            ",name TEXT NOT NULL"
         ")",
         /** @brief Property values */
         "CREATE TABLE IF NOT EXISTS EntityData ("
@@ -144,7 +144,7 @@ namespace bvquery {
             // which property
             ",propId INTEGER NOT NULL REFERENCES Property(propId) ON DELETE CASCADE"
             // property data
-            ",Value TEXT"
+            ",value TEXT"
         ")"
     };
 
