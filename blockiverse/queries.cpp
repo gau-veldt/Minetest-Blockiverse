@@ -104,6 +104,8 @@ namespace bvquery {
         "CREATE TABLE IF NOT EXISTS Entity ("
             "entityId INTEGER PRIMARY KEY ASC NOT NULL"
             ",entityType INTEGER NOT NULL REFERENCES EntityType(entityTypeId) ON DELETE CASCADE"
+            // identity that must be unique for a particular entityType
+            ",objectId INTEGER NOT NULL"
             // when not null specifies a gravitational
             // reference object for coupling (eg: vehicle),
             // orbiting (eg: planet) or falling (eg: player)
@@ -115,18 +117,19 @@ namespace bvquery {
             ",rotZ FLOAT NOT NULL DEFAULT 0.0"
             // position in Blockiverse
             // (BxGxCxPx,ByGyCyPy,BzGzCzPz)
-            ",Bx INTEGER NOT NULL"
-            ",By INTEGER NOT NULL"
-            ",Bz INTEGER NOT NULL"
-            ",Gx INTEGER NOT NULL"
-            ",Gy INTEGER NOT NULL"
-            ",Gz INTEGER NOT NULL"
-            ",Cx INTEGER NOT NULL"
-            ",Cy INTEGER NOT NULL"
-            ",Cz INTEGER NOT NULL"
-            ",Px INTEGER NOT NULL"
-            ",Py INTEGER NOT NULL"
-            ",Pz INTEGER NOT NULL"
+            ",Bx INTEGER NOT NULL DEFAULT 0"
+            ",By INTEGER NOT NULL DEFAULT 0"
+            ",Bz INTEGER NOT NULL DEFAULT 0"
+            ",Gx INTEGER NOT NULL DEFAULT 0"
+            ",Gy INTEGER NOT NULL DEFAULT 0"
+            ",Gz INTEGER NOT NULL DEFAULT 0"
+            ",Cx INTEGER NOT NULL DEFAULT 0"
+            ",Cy INTEGER NOT NULL DEFAULT 0"
+            ",Cz INTEGER NOT NULL DEFAULT 0"
+            ",Px INTEGER NOT NULL DEFAULT 0"
+            ",Py INTEGER NOT NULL DEFAULT 0"
+            ",Pz INTEGER NOT NULL DEFAULT 0"
+            ",UNIQUE(entityType,objectId)"
         ")",
         "CREATE TABLE IF NOT EXISTS Chunk ("
             "sha TEXT PRIMARY KEY NOT NULL"

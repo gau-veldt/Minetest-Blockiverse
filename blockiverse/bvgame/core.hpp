@@ -31,7 +31,8 @@ namespace bvgame {
 
     namespace core {
 
-        void init(SQLiteDB &db);
+        void init(SQLiteDB&);
+        s64 getPlayer(SQLiteDB&,s64);
 
     }
 

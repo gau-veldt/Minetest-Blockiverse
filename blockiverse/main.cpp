@@ -50,6 +50,12 @@ using namespace gui;
 ** write: server thread only
 **  read: main thread only
 */
+volatile bool serverReady;
+/*
+**  init: main thread
+** write: server thread only
+**  read: main thread only
+*/
 volatile bool serverActive;
 /*
 **  init: main thread
@@ -248,11 +254,21 @@ int main(int argc, char** argv)
     bool standalone=(0!=v2int(config["standalone"]));
     if (standalone) {
         LOCK_COUT
-        cout << "Starting server." << endl;
+        cout << "[Standalone] Starting server." << endl;
         UNLOCK_COUT
         serverActive=true;
         req_serverQuit=false;
+        serverReady=false;
         server_thread=new boost::thread(server_main,&args);
+        LOCK_COUT
+        cout << "[Standalone] Waiting for server startup..." << endl;
+        UNLOCK_COUT
+        while (!serverReady) {
+            FrontEnd.run();
+        }
+        LOCK_COUT
+        cout << "[Standalone] Server ready." << endl;
+        UNLOCK_COUT
     }
 
     /*

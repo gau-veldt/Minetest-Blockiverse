@@ -35,6 +35,7 @@ namespace bvgame {
     typedef std::vector<string> rsvdList;
     typedef std::pair<SQLType::_type,string> propSlot;
     typedef std::vector<propSlot> propList;
+    typedef std::map<string,s64> enumList;
 
     const char* queryHasModule=
         "SELECT "
@@ -66,6 +67,13 @@ namespace bvgame {
         s+=" WHERE ownerMod=?1 AND ";
         s+=col;
         s+="=?2";
+        return s;
+    }
+    string queryEnumRsvd(const char *tbl) {
+        string s;
+        s="SELECT * FROM ";
+        s+=tbl;
+        s+=" WHERE ownerMod=?1";
         return s;
     }
     string queryAddRsvd(const char *tbl,const char *col) {
@@ -138,6 +146,23 @@ namespace bvgame {
             }
         }
     }
+    void enumRsvd(SQLiteDB &db,s64 ownerId,const char* tbl, const rsvdList &rsvd, enumList &eList) {
+        statement stmtEnumRsvd;
+        query_result enumRslt;
+        s64 slotId;
+        string slotName;
+        stmtEnumRsvd=db.prepare(queryEnumRsvd(tbl));
+        db.bind(stmtEnumRsvd,1,ownerId);
+        enumRslt=db.loop_run(stmtEnumRsvd);
+        for (size_t i=0;i<enumRslt->size();++i) {
+            slotId=db.get_result<s64>(enumRslt,i,0);
+            slotName=db.get_result<string>(enumRslt,i,2);
+            eList[slotName]=slotId;
+            LOCK_COUT
+            cout << tbl << "[\"" << slotName << "\"]=" << slotId << endl;
+            UNLOCK_COUT
+        }
+    }
 
     void initProp(SQLiteDB &db,s64 ownerId,const propList &props) {
         statement stmtChkProp;
@@ -163,6 +188,23 @@ namespace bvgame {
 
     namespace core {
 
+        enumList PivotType;
+        enumList EntityType;
+
+        const char* queryCreateEntity=
+            "INSERT INTO "
+                "Entity "
+                    "(entityType,objectId) "
+                "VALUES "
+                    "(?1,?2)";
+
+        string queryFindEntity(s64 entType) {
+            string s="SELECT * FROM Entity WHERE entityType=";
+            s+=std::to_string(entType);
+            s+=" AND objectId=?1";
+            return s;
+        }
+
         void init(SQLiteDB &db) {
             s64 coreId=initModule(db,
                 "core",
@@ -171,13 +213,37 @@ namespace bvgame {
 
             rsvd=rsvdList({"Vehicular","Orbital","Falling"});
             initRsvd(db,coreId,"PivotType","pivotType",rsvd);
+            enumRsvd(db,coreId,"PivotType",rsvd,PivotType);
 
             rsvd=rsvdList({"Star","Planet","Chunkoid","Vehicle","Player","Mob"});
             initRsvd(db,coreId,"EntityType","entityType",rsvd);
+            enumRsvd(db,coreId,"EntityType",rsvd,EntityType);
 
             propList props;
-            props.push_back(propSlot(SQLType::integer,"PlayerAccount"));
+            //props.push_back(propSlot(SQLType::integer,"HP"));
+            //props.push_back(propSlot(SQLType::integer,"MaxHP"));
             initProp(db,coreId,props);
+        }
+
+        s64 getPlayer(SQLiteDB &db,s64 acctId) {
+            /** @brief Get player linked to user.
+            *   Create one if it doesn't exist.
+            *   @param db Database handle
+            *   @param acctId user account id
+            *   @return id of player object */
+            while (true) {
+                statement stmt=db.prepare(queryFindEntity(EntityType["Player"]));
+                db.bind(stmt,1,acctId);
+                query_result rsltFindPlayer=db.loop_run(stmt);
+                if (rsltFindPlayer->size()>0) {
+                    return db.get_result<s64>(rsltFindPlayer,0,0);
+                }
+                // Create player object
+                stmt=db.prepare(queryCreateEntity);
+                db.bind(stmt,1,EntityType["Player"]);
+                db.bind(stmt,2,acctId);
+                db.loop_run(stmt);
+            }
         }
 
     }

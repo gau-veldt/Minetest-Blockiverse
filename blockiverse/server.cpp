@@ -146,6 +146,7 @@ DWORD WINAPI server_main(LPVOID argvoid) {
               << " (io=" << &acceptor_io << ")"<< endl;
     UNLOCK_COUT
     tcp::acceptor listener(acceptor_io,tcp::endpoint(tcp::v4(),port));
+    serverReady=true;
 
     while (!req_serverQuit) {
         io_service *s_chld_sess_io=new io_service;

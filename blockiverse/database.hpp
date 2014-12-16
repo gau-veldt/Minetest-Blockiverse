@@ -398,10 +398,18 @@ namespace bvdb {
             UNLOCK_COUT
 
             char *err=NULL;
-            int rc=sqlite3_exec(db,sql.c_str(),NULL,NULL,&err);
-            if (rc) {
-                DBError::busy_aware_throw(rc,err,DBError::release);
-            }
+            bool again;
+            do {
+                try {
+                    again=false;
+                    int rc=sqlite3_exec(db,sql.c_str(),NULL,NULL,&err);
+                    if (rc) {
+                        DBError::busy_aware_throw(rc,err,DBError::release);
+                    }
+                } catch (DBIsBusy &e) {
+                    again=true;
+                }
+            } while (again);
         }
     };
 

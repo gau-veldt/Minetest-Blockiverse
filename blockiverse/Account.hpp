@@ -25,6 +25,7 @@
 #include "queries.hpp"
 #include "server.hpp"
 #include "lua-5.3.0/lua_all.h"
+#include "bvgame/core.hpp"
 
 using bvdb::SQLiteDB;
 using bvdb::DBIsBusy;
@@ -39,6 +40,7 @@ namespace bv {
         serverRoot &root;
         SQLiteDB &db;
         s64 userId;
+        s64 playerId;
         lua_State *asUser;
     protected:
     public:
@@ -48,11 +50,6 @@ namespace bv {
             db(server->get_db()),
             userId(who),
             asUser(luaL_newstate()) {
-
-            LOCK_COUT
-            cout << "Account [" << this << "] ctor (userid="
-                 << userId << ")" << endl;
-            UNLOCK_COUT
 
             /** TODO:
             *   Some of the standard lualibs are not going to behave well
@@ -74,18 +71,20 @@ namespace bv {
 
             // attempts login
             // throws if multiple login attempt for same account)
-            bool try_again;
             statement doLogin=db.prepare(bvquery::loginAccount);
             db.bind(doLogin,1,userId);
             query_result dontcare;
-            do {
-                try_again=false;
-                try {
-                    dontcare=db.run(doLogin);
-                } catch (DBIsBusy &busy) {
-                    try_again=true;
-                }
-            } while (try_again);
+            dontcare=db.loop_run(doLogin);
+
+            playerId=bvgame::core::getPlayer(db,userId);
+
+            LOCK_COUT
+            cout << "Account [" << this
+                 << "] ctor (userid=" << userId
+                 << ", playerId=" << playerId
+                 << ")" << endl;
+            UNLOCK_COUT
+
         }
         virtual ~Account() {
             LOCK_COUT
@@ -100,15 +99,7 @@ namespace bv {
                 statement doLogout=db.prepare(bvquery::logoutAccount);
                 db.bind(doLogout,1,userId);
                 query_result dontcare;
-                bool try_again;
-                do {
-                    try_again=false;
-                    try {
-                        dontcare=db.run(doLogout);
-                    } catch (DBIsBusy &e) {
-                        try_again=true;
-                    }
-                } while (try_again);
+                dontcare=db.loop_run(doLogout);
             } catch (DBError &e) {
                 LOCK_COUT
                 cout << "Account [" << this << "] dtor: " << e.what() << endl;

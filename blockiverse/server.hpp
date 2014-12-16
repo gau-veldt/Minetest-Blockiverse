@@ -26,6 +26,7 @@
 #include "sha1.hpp"
 #include <boost/nondet_random.hpp>
 
+extern volatile bool serverReady;
 extern volatile bool serverActive;
 extern volatile bool req_serverQuit;
 extern boost::random::random_device entropy;
