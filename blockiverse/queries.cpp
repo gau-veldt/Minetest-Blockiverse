@@ -139,7 +139,7 @@ namespace bvquery {
         "CREATE TABLE IF NOT EXISTS ChunkRef ("
             "chunkRefId INTEGER PRIMARY KEY ASC NOT NULL"
             ",entityId INTEGER NOT NULL REFERENCES Entity(entityId)"
-            ",sha TEXT NOT NULL REFERENCES Chunk(sha)"
+            ",sha TEXT NOT NULL REFERENCES Chunk(sha) ON DELETE RESTRICT "
             ",Cx INTEGER NOT NULL"
             ",Cy INTEGER NOT NULL"
             ",Cz INTEGER NOT NULL"
