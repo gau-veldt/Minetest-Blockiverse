@@ -45,7 +45,7 @@ namespace bvclient {
 
     class chunkCache {
     public:
-        /** TODO:
+        /** @todo
             Make me a proper class and put that enumed stuff into ctor
             to allow eventual user-adjustment of view range in client */
         enum ranges {
