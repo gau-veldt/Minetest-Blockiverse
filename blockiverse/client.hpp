@@ -21,6 +21,7 @@
 
 #include "common.hpp"
 #include "protocol.hpp"
+#include "chunk.hpp"
 #include <string>
 #include <irrlicht.h>
 #include <map>
@@ -34,7 +35,8 @@ namespace bvclient {
     using namespace io;
     using namespace gui;
 
-    class Chunk;
+    typedef bvmap::Chunk Chunk;
+    typedef bvmap::Node Node;
     typedef std::shared_ptr<Chunk> chunkPtr;
     typedef std::map<std::string,chunkPtr> chunkMap;
     typedef std::map<std::string,int> userMap;
