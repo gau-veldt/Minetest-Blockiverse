@@ -23,6 +23,7 @@
 #include "protocol.hpp"
 #include <string>
 #include <irrlicht.h>
+#include <map>
 
 namespace bvclient {
 
@@ -32,6 +33,22 @@ namespace bvclient {
     using namespace video;
     using namespace io;
     using namespace gui;
+
+    class Chunk;
+    typedef std::shared_ptr<Chunk> chunkPtr;
+    typedef std::map<std::string,chunkPtr> chunkMap;
+    typedef std::map<std::string,int> userMap;
+
+    class chunkCache {
+        /** @brief Chunks loaded in memory */
+        chunkMap loadedChunks;
+        /** @brief How many cells using each chunk
+            Remove from loadedChunks and chunkUsers upon reaching 0 */
+        userMap  chunkUsers;
+        /** @brief 3D chunk cell mapping
+            Sized for 16-chunk (256-block) visible range */
+        chunkPtr viewRegion[4*(16*16*16)];
+    };
 
     class clientRoot : public bvnet::object {
     private:
