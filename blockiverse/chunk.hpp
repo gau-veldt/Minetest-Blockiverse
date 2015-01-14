@@ -29,6 +29,18 @@ namespace bvmap {
         uint16_t blockId;       // 0=air/space
         uint8_t  blkLight;
         uint8_t  flags;
+        /** @brief decoration above this block (0 if none) */
+        uint16_t deco_above_block;
+        /** @brief decoration below this block (0 if none) */
+        uint16_t deco_below_block;
+        /** @brief decoration in-front-of this block (0 if none) */
+        uint16_t deco_infrontof_block;
+        /** @brief decoration behind this block (0 if none) */
+        uint16_t deco_behind_block;
+        /** @brief decoration to left of this block (0 if none) */
+        uint16_t deco_leftof_block;
+        /** @brief decoration to right of this block (0 if none) */
+        uint16_t deco_rightof_block;
     };
 
     class Chunk {
