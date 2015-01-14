@@ -51,7 +51,7 @@ namespace bvclient {
         userMap  chunkUsers;
         /** @brief 3D chunk cell mapping
             Sized for 16-chunk (256-block) visible range */
-        chunkPtr viewRegion[33*33*33]; // [-16,16] is 33 steps
+        chunkPtr viewRegion[33*33*33]; // [-16,16] is 33 chunks
     };
 
     class clientRoot : public bvnet::object {
