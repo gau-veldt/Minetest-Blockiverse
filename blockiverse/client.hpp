@@ -44,14 +44,23 @@ namespace bvclient {
     typedef std::map<uint16_t,ITexture*> texMap;
 
     class chunkCache {
+    public:
+        /** TODO:
+            Make me a proper class and put that enumed stuff into ctor
+            to allow eventual user-adjustment of view range in client */
+        enum ranges {
+            dist=16,
+            range=1+2*dist,                 // [-dist,dist] chunks=1+2*dist
+            cube_range=range*range*range    // total chunks in range in 3-space
+        };
         /** @brief Chunks loaded in memory */
-        chunkMap loadedChunks;
+        chunkMap loaded;
         /** @brief How many cells using each chunk
             Remove from loadedChunks and chunkUsers upon reaching 0 */
-        userMap  chunkUsers;
+        userMap  users;
         /** @brief 3D chunk cell mapping
             Sized for 16-chunk (256-block) visible range */
-        chunkPtr viewRegion[33*33*33]; // [-16,16] is 33 chunks
+        chunkPtr viewable[cube_range];
     };
 
     class clientRoot : public bvnet::object {
