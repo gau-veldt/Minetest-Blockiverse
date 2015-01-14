@@ -22,6 +22,7 @@
 #include "common.hpp"
 #include "protocol.hpp"
 #include "chunk.hpp"
+#include <inttypes.h>
 #include <string>
 #include <irrlicht.h>
 #include <map>
@@ -40,6 +41,7 @@ namespace bvclient {
     typedef std::shared_ptr<Chunk> chunkPtr;
     typedef std::map<std::string,chunkPtr> chunkMap;
     typedef std::map<std::string,int> userMap;
+    typedef std::map<uint16_t,ITexture*> texMap;
 
     class chunkCache {
         /** @brief Chunks loaded in memory */
@@ -49,7 +51,7 @@ namespace bvclient {
         userMap  chunkUsers;
         /** @brief 3D chunk cell mapping
             Sized for 16-chunk (256-block) visible range */
-        chunkPtr viewRegion[4*(16*16*16)];
+        chunkPtr viewRegion[33*33*33];
     };
 
     class clientRoot : public bvnet::object {
@@ -75,6 +77,8 @@ namespace bvclient {
         IGUIEnvironment* guienv;
         ISceneManager* smgr;
         int textHeight;
+        chunkCache chunks;
+        texMap blockTextures;
     public:
         ClientFrontEnd(IrrlichtDevice* dev) :
             device(dev),
