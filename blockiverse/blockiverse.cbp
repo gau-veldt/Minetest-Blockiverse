@@ -141,6 +141,8 @@
 		<Unit filename="auto/version.h" />
 		<Unit filename="bvgame/core.cpp" />
 		<Unit filename="bvgame/core.hpp" />
+		<Unit filename="chunk.cpp" />
+		<Unit filename="chunk.hpp" />
 		<Unit filename="client.cpp">
 			<Option target="ClientDebug" />
 			<Option target="ClientRelease" />

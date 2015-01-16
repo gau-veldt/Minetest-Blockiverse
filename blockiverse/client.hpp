@@ -119,6 +119,9 @@ namespace bvclient {
             guienv->clear();
         }
 
+        /** @brief generate visible mesh for visible blocks */
+        void TriangulateScene(float angle);
+
         void setGUIFont(std::string fontfile) {
             IGUISkin* skin = guienv->getSkin();
             IGUIFont* font = guienv->getFont(fontfile.c_str());
