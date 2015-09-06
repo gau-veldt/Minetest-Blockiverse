@@ -137,5 +137,5 @@ server=Split("""
 server_main.cpp
 """)
 
-Program("SconsClient",lua+sqlite3+rsa+core+common+client)
-Program("SconsServer",lua+sqlite3+rsa+core+common+server)
+Program("blockiverse",lua+sqlite3+rsa+core+common+client)
+Program("bvserver",lua+sqlite3+rsa+core+common+server)
