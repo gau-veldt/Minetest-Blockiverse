@@ -18,15 +18,6 @@
 */
 #include "server.hpp"
 
-//  init: main thread
-//  read: not used
-// write: not uses
-//
-// these are simply mirrored so the thread quit
-// semantics when running standalone are satisfied
-volatile bool serverActive;
-volatile bool req_serverQuit;
-
 int main(int argc, char** argv)
 {
     extern void protocol_main_init();

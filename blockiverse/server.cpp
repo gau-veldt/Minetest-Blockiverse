@@ -33,6 +33,25 @@
 
 #include "Account.hpp"
 
+/*
+**  init: main thread
+** write: server thread only
+**  read: main thread only
+*/
+volatile bool serverReady;
+/*
+**  init: main thread
+** write: server thread only
+**  read: main thread only
+*/
+volatile bool serverActive;
+/*
+**  init: main thread
+** write: main thread only
+**  read: server thread only
+*/
+volatile bool req_serverQuit;
+
 boost::random::random_device entropy;
 
 using bv::Account;

@@ -6,6 +6,8 @@ tags
 *.vim
 *.orig
 *.rej
+*.o
+*.exe
 
 ## Non-repo dependency dirs
 irrlicht-1.8.1/
@@ -19,3 +21,5 @@ boost_1_56_0/
 boost_1_57_0/
 media/
 minetest/
+blockiverse/.sconsign.dblite
+blockiverse/bv_db

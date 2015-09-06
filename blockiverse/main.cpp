@@ -45,25 +45,6 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-/*
-**  init: main thread
-** write: server thread only
-**  read: main thread only
-*/
-volatile bool serverReady;
-/*
-**  init: main thread
-** write: server thread only
-**  read: main thread only
-*/
-volatile bool serverActive;
-/*
-**  init: main thread
-** write: main thread only
-**  read: server thread only
-*/
-volatile bool req_serverQuit;
-
 void client_default_config(Configurator &cfg) {
     cfg["window_width"]="800";
     cfg["window_height"]="600";

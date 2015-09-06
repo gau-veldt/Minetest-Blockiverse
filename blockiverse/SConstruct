@@ -1,0 +1,141 @@
+import os.path
+import subprocess
+
+join_path=os.path.join
+env=DefaultEnvironment()
+VariantDir("obj",".",duplicate=0)
+
+env.Replace(CPPFLAGS='-std=c++11 -m32 -U__STRICT_ANSI__ -DBOOST_USE_WINDOWS_H -D_WIN32_WINNT=0x0601')
+
+env.Replace(CPPPATH=[
+"C:\\Program Files (x86)\\CodeBlocks\\MinGW\\include",
+join_path('..','irrlicht-1.8.1','include'),
+"C:\\Boost\\include\\boost-1_57",
+'auto',
+'rsa',
+'sqlite'
+])
+
+env.Replace(LIBPATH=[
+"C:\\Program Files (x86)\\CodeBlocks\\MinGW\\lib",
+"C:\\Boost\\lib",
+join_path('..','irrlicht-1.8.1','lib','Win32-gcc')
+])
+
+env.Replace(LIBS=[
+'wsock32',
+'ws2_32',
+'gdi32',
+'opengl32',
+'glu32',
+'Irrlicht',
+'libboost_system-mgw48-mt-d-1_57',
+'libboost_chrono-mgw48-mt-d-1_57',
+'libboost_date_time-mgw48-mt-d-1_57',
+'libboost_atomic-mgw48-mt-d-1_57',
+'libboost_random-mgw48-mt-d-1_57',
+'libboost_thread-mgw48-mt-d-1_57',
+'libboost_filesystem-mgw48-mt-d-1_57'
+])
+
+#---------------------------------------------------------
+#  Auto-generate version header auto/version.h
+#---------------------------------------------------------
+#
+#    - replaces gitstamp.bat for this purpose this
+#      eliminating a platform-specific build step
+#
+#  This stamp will run every build but if the build version
+#  is unaltered, target files using version.h will not be rebuilt
+#  by SCons due to its MD5-based detection (same version ID won't
+#  change the MD5 on repeated builds within the same commit/sync
+#  iteration, only the timestamp).
+#
+verH_template="""/*
+**
+** AUTOMATICALLY GENERATED -- DO NOT HAND EDIT
+**
+** version.h: automatic version string
+**
+*/
+#ifndef VERSION_AUTO_H
+#define VERSION_AUTO_H
+
+#define auto_ver "%s"
+
+#endif // VERSION_AUTO_H
+"""
+shell=subprocess.check_output
+ver=shell(['git','describe','--always','--dirty']).strip()
+verH=verH_template % ver
+with open(join_path('auto','version.h'),'w') as fd:
+    fd.write(verH)
+#---------------------------------------------------------
+
+#
+#  Embedded lua interpretor
+#
+luadir="lua-5.3.0"
+
+lua=[join_path(luadir,x) for x in Split("""
+lapi.cpp lauxlib.cpp lbaselib.cpp lbitlib.cpp
+lcode.cpp lcorolib.cpp lctype.cpp ldblib.cpp
+ldebug.cpp ldo.cpp ldump.cpp lfunc.cpp
+lgc.cpp linit.cpp liolib.cpp llex.cpp
+lmathlib.cpp lmem.cpp loadlib.cpp lobject.cpp
+lopcodes.cpp loslib.cpp lparser.cpp lstate.cpp
+lstring.cpp lstrlib.cpp ltable.cpp ltablib.cpp
+ltm.cpp lundump.cpp lutf8lib.cpp lvm.cpp
+lzio.cpp
+""")]
+
+#
+#  Embedded SQLite3
+#
+sqlite3dir="sqlite"
+sqlite3=[join_path(sqlite3dir,x) for x in Split("""
+sqlite3.c
+""")]
+
+#
+#  Embedded RSA
+#
+rsadir="rsa"
+rsa=[join_path(rsadir,x) for x in Split("""
+BigInt.cpp PrimeGenerator.cpp
+Key.cpp KeyPair.cpp RSA.cpp
+""")]
+
+#
+#  Blockiverse core game
+#
+coredir="bvgame"
+core=[join_path(coredir,x) for x in Split("""
+core.cpp
+""")]
+
+#
+#  Common code
+#
+common=Split("""
+Account.cpp chunk.cpp common.cpp
+database.cpp protocol.cpp queries.cpp
+server.cpp settings.cpp sha1.cpp
+""")
+
+#
+#  Client code
+#
+client=Split("""
+client.cpp main.cpp
+""")
+
+#
+#  Server code
+#
+server=Split("""
+server_main.cpp
+""")
+
+Program("SconsClient",lua+sqlite3+rsa+core+common+client)
+Program("SconsServer",lua+sqlite3+rsa+core+common+server)
